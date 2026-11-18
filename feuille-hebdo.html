@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feuille d'Heures Hebdomadaire (35h / 39h) Imprimable PDF — ChronoCharpente Pro</title>
+<meta name="description" content="Feuille d'heures hebdomadaire gratuite du lundi au dimanche avec calcul automatique des heures supplémentaires (35h/39h) et impression PDF A4.">
+<link rel="canonical" href="https://alyasmalikit.github.io/calculette-tools/feuille-hebdo.html">
+<style>
+:root { --navy:#0F172A; --muted:#475569; --blue-bg:#F0F7FF; --grey-bg:#F8FAFC; --border:#CBD5E1; --green:#16A34A; --accent:#2563EB; --r:10px; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--navy); background:#fff; line-height:1.6; }
+.nav { background:var(--navy); color:#fff; padding:0.85rem 1rem; }
+.nav-inner { max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.75rem; }
+.brand { font-weight:800; font-size:1.15rem; color:#fff; text-decoration:none; }
+.nav-links { display:flex; flex-wrap:wrap; gap:0.5rem; }
+.nav-links a { color:#CBD5E1; text-decoration:none; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.9rem; font-weight:600; }
+.nav-links a:hover, .nav-links a.active { background:#1E293B; color:#fff; }
+.wrap { max-width:1100px; margin:0 auto; padding:1.5rem 1rem; }
+.panel { background:var(--grey-bg); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; margin-bottom:1.5rem; }
+.meta-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; background:#fff; padding:1rem; border-radius:8px; border:1px solid var(--border); margin-bottom:1rem; }
+.meta-grid input, .meta-grid select { width:100%; padding:0.45rem; border:1px solid var(--border); border-radius:6px; margin-top:0.25rem; }
+.table-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; background:#fff; }
+th, td { border:1px solid var(--border); padding:0.65rem; text-align:left; }
+th { background:var(--blue-bg); font-weight:600; }
+td input { padding:0.4rem; border:1px solid var(--border); border-radius:6px; width:5rem; text-align:center; }
+.btn { padding:0.55rem 1.1rem; border-radius:8px; font-weight:600; cursor:pointer; border:none; background:var(--green); color:#fff; }
+.stats { background:var(--blue-bg); border:1px solid #BFDBFE; border-radius:var(--r); padding:1.25rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1rem; margin-top:1.25rem; }
+.stat-lbl { font-size:0.85rem; color:var(--muted); display:block; }
+.stat-val { font-size:1.4rem; font-weight:800; }
+.sign-box { display:none; margin-top:2rem; justify-content:space-between; }
+@media print {
+  .nav, .no-print { display:none !important; }
+  .panel { border:none; background:#fff; padding:0; }
+  .sign-box { display:flex; }
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">ChronoCharpente Pro</a>
+    <div class="nav-links">
+      <a href="index.html">Heures Journalières</a>
+      <a href="feuille-hebdo.html" class="active">Feuille Hebdo (35h/39h)</a>
+      <a href="convertisseur.html">Convertisseurs</a>
+      <a href="toiture-croupe.html">Toiture à Croupe</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
+      <div>
+        <h1 style="margin:0;font-size:1.6rem;">Feuille d'Heures Hebdomadaire (Lundi – Dimanche)</h1>
+        <p style="margin:0.25rem 0 0;color:var(--muted);">Calcul automatique des heures normales et supplémentaires selon votre base contrat.</p>
+      </div>
+      <button type="button" onclick="window.print()" class="btn no-print">Imprimer / Enregistrer en PDF (A4)</button>
+    </div>
+
+    <div class="meta-grid">
+      <div><label><strong>Nom / Salarié :</strong><input type="text" placeholder="Ex : Jean Dupont"></label></div>
+      <div><label><strong>Semaine / Chantier :</strong><input type="text" placeholder="Ex : Semaine 47 — Chantier Lyon"></label></div>
+      <div><label><strong>Base Hebdomadaire :</strong>
+        <select id="base-hrs">
+          <option value="35" selected>35 heures (Légal France)</option>
+          <option value="39">39 heures (BTP / Hôtellerie)</option>
+          <option value="40">40 heures (Suisse / International)</option>
+        </select>
+      </label></div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Jour</th><th>Début</th><th>Fin</th><th>Pause (min)</th><th>Total Jour (HH:MM)</th><th>Décimal</th></tr></thead>
+        <tbody id="wk-body"></tbody>
+      </table>
+    </div>
+
+    <div class="stats">
+      <div><span class="stat-lbl">Total Semaine (HH:MM)</span><span class="stat-val" id="wk-hm" style="color:var(--green);">00h 00min</span></div>
+      <div><span class="stat-lbl">Total Décimal</span><span class="stat-val" id="wk-dec">0.00 h</span></div>
+      <div><span class="stat-lbl">Heures Normales</span><span class="stat-val" id="wk-norm">0.00 h</span></div>
+      <div><span class="stat-lbl">Heures Supplémentaires</span><span class="stat-val" id="wk-ot" style="color:var(--accent);">0.00 h</span></div>
+    </div>
+
+    <div class="sign-box">
+      <div style="width:45%;border-top:1px solid #000;padding-top:0.5rem;">Signature du Salarié :</div>
+      <div style="width:45%;border-top:1px solid #000;padding-top:0.5rem;">Validation Responsable / Client :</div>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  const days=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+  const tbody=document.getElementById('wk-body');
+  const baseSel=document.getElementById('base-hrs');
+  days.forEach((d,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`<td><strong>${d}</strong></td>
+      <td><input type="text" data-d="${i}" data-k="s" value="${i<5?'08:00':''}" placeholder="08:00"></td>
+      <td><input type="text" data-d="${i}" data-k="e" value="${i<5?'16:00':''}" placeholder="16:00"></td>
+      <td><input type="number" data-d="${i}" data-k="b" value="${i<5?60:0}"></td>
+      <td><strong id="d-hm-${i}">00h 00min</strong></td>
+      <td><span id="d-dec-${i}">0.00 h</span></td>`;
+    tbody.appendChild(tr);
+  });
+  function parseHM(v){
+    const p=String(v||'').split(':'); if(p.length!==2||p[0]===''||p[1]==='') return null;
+    const h=Number(p[0]),m=Number(p[1]); return (isNaN(h)||isNaN(m)||h<0||h>23||m<0||m>59)?null:h*60+m;
+  }
+  function fmtHM(m){ return String(Math.floor(m/60)).padStart(2,'0')+'h '+String(Math.round(m%60)).padStart(2,'0')+'min'; }
+  function calc(){
+    let sum=0;
+    for(let i=0;i<7;i++){
+      const s=parseHM(tbody.querySelector(`[data-d="${i}"][data-k="s"]`).value);
+      const e=parseHM(tbody.querySelector(`[data-d="${i}"][data-k="e"]`).value);
+      const b=Number(tbody.querySelector(`[data-d="${i}"][data-k="b"]`).value)||0;
+      let net=0; if(s!==null&&e!==null){let d=e-s;if(d<0)d+=1440;net=Math.max(0,d-b);}
+      sum+=net;
+      document.getElementById(`d-hm-${i}`).textContent=fmtHM(net);
+      document.getElementById(`d-dec-${i}`).textContent=(net/60).toFixed(2)+' h';
+    }
+    const totDec=sum/60, base=Number(baseSel.value)||35;
+    document.getElementById('wk-hm').textContent=fmtHM(sum);
+    document.getElementById('wk-dec').textContent=totDec.toFixed(2)+' h';
+    document.getElementById('wk-norm').textContent=Math.min(totDec,base).toFixed(2)+' h';
+    document.getElementById('wk-ot').textContent=Math.max(0,totDec-base).toFixed(2)+' h';
+  }
+  tbody.addEventListener('input',calc);
+  baseSel.addEventListener('change',calc);
+  calc();
+})();
+</script>
+</body>
+</html>
