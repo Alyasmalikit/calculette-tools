@@ -3,104 +3,216 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ChronoCharpente Pro — Calculateur d'Heures & Charpente</title>
+<title>ChronoCharpente Pro — Calculateur d'Heures, Feuille Hebdo &amp; Toiture à Croupe</title>
+<meta name="description" content="Suite complète de calculateurs gratuits : calculateur d'heures journalières avec taux horaire, feuille d'heures hebdomadaire 35h/39h imprimable, convertisseur décimal et calculateur de charpente toiture à croupe.">
+<link rel="canonical" href="https://alyasmalikit.github.io/calculette-tools/">
 <style>
-:root {
-	--calc-bg: #FFFFFF;
-	--calc-navy: #0F172A;
-	--calc-navy-muted: #475569;
-	--calc-panel-blue: #F0F7FF;
-	--calc-panel-grey: #F8FAFC;
-	--calc-border: #CBD5E1;
-	--calc-green: #16A34A;
-	--calc-green-hover: #15803D;
-	--calc-blue-accent: #2563EB;
-	--calc-radius: 10px;
-	--calc-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-}
-body { margin: 0; background: var(--calc-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--calc-navy); }
-.calc-app-wrapper { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; box-sizing: border-box; }
-.calc-hero { background: var(--calc-panel-blue); border: 1px solid var(--calc-border); border-radius: var(--calc-radius); padding: 2.5rem 1.5rem; text-align: center; margin-bottom: 2rem; }
-.calc-hero h1 { margin: 0 0 0.75rem; font-size: 2rem; color: var(--calc-navy); }
-.calc-hero p { max-width: 650px; margin: 0 auto; color: var(--calc-navy-muted); font-size: 1.05rem; }
-.calc-panel { background: var(--calc-panel-grey); border: 1px solid var(--calc-border); border-radius: var(--calc-radius); padding: 1.5rem; margin-bottom: 1.5rem; }
-.calc-summary-box { background: var(--calc-panel-blue); border: 1px solid #BFDBFE; border-radius: var(--calc-radius); padding: 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
-.calc-stat-label { font-size: 0.85rem; color: var(--calc-navy-muted); display: block; }
-.calc-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--calc-navy); }
-.calc-table-scroll { width: 100%; overflow-x: auto; }
-.calc-table { width: 100%; border-collapse: collapse; background: #FFFFFF; }
-.calc-table th, .calc-table td { border: 1px solid var(--calc-border); padding: 0.75rem; text-align: left; }
-.calc-table th { background: var(--calc-panel-blue); font-weight: 600; }
-.calc-input { padding: 0.5rem; border: 1px solid var(--calc-border); border-radius: 6px; font-size: 1rem; color: var(--calc-navy); background: #FFFFFF; width: 5rem; text-align: center; }
+:root { --bg:#FFFFFF; --navy:#0F172A; --muted:#475569; --blue-bg:#F0F7FF; --grey-bg:#F8FAFC; --border:#CBD5E1; --green:#16A34A; --green-h:#15803D; --accent:#2563EB; --danger:#DC2626; --r:10px; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--navy); background:var(--bg); line-height:1.6; }
+.nav { background:var(--navy); color:#fff; padding:0.85rem 1rem; position:sticky; top:0; z-index:50; }
+.nav-inner { max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.75rem; }
+.brand { font-weight:800; font-size:1.15rem; color:#fff; text-decoration:none; }
+.nav-links { display:flex; flex-wrap:wrap; gap:0.5rem; }
+.nav-links a { color:#CBD5E1; text-decoration:none; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.9rem; font-weight:600; }
+.nav-links a:hover, .nav-links a.active { background:#1E293B; color:#fff; }
+.wrap { max-width:1100px; margin:0 auto; padding:1.5rem 1rem; }
+.hero { background:var(--blue-bg); border:1px solid var(--border); border-radius:var(--r); padding:2rem 1.5rem; text-align:center; margin-bottom:1.5rem; }
+.hero h1 { margin:0 0 0.5rem; font-size:clamp(1.6rem,3vw,2.25rem); }
+.hero p { max-width:720px; margin:0 auto; color:var(--muted); }
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-bottom:2rem; }
+.card { background:#fff; border:1px solid var(--border); border-radius:var(--r); padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 2px 6px rgba(15,23,42,0.04); }
+.card h3 { margin:0 0 0.4rem; font-size:1.1rem; }
+.card p { margin:0 0 1rem; color:var(--muted); font-size:0.92rem; }
+.btn { display:inline-block; padding:0.55rem 1rem; border-radius:8px; font-weight:600; text-decoration:none; text-align:center; cursor:pointer; border:none; font-size:0.92rem; }
+.btn-green { background:var(--green); color:#fff; }
+.btn-green:hover { background:var(--green-h); }
+.btn-outline { background:#fff; color:var(--navy); border:1px solid var(--border); }
+.btn-danger { background:#FEF2F2; color:var(--danger); border:1px solid #FECACA; padding:0.35rem 0.65rem; }
+.panel { background:var(--grey-bg); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; margin-bottom:1.5rem; }
+.table-wrap { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; background:#fff; }
+th, td { border:1px solid var(--border); padding:0.65rem; text-align:left; }
+th { background:var(--blue-bg); font-weight:600; }
+input[type="text"], input[type="number"] { padding:0.45rem; border:1px solid var(--border); border-radius:6px; font-size:0.95rem; width:5.2rem; text-align:center; }
+.stats { background:var(--blue-bg); border:1px solid #BFDBFE; border-radius:var(--r); padding:1.25rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-top:1.25rem; }
+.stat-lbl { font-size:0.85rem; color:var(--muted); display:block; }
+.stat-val { font-size:1.45rem; font-weight:800; color:var(--navy); }
+.ad-slot { border:1px dashed #94A3B8; background:#F8FAFC; color:#64748B; text-align:center; padding:0.85rem; border-radius:8px; font-size:0.85rem; margin:1.25rem 0; }
+.seo-box { background:#fff; border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; margin-top:1.5rem; }
+details { border-bottom:1px solid var(--border); padding:0.75rem 0; }
+summary { font-weight:600; cursor:pointer; }
+footer { text-align:center; color:var(--muted); font-size:0.88rem; margin-top:2rem; padding:1.5rem 0; border-top:1px solid var(--border); }
 </style>
 </head>
 <body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">ChronoCharpente Pro</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Heures Journalières</a>
+      <a href="feuille-hebdo.html">Feuille Hebdo (35h/39h)</a>
+      <a href="convertisseur.html">Convertisseurs</a>
+      <a href="toiture-croupe.html">Toiture à Croupe</a>
+    </div>
+  </div>
+</nav>
 
-<div class="calc-app-wrapper">
-    <div class="calc-hero">
-        <h1>ChronoCharpente Pro</h1>
-        <p>Calculateur gratuit d'heures journalières, de temps de travail et de conversion décimale.</p>
+<main class="wrap">
+  <section class="hero">
+    <h1>Calculateur d'Heures Journalières &amp; Outils Pros</h1>
+    <p>Calculez vos heures travaillées, déduisez vos pauses, estimez votre rémunération brute/nette et accédez à nos outils dédiés pour la paie et la charpente.</p>
+  </section>
+
+  <div class="cards">
+    <div class="card">
+      <div><h3>1. Heures Journalières</h3><p>Calcul multi-créneaux avec déduction des pauses, passage de minuit et estimation de salaire.</p></div>
+      <a href="#calc-daily" class="btn btn-green">Utiliser ci-dessous</a>
+    </div>
+    <div class="card">
+      <div><h3>2. Feuille Hebdo (Lun–Dim)</h3><p>Relevé hebdomadaire complet avec calcul automatique des heures supplémentaires (35h / 39h) et export PDF.</p></div>
+      <a href="feuille-hebdo.html" class="btn btn-outline">Ouvrir la feuille →</a>
+    </div>
+    <div class="card">
+      <div><h3>3. Convertisseur Décimal</h3><p>Convertissez HH:MM en centièmes d'heure, soustrayez deux durées et consultez le tableau de paie.</p></div>
+      <a href="convertisseur.html" class="btn btn-outline">Ouvrir le convertisseur →</a>
+    </div>
+    <div class="card">
+      <div><h3>4. Toiture à Croupe</h3><p>Calculateur de charpente avec schéma dynamique : pente, chevrons, arêtiers, faîtage et surface réelle.</p></div>
+      <a href="toiture-croupe.html" class="btn btn-outline">Ouvrir l'outil charpente →</a>
+    </div>
+  </div>
+
+  <div class="ad-slot">Emplacement Publicitaire / Partenaire (Google AdSense 728x90)</div>
+
+  <section id="calc-daily" class="panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
+      <h2 style="margin:0;">Calculateur d'Heures Journalières &amp; Salaire</h2>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+        <button type="button" id="add-row" class="btn btn-green">+ Ajouter un créneau</button>
+        <button type="button" id="export-csv" class="btn btn-outline">Exporter CSV</button>
+        <button type="button" id="reset-daily" class="btn btn-outline">Réinitialiser</button>
+      </div>
     </div>
 
-    <div class="calc-panel">
-        <h2>Calculateur d'Heures Journalières</h2>
-        <p style="color:var(--calc-navy-muted);">Entrez vos heures de début, de fin et votre pause pour calculer instantanément votre temps de travail net.</p>
-        
-        <div class="calc-table-scroll">
-            <table class="calc-table">
-                <thead>
-                    <tr>
-                        <th>Début (HH:MM)</th>
-                        <th>Fin (HH:MM)</th>
-                        <th>Pause (min)</th>
-                        <th>Durée Nette</th>
-                        <th>Décimal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" id="sh" class="calc-input" value="08:00"></td>
-                        <td><input type="text" id="eh" class="calc-input" value="17:00"></td>
-                        <td><input type="text" id="br" class="calc-input" value="60"></td>
-                        <td><strong id="res-dur" style="color:var(--calc-green);">08:00</strong></td>
-                        <td><strong id="res-dec" style="color:var(--calc-blue-accent);">8.00 h</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="calc-summary-box">
-            <div><span class="calc-stat-label">Temps de Travail Net</span><span class="calc-stat-value" id="tot-net">8h 00min</span></div>
-            <div><span class="calc-stat-label">Total Heures Décimales</span><span class="calc-stat-value" id="tot-dec">8.00 h</span></div>
-        </div>
+    <div style="margin-bottom:1rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;background:#fff;padding:0.75rem 1rem;border-radius:8px;border:1px solid var(--border);">
+      <label><strong>Taux horaire (€/h) :</strong> <input type="number" step="0.01" id="hourly-rate" value="15.00"></label>
+      <span style="font-size:0.88rem;color:var(--muted);">* Sauvegarde automatique activée dans votre navigateur.</span>
     </div>
-</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Créneau</th><th>Début (HH:MM)</th><th>Fin (HH:MM)</th><th>Pause (min)</th><th>Durée Nette</th><th>Heures Décimales</th><th>Gain Estimé</th><th>Action</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="stats">
+      <div><span class="stat-lbl">Temps Net Total</span><span class="stat-val" id="tot-hm" style="color:var(--green);">00h 00min</span></div>
+      <div><span class="stat-lbl">Total Décimal (Paie)</span><span class="stat-val" id="tot-dec">0.00 h</span></div>
+      <div><span class="stat-lbl">Total Minutes</span><span class="stat-val" id="tot-min">0 min</span></div>
+      <div><span class="stat-lbl">Rémunération Estimée</span><span class="stat-val" id="tot-pay" style="color:var(--accent);">0.00 €</span></div>
+    </div>
+  </section>
+
+  <section class="seo-box">
+    <h2>Comment calculer ses heures de travail en centièmes d'heure ?</h2>
+    <p>Les logiciels de paie et de facturation utilisent le système décimal (base 100) plutôt que le format horaire classique (base 60). Notre calculateur convertit automatiquement chaque créneau saisi en format <strong>HH:MM</strong> et en <strong>heures décimales</strong>.</p>
+    <details open><summary>Comment fonctionne le calcul avec horaires de nuit ?</summary><p>Si vous saisissez une heure de début à <strong>21:30</strong> et une heure de fin à <strong>05:00</strong>, l'outil détecte automatiquement le franchissement de minuit et calcule 7h30 (soit 7,50 h) sans erreur.</p></details>
+    <details><summary>Mes données sont-elles enregistrées ?</summary><p>Vos horaires sont mémorisés uniquement sur votre propre appareil (via le stockage local du navigateur) pour que vous ne perdiez pas votre saisie en fermant l'onglet. Aucune donnée n'est envoyée sur un serveur.</p></details>
+  </section>
+
+  <footer>ChronoCharpente Pro — Outils gratuits de gestion du temps et de charpente.</footer>
+</main>
 
 <script>
-document.addEventListener('input', function() {
-    try {
-        const start = document.getElementById('sh').value.split(':');
-        const end = document.getElementById('eh').value.split(':');
-        const breakMins = Number(document.getElementById('br').value) || 0;
-        
-        const startMins = (Number(start[0]) || 0) * 60 + (Number(start[1]) || 0);
-        const endMins = (Number(end[0]) || 0) * 60 + (Number(end[1]) || 0);
-        
-        let netMins = endMins - startMins - breakMins;
-        if (netMins < 0) netMins += 24 * 60;
-        
-        const hrs = Math.floor(netMins / 60);
-        const mins = netMins % 60;
-        const durStr = String(hrs).padStart(2,'0') + 'h ' + String(mins).padStart(2,'0') + 'min';
-        const decVal = (netMins / 60).toFixed(2);
-        
-        document.getElementById('res-dur').textContent = durStr;
-        document.getElementById('res-dec').textContent = decVal + ' h';
-        document.getElementById('tot-net').textContent = durStr;
-        document.getElementById('tot-dec').textContent = decVal + ' h';
-    } catch(e) {}
-});
-</script>
+(function(){
+  const STORAGE_KEY = 'ccp_daily_v1';
+  let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || {
+    rate: 15.00,
+    rows: [{s:'08:00',e:'12:00',b:0},{s:'13:00',e:'17:00',b:0}]
+  };
+  const tbody = document.getElementById('tbody');
+  const rateIn = document.getElementById('hourly-rate');
+  rateIn.value = state.rate;
 
+  function parseHM(v){
+    const p = String(v||'').split(':');
+    if(p.length!==2 || p[0]==='' || p[1]==='') return null;
+    const h=Number(p[0]), m=Number(p[1]);
+    if(isNaN(h)||isNaN(m)||h<0||h>23||m<0||m>59) return null;
+    return h*60+m;
+  }
+  function fmtHM(m){
+    const a=Math.max(0,Math.round(m));
+    return String(Math.floor(a/60)).padStart(2,'0')+'h '+String(a%60).padStart(2,'0')+'min';
+  }
+  function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+  function render(){
+    tbody.innerHTML='';
+    state.rows.forEach((r,i)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td><strong>#${i+1}</strong></td>
+        <td><input type="text" data-i="${i}" data-k="s" value="${r.s}" placeholder="08:00"></td>
+        <td><input type="text" data-i="${i}" data-k="e" value="${r.e}" placeholder="12:00"></td>
+        <td><input type="number" data-i="${i}" data-k="b" value="${r.b}"></td>
+        <td><strong id="r-hm-${i}">00h 00min</strong></td>
+        <td><span id="r-dec-${i}">0.00 h</span></td>
+        <td><span id="r-pay-${i}">0.00 €</span></td>
+        <td>${state.rows.length>1?`<button type="button" class="btn btn-danger" data-del="${i}">✕</button>`:''}</td>`;
+      tbody.appendChild(tr);
+    });
+    calc();
+  }
+
+  function calc(){
+    state.rate = parseFloat(rateIn.value) || 0;
+    let totalMin = 0;
+    state.rows.forEach((r,i)=>{
+      const s=parseHM(r.s), e=parseHM(r.e), b=Number(r.b)||0;
+      let net=0;
+      if(s!==null && e!==null){ let d=e-s; if(d<0) d+=1440; net=Math.max(0,d-b); }
+      totalMin += net;
+      const dec = net/60;
+      document.getElementById(`r-hm-${i}`).textContent = fmtHM(net);
+      document.getElementById(`r-dec-${i}`).textContent = dec.toFixed(2)+' h';
+      document.getElementById(`r-pay-${i}`).textContent = (dec*state.rate).toFixed(2)+' €';
+    });
+    const totDec = totalMin/60;
+    document.getElementById('tot-hm').textContent = fmtHM(totalMin);
+    document.getElementById('tot-dec').textContent = totDec.toFixed(2)+' h';
+    document.getElementById('tot-min').textContent = totalMin+' min';
+    document.getElementById('tot-pay').textContent = (totDec*state.rate).toFixed(2)+' €';
+    save();
+  }
+
+  tbody.addEventListener('input', e=>{
+    const i=e.target.dataset.i, k=e.target.dataset.k;
+    if(i!==undefined){ state.rows[i][k]=e.target.value; calc(); }
+  });
+  tbody.addEventListener('click', e=>{
+    if(e.target.dataset.del!==undefined){ state.rows.splice(Number(e.target.dataset.del),1); render(); }
+  });
+  rateIn.addEventListener('input', calc);
+  document.getElementById('add-row').addEventListener('click', ()=>{ state.rows.push({s:'',e:'',b:0}); render(); });
+  document.getElementById('reset-daily').addEventListener('click', ()=>{
+    state={rate:15,rows:[{s:'08:00',e:'12:00',b:0},{s:'13:00',e:'17:00',b:0}]};
+    rateIn.value=15; render();
+  });
+  document.getElementById('export-csv').addEventListener('click', ()=>{
+    let csv='Creneau;Debut;Fin;Pause_min;Duree_Decimale;Gain_EUR\n';
+    state.rows.forEach((r,i)=>{
+      const s=parseHM(r.s), e=parseHM(r.e), b=Number(r.b)||0;
+      let net=0; if(s!==null&&e!==null){let d=e-s;if(d<0)d+=1440;net=Math.max(0,d-b);}
+      csv+=`${i+1};${r.s};${r.e};${b};${(net/60).toFixed(2)};${((net/60)*state.rate).toFixed(2)}\n`;
+    });
+    const a=document.createElement('a');
+    a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+    a.download='heures-journalieres.csv'; a.click();
+  });
+  render();
+})();
+</script>
 </body>
 </html>
