@@ -15,313 +15,92 @@
 	--calc-green: #16A34A;
 	--calc-green-hover: #15803D;
 	--calc-blue-accent: #2563EB;
-	--calc-danger: #DC2626;
 	--calc-radius: 10px;
 	--calc-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
-body { margin: 0; background: var(--calc-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--calc-navy); line-height: 1.55; }
-.calc-app-wrapper { max-width: 1050px; margin: 0 auto; padding: 1.5rem 1rem; box-sizing: border-box; }
-.calc-app-wrapper * { box-sizing: border-box; }
-.calc-hero { background: var(--calc-panel-blue); border: 1px solid var(--calc-border); border-radius: var(--calc-radius); padding: 2rem 1.5rem; text-align: center; margin-bottom: 1.5rem; }
-.calc-hero h1 { margin: 0 0 0.5rem; font-size: clamp(1.6rem, 3vw, 2.2rem); }
-.calc-hero p { max-width: 680px; margin: 0 auto; color: var(--calc-navy-muted); }
-.calc-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; justify-content: center; }
-.calc-tab { padding: 0.65rem 1.15rem; border: 1px solid var(--calc-border); background: #FFFFFF; color: var(--calc-navy); border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.95rem; }
-.calc-tab.is-active { background: var(--calc-navy); color: #FFFFFF; border-color: var(--calc-navy); }
+body { margin: 0; background: var(--calc-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--calc-navy); }
+.calc-app-wrapper { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; box-sizing: border-box; }
+.calc-hero { background: var(--calc-panel-blue); border: 1px solid var(--calc-border); border-radius: var(--calc-radius); padding: 2.5rem 1.5rem; text-align: center; margin-bottom: 2rem; }
+.calc-hero h1 { margin: 0 0 0.75rem; font-size: 2rem; color: var(--calc-navy); }
+.calc-hero p { max-width: 650px; margin: 0 auto; color: var(--calc-navy-muted); font-size: 1.05rem; }
 .calc-panel { background: var(--calc-panel-grey); border: 1px solid var(--calc-border); border-radius: var(--calc-radius); padding: 1.5rem; margin-bottom: 1.5rem; }
-.calc-panel[hidden] { display: none; }
-.calc-summary-box { background: var(--calc-panel-blue); border: 1px solid #BFDBFE; border-radius: var(--calc-radius); padding: 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-top: 1.25rem; }
+.calc-summary-box { background: var(--calc-panel-blue); border: 1px solid #BFDBFE; border-radius: var(--calc-radius); padding: 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
 .calc-stat-label { font-size: 0.85rem; color: var(--calc-navy-muted); display: block; }
-.calc-stat-value { font-size: 1.45rem; font-weight: 700; color: var(--calc-navy); }
+.calc-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--calc-navy); }
 .calc-table-scroll { width: 100%; overflow-x: auto; }
 .calc-table { width: 100%; border-collapse: collapse; background: #FFFFFF; }
-.calc-table th, .calc-table td { border: 1px solid var(--calc-border); padding: 0.65rem 0.75rem; text-align: left; }
+.calc-table th, .calc-table td { border: 1px solid var(--calc-border); padding: 0.75rem; text-align: left; }
 .calc-table th { background: var(--calc-panel-blue); font-weight: 600; }
-.calc-input { padding: 0.45rem 0.6rem; border: 1px solid var(--calc-border); border-radius: 6px; font-size: 1rem; color: var(--calc-navy); background: #FFFFFF; width: 4.5rem; text-align: center; }
-.calc-btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.55rem 1.1rem; border-radius: 8px; font-weight: 600; cursor: pointer; border: 1px solid transparent; font-size: 0.9rem; }
-.calc-btn-primary { background: var(--calc-green); color: #FFFFFF; }
-.calc-btn-primary:hover { background: var(--calc-green-hover); }
-.calc-btn-danger { background: #FEF2F2; color: var(--calc-danger); border-color: #FECACA; }
-.calc-grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
-.calc-card { background: #FFFFFF; border: 1px solid var(--calc-border); border-radius: var(--calc-radius); padding: 1.25rem; box-shadow: var(--calc-shadow); }
-.calc-card h3 { margin-top: 0; font-size: 1.1rem; }
-.calc-footer { text-align: center; color: var(--calc-navy-muted); font-size: 0.88rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--calc-border); }
+.calc-input { padding: 0.5rem; border: 1px solid var(--calc-border); border-radius: 6px; font-size: 1rem; color: var(--calc-navy); background: #FFFFFF; width: 5rem; text-align: center; }
 </style>
 </head>
 <body>
 
 <div class="calc-app-wrapper">
-	<header class="calc-hero">
-		<h1>ChronoCharpente Pro</h1>
-		<p>Calculateur d'heures journalières, feuille hebdomadaire, convertisseur décimal et calculateur géométrique de toiture à croupe.</p>
-	</header>
+    <div class="calc-hero">
+        <h1>ChronoCharpente Pro</h1>
+        <p>Calculateur gratuit d'heures journalières, de temps de travail et de conversion décimale.</p>
+    </div>
 
-	<nav class="calc-tabs" role="tablist">
-		<button type="button" class="calc-tab is-active" data-tab="daily">1. Heures Journalières</button>
-		<button type="button" class="calc-tab" data-tab="weekly">2. Feuille Hebdo (Lun–Dim)</button>
-		<button type="button" class="calc-tab" data-tab="converter">3. Convertisseurs</button>
-		<button type="button" class="calc-tab" data-tab="roof">4. Toiture à Croupe</button>
-	</nav>
+    <div class="calc-panel">
+        <h2>Calculateur d'Heures Journalières</h2>
+        <p style="color:var(--calc-navy-muted);">Entrez vos heures de début, de fin et votre pause pour calculer instantanément votre temps de travail net.</p>
+        
+        <div class="calc-table-scroll">
+            <table class="calc-table">
+                <thead>
+                    <tr>
+                        <th>Début (HH:MM)</th>
+                        <th>Fin (HH:MM)</th>
+                        <th>Pause (min)</th>
+                        <th>Durée Nette</th>
+                        <th>Décimal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="sh" class="calc-input" value="08:00"></td>
+                        <td><input type="text" id="eh" class="calc-input" value="17:00"></td>
+                        <td><input type="text" id="br" class="calc-input" value="60"></td>
+                        <td><strong id="res-dur" style="color:var(--calc-green);">08:00</strong></td>
+                        <td><strong id="res-dec" style="color:var(--calc-blue-accent);">8.00 h</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-	<!-- TAB 1: DAILY CALCULATOR -->
-	<section id="tab-daily" class="calc-panel">
-		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
-			<h2 style="margin:0;">Calculateur d'Heures Journalières</h2>
-			<button type="button" id="add-interval-btn" class="calc-btn calc-btn-primary">+ Ajouter un intervalle</button>
-		</div>
-		<div class="calc-table-scroll">
-			<table class="calc-table">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Début (HH:MM)</th>
-						<th>Fin (HH:MM)</th>
-						<th>Pause (min)</th>
-						<th>Durée Nette</th>
-						<th>Décimal</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody id="daily-tbody"></tbody>
-			</table>
-		</div>
-		<div class="calc-summary-box">
-			<div><span class="calc-stat-label">Temps Net Total</span><span class="calc-stat-value" id="daily-net" style="color:var(--calc-green);">00h 00min</span></div>
-			<div><span class="calc-stat-label">Heures Décimales</span><span class="calc-stat-value" id="daily-dec">0.00 h</span></div>
-			<div><span class="calc-stat-label">Total Minutes</span><span class="calc-stat-value" id="daily-min">0 min</span></div>
-		</div>
-	</section>
-
-	<!-- TAB 2: WEEKLY TIMESHEET -->
-	<section id="tab-weekly" class="calc-panel" hidden>
-		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:1rem;">
-			<h2 style="margin:0;">Feuille d'Heures Hebdomadaire</h2>
-			<button type="button" onclick="window.print()" class="calc-btn calc-btn-primary">Imprimer / PDF (A4)</button>
-		</div>
-		<div class="calc-table-scroll">
-			<table class="calc-table">
-				<thead>
-					<tr>
-						<th>Jour</th>
-						<th>Début</th>
-						<th>Fin</th>
-						<th>Pause (min)</th>
-						<th>Total Jour</th>
-						<th>Décimal</th>
-					</tr>
-				</thead>
-				<tbody id="weekly-tbody"></tbody>
-			</table>
-		</div>
-		<div class="calc-summary-box">
-			<div><span class="calc-stat-label">Total Semaine (HH:MM)</span><span class="calc-stat-value" id="wk-net" style="color:var(--calc-green);">00h 00min</span></div>
-			<div><span class="calc-stat-label">Total Semaine Décimal</span><span class="calc-stat-value" id="wk-dec">0.00 h</span></div>
-		</div>
-	</section>
-
-	<!-- TAB 3: CONVERTERS -->
-	<section id="tab-converter" class="calc-panel" hidden>
-		<h2 style="margin-top:0;">Outils de Conversion d'Heures</h2>
-		<div class="calc-grid-2">
-			<div class="calc-card">
-				<h3>Heures (HH:MM) → Décimal</h3>
-				<div style="display:flex; gap:0.5rem; align-items:center;">
-					<input type="number" id="c-hh" class="calc-input" value="7"> h
-					<input type="number" id="c-mm" class="calc-input" value="45"> min
-				</div>
-				<p style="margin-top:1rem; font-weight:700;">Résultat : <span id="c-hh-out" style="color:var(--calc-green);">7.75 h</span></p>
-			</div>
-			<div class="calc-card">
-				<h3>Heures Décimales → HH:MM</h3>
-				<div style="display:flex; gap:0.5rem; align-items:center;">
-					<input type="number" step="0.01" id="c-dec" class="calc-input" style="width:6rem;" value="7.50"> heures
-				</div>
-				<p style="margin-top:1rem; font-weight:700;">Résultat : <span id="c-dec-out" style="color:var(--calc-green);">07h 30min</span></p>
-			</div>
-			<div class="calc-card">
-				<h3>Minutes → Heures &amp; Décimal</h3>
-				<div style="display:flex; gap:0.5rem; align-items:center;">
-					<input type="number" id="c-min" class="calc-input" style="width:6rem;" value="450"> minutes
-				</div>
-				<p style="margin-top:1rem; font-weight:700;">Résultat : <span id="c-min-out" style="color:var(--calc-green);">07h 30min (7.50 h)</span></p>
-			</div>
-			<div class="calc-card">
-				<h3>Soustraction de Durées (A − B)</h3>
-				<div style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;">
-					<strong>A :</strong> <input type="number" id="s-ah" class="calc-input" value="88"> h <input type="number" id="s-am" class="calc-input" value="15"> m
-				</div>
-				<div style="display:flex; gap:0.4rem; align-items:center;">
-					<strong>B :</strong> <input type="number" id="s-bh" class="calc-input" value="60"> h <input type="number" id="s-bm" class="calc-input" value="55"> m
-				</div>
-				<p style="margin-top:1rem; font-weight:700;">Écart : <span id="s-out" style="color:var(--calc-green);">27h 20min (27.33 h)</span></p>
-			</div>
-		</div>
-	</section>
-
-	<!-- TAB 4: HIP ROOF CALCULATOR -->
-	<section id="tab-roof" class="calc-panel" hidden>
-		<h2 style="margin-top:0;">Calculateur de Toiture à Croupe (Charpente)</h2>
-		<div class="calc-grid-2">
-			<div class="calc-card">
-				<h3>Dimensions &amp; Pente</h3>
-				<p><label>Hauteur faîtage H (m) : <input type="number" step="0.01" id="rf-h" class="calc-input" style="width:6rem;" value="2.50"></label></p>
-				<p><label>Reculement R (m) : <input type="number" step="0.01" id="rf-r" class="calc-input" style="width:6rem;" value="4.00"></label></p>
-				<p><label>Longueur sablière (m) : <input type="number" step="0.01" id="rf-l" class="calc-input" style="width:6rem;" value="12.00"></label></p>
-			</div>
-			<div class="calc-card">
-				<h3>Résultats Géométriques</h3>
-				<div id="roof-results" style="line-height:1.8;"></div>
-			</div>
-		</div>
-	</section>
-
-	<footer class="calc-footer">ChronoCharpente Pro — 100 % gratuit, calculs locaux sans envoi de données.</footer>
+        <div class="calc-summary-box">
+            <div><span class="calc-stat-label">Temps de Travail Net</span><span class="calc-stat-value" id="tot-net">8h 00min</span></div>
+            <div><span class="calc-stat-label">Total Heures Décimales</span><span class="calc-stat-value" id="tot-dec">8.00 h</span></div>
+        </div>
+    </div>
 </div>
 
 <script>
-(function() {
-	// Tab navigation
-	document.querySelectorAll('.calc-tab').forEach(btn => {
-		btn.addEventListener('click', () => {
-			document.querySelectorAll('.calc-tab').forEach(b => b.classList.remove('is-active'));
-			btn.classList.add('is-active');
-			const target = btn.dataset.tab;
-			document.querySelectorAll('.calc-panel').forEach(p => p.hidden = (p.id !== 'tab-' + target));
-		});
-	});
-
-	function parseTime(str) {
-		const parts = String(str || '').split(':');
-		if (parts.length !== 2 || parts[0] === '' || parts[1] === '') return null;
-		const h = Number(parts[0]), m = Number(parts[1]);
-		if (isNaN(h) || isNaN(m) || h < 0 || h > 23 || m < 0 || m > 59) return null;
-		return h * 60 + m;
-	}
-	function fmtHM(mins) {
-		const sign = mins < 0 ? '-' : '';
-		const abs = Math.abs(Math.round(mins));
-		return sign + String(Math.floor(abs / 60)).padStart(2, '0') + 'h ' + String(abs % 60).padStart(2, '0') + 'min';
-	}
-
-	// 1. Daily Calculator
-	let rows = [{ start: '08:00', end: '12:00', brk: 0 }, { start: '13:00', end: '17:00', brk: 0 }];
-	const dailyBody = document.getElementById('daily-tbody');
-	function renderDaily() {
-		dailyBody.innerHTML = '';
-		rows.forEach((r, idx) => {
-			const tr = document.createElement('tr');
-			tr.innerHTML = `<td>${idx + 1}</td>
-				<td><input type="text" class="calc-input" data-idx="${idx}" data-k="start" value="${r.start}" placeholder="08:00"></td>
-				<td><input type="text" class="calc-input" data-idx="${idx}" data-k="end" value="${r.end}" placeholder="12:00"></td>
-				<td><input type="number" class="calc-input" data-idx="${idx}" data-k="brk" value="${r.brk}"></td>
-				<td><strong data-out-hm="${idx}">00h 00min</strong></td>
-				<td><span data-out-dec="${idx}">0.00 h</span></td>
-				<td>${rows.length > 1 ? `<button type="button" class="calc-btn calc-btn-danger" data-del="${idx}">✕</button>` : ''}</td>`;
-			dailyBody.appendChild(tr);
-		});
-		calcDaily();
-	}
-	function calcDaily() {
-		let totalNet = 0;
-		rows.forEach((r, idx) => {
-			const s = parseTime(r.start), e = parseTime(r.end), b = Number(r.brk) || 0;
-			let net = 0;
-			if (s !== null && e !== null) {
-				let diff = e - s;
-				if (diff < 0) diff += 1440;
-				net = Math.max(0, diff - b);
-			}
-			totalNet += net;
-			dailyBody.querySelector(`[data-out-hm="${idx}"]`).textContent = fmtHM(net);
-			dailyBody.querySelector(`[data-out-dec="${idx}"]`).textContent = (net / 60).toFixed(2) + ' h';
-		});
-		document.getElementById('daily-net').textContent = fmtHM(totalNet);
-		document.getElementById('daily-dec').textContent = (totalNet / 60).toFixed(2) + ' h';
-		document.getElementById('daily-min').textContent = totalNet + ' min';
-	}
-	dailyBody.addEventListener('input', e => {
-		const idx = e.target.dataset.idx, k = e.target.dataset.k;
-		if (idx !== undefined) { rows[idx][k] = e.target.value; calcDaily(); }
-	});
-	dailyBody.addEventListener('click', e => {
-		if (e.target.dataset.del !== undefined) { rows.splice(Number(e.target.dataset.del), 1); renderDaily(); }
-	});
-	document.getElementById('add-interval-btn').addEventListener('click', () => { rows.push({ start: '', end: '', brk: 0 }); renderDaily(); });
-	renderDaily();
-
-	// 2. Weekly Timesheet
-	const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-	const wkBody = document.getElementById('weekly-tbody');
-	days.forEach((d, i) => {
-		const defS = i < 5 ? '08:00' : '', defE = i < 5 ? '17:00' : '', defB = i < 5 ? 60 : 0;
-		const tr = document.createElement('tr');
-		tr.innerHTML = `<td><strong>${d}</strong></td>
-			<td><input type="text" class="calc-input wk-in" data-day="${i}" data-f="s" value="${defS}" placeholder="08:00"></td>
-			<td><input type="text" class="calc-input wk-in" data-day="${i}" data-f="e" value="${defE}" placeholder="17:00"></td>
-			<td><input type="number" class="calc-input wk-in" data-day="${i}" data-f="b" value="${defB}"></td>
-			<td><strong id="wk-hm-${i}">00h 00min</strong></td>
-			<td><span id="wk-dec-${i}">0.00 h</span></td>`;
-		wkBody.appendChild(tr);
-	});
-	function calcWeekly() {
-		let sum = 0;
-		for (let i = 0; i < 7; i++) {
-			const s = parseTime(wkBody.querySelector(`[data-day="${i}"][data-f="s"]`).value);
-			const e = parseTime(wkBody.querySelector(`[data-day="${i}"][data-f="e"]`).value);
-			const b = Number(wkBody.querySelector(`[data-day="${i}"][data-f="b"]`).value) || 0;
-			let net = 0;
-			if (s !== null && e !== null) { let d = e - s; if (d < 0) d += 1440; net = Math.max(0, d - b); }
-			sum += net;
-			document.getElementById(`wk-hm-${i}`).textContent = fmtHM(net);
-			document.getElementById(`wk-dec-${i}`).textContent = (net / 60).toFixed(2) + ' h';
-		}
-		document.getElementById('wk-net').textContent = fmtHM(sum);
-		document.getElementById('wk-dec').textContent = (sum / 60).toFixed(2) + ' h';
-	}
-	wkBody.addEventListener('input', calcWeekly);
-	calcWeekly();
-
-	// 3. Converters
-	function calcConverters() {
-		const m1 = (Number(document.getElementById('c-hh').value) || 0) * 60 + (Number(document.getElementById('c-mm').value) || 0);
-		document.getElementById('c-hh-out').textContent = (m1 / 60).toFixed(2) + ' h (' + m1 + ' min)';
-		const m2 = Math.round((Number(document.getElementById('c-dec').value) || 0) * 60);
-		document.getElementById('c-dec-out').textContent = fmtHM(m2);
-		const m3 = Number(document.getElementById('c-min').value) || 0;
-		document.getElementById('c-min-out').textContent = fmtHM(m3) + ' (' + (m3 / 60).toFixed(2) + ' h)';
-		const a = (Number(document.getElementById('s-ah').value) || 0) * 60 + (Number(document.getElementById('s-am').value) || 0);
-		const b = (Number(document.getElementById('s-bh').value) || 0) * 60 + (Number(document.getElementById('s-bm').value) || 0);
-		const diff = a - b;
-		document.getElementById('s-out').textContent = fmtHM(diff) + ' (' + (diff / 60).toFixed(2) + ' h)';
-	}
-	document.getElementById('tab-converter').addEventListener('input', calcConverters);
-	calcConverters();
-
-	// 4. Hip Roof Calculator
-	function calcRoof() {
-		const H = parseFloat(document.getElementById('rf-h').value) || 0;
-		const R = parseFloat(document.getElementById('rf-r').value) || 0;
-		const L = parseFloat(document.getElementById('rf-l').value) || 0;
-		if (H <= 0 || R <= 0 || L <= 0) return;
-		const pitchDeg = Math.atan(H / R) * (180 / Math.PI);
-		const pitchPct = (H / R) * 100;
-		const commonLen = Math.hypot(H, R);
-		const hipPlan = Math.hypot(R, R);
-		const hipLen = Math.hypot(H, hipPlan);
-		const hipPitch = Math.atan(H / hipPlan) * (180 / Math.PI);
-		const ridge = Math.max(0, L - 2 * R);
-		const planArea = L * (2 * R);
-		const trueArea = planArea / Math.cos(pitchDeg * Math.PI / 180);
-		document.getElementById('roof-results').innerHTML = `
-			<div><strong>Pente versant :</strong> ${pitchDeg.toFixed(2)}° (${pitchPct.toFixed(1)} %)</div>
-			<div><strong>Chevron commun :</strong> ${commonLen.toFixed(3)} m</div>
-			<div><strong>Longueur arêtier :</strong> ${hipLen.toFixed(3)} m (pente ${hipPitch.toFixed(2)}°)</div>
-			<div><strong>Longueur faîtage :</strong> ${ridge.toFixed(3)} m</div>
-			<div><strong>Surface réelle toiture :</strong> ${trueArea.toFixed(2)} m² (sol : ${planArea.toFixed(2)} m²)</div>`;
-	}
-	document.getElementById('tab-roof').addEventListener('input', calcRoof);
-	calcRoof();
-})();
+document.addEventListener('input', function() {
+    try {
+        const start = document.getElementById('sh').value.split(':');
+        const end = document.getElementById('eh').value.split(':');
+        const breakMins = Number(document.getElementById('br').value) || 0;
+        
+        const startMins = (Number(start[0]) || 0) * 60 + (Number(start[1]) || 0);
+        const endMins = (Number(end[0]) || 0) * 60 + (Number(end[1]) || 0);
+        
+        let netMins = endMins - startMins - breakMins;
+        if (netMins < 0) netMins += 24 * 60;
+        
+        const hrs = Math.floor(netMins / 60);
+        const mins = netMins % 60;
+        const durStr = String(hrs).padStart(2,'0') + 'h ' + String(mins).padStart(2,'0') + 'min';
+        const decVal = (netMins / 60).toFixed(2);
+        
+        document.getElementById('res-dur').textContent = durStr;
+        document.getElementById('res-dec').textContent = decVal + ' h';
+        document.getElementById('tot-net').textContent = durStr;
+        document.getElementById('tot-dec').textContent = decVal + ' h';
+    } catch(e) {}
+});
 </script>
+
 </body>
 </html>
