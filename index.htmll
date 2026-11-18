@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChronoCharpente Pro — Calculateur d'Heures & Charpente</title>
+<style>
+:root {
+	--calc-bg: #FFFFFF;
+	--calc-navy: #0F172A;
+	--calc-navy-muted: #475569;
+	--calc-panel-blue: #F0F7FF;
+	--calc-panel-grey: #F8FAFC;
+	--calc-border: #CBD5E1;
+	--calc-green: #16A34A;
+	--calc-green-hover: #15803D;
+	--calc-blue-accent: #2563EB;
+	--calc-radius: 10px;
+	--calc-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+body { margin: 0; background: var(--calc-bg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--calc-navy); }
+.calc-app-wrapper { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; box-sizing: border-box; }
+.calc-hero { background: var(--calc-panel-blue); border: 1px solid var(--calc-border); border-radius: var(--calc-radius); padding: 2.5rem 1.5rem; text-align: center; margin-bottom: 2rem; }
+.calc-hero h1 { margin: 0 0 0.75rem; font-size: 2rem; color: var(--calc-navy); }
+.calc-hero p { max-width: 650px; margin: 0 auto; color: var(--calc-navy-muted); font-size: 1.05rem; }
+.calc-panel { background: var(--calc-panel-grey); border: 1px solid var(--calc-border); border-radius: var(--calc-radius); padding: 1.5rem; margin-bottom: 1.5rem; }
+.calc-summary-box { background: var(--calc-panel-blue); border: 1px solid #BFDBFE; border-radius: var(--calc-radius); padding: 1.25rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
+.calc-stat-label { font-size: 0.85rem; color: var(--calc-navy-muted); display: block; }
+.calc-stat-value { font-size: 1.5rem; font-weight: 700; color: var(--calc-navy); }
+.calc-table-scroll { width: 100%; overflow-x: auto; }
+.calc-table { width: 100%; border-collapse: collapse; background: #FFFFFF; }
+.calc-table th, .calc-table td { border: 1px solid var(--calc-border); padding: 0.75rem; text-align: left; }
+.calc-table th { background: var(--calc-panel-blue); font-weight: 600; }
+.calc-input { padding: 0.5rem; border: 1px solid var(--calc-border); border-radius: 6px; font-size: 1rem; color: var(--calc-navy); background: #FFFFFF; width: 5rem; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="calc-app-wrapper">
+    <div class="calc-hero">
+        <h1>ChronoCharpente Pro</h1>
+        <p>Calculateur gratuit d'heures journalières, de temps de travail et de conversion décimale.</p>
+    </div>
+
+    <div class="calc-panel">
+        <h2>Calculateur d'Heures Journalières</h2>
+        <p style="color:var(--calc-navy-muted);">Entrez vos heures de début, de fin et votre pause pour calculer instantanément votre temps de travail net.</p>
+        
+        <div class="calc-table-scroll">
+            <table class="calc-table">
+                <thead>
+                    <tr>
+                        <th>Début (HH:MM)</th>
+                        <th>Fin (HH:MM)</th>
+                        <th>Pause (min)</th>
+                        <th>Durée Nette</th>
+                        <th>Décimal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" id="sh" class="calc-input" value="08:00"></td>
+                        <td><input type="text" id="eh" class="calc-input" value="17:00"></td>
+                        <td><input type="text" id="br" class="calc-input" value="60"></td>
+                        <td><strong id="res-dur" style="color:var(--calc-green);">08:00</strong></td>
+                        <td><strong id="res-dec" style="color:var(--calc-blue-accent);">8.00 h</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="calc-summary-box">
+            <div><span class="calc-stat-label">Temps de Travail Net</span><span class="calc-stat-value" id="tot-net">8h 00min</span></div>
+            <div><span class="calc-stat-label">Total Heures Décimales</span><span class="calc-stat-value" id="tot-dec">8.00 h</span></div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('input', function() {
+    try {
+        const start = document.getElementById('sh').value.split(':');
+        const end = document.getElementById('eh').value.split(':');
+        const breakMins = Number(document.getElementById('br').value) || 0;
+        
+        const startMins = (Number(start[0]) || 0) * 60 + (Number(start[1]) || 0);
+        const endMins = (Number(end[0]) || 0) * 60 + (Number(end[1]) || 0);
+        
+        let netMins = endMins - startMins - breakMins;
+        if (netMins < 0) netMins += 24 * 60;
+        
+        const hrs = Math.floor(netMins / 60);
+        const mins = netMins % 60;
+        const durStr = String(hrs).padStart(2,'0') + 'h ' + String(mins).padStart(2,'0') + 'min';
+        const decVal = (netMins / 60).toFixed(2);
+        
+        document.getElementById('res-dur').textContent = durStr;
+        document.getElementById('res-dec').textContent = decVal + ' h';
+        document.getElementById('tot-net').textContent = durStr;
+        document.getElementById('tot-dec').textContent = decVal + ' h';
+    } catch(e) {}
+});
+</script>
+
+</body>
+</html>
