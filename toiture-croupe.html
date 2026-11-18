@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur Toiture à Croupe (Charpente) &amp; Schéma Dynamique — ChronoCharpente Pro</title>
+<meta name="description" content="Calculateur géométrique gratuit pour toiture à croupe : pente en degrés et pourcentage, longueur des chevrons, arêtiers, faîtage et surface réelle de couverture avec schéma SVG.">
+<link rel="canonical" href="https://alyasmalikit.github.io/calculette-tools/toiture-croupe.html">
+<style>
+:root { --navy:#0F172A; --muted:#475569; --blue-bg:#F0F7FF; --grey-bg:#F8FAFC; --border:#CBD5E1; --green:#16A34A; --accent:#2563EB; --r:10px; }
+* { box-sizing:border-box; }
+body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--navy); background:#fff; line-height:1.6; }
+.nav { background:var(--navy); color:#fff; padding:0.85rem 1rem; }
+.nav-inner { max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.75rem; }
+.brand { font-weight:800; font-size:1.15rem; color:#fff; text-decoration:none; }
+.nav-links { display:flex; flex-wrap:wrap; gap:0.5rem; }
+.nav-links a { color:#CBD5E1; text-decoration:none; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.9rem; font-weight:600; }
+.nav-links a:hover, .nav-links a.active { background:#1E293B; color:#fff; }
+.wrap { max-width:1100px; margin:0 auto; padding:1.5rem 1rem; }
+.layout { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.5rem; margin-top:1rem; }
+.card { background:var(--grey-bg); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; }
+.field { margin-bottom:1rem; }
+.field label { display:block; font-weight:600; margin-bottom:0.25rem; }
+.field input { width:100%; padding:0.55rem; border:1px solid var(--border); border-radius:6px; font-size:1rem; }
+.res-row { display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid var(--border); }
+.res-row strong { color:var(--accent); }
+.svg-box { background:#fff; border:1px solid var(--border); border-radius:var(--r); padding:1rem; text-align:center; margin-top:1.5rem; }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">ChronoCharpente Pro</a>
+    <div class="nav-links">
+      <a href="index.html">Heures Journalières</a>
+      <a href="feuille-hebdo.html">Feuille Hebdo (35h/39h)</a>
+      <a href="convertisseur.html">Convertisseurs</a>
+      <a href="toiture-croupe.html" class="active">Toiture à Croupe</a>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <h1>Calculateur Géométrique de Toiture à Croupe (Charpente)</h1>
+  <p style="color:var(--muted);">Saisissez vos cotes hors-tout pour obtenir instantanément la pente, la longueur des chevrons communs, des arêtiers, du faîtage et la surface réelle à couvrir.</p>
+
+  <div class="layout" id="roof-app">
+    <div class="card">
+      <h2 style="margin-top:0;">1. Cotes de la Charpente</h2>
+      <div class="field"><label>Hauteur du faîtage H (mètres) :</label><input type="number" step="0.01" id="rf-h" value="2.50"></div>
+      <div class="field"><label>Reculement R / Demi-largeur (mètres) :</label><input type="number" step="0.01" id="rf-r" value="4.00"></div>
+      <div class="field"><label>Longueur sablière L (mètres) :</label><input type="number" step="0.01" id="rf-l" value="12.00"></div>
+      <div class="field"><label>Entraxe des chevrons (cm) :</label><input type="number" step="1" id="rf-sp" value="60"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0;">2. Résultats &amp; Débit Bois</h2>
+      <div id="rf-out"></div>
+    </div>
+  </div>
+
+  <div class="svg-box">
+    <h3 style="margin-top:0;">Vue en Plan Dynamique de la Toiture à Croupe</h3>
+    <svg id="roof-svg" viewBox="0 0 600 260" style="max-width:100%;height:auto;"></svg>
+  </div>
+</main>
+
+<script>
+(function(){
+  function calc(){
+    const H=parseFloat(document.getElementById('rf-h').value)||0;
+    const R=parseFloat(document.getElementById('rf-r').value)||0;
+    const L=parseFloat(document.getElementById('rf-l').value)||0;
+    const sp=(parseFloat(document.getElementById('rf-sp').value)||60)/100;
+    if(H<=0||R<=0||L<=0) return;
+
+    const pitchDeg=Math.atan(H/R)*(180/Math.PI);
+    const pitchPct=(H/R)*100;
+    const common=Math.hypot(H,R);
+    const hipPlan=Math.hypot(R,R);
+    const hipLen=Math.hypot(H,hipPlan);
+    const hipDeg=Math.atan(H/hipPlan)*(180/Math.PI);
+    const ridge=Math.max(0,L-2*R);
+    const planArea=L*(2*R);
+    const trueArea=planArea/Math.cos(pitchDeg*Math.PI/180);
+    const commonPairs=ridge>0?Math.floor(ridge/sp)+1:0;
+
+    document.getElementById('rf-out').innerHTML=`
+      <div class="res-row"><span>Pente des versants :</span><strong>${pitchDeg.toFixed(2)}° (${pitchPct.toFixed(1)} %)</strong></div>
+      <div class="res-row"><span>Longueur chevron commun :</span><strong>${common.toFixed(3)} m</strong></div>
+      <div class="res-row"><span>Longueur arêtier (4 pièces) :</span><strong>${hipLen.toFixed(3)} m (pente ${hipDeg.toFixed(2)}°)</strong></div>
+      <div class="res-row"><span>Longueur du faîtage :</span><strong>${ridge.toFixed(3)} m</strong></div>
+      <div class="res-row"><span>Surface projetée au sol :</span><strong>${planArea.toFixed(2)} m²</strong></div>
+      <div class="res-row"><span>Surface réelle de couverture :</span><strong style="color:var(--green);">${trueArea.toFixed(2)} m²</strong></div>
+      <div class="res-row"><span>Paires de chevrons droits (hors croupe) :</span><strong>${commonPairs} paires</strong></div>`;
+
+    // Draw scaled plan SVG
+    const W=2*R;
+    const scale=Math.min(480/Math.max(L,W), 180/W);
+    const sw=L*scale, sh=W*scale;
+    const x0=(600-sw)/2, y0=(260-sh)/2;
+    const inset=Math.min(sw/2, R*scale);
+    document.getElementById('roof-svg').innerHTML=`
+      <rect x="${x0}" y="${y0}" width="${sw}" height="${sh}" fill="#F0F7FF" stroke="#0F172A" stroke-width="2.5"/>
+      <line x1="${x0}" y1="${y0}" x2="${x0+inset}" y2="${y0+sh/2}" stroke="#2563EB" stroke-width="2"/>
+      <line x1="${x0}" y1="${y0+sh}" x2="${x0+inset}" y2="${y0+sh/2}" stroke="#2563EB" stroke-width="2"/>
+      <line x1="${x0+sw}" y1="${y0}" x2="${x0+sw-inset}" y2="${y0+sh/2}" stroke="#2563EB" stroke-width="2"/>
+      <line x1="${x0+sw}" y1="${y0+sh}" x2="${x0+sw-inset}" y2="${y0+sh/2}" stroke="#2563EB" stroke-width="2"/>
+      <line x1="${x0+inset}" y1="${y0+sh/2}" x2="${x0+sw-inset}" y2="${y0+sh/2}" stroke="#DC2626" stroke-width="3"/>
+      <text x="300" y="${y0-8}" text-anchor="middle" font-size="13" fill="#0F172A" font-weight="bold">Sablière L = ${L.toFixed(2)} m</text>
+      <text x="300" y="${y0+sh/2-8}" text-anchor="middle" font-size="12" fill="#DC2626" font-weight="bold">Faîtage = ${ridge.toFixed(2)} m</text>`;
+  }
+  document.getElementById('roof-app').addEventListener('input',calc);
+  calc();
+})();
+</script>
+</body>
+</html>
