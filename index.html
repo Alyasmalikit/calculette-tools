@@ -1,248 +1,339 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="4xv0yELo8t3bO9FnrB3KT5-WCWVDhb8jHVW0n7cpASs" />
-<title>ChronoCharpente Pro — Calculateur d'Heures, Feuille Hebdo &amp; Toiture à Croupe</title>
-<meta name="description" content="Suite complète de calculateurs gratuits : calculateur d'heures journalières avec taux horaire, feuille d'heures hebdomadaire 35h/39h imprimable, convertisseur décimal et calculateur de charpente toiture à croupe.">
+<title>Calculette-tools | Simple Time &amp; Working Hours Calculators</title>
+<meta name="description" content="Clean and fast online calculators for working time, working hours, duration addition/subtraction, and daily work hours.">
 <link rel="canonical" href="https://alyasmalikit.github.io/calculette-tools/">
 <style>
-:root { --bg:#FFFFFF; --navy:#0F172A; --muted:#475569; --blue-bg:#F0F7FF; --grey-bg:#F8FAFC; --border:#CBD5E1; --green:#16A34A; --green-h:#15803D; --accent:#2563EB; --danger:#DC2626; --r:10px; }
-* { box-sizing:border-box; }
-body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--navy); background:var(--bg); line-height:1.6; }
-.nav { background:var(--navy); color:#fff; padding:0.85rem 1rem; position:sticky; top:0; z-index:50; }
-.nav-inner { max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.75rem; }
-.brand { font-weight:800; font-size:1.15rem; color:#fff; text-decoration:none; }
-.nav-links { display:flex; flex-wrap:wrap; gap:0.5rem; }
-.nav-links a { color:#CBD5E1; text-decoration:none; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.9rem; font-weight:600; }
-.nav-links a:hover, .nav-links a.active { background:#1E293B; color:#fff; }
-.wrap { max-width:1100px; margin:0 auto; padding:1.5rem 1rem; }
-.hero { background:var(--blue-bg); border:1px solid var(--border); border-radius:var(--r); padding:2rem 1.5rem; text-align:center; margin-bottom:1.5rem; }
-.hero h1 { margin:0 0 0.5rem; font-size:clamp(1.6rem,3vw,2.25rem); }
-.hero p { max-width:720px; margin:0 auto; color:var(--muted); }
-.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-bottom:2rem; }
-.card { background:#fff; border:1px solid var(--border); border-radius:var(--r); padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 2px 6px rgba(15,23,42,0.04); }
-.card h3 { margin:0 0 0.4rem; font-size:1.1rem; }
-.card p { margin:0 0 1rem; color:var(--muted); font-size:0.92rem; }
-.btn { display:inline-block; padding:0.55rem 1rem; border-radius:8px; font-weight:600; text-decoration:none; text-align:center; cursor:pointer; border:none; font-size:0.92rem; }
-.btn-green { background:var(--green); color:#fff; }
-.btn-green:hover { background:var(--green-h); }
-.btn-outline { background:#fff; color:var(--navy); border:1px solid var(--border); }
-.btn-danger { background:#FEF2F2; color:var(--danger); border:1px solid #FECACA; padding:0.35rem 0.65rem; }
-.panel { background:var(--grey-bg); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; margin-bottom:1.5rem; }
-.table-wrap { overflow-x:auto; }
-table { width:100%; border-collapse:collapse; background:#fff; }
-th, td { border:1px solid var(--border); padding:0.65rem; text-align:left; }
-th { background:var(--blue-bg); font-weight:600; }
-input[type="text"], input[type="number"] { padding:0.45rem; border:1px solid var(--border); border-radius:6px; font-size:0.95rem; width:5.2rem; text-align:center; }
-.stats { background:var(--blue-bg); border:1px solid #BFDBFE; border-radius:var(--r); padding:1.25rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-top:1.25rem; }
-.stat-lbl { font-size:0.85rem; color:var(--muted); display:block; }
-.stat-val { font-size:1.45rem; font-weight:800; color:var(--navy); }
-.ad-slot { border:1px dashed #94A3B8; background:#F8FAFC; color:#64748B; text-align:center; padding:0.85rem; border-radius:8px; font-size:0.85rem; margin:1.25rem 0; }
-.seo-box { background:#fff; border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; margin-top:1.5rem; }
-details { border-bottom:1px solid var(--border); padding:0.75rem 0; }
-summary { font-weight:600; cursor:pointer; }
-footer { text-align:center; color:var(--muted); font-size:0.88rem; margin-top:2rem; padding:1.5rem 0; border-top:1px solid var(--border); }
-footer .footer-links { margin-top:10px; font-size:14px; }
-footer .footer-links a { margin:0 8px; color:var(--muted); text-decoration:none; }
-footer .footer-links a:hover { color:var(--navy); text-decoration:underline; }
+  :root {
+    --bg: #ffffff;
+    --surface: #f8fafc;
+    --ink: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Simple Header */
+  header {
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 0;
+  }
+  .brand {
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .menu a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .menu a:hover { color: var(--primary); }
+
+  /* Clean Hero */
+  .hero {
+    padding: 40px 0 28px;
+    text-align: center;
+  }
+  .hero h1 {
+    margin: 0 0 10px;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    letter-spacing: -0.02em;
+  }
+  .hero p {
+    margin: 0 auto;
+    max-width: 580px;
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  /* 4 Clean Cards */
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin: 24px 0 36px;
+  }
+  .card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .card h2 {
+    margin: 0 0 6px;
+    font-size: 1.05rem;
+  }
+  .card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    background: var(--primary);
+    color: #fff;
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-hover); }
+
+  /* Quick Daily Calculator */
+  .quick-box {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    background: #fff;
+    margin-bottom: 36px;
+  }
+  .quick-box h2 {
+    margin: 0 0 6px;
+    font-size: 1.2rem;
+  }
+  .quick-sub {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .inputs-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  .result-bar {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border-left: 4px solid var(--primary);
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  /* Simple Guide Section */
+  .guide {
+    border-top: 1px solid var(--border);
+    padding-top: 28px;
+    margin-bottom: 36px;
+  }
+  .guide h2 {
+    margin: 0 0 10px;
+    font-size: 1.15rem;
+  }
+  .guide p {
+    margin: 0 0 12px;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  /* Clean Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 0 36px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .footer-links {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .footer-links a:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
 </style>
 </head>
 <body>
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="brand">ChronoCharpente Pro</a>
-    <div class="nav-links">
-      <a href="index.html" class="active">Heures Journalières</a>
-      <a href="feuille-hebdo.html">Feuille Hebdo (35h/39h)</a>
-      <a href="convertisseur.html">Convertisseurs</a>
-      <a href="working-time-calculator.html">Working Time</a>
-      <a href="working-hour-calculator.html">Working Hour</a>
-      <a href="time-calculator.html">Time Calculator</a>
-      <a href="toiture-croupe.html">Toiture à Croupe</a>
-    </div>
-  </div>
-</nav>
 
-<main class="wrap">
+<header>
+  <div class="container nav">
+    <a href="index.html" class="brand">Calculette-tools</a>
+    <nav class="menu">
+      <a href="working-time-calculator.html">Working Time</a>
+      <a href="working-hour-calculator.html">Working Hours</a>
+      <a href="time-calculator.html">Time Calculator</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
   <section class="hero">
-    <h1>Calculateur d'Heures Journalières &amp; Outils Pros</h1>
-    <p>Calculez vos heures travaillées, déduisez vos pauses, estimez votre rémunération brute/nette et accédez à nos outils dédiés pour la paie et la charpente.</p>
+    <h1>Simple Time &amp; Working Hours Calculators</h1>
+    <p>Fast, clutter-free tools to calculate shift duration, weekly working hours, and time additions without extra complexity.</p>
   </section>
 
-  <div class="cards">
+  <section class="grid-4">
     <div class="card">
-      <div><h3>1. Heures Journalières</h3><p>Calcul multi-créneaux avec déduction des pauses, passage de minuit et estimation de salaire.</p></div>
-      <a href="#calc-daily" class="btn btn-green">Utiliser ci-dessous</a>
+      <div>
+        <h2>Working Time</h2>
+        <p>Start, end, and break time to get net hours.</p>
+      </div>
+      <a href="working-time-calculator.html" class="btn">Open Tool</a>
     </div>
-    <div class="card">
-      <div><h3>2. Feuille Hebdo (Lun–Dim)</h3><p>Relevé hebdomadaire complet avec calcul automatique des heures supplémentaires (35h / 39h) et export PDF.</p></div>
-      <a href="feuille-hebdo.html" class="btn btn-outline">Ouvrir la feuille →</a>
-    </div>
-    <div class="card">
-      <div><h3>3. Convertisseur Décimal</h3><p>Convertissez HH:MM en centièmes d'heure, soustrayez deux durées et consultez le tableau de paie.</p></div>
-      <a href="convertisseur.html" class="btn btn-outline">Ouvrir le convertisseur →</a>
-    </div>
-    <div class="card">
-      <div><h3>4. Working Time Calculator</h3><p>Calculez le temps de travail net entre l'heure de début et de fin, avec pause et horaires de nuit.</p></div>
-      <a href="working-time-calculator.html" class="btn btn-outline">Ouvrir l'outil →</a>
-    </div>
-    <div class="card">
-      <div><h3>5. Working Hour Calculator</h3><p>Estimez le total d'heures travaillées, les heures supplémentaires et la rémunération horaire.</p></div>
-      <a href="working-hour-calculator.html" class="btn btn-outline">Ouvrir l'outil →</a>
-    </div>
-    <div class="card">
-      <div><h3>6. Time Calculator</h3><p>Additionnez ou soustrayez des durées en heures, minutes et secondes facilement.</p></div>
-      <a href="time-calculator.html" class="btn btn-outline">Ouvrir l'outil →</a>
-    </div>
-    <div class="card">
-      <div><h3>7. Toiture à Croupe</h3><p>Calculateur de charpente avec schéma dynamique : pente, chevrons, arêtiers, faîtage et surface réelle.</p></div>
-      <a href="toiture-croupe.html" class="btn btn-outline">Ouvrir l'outil charpente →</a>
-    </div>
-  </div>
 
-  <div class="ad-slot">Emplacement Publicitaire / Partenaire (Google AdSense 728x90)</div>
+    <div class="card">
+      <div>
+        <h2>Working Hours</h2>
+        <p>Total hours, overtime, and estimated hourly pay.</p>
+      </div>
+      <a href="working-hour-calculator.html" class="btn">Open Tool</a>
+    </div>
 
-  <section id="calc-daily" class="panel">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
-      <h2 style="margin:0;">Calculateur d'Heures Journalières &amp; Salaire</h2>
-      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-        <button type="button" id="add-row" class="btn btn-green">+ Ajouter un créneau</button>
-        <button type="button" id="export-csv" class="btn btn-outline">Exporter CSV</button>
-        <button type="button" id="reset-daily" class="btn btn-outline">Réinitialiser</button>
+    <div class="card">
+      <div>
+        <h2>Time Calculator</h2>
+        <p>Add or subtract hours, minutes, and seconds.</p>
+      </div>
+      <a href="time-calculator.html" class="btn">Open Tool</a>
+    </div>
+
+    <div class="card">
+      <div>
+        <h2>Daily Shift Check</h2>
+        <p>Quick single-shift calculation right below.</p>
+      </div>
+      <a href="#quick-calc" class="btn">Jump Below</a>
+    </div>
+  </section>
+
+  <section id="quick-calc" class="quick-box">
+    <h2>Quick Daily Shift Calculator</h2>
+    <p class="quick-sub">Enter start time, end time, and break in minutes for an instant result.</p>
+
+    <div class="inputs-row">
+      <div>
+        <label for="qStart">Start Time</label>
+        <input id="qStart" type="time" value="09:00">
+      </div>
+      <div>
+        <label for="qEnd">End Time</label>
+        <input id="qEnd" type="time" value="17:30">
+      </div>
+      <div>
+        <label for="qBreak">Break (mins)</label>
+        <input id="qBreak" type="number" min="0" value="30">
       </div>
     </div>
 
-    <div style="margin-bottom:1rem;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;background:#fff;padding:0.75rem 1rem;border-radius:8px;border:1px solid var(--border);">
-      <label><strong>Taux horaire (€/h) :</strong> <input type="number" step="0.01" id="hourly-rate" value="15.00"></label>
-      <span style="font-size:0.88rem;color:var(--muted);">* Sauvegarde automatique activée dans votre navigateur.</span>
-    </div>
+    <button type="button" class="btn" onclick="runQuickCalc()">Calculate</button>
 
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Créneau</th><th>Début (HH:MM)</th><th>Fin (HH:MM)</th><th>Pause (min)</th><th>Durée Nette</th><th>Heures Décimales</th><th>Gain Estimé</th><th>Action</th></tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-
-    <div class="stats">
-      <div><span class="stat-lbl">Temps Net Total</span><span class="stat-val" id="tot-hm" style="color:var(--green);">00h 00min</span></div>
-      <div><span class="stat-lbl">Total Décimal (Paie)</span><span class="stat-val" id="tot-dec">0.00 h</span></div>
-      <div><span class="stat-lbl">Total Minutes</span><span class="stat-val" id="tot-min">0 min</span></div>
-      <div><span class="stat-lbl">Rémunération Estimée</span><span class="stat-val" id="tot-pay" style="color:var(--accent);">0.00 €</span></div>
-    </div>
+    <div id="qResult" class="result-bar">Net Time: 8h 0m (8.00 decimal hours)</div>
   </section>
 
-  <section class="seo-box">
-    <h2>Comment calculer ses heures de travail en centièmes d'heure ?</h2>
-    <p>Les logiciels de paie et de facturation utilisent le système décimal (base 100) plutôt que le format horaire classique (base 60). Notre calculateur convertit automatiquement chaque créneau saisi en format <strong>HH:MM</strong> et en <strong>heures décimales</strong>.</p>
-    <details open><summary>Comment fonctionne le calcul avec horaires de nuit ?</summary><p>Si vous saisissez une heure de début à <strong>21:30</strong> et une heure de fin à <strong>05:00</strong>, l'outil détecte automatiquement le franchissement de minuit et calcule 7h30 (soit 7,50 h) sans erreur.</p></details>
-    <details><summary>Mes données sont-elles enregistrées ?</summary><p>Vos horaires sont mémorisés uniquement sur votre propre appareil (via le stockage local du navigateur) pour que vous ne perdiez pas votre saisie en fermant l'onglet. Aucune donnée n'est envoyée sur un serveur.</p></details>
+  <section class="guide">
+    <h2>How Our Time Tools Help</h2>
+    <p>Each calculator focuses on one clear task so you get answers quickly on mobile or desktop. For multi-day totals or adding durations, use the dedicated tools in the menu above.</p>
   </section>
-
-  <footer>
-    <div>ChronoCharpente Pro — Outils gratuits de gestion du temps et de charpente.</div>
-    <div class="footer-links">
-      <a href="working-time-calculator.html">Working Time Calculator</a> |
-      <a href="working-hour-calculator.html">Working Hour Calculator</a> |
-      <a href="time-calculator.html">Time Calculator</a> |
-      <a href="about.html">About Us</a> |
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="terms.html">Terms &amp; Disclaimer</a> |
-      <a href="contact.html">Contact Us</a>
-    </div>
-  </footer>
 </main>
 
+<footer>
+  <div class="container">
+    <div>Calculette-tools — Simple online calculators</div>
+    <div class="footer-links">
+      <a href="working-time-calculator.html">Working Time</a>
+      <a href="working-hour-calculator.html">Working Hours</a>
+      <a href="time-calculator.html">Time Calculator</a>
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Disclaimer</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
 <script>
-(function(){
-  const STORAGE_KEY = 'ccp_daily_v1';
-  let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null') || {
-    rate: 15.00,
-    rows: [{s:'08:00',e:'12:00',b:0},{s:'13:00',e:'17:00',b:0}]
-  };
-  const tbody = document.getElementById('tbody');
-  const rateIn = document.getElementById('hourly-rate');
-  rateIn.value = state.rate;
+  function runQuickCalc() {
+    const sVal = document.getElementById("qStart").value;
+    const eVal = document.getElementById("qEnd").value;
+    const brk = Math.max(0, parseInt(document.getElementById("qBreak").value || "0", 10));
+    const out = document.getElementById("qResult");
 
-  function parseHM(v){
-    const p = String(v||'').split(':');
-    if(p.length!==2 || p[0]==='' || p[1]==='') return null;
-    const h=Number(p[0]), m=Number(p[1]);
-    if(isNaN(h)||isNaN(m)||h<0||h>23||m<0||m>59) return null;
-    return h*60+m;
-  }
-  function fmtHM(m){
-    const a=Math.max(0,Math.round(m));
-    return String(Math.floor(a/60)).padStart(2,'0')+'h '+String(a%60).padStart(2,'0')+'min';
-  }
-  function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+    if (!sVal || !eVal) {
+      out.textContent = "Please enter both start and end times.";
+      return;
+    }
 
-  function render(){
-    tbody.innerHTML='';
-    state.rows.forEach((r,i)=>{
-      const tr=document.createElement('tr');
-      tr.innerHTML=`<td><strong>#${i+1}</strong></td>
-        <td><input type="text" data-i="${i}" data-k="s" value="${r.s}" placeholder="08:00"></td>
-        <td><input type="text" data-i="${i}" data-k="e" value="${r.e}" placeholder="12:00"></td>
-        <td><input type="number" data-i="${i}" data-k="b" value="${r.b}"></td>
-        <td><strong id="r-hm-${i}">00h 00min</strong></td>
-        <td><span id="r-dec-${i}">0.00 h</span></td>
-        <td><span id="r-pay-${i}">0.00 €</span></td>
-        <td>${state.rows.length>1?`<button type="button" class="btn btn-danger" data-del="${i}">✕</button>`:''}</td>`;
-      tbody.appendChild(tr);
-    });
-    calc();
-  }
+    const [sh, sm] = sVal.split(":").map(Number);
+    const [eh, em] = eVal.split(":").map(Number);
 
-  function calc(){
-    state.rate = parseFloat(rateIn.value) || 0;
-    let totalMin = 0;
-    state.rows.forEach((r,i)=>{
-      const s=parseHM(r.s), e=parseHM(r.e), b=Number(r.b)||0;
-      let net=0;
-      if(s!==null && e!==null){ let d=e-s; if(d<0) d+=1440; net=Math.max(0,d-b); }
-      totalMin += net;
-      const dec = net/60;
-      document.getElementById(`r-hm-${i}`).textContent = fmtHM(net);
-      document.getElementById(`r-dec-${i}`).textContent = dec.toFixed(2)+' h';
-      document.getElementById(`r-pay-${i}`).textContent = (dec*state.rate).toFixed(2)+' €';
-    });
-    const totDec = totalMin/60;
-    document.getElementById('tot-hm').textContent = fmtHM(totalMin);
-    document.getElementById('tot-dec').textContent = totDec.toFixed(2)+' h';
-    document.getElementById('tot-min').textContent = totalMin+' min';
-    document.getElementById('tot-pay').textContent = (totDec*state.rate).toFixed(2)+' €';
-    save();
-  }
+    let startMin = sh * 60 + sm;
+    let endMin = eh * 60 + em;
+    if (endMin < startMin) endMin += 1440;
 
-  tbody.addEventListener('input', e=>{
-    const i=e.target.dataset.i, k=e.target.dataset.k;
-    if(i!==undefined){ state.rows[i][k]=e.target.value; calc(); }
-  });
-  tbody.addEventListener('click', e=>{
-    if(e.target.dataset.del!==undefined){ state.rows.splice(Number(e.target.dataset.del),1); render(); }
-  });
-  rateIn.addEventListener('input', calc);
-  document.getElementById('add-row').addEventListener('click', ()=>{ state.rows.push({s:'',e:'',b:0}); render(); });
-  document.getElementById('reset-daily').addEventListener('click', ()=>{
-    state={rate:15,rows:[{s:'08:00',e:'12:00',b:0},{s:'13:00',e:'17:00',b:0}]};
-    rateIn.value=15; render();
-  });
-  document.getElementById('export-csv').addEventListener('click', ()=>{
-    let csv='Creneau;Debut;Fin;Pause_min;Duree_Decimale;Gain_EUR\n';
-    state.rows.forEach((r,i)=>{
-      const s=parseHM(r.s), e=parseHM(r.e), b=Number(r.b)||0;
-      let net=0; if(s!==null&&e!==null){let d=e-s;if(d<0)d+=1440;net=Math.max(0,d-b);}
-      csv+=`${i+1};${r.s};${r.e};${b};${(net/60).toFixed(2)};${((net/60)*state.rate).toFixed(2)}\n`;
-    });
-    const a=document.createElement('a');
-    a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
-    a.download='heures-journalieres.csv'; a.click();
-  });
-  render();
-})();
+    const net = Math.max(0, endMin - startMin - brk);
+    const h = Math.floor(net / 60);
+    const m = net % 60;
+    const dec = (net / 60).toFixed(2);
+
+    out.textContent = `Net Time: ${h}h ${m}m (${dec} decimal hours)`;
+  }
 </script>
+
 </body>
 </html>
