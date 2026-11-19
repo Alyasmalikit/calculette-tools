@@ -117,6 +117,30 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
+  /* Diagram Card */
+  .diagram-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .diagram-card svg {
+    width: 100%;
+    max-width: 620px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .diagram-caption {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
   /* Grid & Cards */
   .main-grid {
     display: grid;
@@ -164,10 +188,6 @@
     gap: 10px;
     align-items: end;
     margin-bottom: 12px;
-  }
-  .op-row {
-    margin-bottom: 12px;
-    max-width: 180px;
   }
   .toolbar {
     display: flex;
@@ -271,6 +291,21 @@
     <p data-t="pageSub">Additionnez ou soustrayez deux durées, ou cumulez plusieurs durées avec conversion en centièmes d'heure.</p>
   </div>
 
+  <!-- Base-60 Carry SVG Diagram -->
+  <div class="diagram-card">
+    <svg viewBox="0 0 640 105" role="img" aria-label="Schéma report base 60 minutes vers heures">
+      <rect x="0" y="0" width="640" height="105" rx="10" fill="#f8fafc"/>
+      <rect x="45" y="32" width="230" height="32" rx="6" fill="#2563eb"/>
+      <path d="M295 48 L335 48" stroke="#0f172a" stroke-width="2.5" fill="none"/>
+      <polygon points="335,43 345,48 335,53" fill="#0f172a"/>
+      <rect x="360" y="32" width="235" height="32" rx="6" fill="#16a34a"/>
+      <text x="160" y="52" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">60 Minutes (Base 60)</text>
+      <text x="477" y="52" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">1 Heure (1.00 h)</text>
+      <text x="320" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Report automatique des minutes &amp; calcul décimal</text>
+    </svg>
+    <div class="diagram-caption" data-t="diagCap">Addition et soustraction exactes en base 60 avec équivalent en centièmes d'heure.</div>
+  </div>
+
   <div class="main-grid">
     <!-- Card 1: Add / Subtract A and B -->
     <div class="card">
@@ -279,11 +314,11 @@
       <div class="dur-row">
         <div>
           <label for="aH" data-t="lblH">Heures (A)</label>
-          <input type="number" id="aH" min="0" value="4" oninput="calcPair()">
+          <input type="number" id="aH" min="0" step="any" value="4" oninput="calcPair()">
         </div>
         <div>
           <label for="aM" data-t="lblM">Minutes (A)</label>
-          <input type="number" id="aM" min="0" value="35" oninput="calcPair()">
+          <input type="number" id="aM" min="0" step="any" value="35" oninput="calcPair()">
         </div>
         <div>
           <label for="opSel" data-t="lblOp">Opération</label>
@@ -297,11 +332,11 @@
       <div class="dur-row">
         <div>
           <label for="bH" data-t="lblBH">Heures (B)</label>
-          <input type="number" id="bH" min="0" value="1" oninput="calcPair()">
+          <input type="number" id="bH" min="0" step="any" value="1" oninput="calcPair()">
         </div>
         <div>
           <label for="bM" data-t="lblBM">Minutes (B)</label>
-          <input type="number" id="bM" min="0" value="50" oninput="calcPair()">
+          <input type="number" id="bM" min="0" step="any" value="50" oninput="calcPair()">
         </div>
         <div>
           <button type="button" class="btn-sec" style="width:100%;" onclick="resetPair()" data-t="btnReset">Reset</button>
@@ -326,8 +361,8 @@
       </div>
 
       <div class="res-box">
-        <span class="res-main" id="multiMain">05h 05min</span>
-        <span class="res-sub" id="multiSub">305 min | 5.08 h</span>
+        <span class="res-main" id="multiMain">05h 10min</span>
+        <span class="res-sub" id="multiSub">310 min | 5.17 h</span>
       </div>
     </div>
   </div>
@@ -345,18 +380,28 @@
       <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
       <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="disclaimer.html" data-t="navDisclaimer">Mentions &amp; Clause</a>
+    </div>
   </div>
 </footer>
 
 <script>
+  const LANG_KEY = "calculette_lang_v1";
   let lang = "fr";
+
   const dict = {
     fr: {
       btn: "EN",
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
       pageTitle: "Calculateur de Temps & Durées",
       pageSub: "Additionnez ou soustrayez deux durées, ou cumulez plusieurs durées avec conversion en centièmes d'heure.",
+      diagCap: "Addition et soustraction exactes en base 60 avec équivalent en centièmes d'heure.",
       secPair: "Addition / Soustraction de Deux Durées",
       secMulti: "Cumul de Plusieurs Durées",
       lblH: "Heures (A)", lblM: "Minutes (A)",
@@ -371,8 +416,10 @@
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       pageTitle: "Time & Duration Calculator",
       pageSub: "Add or subtract two durations, or sum multiple durations with decimal hours conversion.",
+      diagCap: "Exact base-60 addition and subtraction with decimal hour equivalents.",
       secPair: "Add / Subtract Two Durations",
       secMulti: "Sum Multiple Durations",
       lblH: "Hours (A)", lblM: "Minutes (A)",
@@ -401,10 +448,10 @@
   }
 
   function calcPair() {
-    const aH = Number(document.getElementById("aH").value) || 0;
-    const aM = Number(document.getElementById("aM").value) || 0;
-    const bH = Number(document.getElementById("bH").value) || 0;
-    const bM = Number(document.getElementById("bM").value) || 0;
+    const aH = parseFloat(document.getElementById("aH").value) || 0;
+    const aM = parseFloat(document.getElementById("aM").value) || 0;
+    const bH = parseFloat(document.getElementById("bH").value) || 0;
+    const bM = parseFloat(document.getElementById("bM").value) || 0;
     const op = document.getElementById("opSel").value;
 
     const totalA = aH * 60 + aM;
@@ -412,14 +459,14 @@
     const res = op === "add" ? (totalA + totalB) : (totalA - totalB);
 
     document.getElementById("pairMain").textContent = fmtHM(res);
-    document.getElementById("pairSub").textContent = `${res} min | ${(res / 60).toFixed(2)} h`;
+    document.getElementById("pairSub").textContent = `${Math.round(res)} min | ${(res / 60).toFixed(2)} h`;
   }
 
   function resetPair() {
-    document.getElementById("aH").value = 4;
-    document.getElementById("aM").value = 35;
-    document.getElementById("bH").value = 1;
-    document.getElementById("bM").value = 50;
+    document.getElementById("aH").value = "4";
+    document.getElementById("aM").value = "35";
+    document.getElementById("bH").value = "1";
+    document.getElementById("bM").value = "50";
     document.getElementById("opSel").value = "add";
     calcPair();
   }
@@ -435,11 +482,11 @@
       div.innerHTML = `
         <div>
           <label>${d.hShort} #${idx + 1}</label>
-          <input type="number" min="0" value="${r.h}" oninput="multiRows[${idx}].h = Number(this.value) || 0; calcMulti();">
+          <input type="number" min="0" step="any" value="${r.h}" oninput="multiRows[${idx}].h = parseFloat(this.value) || 0; calcMulti();">
         </div>
         <div>
           <label>${d.mShort} #${idx + 1}</label>
-          <input type="number" min="0" value="${r.m}" oninput="multiRows[${idx}].m = Number(this.value) || 0; calcMulti();">
+          <input type="number" min="0" step="any" value="${r.m}" oninput="multiRows[${idx}].m = parseFloat(this.value) || 0; calcMulti();">
         </div>
       `;
       wrap.appendChild(div);
@@ -465,13 +512,12 @@
   }
 
   function calcMulti() {
-    const sum = multiRows.reduce((acc, r) => acc + ((Number(r.h) || 0) * 60) + (Number(r.m) || 0), 0);
+    const sum = multiRows.reduce((acc, r) => acc + ((parseFloat(r.h) || 0) * 60) + (parseFloat(r.m) || 0), 0);
     document.getElementById("multiMain").textContent = fmtHM(sum);
-    document.getElementById("multiSub").textContent = `${sum} min | ${(sum / 60).toFixed(2)} h`;
+    document.getElementById("multiSub").textContent = `${Math.round(sum)} min | ${(sum / 60).toFixed(2)} h`;
   }
 
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
+  function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
     document.getElementById("langBtn").textContent = d.btn;
@@ -479,11 +525,21 @@
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
+    calcPair();
     renderMulti();
   }
 
-  calcPair();
-  renderMulti();
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  applyLang();
 </script>
 
 </body>
