@@ -322,22 +322,22 @@
 
       <div class="field">
         <label for="inRate" data-t="lblRate">Taux horaire (€ / heure)</label>
-        <input type="number" id="inRate" step="0.01" min="0" value="14.50" oninput="calcPay()">
+        <input type="number" id="inRate" step="0.01" min="0" value="0" oninput="calcPay()">
       </div>
 
       <div class="field">
         <label for="inRegHours" data-t="lblRegHours">Heures normales (en décimal 1/100e)</label>
-        <input type="number" id="inRegHours" step="0.01" min="0" value="35.00" oninput="calcPay()">
+        <input type="number" id="inRegHours" step="0.01" min="0" value="0" oninput="calcPay()">
       </div>
 
       <div class="field">
         <label for="inOtHours" data-t="lblOtHours">Heures supplémentaires (en décimal 1/100e)</label>
-        <input type="number" id="inOtHours" step="0.01" min="0" value="4.25" oninput="calcPay()">
+        <input type="number" id="inOtHours" step="0.01" min="0" value="0" oninput="calcPay()">
       </div>
 
       <div class="field">
         <label for="inOtPct" data-t="lblOtPct">Taux de majoration heures sup (%)</label>
-        <input type="number" id="inOtPct" step="1" min="0" value="25" oninput="calcPay()">
+        <input type="number" id="inOtPct" step="1" min="0" value="0" oninput="calcPay()">
       </div>
 
       <div class="toolbar">
@@ -352,23 +352,23 @@
 
       <div class="res-row">
         <span class="res-label" data-t="rTotalHours">Total heures travaillées</span>
-        <span class="res-val" id="outTotalHours">39.25 h (39h 15min)</span>
+        <span class="res-val" id="outTotalHours">0.00 h (00h 00min)</span>
       </div>
       <div class="res-row">
         <span class="res-label" data-t="rBasePay">Montant heures normales</span>
-        <span class="res-val" id="outBasePay">507.50 €</span>
+        <span class="res-val" id="outBasePay">0.00 €</span>
       </div>
       <div class="res-row">
         <span class="res-label" data-t="rOtRate">Taux horaire majoré</span>
-        <span class="res-val" id="outOtRate">18.13 € / h</span>
+        <span class="res-val" id="outOtRate">0.00 € / h</span>
       </div>
       <div class="res-row">
         <span class="res-label" data-t="rOtPay">Montant heures supplémentaires</span>
-        <span class="res-val" id="outOtPay">77.03 €</span>
+        <span class="res-val" id="outOtPay">0.00 €</span>
       </div>
       <div class="res-row highlight">
         <span class="res-label" data-t="rGrandTotal">TOTAL ESTIMÉ</span>
-        <span class="res-val" id="outGrandTotal">584.53 €</span>
+        <span class="res-val" id="outGrandTotal">0.00 €</span>
       </div>
     </div>
   </div>
@@ -503,10 +503,10 @@
   }
 
   function resetPay() {
-    document.getElementById("inRate").value = "14.50";
-    document.getElementById("inRegHours").value = "35.00";
-    document.getElementById("inOtHours").value = "4.25";
-    document.getElementById("inOtPct").value = "25";
+    document.getElementById("inRate").value = "0";
+    document.getElementById("inRegHours").value = "0";
+    document.getElementById("inOtHours").value = "0";
+    document.getElementById("inOtPct").value = "0";
     calcPay();
   }
 
