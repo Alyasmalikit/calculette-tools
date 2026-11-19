@@ -3,10 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-site-verification" content="4xv0yELo8t3bO9FnrB3KT5-WCWVDhb8jHVW0n7cpASs">
-<title>Calculette-tools — Calculateurs d'Heures &amp; Temps</title>
-<meta name="description" content="Calculateurs gratuits en ligne : temps de travail, heures travaillées et paie, addition/soustraction de durées, feuille hebdomadaire, convertisseur décimal et toiture.">
-<link rel="canonical" href="https://alyasmalikit.github.io/calculette-tools/">
+<title>Calculette-tools | Calculateurs Temps de Travail, Feuille Hebdo &amp; Charpente</title>
+<meta name="description" content="Outils gratuits en ligne pour calculer le temps de travail, la feuille d'heures hebdomadaire, les durées, les centièmes d'heure (1/100e), le salaire et les coupes de croupe.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -111,34 +109,25 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Hero */
-  .hero { padding: 24px 0 10px; }
+  .hero { padding: 26px 0 14px; }
   .hero h1 {
-    margin: 0 0 6px;
-    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin: 0 0 8px;
+    font-size: clamp(1.5rem, 3.2vw, 2.1rem);
     letter-spacing: -0.02em;
-    overflow-wrap: break-word;
   }
   .hero p {
     margin: 0;
     color: var(--muted);
-    font-size: 0.95rem;
-    overflow-wrap: break-word;
+    font-size: 0.96rem;
+    max-width: 760px;
   }
 
-  .sec-title {
-    margin: 20px 0 12px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--ink);
-  }
-
-  /* 3 Live Calculators */
-  .live-grid {
+  /* Tools Grid */
+  .tools-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 16px;
-    margin-bottom: 28px;
-    width: 100%;
+    margin: 16px 0 18px;
   }
   .tool-card {
     background: var(--surface);
@@ -149,149 +138,70 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-width: 0;
-    max-width: 100%;
-  }
-  .tool-card-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 12px;
     min-width: 0;
   }
-  .tool-card-head h2 {
+  .tool-card h2 {
+    margin: 0 0 6px;
+    font-size: 1.06rem;
+    color: var(--ink);
+  }
+  .tool-card p {
     margin: 0;
-    font-size: 1.02rem;
-    min-width: 0;
-    overflow-wrap: break-word;
+    color: var(--muted);
+    font-size: 0.9rem;
   }
-  .full-link {
-    font-size: 0.8rem;
-    font-weight: 600;
+  .tool-link {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--soft);
     color: var(--primary);
     text-decoration: none;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-  .full-link:hover { text-decoration: underline; }
-
-  .field-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-  .field-row-3 {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-  .field-row > div, .field-row-3 > div { min-width: 0; }
-  label {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--muted);
-    margin-bottom: 4px;
-    overflow-wrap: break-word;
-  }
-  input, select {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    padding: 8px 9px;
-    border: 1px solid #cbd5e1;
+    font-weight: 700;
+    font-size: 0.86rem;
+    padding: 7px 12px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    background: #fff;
-    color: var(--ink);
   }
-  input:focus, select:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-  }
-  .btn-group {
-    display: flex;
-    gap: 8px;
-    margin-top: 6px;
-  }
-  .btn {
-    flex: 1;
-    max-width: 100%;
+  .tool-link:hover {
     background: var(--primary);
     color: #fff;
-    border: none;
-    padding: 10px 12px;
-    border-radius: 9px;
-    font-weight: 600;
-    font-size: 0.88rem;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    text-align: center;
-  }
-  .btn:hover { background: var(--primary-hover); }
-  .btn-reset {
-    background: #f1f5f9;
-    color: var(--ink);
-    border: 1px solid #cbd5e1;
-    padding: 10px 12px;
-    border-radius: 9px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    flex-shrink: 0;
-  }
-  .btn-reset:hover { background: #e2e8f0; }
-
-  .res-box {
-    margin-top: 10px;
-    padding: 10px 12px;
-    background: var(--soft);
-    border: 1px solid #bfdbfe;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.88rem;
-    color: var(--ink);
-    overflow-wrap: break-word;
   }
 
-  /* 3 Tool Cards */
-  .links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-    gap: 16px;
-    margin-bottom: 34px;
-    width: 100%;
-  }
-  .link-card {
+  /* Cards */
+  .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 18px;
+    padding: 20px;
     box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 12px;
+    margin-bottom: 18px;
+    width: 100%;
     min-width: 0;
-    max-width: 100%;
   }
-  .link-card h3 {
-    margin: 0 0 6px;
-    font-size: 1.02rem;
-    overflow-wrap: break-word;
+  .card h2 {
+    margin: 0 0 10px;
+    font-size: 1.1rem;
   }
-  .link-card p {
-    margin: 0;
+  .card p {
+    margin: 0 0 10px;
     color: var(--muted);
-    font-size: 0.88rem;
-    overflow-wrap: break-word;
+    font-size: 0.92rem;
+  }
+
+  /* Ad Space */
+  .ad-slot {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    margin: 18px auto;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   /* Footer */
@@ -303,6 +213,7 @@
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
+    margin-top: 22px;
   }
   .footer-links {
     margin-top: 10px;
@@ -341,130 +252,78 @@
 
 <main class="container">
   <section class="hero">
-    <h1 data-t="heroTitle">Calculateurs d'Heures &amp; Temps en Ligne</h1>
-    <p data-t="heroSub">Calculs instantanés sur la page + accès direct aux outils spécialisés.</p>
+    <h1 data-t="heroTitle">Outils Pratiques de Temps, Paie et Charpente</h1>
+    <p data-t="heroSub">Calculez vos journées de travail, tenez votre feuille hebdomadaire, convertissez les heures en centièmes (1/100e) et estimez vos coupes de croupe directement dans votre navigateur.</p>
   </section>
 
-  <div class="sec-title" data-t="sec1">1. Calculateurs Instantanés</div>
-  <section class="live-grid">
+  <section class="tools-grid">
+    <article class="tool-card">
+      <div>
+        <h2 data-t="t1Title">Temps de Travail Journalier</h2>
+        <p data-t="t1Desc">Additionnez plusieurs plages horaires dans la journée ou soustrayez deux durées en HH:MM et centièmes (1/100e).</p>
+      </div>
+      <a href="working-time-calculator.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+    </article>
 
-    <!-- 1. Work time calculator -->
-    <div class="tool-card">
+    <article class="tool-card">
       <div>
-        <div class="tool-card-head">
-          <h2 data-t="t1Title">Temps de Travail Net</h2>
-          <a href="working-time-calculator.html" class="full-link" data-t="fullScreen">Ouvrir →</a>
-        </div>
-        <div class="field-row">
-          <div><label for="wtStart" data-t="lblStart">Début</label><input id="wtStart" type="time" value="09:00" oninput="calcWT()"></div>
-          <div><label for="wtEnd" data-t="lblEnd">Fin</label><input id="wtEnd" type="time" value="17:30" oninput="calcWT()"></div>
-        </div>
-        <div style="margin-bottom:10px;">
-          <label for="wtBreak" data-t="lblBreak">Pause (min)</label>
-          <input id="wtBreak" type="number" min="0" value="30" oninput="calcWT()">
-        </div>
+        <h2 data-t="t2Title">Feuille de Pointage Hebdomadaire</h2>
+        <p data-t="t2Desc">Saisissez vos heures du lundi au dimanche avec sauvegarde locale, navigation par semaine et version imprimable.</p>
       </div>
-      <div>
-        <div class="btn-group">
-          <button type="button" class="btn" onclick="calcWT()" data-t="calcBtn">Calculer</button>
-          <button type="button" class="btn-reset" onclick="resetWT()" data-t="resetBtn">Reset</button>
-        </div>
-        <div id="wtOut" class="res-box">Net : 8h 00min (8.00 h)</div>
-      </div>
-    </div>
+      <a href="feuille-hebdo.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+    </article>
 
-    <!-- 2. Working hours calculator -->
-    <div class="tool-card">
+    <article class="tool-card">
       <div>
-        <div class="tool-card-head">
-          <h2 data-t="t2Title">Heures &amp; Salaire</h2>
-          <a href="working-hour-calculator.html" class="full-link" data-t="fullScreen">Ouvrir →</a>
-        </div>
-        <div class="field-row">
-          <div><label for="whDays" data-t="lblDays">Jours</label><input id="whDays" type="number" min="0" step="any" value="5" oninput="calcWH()"></div>
-          <div><label for="whPerDay" data-t="lblHrsDay">Heures / jour</label><input id="whPerDay" type="number" min="0" step="any" value="8" oninput="calcWH()"></div>
-        </div>
-        <div class="field-row">
-          <div><label for="whLimit" data-t="lblLimit">Seuil (h)</label><input id="whLimit" type="number" min="0" step="any" value="35" oninput="calcWH()"></div>
-          <div><label for="whRate" data-t="lblRate">Taux horaire</label><input id="whRate" type="number" min="0" step="any" value="0" oninput="calcWH()"></div>
-        </div>
+        <h2 data-t="t3Title">Heures &amp; Salaire</h2>
+        <p data-t="t3Desc">Estimez votre rémunération à partir de vos heures normales, de vos heures supplémentaires majorées et du taux horaire.</p>
       </div>
-      <div>
-        <div class="btn-group">
-          <button type="button" class="btn" onclick="calcWH()" data-t="calcBtn">Calculer</button>
-          <button type="button" class="btn-reset" onclick="resetWH()" data-t="resetBtn">Reset</button>
-        </div>
-        <div id="whOut" class="res-box">Total : 40.00 h | Sup : 5.00 h</div>
-      </div>
-    </div>
+      <a href="working-hour-calculator.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+    </article>
 
-    <!-- 3. Time calculator -->
-    <div class="tool-card">
+    <article class="tool-card">
       <div>
-        <div class="tool-card-head">
-          <h2 data-t="t3Title">Addition / Soustraction</h2>
-          <a href="time-calculator.html" class="full-link" data-t="fullScreen">Ouvrir →</a>
-        </div>
-        <div class="field-row-3">
-          <div><label for="tcH1">H1</label><input id="tcH1" type="number" min="0" step="1" value="2" oninput="calcTC()"></div>
-          <div><label for="tcM1">Min1</label><input id="tcM1" type="number" min="0" step="1" value="45" oninput="calcTC()"></div>
-          <div>
-            <label for="tcOp" data-t="lblOp">Opération</label>
-            <select id="tcOp" onchange="calcTC()">
-              <option value="add">+</option>
-              <option value="sub">-</option>
-            </select>
-          </div>
-        </div>
-        <div class="field-row">
-          <div><label for="tcH2">H2</label><input id="tcH2" type="number" min="0" step="1" value="1" oninput="calcTC()"></div>
-          <div><label for="tcM2">Min2</label><input id="tcM2" type="number" min="0" step="1" value="30" oninput="calcTC()"></div>
-        </div>
+        <h2 data-t="t4Title">Calculateur de Durées</h2>
+        <p data-t="t4Desc">Additionnez ou soustrayez des durées en heures et minutes avec affichage simultané en centièmes d'heure.</p>
       </div>
-      <div>
-        <div class="btn-group">
-          <button type="button" class="btn" onclick="calcTC()" data-t="calcBtn">Calculer</button>
-          <button type="button" class="btn-reset" onclick="resetTC()" data-t="resetBtn">Reset</button>
-        </div>
-        <div id="tcOut" class="res-box">Résultat : 4h 15min</div>
-      </div>
-    </div>
+      <a href="time-calculator.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+    </article>
 
+    <article class="tool-card">
+      <div>
+        <h2 data-t="t5Title">Convertisseur 1/100e</h2>
+        <p data-t="t5Desc">Convertissez rapidement des heures et minutes en centièmes d'heure décimaux et inversement.</p>
+      </div>
+      <a href="convertisseur.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+    </article>
+
+    <article class="tool-card">
+      <div>
+        <h2 data-t="t6Title">Charpente : Toiture en Croupe</h2>
+        <p data-t="t6Desc">Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe, la pente et la surface des herses.</p>
+      </div>
+      <a href="toiture-croupe.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+    </article>
   </section>
 
-  <div class="sec-title" data-t="sec2">2. Outils Spécialisés</div>
-  <section class="links-grid">
-    <div class="link-card">
-      <div>
-        <h3 data-t="l1Title">Feuille Hebdo (35h / 39h)</h3>
-        <p data-t="l1Desc">Relevé hebdomadaire jour par jour avec calcul des heures supplémentaires et impression.</p>
-      </div>
-      <a href="feuille-hebdo.html" class="btn" data-t="openTool">Ouvrir l'outil →</a>
-    </div>
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
 
-    <div class="link-card">
-      <div>
-        <h3 data-t="l2Title">Convertisseur Décimal (HH:MM)</h3>
-        <p data-t="l2Desc">Convertissez heures, minutes et durées en centièmes d'heure décimaux.</p>
-      </div>
-      <a href="convertisseur.html" class="btn" data-t="openTool">Ouvrir l'outil →</a>
-    </div>
-
-    <div class="link-card">
-      <div>
-        <h3 data-t="l3Title">Calculateur Toiture</h3>
-        <p data-t="l3Desc">Pente, chevrons, arêtiers, faîtage et surface réelle de toiture.</p>
-      </div>
-      <a href="toiture-croupe.html" class="btn" data-t="openTool">Ouvrir l'outil →</a>
-    </div>
+  <section class="card">
+    <h2 data-t="aboutSiteTitle">À propos de Calculette-tools</h2>
+    <p data-t="aboutSiteP1">Calculette-tools rassemble des utilitaires simples et rapides pour le suivi du temps de travail, la conversion en centièmes d'heure (1/100e) et les calculs géométriques de charpente.</p>
+    <p style="margin-bottom:0;" data-t="aboutSiteP2">Tous les calculs s'exécutent localement dans votre navigateur (avec sauvegarde locale sur la feuille hebdomadaire) sans inscription obligatoire.</p>
   </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
   <div class="container">
     <div>Calculette-tools</div>
     <div class="footer-links">
-      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="index.html" class="active" data-t="navHome">Accueil</a>
       <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
       <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
       <a href="time-calculator.html" data-t="navTc">Durées</a>
@@ -491,48 +350,48 @@
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      heroTitle: "Calculateurs d'Heures & Temps en Ligne",
-      heroSub: "Calculs instantanés sur la page + accès direct aux outils spécialisés.",
-      sec1: "1. Calculateurs Instantanés",
-      sec2: "2. Outils Spécialisés",
-      t1Title: "Temps de Travail Net",
-      t2Title: "Heures & Salaire",
-      t3Title: "Addition / Soustraction",
-      fullScreen: "Ouvrir →",
-      lblStart: "Début", lblEnd: "Fin", lblBreak: "Pause (min)",
-      lblDays: "Jours", lblHrsDay: "Heures / jour", lblLimit: "Seuil (h)", lblRate: "Taux horaire",
-      lblOp: "Opération",
-      calcBtn: "Calculer", resetBtn: "Reset", openTool: "Ouvrir l'outil →",
-      l1Title: "Feuille Hebdo (35h / 39h)",
-      l1Desc: "Relevé hebdomadaire jour par jour avec calcul des heures supplémentaires et impression.",
-      l2Title: "Convertisseur Décimal (HH:MM)",
-      l2Desc: "Convertissez heures, minutes et durées en centièmes d'heure décimaux.",
-      l3Title: "Calculateur Toiture",
-      l3Desc: "Pente, chevrons, arêtiers, faîtage et surface réelle de toiture."
+      heroTitle: "Outils Pratiques de Temps, Paie et Charpente",
+      heroSub: "Calculez vos journées de travail, tenez votre feuille hebdomadaire, convertissez les heures en centièmes (1/100e) et estimez vos coupes de croupe directement dans votre navigateur.",
+      t1Title: "Temps de Travail Journalier",
+      t1Desc: "Additionnez plusieurs plages horaires dans la journée ou soustrayez deux durées en HH:MM et centièmes (1/100e).",
+      t2Title: "Feuille de Pointage Hebdomadaire",
+      t2Desc: "Saisissez vos heures du lundi au dimanche avec sauvegarde locale, navigation par semaine et version imprimable.",
+      t3Title: "Heures & Salaire",
+      t3Desc: "Estimez votre rémunération à partir de vos heures normales, de vos heures supplémentaires majorées et du taux horaire.",
+      t4Title: "Calculateur de Durées",
+      t4Desc: "Additionnez ou soustrayez des durées en heures et minutes avec affichage simultané en centièmes d'heure.",
+      t5Title: "Convertisseur 1/100e",
+      t5Desc: "Convertissez rapidement des heures et minutes en centièmes d'heure décimaux et inversement.",
+      t6Title: "Charpente : Toiture en Croupe",
+      t6Desc: "Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe, la pente et la surface des herses.",
+      openTool: "Ouvrir l'outil →",
+      aboutSiteTitle: "À propos de Calculette-tools",
+      aboutSiteP1: "Calculette-tools rassemble des utilitaires simples et rapides pour le suivi du temps de travail, la conversion en centièmes d'heure (1/100e) et les calculs géométriques de charpente.",
+      aboutSiteP2: "Tous les calculs s'exécutent localement dans votre navigateur (avec sauvegarde locale sur la feuille hebdomadaire) sans inscription obligatoire."
     },
     en: {
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      heroTitle: "Online Time & Working Hours Calculators",
-      heroSub: "Instant calculations right on this page + direct access to specialized tools.",
-      sec1: "1. Instant Calculators",
-      sec2: "2. Specialized Tools",
-      t1Title: "Net Working Time",
-      t2Title: "Working Hours & Pay",
-      t3Title: "Add / Subtract Time",
-      fullScreen: "Open →",
-      lblStart: "Start Time", lblEnd: "End Time", lblBreak: "Break (mins)",
-      lblDays: "Days", lblHrsDay: "Hours / day", lblLimit: "Limit (hrs)", lblRate: "Hourly Rate",
-      lblOp: "Operation",
-      calcBtn: "Calculate", resetBtn: "Reset", openTool: "Open Tool →",
-      l1Title: "Weekly Timesheet (35h / 39h)",
-      l1Desc: "Day-by-day weekly timesheet with automatic overtime calculation and print layout.",
-      l2Title: "Decimal Converter (HH:MM)",
-      l2Desc: "Convert hours, minutes, and durations into decimal hours.",
-      l3Title: "Hip Roof Calculator",
-      l3Desc: "Slope, common rafters, hip rafters, ridge, and true roof surface area."
+      heroTitle: "Practical Time, Payroll & Framing Calculators",
+      heroSub: "Calculate daily work shifts, keep a weekly timesheet, convert hours into hundredths (1/100e), and estimate hip roof cuts right in your browser.",
+      t1Title: "Daily Working Time",
+      t1Desc: "Add multiple daily time slots or subtract two durations in HH:MM and decimal hundredths (1/100e).",
+      t2Title: "Weekly Timesheet",
+      t2Desc: "Enter hours from Monday to Sunday with local browser save, week switching, and a printable layout.",
+      t3Title: "Working Hours & Pay",
+      t3Desc: "Estimate earnings from regular hours, overtime bonus percentage, and hourly pay rate.",
+      t4Title: "Time Duration Calculator",
+      t4Desc: "Add or subtract hours and minutes with simultaneous output in decimal hundredths of an hour.",
+      t5Title: "1/100e Converter",
+      t5Desc: "Convert between hours and minutes and decimal hundredths of an hour quickly in either direction.",
+      t6Title: "Framing: Hip Roof",
+      t6Desc: "Calculate common and hip rafter lengths, cut angles, roof pitch, and total slope surface area.",
+      openTool: "Open tool →",
+      aboutSiteTitle: "About Calculette-tools",
+      aboutSiteP1: "Calculette-tools brings together straightforward tools for tracking work hours, converting to decimal hundredths (1/100e), and working out roof framing geometry.",
+      aboutSiteP2: "All calculations run locally in your browser (with local storage on the weekly timesheet) with no sign-up required."
     }
   };
 
@@ -544,91 +403,12 @@
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
-    calcWT();
-    calcWH();
-    calcTC();
   }
 
   function toggleLang() {
     lang = lang === "fr" ? "en" : "fr";
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
     applyLang();
-  }
-
-  function calcWT() {
-    const s = document.getElementById("wtStart").value;
-    const e = document.getElementById("wtEnd").value;
-    const b = Math.max(0, parseInt(document.getElementById("wtBreak").value || "0", 10));
-    if (!s || !e) {
-      document.getElementById("wtOut").textContent =
-        lang === "en" ? "Net: 0h 00m (0.00 hrs)" : "Net : 0h 00min (0.00 h)";
-      return;
-    }
-    const [sh, sm] = s.split(":").map(Number);
-    const [eh, em] = e.split(":").map(Number);
-    let smTotal = sh * 60 + sm, emTotal = eh * 60 + em;
-    if (emTotal < smTotal) emTotal += 1440;
-    const net = Math.max(0, emTotal - smTotal - b);
-    const h = String(Math.floor(net / 60)).padStart(2, "0");
-    const m = String(net % 60).padStart(2, "0");
-    const dec = (net / 60).toFixed(2);
-    document.getElementById("wtOut").textContent =
-      lang === "en" ? `Net: ${h}h ${m}m (${dec} hrs)` : `Net : ${h}h ${m}min (${dec} h)`;
-  }
-
-  function resetWT() {
-    document.getElementById("wtStart").value = "09:00";
-    document.getElementById("wtEnd").value = "17:30";
-    document.getElementById("wtBreak").value = "30";
-    calcWT();
-  }
-
-  function calcWH() {
-    const d = Math.max(0, parseFloat(document.getElementById("whDays").value) || 0);
-    const h = Math.max(0, parseFloat(document.getElementById("whPerDay").value) || 0);
-    const lim = Math.max(0, parseFloat(document.getElementById("whLimit").value) || 0);
-    const rate = Math.max(0, parseFloat(document.getElementById("whRate").value) || 0);
-    const tot = d * h;
-    const ot = Math.max(0, tot - lim);
-    let txt = lang === "en"
-      ? `Total: ${tot.toFixed(2)} hrs | OT: ${ot.toFixed(2)} hrs`
-      : `Total : ${tot.toFixed(2)} h | Sup : ${ot.toFixed(2)} h`;
-    if (rate > 0) {
-      txt += lang === "en" ? ` | Pay: ${(tot * rate).toFixed(2)}` : ` | Paie : ${(tot * rate).toFixed(2)}`;
-    }
-    document.getElementById("whOut").textContent = txt;
-  }
-
-  function resetWH() {
-    document.getElementById("whDays").value = "5";
-    document.getElementById("whPerDay").value = "8";
-    document.getElementById("whLimit").value = "35";
-    document.getElementById("whRate").value = "0";
-    calcWH();
-  }
-
-  function calcTC() {
-    const h1 = Math.max(0, parseInt(document.getElementById("tcH1").value, 10) || 0);
-    const m1 = Math.max(0, parseInt(document.getElementById("tcM1").value, 10) || 0);
-    const h2 = Math.max(0, parseInt(document.getElementById("tcH2").value, 10) || 0);
-    const m2 = Math.max(0, parseInt(document.getElementById("tcM2").value, 10) || 0);
-    const op = document.getElementById("tcOp").value;
-    const t1 = h1 * 60 + m1, t2 = h2 * 60 + m2;
-    const res = op === "add" ? (t1 + t2) : (t1 - t2);
-    const sign = res < 0 ? "-" : "";
-    const abs = Math.abs(res);
-    const h = Math.floor(abs / 60), m = abs % 60;
-    document.getElementById("tcOut").textContent =
-      lang === "en" ? `Result: ${sign}${h}h ${m}m` : `Résultat : ${sign}${h}h ${m}min`;
-  }
-
-  function resetTC() {
-    document.getElementById("tcH1").value = "2";
-    document.getElementById("tcM1").value = "45";
-    document.getElementById("tcOp").value = "add";
-    document.getElementById("tcH2").value = "1";
-    document.getElementById("tcM2").value = "30";
-    calcTC();
   }
 
   try {
