@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convertisseur Heures Décimales &amp; HH:MM | Calculette-tools</title>
-<meta name="description" content="Convertissez facilement heures et minutes (HH:MM) en heures décimales (centièmes d'heure 1/100e) et inversement.">
+<title>Convertisseur Heures &amp; Minutes en Centièmes (1/100e) | Calculette-tools</title>
+<meta name="description" content="Convertissez facilement vos heures et minutes en centièmes d'heure (base décimale 1/100e) et inversement.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -36,6 +36,8 @@
     margin: 0 auto;
     padding: 0 16px;
   }
+
+  /* Header */
   .site-header {
     width: 100%;
     background: var(--surface);
@@ -105,66 +107,66 @@
     flex-shrink: 0;
   }
   .lang-btn:hover { background: var(--primary-hover); }
-  .page-head { padding: 24px 0 12px; }
+
+  /* Page Head */
+  .page-head { padding: 22px 0 14px; }
   .page-head h1 {
     margin: 0 0 6px;
     font-size: clamp(1.4rem, 3vw, 1.95rem);
     letter-spacing: -0.02em;
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
-  .diagram-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    box-shadow: var(--shadow);
-    margin-bottom: 18px;
-    text-align: center;
-  }
-  .diagram-card svg {
-    width: 100%;
-    max-width: 620px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-  .diagram-caption {
-    margin-top: 6px;
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-weight: 600;
-  }
-  .main-grid {
+
+  /* Split Grid */
+  .split-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 18px;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
   }
+  @media (max-width: 780px) {
+    .split-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 20px;
     box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    width: 100%;
     min-width: 0;
   }
+  .split-grid .card { margin-bottom: 0; }
   .card h2 {
     margin: 0 0 14px;
     font-size: 1.08rem;
   }
-  .field-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin-bottom: 12px;
+  .card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
   }
-  .field-row > div { min-width: 0; }
-  label {
+
+  .field { margin-bottom: 12px; }
+  .field label {
     display: block;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .hm-pair {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hm-pair span {
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--muted);
-    margin-bottom: 4px;
   }
   input[type="number"] {
     width: 100%;
@@ -172,7 +174,7 @@
     padding: 9px 10px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
-    font-size: 0.92rem;
+    font-size: 0.94rem;
     background: #fff;
     color: var(--ink);
   }
@@ -181,15 +183,43 @@
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
-  .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+
+  .out-box {
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: var(--soft);
+    border: 1px solid #93c5fd;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .out-lbl {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .out-val {
+    font-size: 1.02rem;
+    font-weight: 800;
+    color: var(--primary);
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
   .btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 9px 16px;
+    border-radius: 9px;
     font-weight: 600;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
   .btn:hover { background: var(--primary-hover); }
@@ -197,51 +227,31 @@
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 9px 16px;
+    border-radius: 9px;
     font-weight: 600;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
   .btn-sec:hover { background: #e2e8f0; }
-  .res-box {
-    margin-top: 6px;
-    padding: 12px 14px;
-    background: var(--soft);
-    border: 1px solid #bfdbfe;
-    border-radius: 10px;
-  }
-  .res-main {
-    display: block;
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: var(--ink);
-  }
-  .res-sub {
-    display: block;
-    margin-top: 3px;
-    font-size: 0.84rem;
-    font-weight: 600;
-    color: var(--muted);
-  }
-  .ref-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
-    gap: 10px;
-  }
-  .ref-item {
-    border: 1px solid var(--border);
-    border-radius: 10px;
+
+  /* Ad Space */
+  .ad-slot {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    margin: 18px auto;
     padding: 10px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    background: #fafcff;
-    font-size: 0.86rem;
   }
-  .ref-item strong {
-    display: block;
-    color: var(--primary);
-    font-size: 0.95rem;
-  }
+
+  /* Footer */
   .site-footer {
     width: 100%;
     border-top: 1px solid var(--border);
@@ -250,7 +260,7 @@
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
-    margin-top: 24px;
+    margin-top: 22px;
   }
   .footer-links {
     margin-top: 10px;
@@ -289,78 +299,67 @@
 
 <main class="container">
   <div class="page-head">
-    <h1 data-t="pageTitle">Convertisseur HH:MM &amp; Heures Décimales (1/100e)</h1>
-    <p data-t="pageSub">Convertissez vos heures et minutes en centièmes d'heure décimaux pour la paie et la comptabilité, ou l'inverse.</p>
+    <h1 data-t="pageTitle">Convertisseur Heures / Minutes ↔ Centièmes (1/100e)</h1>
+    <p data-t="pageSub">Passez facilement des heures et minutes (base 60) aux centièmes d'heure (base 100) et inversement.</p>
   </div>
 
-  <div class="diagram-card">
-    <svg viewBox="0 0 640 105" role="img" aria-label="Schéma conversion base 60 vers base 100 centièmes d'heure">
-      <rect x="0" y="0" width="640" height="105" rx="10" fill="#f8fafc"/>
-      <rect x="45" y="32" width="225" height="32" rx="6" fill="#2563eb"/>
-      <path d="M285 43 L350 43 M350 53 L285 53" stroke="#0f172a" stroke-width="2.2" fill="none"/>
-      <polygon points="350,39 358,43 350,47" fill="#0f172a"/>
-      <polygon points="285,49 277,53 285,57" fill="#0f172a"/>
-      <rect x="370" y="32" width="225" height="32" rx="6" fill="#16a34a"/>
-      <text x="157" y="52" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Base 60 (ex. 04h 30min)</text>
-      <text x="482" y="52" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Base 100 (ex. 4.50 h)</text>
-      <text x="320" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Minutes / 60 = Centièmes d'heure (1/100e)</text>
-    </svg>
-    <div class="diagram-caption" data-t="diagCap">Conversion bidirectionnelle instantanée entre horloge (60 min) et paie (100 centièmes).</div>
-  </div>
-
-  <div class="main-grid">
+  <div class="split-grid">
+    <!-- Left: HH:MM to 1/100e -->
     <div class="card">
-      <h2 data-t="secToDec">Heures &amp; Minutes → Décimal (1/100e)</h2>
-      <div class="field-row">
-        <div>
-          <label for="inH" data-t="lblH">Heures</label>
-          <input type="number" id="inH" min="0" step="any" value="4" oninput="calcToDec()">
-        </div>
-        <div>
-          <label for="inM" data-t="lblM">Minutes</label>
-          <input type="number" id="inM" min="0" step="any" value="40" oninput="calcToDec()">
+      <h2 data-t="secHmToDec">Heures &amp; Minutes → Centièmes (1/100e)</h2>
+      <div class="field">
+        <label data-t="lblHmInput">Saisir heures et minutes</label>
+        <div class="hm-pair">
+          <input type="number" id="inH" min="0" value="0" oninput="convHmToDec()">
+          <span>h</span>
+          <input type="number" id="inM" min="0" max="59" value="0" oninput="convHmToDec()">
+          <span>min</span>
         </div>
       </div>
-      <div class="btn-row">
-        <button type="button" class="btn" onclick="calcToDec()" data-t="btnCalc">Convertir</button>
-        <button type="button" class="btn-sec" onclick="resetToDec()" data-t="btnReset">Reset</button>
+
+      <div class="out-box">
+        <span class="out-lbl" data-t="lblOutDec">Résultat décimal</span>
+        <span class="out-val" id="outDec">0.00 h</span>
       </div>
-      <div class="res-box">
-        <span class="res-main" id="outDec">4.67 h</span>
-        <span class="res-sub" id="outDecSub">04h 40min | 280 min</span>
+
+      <div class="toolbar">
+        <button type="button" class="btn" onclick="convHmToDec()" data-t="btnConvert">Convertir</button>
+        <button type="button" class="btn-sec" onclick="resetHm()" data-t="btnReset">Reset</button>
       </div>
     </div>
 
+    <!-- Right: 1/100e to HH:MM -->
     <div class="card">
-      <h2 data-t="secToHM">Décimal (1/100e) → Heures &amp; Minutes</h2>
-      <div class="field-row">
-        <div style="grid-column: 1 / -1;">
-          <label for="inDec" data-t="lblDec">Heures décimales (ex. 8.42)</label>
-          <input type="number" id="inDec" min="0" step="any" value="8.42" oninput="calcToHM()">
-        </div>
+      <h2 data-t="secDecToHm">Centièmes (1/100e) → Heures &amp; Minutes</h2>
+      <div class="field">
+        <label for="inDec" data-t="lblDecInput">Saisir heures décimales (ex. 7.50)</label>
+        <input type="number" id="inDec" step="0.01" min="0" value="0" oninput="convDecToHm()">
       </div>
-      <div class="btn-row">
-        <button type="button" class="btn" onclick="calcToHM()" data-t="btnCalc">Convertir</button>
-        <button type="button" class="btn-sec" onclick="resetToHM()" data-t="btnReset">Reset</button>
+
+      <div class="out-box">
+        <span class="out-lbl" data-t="lblOutHm">Résultat heures-minutes</span>
+        <span class="out-val" id="outHm">00h 00min</span>
       </div>
-      <div class="res-box">
-        <span class="res-main" id="outHM">08h 25min</span>
-        <span class="res-sub" id="outHMSub">8.42 h | 505 min</span>
+
+      <div class="toolbar">
+        <button type="button" class="btn" onclick="convDecToHm()" data-t="btnConvert">Convertir</button>
+        <button type="button" class="btn-sec" onclick="resetDec()" data-t="btnReset">Reset</button>
       </div>
     </div>
   </div>
 
-  <div class="card">
-    <h2 data-t="secRef">Repères Rapides (Minutes &amp; Décimal)</h2>
-    <div class="ref-grid">
-      <div class="ref-item"><strong>0.08 h</strong>5 min</div>
-      <div class="ref-item"><strong>0.17 h</strong>10 min</div>
-      <div class="ref-item"><strong>0.25 h</strong>15 min</div>
-      <div class="ref-item"><strong>0.33 h</strong>20 min</div>
-      <div class="ref-item"><strong>0.50 h</strong>30 min</div>
-      <div class="ref-item"><strong>0.75 h</strong>45 min</div>
-    </div>
-  </div>
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
+
+  <!-- Guide -->
+  <section class="card">
+    <h2 data-t="guideTitle">Pourquoi convertir les minutes en centièmes d'heure (1/100e) ?</h2>
+    <p data-t="guideP1">Une heure comprend 60 minutes, alors que le système décimal fonctionne sur une base 100. Par exemple, 30 minutes correspondent à la moitié d'une heure (0,50 h) et 15 minutes au quart d'une heure (0,25 h), tandis que 20 minutes valent environ 0,33 h.</p>
+    <p style="margin-bottom:0;" data-t="guideP2">Cette conversion est très pratique pour additionner des feuilles d'heures dans un tableur ou calculer un salaire horaire sans confondre les minutes avec des décimales.</p>
+  </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
@@ -372,7 +371,7 @@
       <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
       <a href="time-calculator.html" data-t="navTc">Durées</a>
       <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
-      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="convertisseur.html" class="active" data-t="navCv">Convertisseur</a>
       <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
     <div class="footer-links">
@@ -394,78 +393,77 @@
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      pageTitle: "Convertisseur HH:MM & Heures Décimales (1/100e)",
-      pageSub: "Convertissez vos heures et minutes en centièmes d'heure décimaux pour la paie et la comptabilité, ou l'inverse.",
-      diagCap: "Conversion bidirectionnelle instantanée entre horloge (60 min) et paie (100 centièmes).",
-      secToDec: "Heures & Minutes → Décimal (1/100e)",
-      secToHM: "Décimal (1/100e) → Heures & Minutes",
-      secRef: "Repères Rapides (Minutes & Décimal)",
-      lblH: "Heures",
-      lblM: "Minutes",
-      lblDec: "Heures décimales (ex. 8.42)",
-      btnCalc: "Convertir",
-      btnReset: "Reset"
+      pageTitle: "Convertisseur Heures / Minutes ↔ Centièmes (1/100e)",
+      pageSub: "Passez facilement des heures et minutes (base 60) aux centièmes d'heure (base 100) et inversement.",
+      secHmToDec: "Heures & Minutes → Centièmes (1/100e)",
+      lblHmInput: "Saisir heures et minutes",
+      lblOutDec: "Résultat décimal",
+      secDecToHm: "Centièmes (1/100e) → Heures & Minutes",
+      lblDecInput: "Saisir heures décimales (ex. 7.50)",
+      lblOutHm: "Résultat heures-minutes",
+      btnConvert: "Convertir",
+      btnReset: "Reset",
+      guideTitle: "Pourquoi convertir les minutes en centièmes d'heure (1/100e) ?",
+      guideP1: "Une heure comprend 60 minutes, alors que le système décimal fonctionne sur une base 100. Par exemple, 30 minutes correspondent à la moitié d'une heure (0,50 h) et 15 minutes au quart d'une heure (0,25 h), tandis que 20 minutes valent environ 0,33 h.",
+      guideP2: "Cette conversion est très pratique pour additionner des feuilles d'heures dans un tableur ou calculer un salaire horaire sans confondre les minutes avec des décimales."
     },
     en: {
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      pageTitle: "HH:MM & Decimal Hours (1/100e) Converter",
-      pageSub: "Convert hours and minutes into decimal hundredths of an hour for payroll and tracking, or convert back.",
-      diagCap: "Instant two-way conversion between clock time (base 60) and decimal payroll hours (base 100).",
-      secToDec: "Hours & Minutes → Decimal (1/100e)",
-      secToHM: "Decimal (1/100e) → Hours & Minutes",
-      secRef: "Quick Reference (Minutes & Decimal)",
-      lblH: "Hours",
-      lblM: "Minutes",
-      lblDec: "Decimal hours (e.g. 8.42)",
-      btnCalc: "Convert",
-      btnReset: "Reset"
+      pageTitle: "Hours & Minutes ↔ Hundredths (1/100e) Converter",
+      pageSub: "Convert between hours and minutes (base 60) and decimal hundredths of an hour (base 100).",
+      secHmToDec: "Hours & Minutes → Hundredths (1/100e)",
+      lblHmInput: "Enter hours and minutes",
+      lblOutDec: "Decimal output",
+      secDecToHm: "Hundredths (1/100e) → Hours & Minutes",
+      lblDecInput: "Enter decimal hours (e.g. 7.50)",
+      lblOutHm: "Hours-minutes output",
+      btnConvert: "Convert",
+      btnReset: "Reset",
+      guideTitle: "Why Convert Minutes into Hundredths of an Hour (1/100e)?",
+      guideP1: "An hour has 60 minutes while decimal math uses base 100. For example, 30 minutes equals half an hour (0.50 hrs) and 15 minutes equals a quarter hour (0.25 hrs), while 20 minutes is about 0.33 hrs.",
+      guideP2: "Converting to hundredths makes spreadsheet totals and hourly pay calculations straightforward without mixing up minutes and decimals."
     }
   };
 
-  function calcToDec() {
+  function convHmToDec() {
     const h = Math.max(0, parseFloat(document.getElementById("inH").value) || 0);
-    const m = Math.max(0, parseFloat(document.getElementById("inM").value) || 0);
-    const totalMins = Math.round((h * 60) + m);
-    const dec = (totalMins / 60).toFixed(2);
-    const hh = String(Math.floor(totalMins / 60)).padStart(2, "0");
-    const mm = String(totalMins % 60).padStart(2, "0");
-
-    document.getElementById("outDec").textContent = dec + " h";
-    document.getElementById("outDecSub").textContent = hh + "h " + mm + "min | " + totalMins + " min";
+    const m = Math.min(59, Math.max(0, parseFloat(document.getElementById("inM").value) || 0));
+    const dec = h + m / 60;
+    document.getElementById("outDec").textContent = `${dec.toFixed(2)} h`;
   }
 
-  function resetToDec() {
-    document.getElementById("inH").value = "4";
-    document.getElementById("inM").value = "40";
-    calcToDec();
-  }
-
-  function calcToHM() {
+  function convDecToHm() {
     const dec = Math.max(0, parseFloat(document.getElementById("inDec").value) || 0);
     const totalMins = Math.round(dec * 60);
-    const hh = String(Math.floor(totalMins / 60)).padStart(2, "0");
-    const mm = String(totalMins % 60).padStart(2, "0");
-
-    document.getElementById("outHM").textContent = hh + "h " + mm + "min";
-    document.getElementById("outHMSub").textContent = dec.toFixed(2) + " h | " + totalMins + " min";
+    const h = String(Math.floor(totalMins / 60)).padStart(2, "0");
+    const m = String(totalMins % 60).padStart(2, "0");
+    document.getElementById("outHm").textContent = `${h}h ${m}min`;
   }
 
-  function resetToHM() {
-    document.getElementById("inDec").value = "8.42";
-    calcToHM();
+  function resetHm() {
+    document.getElementById("inH").value = "0";
+    document.getElementById("inM").value = "0";
+    convHmToDec();
+  }
+
+  function resetDec() {
+    document.getElementById("inDec").value = "0";
+    convDecToHm();
   }
 
   function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
     document.getElementById("langBtn").textContent = d.btn;
-    document.querySelectorAll("[data-t]").forEach(function(el) {
+    document.querySelectorAll("[data-t]").forEach(el => {
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
+    convHmToDec();
+    convDecToHm();
   }
 
   function toggleLang() {
@@ -479,8 +477,6 @@
   } catch (e) {}
 
   applyLang();
-  calcToDec();
-  calcToHM();
 </script>
 
 </body>
