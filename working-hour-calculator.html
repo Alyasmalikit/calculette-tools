@@ -3,132 +3,501 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Working Hour Calculator / Heures &amp; Paie | Calculette-tools</title>
+<title>Calculateur d'Heures Travaillées &amp; Paie | Calculette-tools</title>
+<meta name="description" content="Calculez vos heures totales, heures normales, heures supplémentaires et estimation de salaire en heures-minutes et centièmes d'heure.">
 <style>
   :root {
-    --bg: #f8fafc; --surface: #ffffff; --ink: #0f172a; --muted: #475569;
-    --border: #e2e8f0; --primary: #2563eb; --primary-dark: #1d4ed8;
-    --accent: #0ea5e9; --soft-blue: #eff6ff; --radius: 14px;
-    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --ink: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --soft: #eff6ff;
+    --radius: 14px;
+    --shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
   }
-  * { box-sizing: border-box; }
-  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
-  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-  .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-  .nav-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 14px 0; }
-  .brand { font-weight: 800; font-size: 1.2rem; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: inline-block; }
-  .nav-right { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-  .nav-menu { display: flex; flex-wrap: wrap; gap: 4px; }
-  .nav-menu a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 6px 10px; border-radius: 8px; }
-  .nav-menu a:hover, .nav-menu a.active { color: var(--primary); background: var(--soft-blue); }
-  .lang-btn { background: var(--soft-blue); color: var(--primary); border: 1px solid #bfdbfe; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
-  .page-head { margin: 26px 0 18px; }
-  .page-head h1 { margin: 0 0 8px; font-size: clamp(1.5rem, 3vw, 2rem); }
-  .page-head p { margin: 0; color: var(--muted); }
-  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); margin-bottom: 24px; }
-  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin-bottom: 18px; }
-  label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
-  input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 9px; font-size: 0.95rem; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 0.92rem; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
-  .result-box { margin-top: 18px; padding: 14px 16px; background: var(--soft-blue); border: 1px solid #bfdbfe; border-left: 4px solid var(--primary); border-radius: 10px; font-weight: 700; }
-  .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-  .info-card h2 { margin: 0 0 8px; font-size: 1.15rem; }
-  .info-card p { margin: 0; color: var(--muted); }
-  .site-footer { border-top: 1px solid var(--border); background: var(--surface); padding: 24px 0 36px; text-align: center; font-size: 0.9rem; color: var(--muted); }
-  .footer-links { margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-  .footer-links a { color: var(--muted); text-decoration: none; font-weight: 500; }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* Header */
+  .site-header {
+    width: 100%;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 0;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .brand-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: inline-block;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-width: 0;
+  }
+  .nav-menu a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 9px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .nav-menu a:hover, .nav-menu a.active {
+    color: var(--primary);
+    background: var(--soft);
+  }
+  .lang-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .lang-btn:hover { background: var(--primary-hover); }
+
+  /* Page Head */
+  .page-head { padding: 24px 0 12px; }
+  .page-head h1 {
+    margin: 0 0 6px;
+    font-size: clamp(1.4rem, 3vw, 1.95rem);
+    letter-spacing: -0.02em;
+  }
+  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+
+  /* Grid & Cards */
+  .main-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    min-width: 0;
+  }
+  .card h2 {
+    margin: 0 0 14px;
+    font-size: 1.08rem;
+  }
+
+  .presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .chip {
+    background: var(--soft);
+    color: var(--primary);
+    border: 1px solid #bfdbfe;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .chip:hover { background: var(--primary); color: #fff; }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .field-grid > div { min-width: 0; }
+  label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  input, select {
+    width: 100%;
+    min-width: 0;
+    padding: 9px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    background: #fff;
+    color: var(--ink);
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .btn {
+    flex: 1;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-hover); }
+  .btn-sec {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+    padding: 10px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .btn-sec:hover { background: #e2e8f0; }
+
+  /* Summary Stats */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .stat-box {
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 12px;
+    min-width: 0;
+  }
+  .stat-lbl {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .stat-val {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--ink);
+    overflow-wrap: break-word;
+  }
+
+  /* Footer */
+  .site-footer {
+    width: 100%;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 22px 0 32px;
+    text-align: center;
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin-top: 24px;
+  }
+  .footer-links {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-links a:hover { color: var(--primary); }
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="container nav-bar">
-    <a href="index.html" class="brand"><span class="dot"></span>Calculette-tools</a>
+    <a href="index.html" class="brand"><span class="brand-dot"></span>Calculette-tools</a>
     <div class="nav-right">
       <nav class="nav-menu">
-        <a href="index.html">Accueil / Home</a>
-        <a href="working-time-calculator.html">Temps de Travail</a>
-        <a href="working-hour-calculator.html" class="active">Heures &amp; Paie / Working Hours</a>
-        <a href="time-calculator.html">Calculateur de Temps</a>
-        <a href="feuille-hebdo.html">Feuille Hebdo</a>
-        <a href="convertisseur.html">Convertisseur</a>
-        <a href="toiture-croupe.html">Toiture</a>
+        <a href="index.html" data-t="navHome">Accueil</a>
+        <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+        <a href="working-hour-calculator.html" class="active" data-t="navWh">Heures &amp; Salaire</a>
+        <a href="time-calculator.html" data-t="navTc">Durées</a>
+        <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+        <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+        <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
       </nav>
-      <button type="button" id="langToggle" class="lang-btn" onclick="switchLang()">FR / EN</button>
+      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
     </div>
   </div>
 </header>
 
 <main class="container">
   <div class="page-head">
-    <h1>Calculateur d'Heures &amp; Salaire / Working Hour Calculator</h1>
-    <p>Estimez total d'heures, heures supplémentaires et salaire / Estimate total hours, overtime &amp; pay.</p>
+    <h1 data-t="pageTitle">Calculateur d'Heures Travaillées, Heures Sup &amp; Paie</h1>
+    <p data-t="pageSub">Calculez le volume d'heures sur une période, la répartition heures normales / supplémentaires et l'estimation de rémunération.</p>
   </div>
 
-  <section class="panel">
-    <div class="row">
-      <div><label for="daysWorked">Jours / Days</label><input id="daysWorked" type="number" min="1" max="31" value="5"></div>
-      <div><label for="hoursPerDay">Heures/jour / Hours/day</label><input id="hoursPerDay" type="number" min="0" step="0.25" value="8"></div>
-      <div><label for="standardHours">Seuil normal / Regular Limit</label><input id="standardHours" type="number" min="0" step="0.5" value="35"></div>
-      <div><label for="hourlyRate">Taux horaire / Hourly Rate</label><input id="hourlyRate" type="number" min="0" step="0.01" value="0"></div>
-    </div>
-    <button type="button" class="btn" onclick="calcWH()">Calculer / Calculate</button>
-    <div id="whResult" class="result-box">Total : 40.00 h | Normales / Regular : 35.00 h | Sup / Overtime : 5.00 h</div>
-  </section>
+  <div class="main-grid">
+    <div class="card">
+      <h2 data-t="secInputs">Paramètres de Travail</h2>
 
-  <section class="info-card">
-    <h2>Utilisation / Usage</h2>
-    <p>Calculez facilement vos heures cumulées, les heures au-delà du seuil standard et une estimation de rémunération. / Quickly estimate cumulative hours, overtime above your limit, and pay.</p>
-  </section>
+      <div class="presets">
+        <button type="button" class="chip" onclick="applyPreset(5, 7, 35, 1.25)">35h / Semaine</button>
+        <button type="button" class="chip" onclick="applyPreset(5, 7.8, 39, 1.25)">39h BTP</button>
+        <button type="button" class="chip" onclick="applyPreset(5, 8, 40, 1.5)">40h / 1.5x OT</button>
+        <button type="button" class="chip" onclick="applyPreset(20, 8, 151.67, 1.25)">Mois (151.67h)</button>
+      </div>
+
+      <div class="field-grid">
+        <div>
+          <label for="days" data-t="lblDays">Nombre de jours</label>
+          <input type="number" id="days" min="0" step="0.5" value="5" oninput="calc()">
+        </div>
+        <div>
+          <label for="hrsDay" data-t="lblHrsDay">Heures / jour (décimal)</label>
+          <input type="number" id="hrsDay" min="0" step="0.25" value="8" oninput="calc()">
+        </div>
+        <div>
+          <label for="baseHrs" data-t="lblBase">Seuil heures normales</label>
+          <input type="number" id="baseHrs" min="0" step="0.5" value="35" oninput="calc()">
+        </div>
+        <div>
+          <label for="rate" data-t="lblRate">Taux horaire (€ / $)</label>
+          <input type="number" id="rate" min="0" step="0.5" value="15" oninput="calc()">
+        </div>
+        <div>
+          <label for="otMult" data-t="lblMult">Majoration heures sup</label>
+          <select id="otMult" onchange="calc()">
+            <option value="1">1.00x (Standard)</option>
+            <option value="1.25" selected>1.25x (+25%)</option>
+            <option value="1.5">1.50x (+50%)</option>
+            <option value="2">2.00x (+100%)</option>
+          </select>
+        </div>
+        <div>
+          <label for="extraMins" data-t="lblExtraM">Minutes additionnelles</label>
+          <input type="number" id="extraMins" min="0" step="1" value="0" oninput="calc()">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="btn" onclick="calc()" data-t="btnCalc">Calculer</button>
+        <button type="button" class="btn-sec" onclick="resetForm()" data-t="btnReset">Reset</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 data-t="secRes">Résumé &amp; Détail</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <span class="stat-lbl" data-t="sTotDec">Total Décimal</span>
+          <span class="stat-val" id="outTotDec">40.00 h</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-lbl" data-t="sTotHM">Total (HH:MM)</span>
+          <span class="stat-val" id="outTotHM">40h 00min</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-lbl" data-t="sReg">Heures Normales</span>
+          <span class="stat-val" id="outReg">35.00 h</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-lbl" data-t="sOt">Heures Supplémentaires</span>
+          <span class="stat-val" id="outOt">5.00 h</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-lbl" data-t="sPayReg">Paie Normale</span>
+          <span class="stat-val" id="outPayReg">525.00</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-lbl" data-t="sPayTot">Estimation Totale</span>
+          <span class="stat-val" id="outPayTot">618.75</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <footer class="site-footer">
   <div class="container">
-    <div>Calculette-tools — FR &amp; EN</div>
+    <div>Calculette-tools</div>
     <div class="footer-links">
-      <a href="index.html">Home / Accueil</a>
-      <a href="working-time-calculator.html">Working Time</a>
-      <a href="time-calculator.html">Time Calculator</a>
-      <a href="about.html">About / À propos</a>
-      <a href="privacy.html">Privacy / Confidentialité</a>
-      <a href="terms.html">Terms / Conditions</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
   </div>
 </footer>
 
 <script>
-  let mode = "both";
-  function switchLang() {
-    mode = mode === "both" ? "fr" : mode === "fr" ? "en" : "both";
-    document.getElementById("langToggle").textContent = mode === "both" ? "FR / EN" : mode.toUpperCase();
-    calcWH();
-  }
-  function calcWH() {
-    const days = Math.max(0, parseFloat(document.getElementById("daysWorked").value || "0"));
-    const perDay = Math.max(0, parseFloat(document.getElementById("hoursPerDay").value || "0"));
-    const limit = Math.max(0, parseFloat(document.getElementById("standardHours").value || "0"));
-    const rate = Math.max(0, parseFloat(document.getElementById("hourlyRate").value || "0"));
-    const total = days * perDay;
-    const reg = Math.min(total, limit);
-    const ot = Math.max(0, total - limit);
-    const out = document.getElementById("whResult");
-
-    if (mode === "en") {
-      let t = `Total: ${total.toFixed(2)} hrs | Regular: ${reg.toFixed(2)} hrs | Overtime: ${ot.toFixed(2)} hrs`;
-      if (rate > 0) t += ` | Est. Pay: ${(total * rate).toFixed(2)}`;
-      out.textContent = t;
-    } else if (mode === "fr") {
-      let t = `Total : ${total.toFixed(2)} h | Normales : ${reg.toFixed(2)} h | Supplémentaires : ${ot.toFixed(2)} h`;
-      if (rate > 0) t += ` | Estimation : ${(total * rate).toFixed(2)}`;
-      out.textContent = t;
-    } else {
-      let t = `Total : ${total.toFixed(2)} h | Normales / Regular : ${reg.toFixed(2)} h | Sup / Overtime : ${ot.toFixed(2)} h`;
-      if (rate > 0) t += ` | Gain / Pay : ${(total * rate).toFixed(2)}`;
-      out.textContent = t;
+  let lang = "fr";
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      pageTitle: "Calculateur d'Heures Travaillées, Heures Sup & Paie",
+      pageSub: "Calculez le volume d'heures sur une période, la répartition heures normales / supplémentaires et l'estimation de rémunération.",
+      secInputs: "Paramètres de Travail",
+      secRes: "Résumé & Détail",
+      lblDays: "Nombre de jours",
+      lblHrsDay: "Heures / jour (décimal)",
+      lblBase: "Seuil heures normales",
+      lblRate: "Taux horaire (€ / $)",
+      lblMult: "Majoration heures sup",
+      lblExtraM: "Minutes additionnelles",
+      btnCalc: "Calculer",
+      btnReset: "Reset",
+      sTotDec: "Total Décimal",
+      sTotHM: "Total (HH:MM)",
+      sReg: "Heures Normales",
+      sOt: "Heures Supplémentaires",
+      sPayReg: "Paie Normale",
+      sPayTot: "Estimation Totale"
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      pageTitle: "Working Hours, Overtime & Pay Calculator",
+      pageSub: "Calculate total working hours, regular vs. overtime hours, and estimated gross pay.",
+      secInputs: "Work Parameters",
+      secRes: "Summary & Breakdown",
+      lblDays: "Number of days",
+      lblHrsDay: "Hours / day (decimal)",
+      lblBase: "Regular hours threshold",
+      lblRate: "Hourly rate (€ / $)",
+      lblMult: "Overtime multiplier",
+      lblExtraM: "Additional minutes",
+      btnCalc: "Calculate",
+      btnReset: "Reset",
+      sTotDec: "Total Decimal",
+      sTotHM: "Total (HH:MM)",
+      sReg: "Regular Hours",
+      sOt: "Overtime Hours",
+      sPayReg: "Regular Pay",
+      sPayTot: "Estimated Total"
     }
+  };
+
+  function applyPreset(d, h, b, m) {
+    document.getElementById("days").value = d;
+    document.getElementById("hrsDay").value = h;
+    document.getElementById("baseHrs").value = b;
+    document.getElementById("otMult").value = String(m);
+    calc();
   }
+
+  function resetForm() {
+    document.getElementById("days").value = 5;
+    document.getElementById("hrsDay").value = 8;
+    document.getElementById("baseHrs").value = 35;
+    document.getElementById("rate").value = 15;
+    document.getElementById("otMult").value = "1.25";
+    document.getElementById("extraMins").value = 0;
+    calc();
+  }
+
+  function calc() {
+    const days = Math.max(0, Number(document.getElementById("days").value) || 0);
+    const hrsDay = Math.max(0, Number(document.getElementById("hrsDay").value) || 0);
+    const base = Math.max(0, Number(document.getElementById("baseHrs").value) || 0);
+    const rate = Math.max(0, Number(document.getElementById("rate").value) || 0);
+    const mult = Number(document.getElementById("otMult").value) || 1;
+    const extraM = Math.max(0, Number(document.getElementById("extraMins").value) || 0);
+
+    const totalHrs = (days * hrsDay) + (extraM / 60);
+    const regHrs = Math.min(totalHrs, base);
+    const otHrs = Math.max(0, totalHrs - base);
+    const totalMinsRounded = Math.round(totalHrs * 60);
+    const hh = String(Math.floor(totalMinsRounded / 60)).padStart(2, "0");
+    const mm = String(totalMinsRounded % 60).padStart(2, "0");
+
+    const payReg = regHrs * rate;
+    const payOt = otHrs * rate * mult;
+    const payTot = payReg + payOt;
+
+    document.getElementById("outTotDec").textContent = `${totalHrs.toFixed(2)} h`;
+    document.getElementById("outTotHM").textContent = `${hh}h ${mm}min`;
+    document.getElementById("outReg").textContent = `${regHrs.toFixed(2)} h`;
+    document.getElementById("outOt").textContent = `${otHrs.toFixed(2)} h`;
+    document.getElementById("outPayReg").textContent = payReg.toFixed(2);
+    document.getElementById("outPayTot").textContent = payTot.toFixed(2);
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+  }
+
+  calc();
 </script>
+
 </body>
 </html>
