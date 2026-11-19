@@ -36,8 +36,6 @@
     margin: 0 auto;
     padding: 0 16px;
   }
-
-  /* Header */
   .site-header {
     width: 100%;
     background: var(--surface);
@@ -107,8 +105,6 @@
     flex-shrink: 0;
   }
   .lang-btn:hover { background: var(--primary-hover); }
-
-  /* Page Head */
   .page-head { padding: 24px 0 12px; }
   .page-head h1 {
     margin: 0 0 6px;
@@ -116,8 +112,6 @@
     letter-spacing: -0.02em;
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
-
-  /* Diagram Card */
   .diagram-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -140,8 +134,6 @@
     color: var(--muted);
     font-weight: 600;
   }
-
-  /* Grid & Cards */
   .main-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
@@ -189,6 +181,18 @@
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.86rem;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-hover); }
   .btn-sec {
     background: #f1f5f9;
     color: var(--ink);
@@ -198,10 +202,8 @@
     font-weight: 600;
     font-size: 0.86rem;
     cursor: pointer;
-    margin-bottom: 10px;
   }
   .btn-sec:hover { background: #e2e8f0; }
-
   .res-box {
     margin-top: 6px;
     padding: 12px 14px;
@@ -222,8 +224,6 @@
     font-weight: 600;
     color: var(--muted);
   }
-
-  /* Quick Table */
   .ref-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
@@ -242,8 +242,6 @@
     color: var(--primary);
     font-size: 0.95rem;
   }
-
-  /* Footer */
   .site-footer {
     width: 100%;
     border-top: 1px solid var(--border);
@@ -291,11 +289,10 @@
 
 <main class="container">
   <div class="page-head">
-    <h1 data-t="pageTitle">Convertisseur HH:MM ↔ Heures Décimales (1/100e)</h1>
+    <h1 data-t="pageTitle">Convertisseur HH:MM &amp; Heures Décimales (1/100e)</h1>
     <p data-t="pageSub">Convertissez vos heures et minutes en centièmes d'heure décimaux pour la paie et la comptabilité, ou l'inverse.</p>
   </div>
 
-  <!-- Base-60 <-> Base-100 SVG Diagram -->
   <div class="diagram-card">
     <svg viewBox="0 0 640 105" role="img" aria-label="Schéma conversion base 60 vers base 100 centièmes d'heure">
       <rect x="0" y="0" width="640" height="105" rx="10" fill="#f8fafc"/>
@@ -306,42 +303,46 @@
       <rect x="370" y="32" width="225" height="32" rx="6" fill="#16a34a"/>
       <text x="157" y="52" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Base 60 (ex. 04h 30min)</text>
       <text x="482" y="52" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Base 100 (ex. 4.50 h)</text>
-      <text x="320" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Minutes ÷ 60 = Centièmes d'heure (1/100e)</text>
+      <text x="320" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Minutes / 60 = Centièmes d'heure (1/100e)</text>
     </svg>
     <div class="diagram-caption" data-t="diagCap">Conversion bidirectionnelle instantanée entre horloge (60 min) et paie (100 centièmes).</div>
   </div>
 
   <div class="main-grid">
-    <!-- 1. HH:MM -> Decimal -->
     <div class="card">
       <h2 data-t="secToDec">Heures &amp; Minutes → Décimal (1/100e)</h2>
       <div class="field-row">
         <div>
           <label for="inH" data-t="lblH">Heures</label>
-          <input type="number" id="inH" min="0" step="any" value="4" oninput="toDec()">
+          <input type="number" id="inH" min="0" step="any" value="4" oninput="calcToDec()">
         </div>
         <div>
           <label for="inM" data-t="lblM">Minutes</label>
-          <input type="number" id="inM" min="0" step="any" value="40" oninput="toDec()">
+          <input type="number" id="inM" min="0" step="any" value="40" oninput="calcToDec()">
         </div>
       </div>
-      <button type="button" class="btn-sec" onclick="resetToDec()" data-t="btnReset">Reset</button>
+      <div class="btn-row">
+        <button type="button" class="btn" onclick="calcToDec()" data-t="btnCalc">Convertir</button>
+        <button type="button" class="btn-sec" onclick="resetToDec()" data-t="btnReset">Reset</button>
+      </div>
       <div class="res-box">
         <span class="res-main" id="outDec">4.67 h</span>
         <span class="res-sub" id="outDecSub">04h 40min | 280 min</span>
       </div>
     </div>
 
-    <!-- 2. Decimal -> HH:MM -->
     <div class="card">
       <h2 data-t="secToHM">Décimal (1/100e) → Heures &amp; Minutes</h2>
       <div class="field-row">
         <div style="grid-column: 1 / -1;">
           <label for="inDec" data-t="lblDec">Heures décimales (ex. 8.42)</label>
-          <input type="number" id="inDec" min="0" step="any" value="8.42" oninput="toHM()">
+          <input type="number" id="inDec" min="0" step="any" value="8.42" oninput="calcToHM()">
         </div>
       </div>
-      <button type="button" class="btn-sec" onclick="resetToHM()" data-t="btnReset">Reset</button>
+      <div class="btn-row">
+        <button type="button" class="btn" onclick="calcToHM()" data-t="btnCalc">Convertir</button>
+        <button type="button" class="btn-sec" onclick="resetToHM()" data-t="btnReset">Reset</button>
+      </div>
       <div class="res-box">
         <span class="res-main" id="outHM">08h 25min</span>
         <span class="res-sub" id="outHMSub">8.42 h | 505 min</span>
@@ -350,7 +351,7 @@
   </div>
 
   <div class="card">
-    <h2 data-t="secRef">Repères Rapides (Minutes ↔ Décimal)</h2>
+    <h2 data-t="secRef">Repères Rapides (Minutes &amp; Décimal)</h2>
     <div class="ref-grid">
       <div class="ref-item"><strong>0.08 h</strong>5 min</div>
       <div class="ref-item"><strong>0.17 h</strong>10 min</div>
@@ -393,15 +394,16 @@
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
-      pageTitle: "Convertisseur HH:MM ↔ Heures Décimales (1/100e)",
+      pageTitle: "Convertisseur HH:MM & Heures Décimales (1/100e)",
       pageSub: "Convertissez vos heures et minutes en centièmes d'heure décimaux pour la paie et la comptabilité, ou l'inverse.",
       diagCap: "Conversion bidirectionnelle instantanée entre horloge (60 min) et paie (100 centièmes).",
       secToDec: "Heures & Minutes → Décimal (1/100e)",
       secToHM: "Décimal (1/100e) → Heures & Minutes",
-      secRef: "Repères Rapides (Minutes ↔ Décimal)",
+      secRef: "Repères Rapides (Minutes & Décimal)",
       lblH: "Heures",
       lblM: "Minutes",
       lblDec: "Heures décimales (ex. 8.42)",
+      btnCalc: "Convertir",
       btnReset: "Reset"
     },
     en: {
@@ -409,20 +411,21 @@
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      pageTitle: "HH:MM ↔ Decimal Hours (1/100e) Converter",
+      pageTitle: "HH:MM & Decimal Hours (1/100e) Converter",
       pageSub: "Convert hours and minutes into decimal hundredths of an hour for payroll and tracking, or convert back.",
       diagCap: "Instant two-way conversion between clock time (base 60) and decimal payroll hours (base 100).",
       secToDec: "Hours & Minutes → Decimal (1/100e)",
       secToHM: "Decimal (1/100e) → Hours & Minutes",
-      secRef: "Quick Reference (Minutes ↔ Decimal)",
+      secRef: "Quick Reference (Minutes & Decimal)",
       lblH: "Hours",
       lblM: "Minutes",
       lblDec: "Decimal hours (e.g. 8.42)",
+      btnCalc: "Convert",
       btnReset: "Reset"
     }
   };
 
-  function toDec() {
+  function calcToDec() {
     const h = Math.max(0, parseFloat(document.getElementById("inH").value) || 0);
     const m = Math.max(0, parseFloat(document.getElementById("inM").value) || 0);
     const totalMins = Math.round((h * 60) + m);
@@ -430,36 +433,36 @@
     const hh = String(Math.floor(totalMins / 60)).padStart(2, "0");
     const mm = String(totalMins % 60).padStart(2, "0");
 
-    document.getElementById("outDec").textContent = `${dec} h`;
-    document.getElementById("outDecSub").textContent = `${hh}h ${mm}min | ${totalMins} min`;
+    document.getElementById("outDec").textContent = dec + " h";
+    document.getElementById("outDecSub").textContent = hh + "h " + mm + "min | " + totalMins + " min";
   }
 
   function resetToDec() {
     document.getElementById("inH").value = "4";
     document.getElementById("inM").value = "40";
-    toDec();
+    calcToDec();
   }
 
-  function toHM() {
+  function calcToHM() {
     const dec = Math.max(0, parseFloat(document.getElementById("inDec").value) || 0);
     const totalMins = Math.round(dec * 60);
     const hh = String(Math.floor(totalMins / 60)).padStart(2, "0");
     const mm = String(totalMins % 60).padStart(2, "0");
 
-    document.getElementById("outHM").textContent = `${hh}h ${mm}min`;
-    document.getElementById("outHMSub").textContent = `${dec.toFixed(2)} h | ${totalMins} min`;
+    document.getElementById("outHM").textContent = hh + "h " + mm + "min";
+    document.getElementById("outHMSub").textContent = dec.toFixed(2) + " h | " + totalMins + " min";
   }
 
   function resetToHM() {
     document.getElementById("inDec").value = "8.42";
-    toHM();
+    calcToHM();
   }
 
   function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
     document.getElementById("langBtn").textContent = d.btn;
-    document.querySelectorAll("[data-t]").forEach(el => {
+    document.querySelectorAll("[data-t]").forEach(function(el) {
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
@@ -476,8 +479,8 @@
   } catch (e) {}
 
   applyLang();
-  toDec();
-  toHM();
+  calcToDec();
+  calcToHM();
 </script>
 
 </body>
