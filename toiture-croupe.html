@@ -189,23 +189,27 @@
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
   .btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 9px;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
-    margin-right: 8px;
   }
   .btn:hover { background: var(--primary-hover); }
   .btn-sec {
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 9px;
     font-weight: 600;
     font-size: 0.88rem;
@@ -341,5 +345,233 @@
           <input type="number" id="hc" min="0" step="any" value="1.000" oninput="calcRoof()">
         </div>
       </div>
-      <div>
+      <div class="btn-row">
         <button type="button" class="btn" onclick="calcRoof()" data-t="btnCalc">Calculer les coupes</button>
+        <button type="button" class="btn-sec" id="resetBtn" onclick="resetRoof()" data-t="btnReset">Reset</button>
+      </div>
+    </div>
+
+    <!-- Outputs -->
+    <div class="card">
+      <h2 data-t="secRes">Résultats Arêtiers &amp; Coupes</h2>
+      <table class="res-table">
+        <thead>
+          <tr>
+            <th data-t="colParam">Paramètre</th>
+            <th style="text-align:right;" data-t="colHip1">Arêtier 1</th>
+            <th style="text-align:right;" data-t="colHip2">Arêtier 2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-t="rPlan">Longueur en plan</td>
+            <td class="num" id="p1">1.414 m</td>
+            <td class="num" id="p2">1.414 m</td>
+          </tr>
+          <tr>
+            <td data-t="rTrue">Vraie grandeur</td>
+            <td class="num" id="tg1">1.732 m</td>
+            <td class="num" id="tg2">1.732 m</td>
+          </tr>
+          <tr>
+            <td data-t="rPlumb">Coupe aplomb</td>
+            <td class="num" id="ca1">54.7°</td>
+            <td class="num" id="ca2">54.7°</td>
+          </tr>
+          <tr>
+            <td data-t="rLevel">Coupe de niveau</td>
+            <td class="num" id="cn1">35.3°</td>
+            <td class="num" id="cn2">35.3°</td>
+          </tr>
+          <tr>
+            <td data-t="rChamferL">Délardement côté long-pan</td>
+            <td class="num" id="dll1">30.0°</td>
+            <td class="num" id="dll2">30.0°</td>
+          </tr>
+          <tr>
+            <td data-t="rChamferC">Délardement côté croupe</td>
+            <td class="num" id="dlc1">30.0°</td>
+            <td class="num" id="dlc2">30.0°</td>
+          </tr>
+          <tr>
+            <td data-t="rJointL">Engeulement côté long-pan</td>
+            <td class="num" id="egl1">45.0°</td>
+            <td class="num" id="egl2">45.0°</td>
+          </tr>
+          <tr>
+            <td data-t="rJointC">Engeulement côté croupe</td>
+            <td class="num" id="egc1">45.0°</td>
+            <td class="num" id="egc2">45.0°</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>Calculette-tools</div>
+    <div class="footer-links">
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+    </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="disclaimer.html" data-t="navDisclaimer">Mentions &amp; Clause</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const LANG_KEY = "calculette_lang_v1";
+  let lang = "fr";
+
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
+      pageTitle: "Calculateur Toiture à Croupe (Arêtiers & Coupes)",
+      pageSub: "À partir des dimensions de base (CE1, CE2, E1, E2, HC), calculez les longueurs d'arêtiers, pentes et angles de coupe.",
+      diagCap: "Schéma de principe : CE1/CE2 (chevrons d'emprunt), E1/E2 (lignes d'égout), HC (hauteur de couronnement).",
+      secData: "Données de Base (m)",
+      secRes: "Résultats Arêtiers & Coupes",
+      lblHc: "Hauteur de couronnement HC (m)",
+      btnCalc: "Calculer les coupes",
+      btnReset: "Reset",
+      colParam: "Paramètre",
+      colHip1: "Arêtier 1",
+      colHip2: "Arêtier 2",
+      rPlan: "Longueur en plan",
+      rTrue: "Vraie grandeur",
+      rPlumb: "Coupe aplomb",
+      rLevel: "Coupe de niveau",
+      rChamferL: "Délardement côté long-pan",
+      rChamferC: "Délardement côté croupe",
+      rJointL: "Engeulement côté long-pan",
+      rJointC: "Engeulement côté croupe"
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
+      pageTitle: "Hip Roof Framing Calculator (Hips & Cuts)",
+      pageSub: "From base dimensions (CE1, CE2, E1, E2, HC), calculate hip rafter lengths, slopes, and cutting angles.",
+      diagCap: "Reference diagram: CE1/CE2 (borrowed rafters), E1/E2 (eaves lines), HC (crowning height).",
+      secData: "Base Dimensions (m)",
+      secRes: "Hip Rafters & Cuts Results",
+      lblHc: "Crowning height HC (m)",
+      btnCalc: "Calculate cuts",
+      btnReset: "Reset",
+      colParam: "Parameter",
+      colHip1: "Hip 1",
+      colHip2: "Hip 2",
+      rPlan: "Plan length",
+      rTrue: "True length",
+      rPlumb: "Plumb cut",
+      rLevel: "Level cut",
+      rChamferL: "Chamfer (main roof side)",
+      rChamferC: "Chamfer (hip end side)",
+      rJointL: "Cheek cut (main roof side)",
+      rJointC: "Cheek cut (hip end side)"
+    }
+  };
+
+  function toDeg(rad) {
+    return (rad * 180) / Math.PI;
+  }
+
+  function calcHip(ce, e, hc) {
+    const plan = Math.sqrt(ce * ce + e * e);
+    const trueLen = Math.sqrt(plan * plan + hc * hc);
+    if (plan === 0 || trueLen === 0 || hc === 0) {
+      return { plan: 0, trueLen: 0, plumb: 0, level: 0, chamferL: 0, chamferC: 0, jointL: 0, jointC: 0 };
+    }
+    const plumb = toDeg(Math.atan2(plan, hc));
+    const level = toDeg(Math.atan2(hc, plan));
+    const chamferL = toDeg(Math.atan((hc * ce) / (e * trueLen)));
+    const chamferC = toDeg(Math.atan((hc * e) / (ce * trueLen)));
+    const jointL = toDeg(Math.atan((e * trueLen) / (ce * plan)));
+    const jointC = toDeg(Math.atan((ce * trueLen) / (e * plan)));
+    return { plan, trueLen, plumb, level, chamferL, chamferC, jointL, jointC };
+  }
+
+  function getVal(id) {
+    const raw = document.getElementById(id).value;
+    const num = parseFloat(raw);
+    return Number.isFinite(num) && num > 0 ? num : 0;
+  }
+
+  function calcRoof() {
+    const ce1 = getVal("ce1");
+    const ce2 = getVal("ce2");
+    const e1 = getVal("e1");
+    const e2 = getVal("e2");
+    const hc = getVal("hc");
+
+    const h1 = calcHip(ce1, e1, hc);
+    const h2 = calcHip(ce2, e2, hc);
+
+    document.getElementById("p1").textContent = h1.plan.toFixed(3) + " m";
+    document.getElementById("p2").textContent = h2.plan.toFixed(3) + " m";
+    document.getElementById("tg1").textContent = h1.trueLen.toFixed(3) + " m";
+    document.getElementById("tg2").textContent = h2.trueLen.toFixed(3) + " m";
+    document.getElementById("ca1").textContent = h1.plumb.toFixed(1) + "°";
+    document.getElementById("ca2").textContent = h2.plumb.toFixed(1) + "°";
+    document.getElementById("cn1").textContent = h1.level.toFixed(1) + "°";
+    document.getElementById("cn2").textContent = h2.level.toFixed(1) + "°";
+    document.getElementById("dll1").textContent = h1.chamferL.toFixed(1) + "°";
+    document.getElementById("dll2").textContent = h2.chamferL.toFixed(1) + "°";
+    document.getElementById("dlc1").textContent = h1.chamferC.toFixed(1) + "°";
+    document.getElementById("dlc2").textContent = h2.chamferC.toFixed(1) + "°";
+    document.getElementById("egl1").textContent = h1.jointL.toFixed(1) + "°";
+    document.getElementById("egl2").textContent = h2.jointL.toFixed(1) + "°";
+    document.getElementById("egc1").textContent = h1.jointC.toFixed(1) + "°";
+    document.getElementById("egc2").textContent = h2.jointC.toFixed(1) + "°";
+  }
+
+  function resetRoof() {
+    document.getElementById("ce1").value = "1.000";
+    document.getElementById("ce2").value = "1.000";
+    document.getElementById("e1").value = "1.000";
+    document.getElementById("e2").value = "1.000";
+    document.getElementById("hc").value = "1.000";
+    calcRoof();
+  }
+
+  function applyLangUI() {
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLangUI();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  applyLangUI();
+  calcRoof();
+</script>
+
+</body>
+</html>
