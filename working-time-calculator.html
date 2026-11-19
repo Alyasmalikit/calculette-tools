@@ -605,4 +605,34 @@
     const bh = parseFloat(document.getElementById("subBh").value) || 0;
     const bm = parseFloat(document.getElementById("subBm").value) || 0;
     const diff = (ah * 60 + am) - (bh * 60 + bm);
-    document.getElementBy
+    document.getElementById("subOutHM").textContent = fmtHM(diff);
+    document.getElementById("subOutDec").textContent = `${(diff / 60).toFixed(2)} h`;
+  }
+
+  function applyLang() {
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+    renderSlots();
+    calcSub();
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  applyLang();
+</script>
+
+</body>
+</html>
