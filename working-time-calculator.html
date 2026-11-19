@@ -3,123 +3,569 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Working Time Calculator / Temps de Travail | Calculette-tools</title>
+<title>Calculateur de Temps de Travail | Calculette-tools</title>
+<meta name="description" content="Calculez vos heures de travail journalières ou hebdomadaires en heures-minutes et centièmes d'heure (1/100e), avec soustraction de durées.">
 <style>
   :root {
-    --bg: #f8fafc; --surface: #ffffff; --ink: #0f172a; --muted: #475569;
-    --border: #e2e8f0; --primary: #2563eb; --primary-dark: #1d4ed8;
-    --accent: #0ea5e9; --soft-blue: #eff6ff; --radius: 14px;
-    --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --ink: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --soft: #eff6ff;
+    --radius: 14px;
+    --shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
   }
-  * { box-sizing: border-box; }
-  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.6; }
-  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
-  .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-  .nav-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 14px 0; }
-  .brand { font-weight: 800; font-size: 1.2rem; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); display: inline-block; }
-  .nav-right { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-  .nav-menu { display: flex; flex-wrap: wrap; gap: 4px; }
-  .nav-menu a { color: var(--muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 6px 10px; border-radius: 8px; }
-  .nav-menu a:hover, .nav-menu a.active { color: var(--primary); background: var(--soft-blue); }
-  .lang-btn { background: var(--soft-blue); color: var(--primary); border: 1px solid #bfdbfe; padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
-  .page-head { margin: 26px 0 18px; }
-  .page-head h1 { margin: 0 0 8px; font-size: clamp(1.5rem, 3vw, 2rem); }
-  .page-head p { margin: 0; color: var(--muted); }
-  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); margin-bottom: 24px; }
-  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 18px; }
-  label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 6px; }
-  input { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 9px; font-size: 0.95rem; }
-  .btn { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; padding: 10px 18px; border-radius: 10px; font-size: 0.92rem; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); }
-  .result-box { margin-top: 18px; padding: 14px 16px; background: var(--soft-blue); border: 1px solid #bfdbfe; border-left: 4px solid var(--primary); border-radius: 10px; font-weight: 700; }
-  .info-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
-  .info-card h2 { margin: 0 0 8px; font-size: 1.15rem; }
-  .info-card p { margin: 0; color: var(--muted); }
-  .site-footer { border-top: 1px solid var(--border); background: var(--surface); padding: 24px 0 36px; text-align: center; font-size: 0.9rem; color: var(--muted); }
-  .footer-links { margin-top: 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-  .footer-links a { color: var(--muted); text-decoration: none; font-weight: 500; }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* Header */
+  .site-header {
+    width: 100%;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 0;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .brand-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: inline-block;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-width: 0;
+  }
+  .nav-menu a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 9px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+  .nav-menu a:hover, .nav-menu a.active {
+    color: var(--primary);
+    background: var(--soft);
+  }
+  .lang-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .lang-btn:hover { background: var(--primary-hover); }
+
+  /* Page Head */
+  .page-head { padding: 24px 0 12px; }
+  .page-head h1 {
+    margin: 0 0 6px;
+    font-size: clamp(1.4rem, 3vw, 1.95rem);
+    letter-spacing: -0.02em;
+  }
+  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    width: 100%;
+    min-width: 0;
+  }
+  .card h2 {
+    margin: 0 0 14px;
+    font-size: 1.08rem;
+  }
+
+  /* Slot Rows */
+  .slot-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.9fr) auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #fafcff;
+  }
+  .slot-row.disabled {
+    opacity: 0.55;
+    background: #f1f5f9;
+  }
+  @media (max-width: 760px) {
+    .slot-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .slot-field label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  input[type="time"], input[type="number"] {
+    width: 100%;
+    min-width: 0;
+    padding: 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #fff;
+    color: var(--ink);
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+  .out-pill {
+    padding: 8px 10px;
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .chk-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 14px;
+  }
+  .chk-wrap input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  /* Toolbar Buttons */
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 14px 0 18px;
+  }
+  .btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-hover); }
+  .btn-sec {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .btn-sec:hover { background: #e2e8f0; }
+
+  /* Total Bar */
+  .total-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--soft);
+    border: 1px solid #93c5fd;
+    border-radius: 12px;
+  }
+  .total-label {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .total-vals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--primary);
+  }
+
+  /* Subtraction A - B */
+  .sub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 14px;
+    align-items: end;
+  }
+  .hm-pair {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hm-pair span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  /* Footer */
+  .site-footer {
+    width: 100%;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 22px 0 32px;
+    text-align: center;
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin-top: 24px;
+  }
+  .footer-links {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-links a:hover { color: var(--primary); }
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="container nav-bar">
-    <a href="index.html" class="brand"><span class="dot"></span>Calculette-tools</a>
+    <a href="index.html" class="brand"><span class="brand-dot"></span>Calculette-tools</a>
     <div class="nav-right">
       <nav class="nav-menu">
-        <a href="index.html">Accueil / Home</a>
-        <a href="working-time-calculator.html" class="active">Temps de Travail / Working Time</a>
-        <a href="working-hour-calculator.html">Heures &amp; Paie</a>
-        <a href="time-calculator.html">Calculateur de Temps</a>
-        <a href="feuille-hebdo.html">Feuille Hebdo</a>
-        <a href="convertisseur.html">Convertisseur</a>
-        <a href="toiture-croupe.html">Toiture</a>
+        <a href="index.html" data-t="navHome">Accueil</a>
+        <a href="working-time-calculator.html" class="active" data-t="navWt">Temps de Travail</a>
+        <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+        <a href="time-calculator.html" data-t="navTc">Durées</a>
+        <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+        <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+        <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
       </nav>
-      <button type="button" id="langToggle" class="lang-btn" onclick="switchLang()">FR / EN</button>
+      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
     </div>
   </div>
 </header>
 
 <main class="container">
   <div class="page-head">
-    <h1>Calculateur de Temps de Travail / Working Time Calculator</h1>
-    <p>Calculez les heures nettes entre début, fin et pause (y compris de nuit) / Calculate net working hours from start, end &amp; break time.</p>
+    <h1 data-t="pageTitle">Calculateur du Temps de Travail (Journée ou Semaine)</h1>
+    <p data-t="pageSub">Ajoutez plusieurs plages horaires (y compris passage minuit), cochez/décochez les lignes et obtenez le total en heures-minutes et centièmes d'heure (1/100e)[cite: 1].</p>
   </div>
 
-  <section class="panel">
-    <div class="row">
-      <div><label for="startTime">Début / Start Time</label><input id="startTime" type="time" value="09:00"></div>
-      <div><label for="endTime">Fin / End Time</label><input id="endTime" type="time" value="17:30"></div>
-      <div><label for="breakMins">Pause (min) / Break (mins)</label><input id="breakMins" type="number" min="0" value="30"></div>
-    </div>
-    <button type="button" class="btn" onclick="calcWT()">Calculer / Calculate</button>
-    <div id="wtResult" class="result-box">Temps net / Net Time : 8h 0min (8.00 h / decimal hrs)</div>
-  </section>
+  <div class="card">
+    <h2 data-t="secSlots">Plages Horaires</h2>
+    <div id="slotsContainer"></div>
 
-  <section class="info-card">
-    <h2>Guide / How It Works</h2>
-    <p>Soustrait l'heure de début de l'heure de fin puis retire la pause en minutes, avec prise en charge automatique des horaires de nuit. / Subtracts start from end time and deducts break minutes, handling overnight shifts automatically.</p>
-  </section>
+    <div class="toolbar">
+      <button type="button" class="btn" onclick="addSlot()" data-t="btnAdd">+ Ajouter une ligne</button>
+      <button type="button" class="btn-sec" onclick="removeSlot()" data-t="btnRemove">− Supprimer une ligne</button>
+      <button type="button" class="btn-sec" onclick="resetSlots()" data-t="btnReset">Reset</button>
+    </div>
+
+    <div class="total-bar">
+      <span class="total-label" data-t="lblTotal">TOTAL</span>
+      <div class="total-vals">
+        <span id="totalHM">00h 00min</span>
+        <span id="totalDec">0.00 h</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 data-t="secSub">Soustraction de Temps (A − B)</h2>
+    <div class="sub-grid">
+      <div>
+        <label>A</label>
+        <div class="hm-pair">
+          <input type="number" id="subAh" min="0" value="39" oninput="calcSub()">
+          <span>h</span>
+          <input type="number" id="subAm" min="0" max="59" value="15" oninput="calcSub()">
+          <span>min</span>
+        </div>
+      </div>
+      <div>
+        <label>B</label>
+        <div class="hm-pair">
+          <input type="number" id="subBh" min="0" value="35" oninput="calcSub()">
+          <span>h</span>
+          <input type="number" id="subBm" min="0" max="59" value="0" oninput="calcSub()">
+          <span>min</span>
+        </div>
+      </div>
+      <div>
+        <label data-t="lblResHM">Temps (HH:MM)</label>
+        <div class="out-pill" id="subOutHM">04h 15min</div>
+      </div>
+      <div>
+        <label data-t="lblResDec">Temps (1/100e)</label>
+        <div class="out-pill" id="subOutDec">4.25 h</div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <footer class="site-footer">
   <div class="container">
-    <div>Calculette-tools — FR &amp; EN</div>
+    <div>Calculette-tools</div>
     <div class="footer-links">
-      <a href="index.html">Home / Accueil</a>
-      <a href="working-hour-calculator.html">Working Hours</a>
-      <a href="time-calculator.html">Time Calculator</a>
-      <a href="about.html">About / À propos</a>
-      <a href="privacy.html">Privacy / Confidentialité</a>
-      <a href="terms.html">Terms / Conditions</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
   </div>
 </footer>
 
 <script>
-  let mode = "both";
-  function switchLang() {
-    mode = mode === "both" ? "fr" : mode === "fr" ? "en" : "both";
-    document.getElementById("langToggle").textContent = mode === "both" ? "FR / EN" : mode.toUpperCase();
-    calcWT();
+  let lang = "fr";
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      pageTitle: "Calculateur du Temps de Travail (Journée ou Semaine)",
+      pageSub: "Ajoutez plusieurs plages horaires (y compris passage minuit), cochez/décochez les lignes et obtenez le total en heures-minutes et centièmes d'heure (1/100e).",
+      secSlots: "Plages Horaires",
+      btnAdd: "+ Ajouter une ligne",
+      btnRemove: "− Supprimer une ligne",
+      btnReset: "Reset",
+      lblTotal: "TOTAL",
+      secSub: "Soustraction de Temps (A − B)",
+      lblResHM: "Temps (HH:MM)",
+      lblResDec: "Temps (1/100e)",
+      lblStart: "Heure début",
+      lblEnd: "Heure fin",
+      lblTime: "Temps",
+      lblDec: "Temps 1/100e"
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      pageTitle: "Working Time Calculator (Day or Week)",
+      pageSub: "Add multiple time slots (including overnight shifts), toggle row checkboxes, and view totals in hours-minutes and hundredths of an hour (1/100e).",
+      secSlots: "Time Slots",
+      btnAdd: "+ Add a line",
+      btnRemove: "− Remove a line",
+      btnReset: "Reset",
+      lblTotal: "TOTAL",
+      secSub: "Time Subtraction (A − B)",
+      lblResHM: "Time (HH:MM)",
+      lblResDec: "Time (1/100e)",
+      lblStart: "Start time",
+      lblEnd: "End time",
+      lblTime: "Duration",
+      lblDec: "Decimal 1/100e"
+    }
+  };
+
+  const defaultSlots = [
+    { start: "07:35", end: "12:15", active: true },
+    { start: "13:10", end: "15:45", active: true },
+    { start: "15:45", end: "16:05", active: false },
+    { start: "16:05", end: "17:15", active: true }
+  ];
+
+  let slots = JSON.parse(JSON.stringify(defaultSlots));
+
+  function fmtHM(mins) {
+    const sign = mins < 0 ? "-" : "";
+    const abs = Math.abs(Math.round(mins));
+    const h = String(Math.floor(abs / 60)).padStart(2, "0");
+    const m = String(abs % 60).padStart(2, "0");
+    return `${sign}${h}h ${m}min`;
   }
-  function calcWT() {
-    const sVal = document.getElementById("startTime").value;
-    const eVal = document.getElementById("endTime").value;
-    const brk = Math.max(0, parseInt(document.getElementById("breakMins").value || "0", 10));
-    const out = document.getElementById("wtResult");
-    if (!sVal || !eVal) { out.textContent = "Please enter start & end time / Saisissez début et fin."; return; }
-    const [sh, sm] = sVal.split(":").map(Number);
-    const [eh, em] = eVal.split(":").map(Number);
-    let sMin = sh * 60 + sm, eMin = eh * 60 + em;
-    if (eMin < sMin) eMin += 1440;
-    const net = Math.max(0, eMin - sMin - brk);
-    const h = Math.floor(net / 60), m = net % 60, dec = (net / 60).toFixed(2);
-    if (mode === "en") out.textContent = `Net Working Time: ${h} hours ${m} minutes (${dec} decimal hours)`;
-    else if (mode === "fr") out.textContent = `Temps de travail net : ${h} heures ${m} minutes (${dec} heures décimales)`;
-    else out.textContent = `Temps net / Net Time : ${h}h ${m}min (${dec} h / decimal hrs)`;
+
+  function renderSlots() {
+    const container = document.getElementById("slotsContainer");
+    const d = dict[lang];
+    container.innerHTML = "";
+
+    slots.forEach((s, idx) => {
+      const row = document.createElement("div");
+      row.className = "slot-row" + (s.active ? "" : " disabled");
+      row.innerHTML = `
+        <div class="slot-field">
+          <label>${d.lblStart}</label>
+          <input type="time" value="${s.start}" oninput="updateSlot(${idx}, 'start', this.value)">
+        </div>
+        <div class="slot-field">
+          <label>${d.lblEnd}</label>
+          <input type="time" value="${s.end}" oninput="updateSlot(${idx}, 'end', this.value)">
+        </div>
+        <div class="slot-field">
+          <label>${d.lblTime}</label>
+          <div class="out-pill" id="slotHM-${idx}">00h 00min</div>
+        </div>
+        <div class="slot-field">
+          <label>${d.lblDec}</label>
+          <div class="out-pill" id="slotDec-${idx}">0.00 h</div>
+        </div>
+        <div class="chk-wrap">
+          <input type="checkbox" ${s.active ? "checked" : ""} onchange="updateSlot(${idx}, 'active', this.checked)">
+        </div>
+      `;
+      container.appendChild(row);
+    });
+
+    calcAll();
   }
+
+  function updateSlot(idx, key, val) {
+    slots[idx][key] = val;
+    if (key === "active") {
+      renderSlots();
+    } else {
+      calcAll();
+    }
+  }
+
+  function addSlot() {
+    slots.push({ start: "08:00", end: "12:00", active: true });
+    renderSlots();
+  }
+
+  function removeSlot() {
+    if (slots.length > 1) {
+      slots.pop();
+      renderSlots();
+    }
+  }
+
+  function resetSlots() {
+    slots = JSON.parse(JSON.stringify(defaultSlots));
+    document.getElementById("subAh").value = 39;
+    document.getElementById("subAm").value = 15;
+    document.getElementById("subBh").value = 35;
+    document.getElementById("subBm").value = 0;
+    renderSlots();
+    calcSub();
+  }
+
+  function calcAll() {
+    let totalMins = 0;
+    slots.forEach((s, idx) => {
+      let diff = 0;
+      if (s.start && s.end) {
+        const [sh, sm] = s.start.split(":").map(Number);
+        const [eh, em] = s.end.split(":").map(Number);
+        let startM = sh * 60 + sm;
+        let endM = eh * 60 + em;
+        if (endM < startM) endM += 1440;
+        diff = Math.max(0, endM - startM);
+      }
+      const hmEl = document.getElementById(`slotHM-${idx}`);
+      const decEl = document.getElementById(`slotDec-${idx}`);
+      if (hmEl) hmEl.textContent = fmtHM(diff);
+      if (decEl) decEl.textContent = `${(diff / 60).toFixed(2)} h`;
+      if (s.active) totalMins += diff;
+    });
+
+    document.getElementById("totalHM").textContent = fmtHM(totalMins);
+    document.getElementById("totalDec").textContent = `${(totalMins / 60).toFixed(2)} h`;
+  }
+
+  function calcSub() {
+    const ah = Number(document.getElementById("subAh").value) || 0;
+    const am = Number(document.getElementById("subAm").value) || 0;
+    const bh = Number(document.getElementById("subBh").value) || 0;
+    const bm = Number(document.getElementById("subBm").value) || 0;
+    const diff = (ah * 60 + am) - (bh * 60 + bm);
+    document.getElementById("subOutHM").textContent = fmtHM(diff);
+    document.getElementById("subOutDec").textContent = `${(diff / 60).toFixed(2)} h`;
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+    renderSlots();
+    calcSub();
+  }
+
+  renderSlots();
+  calcSub();
 </script>
+
 </body>
 </html>
