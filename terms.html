@@ -4,250 +4,178 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mentions Légales &amp; Clause de Non-Responsabilité | Calculette-tools</title>
-<meta name="description" content="Mentions légales et clause de non-responsabilité concernant l'utilisation des calculateurs Calculette-tools.">
 <style>
-  :root {
-    --bg: #f4f7fb;
-    --surface: #ffffff;
-    --ink: #0f172a;
-    --muted: #475569;
-    --border: #e2e8f0;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --soft: #eff6ff;
-    --radius: 14px;
-    --shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
-  }
-  *, *::before, *::after { box-sizing: border-box; }
-  html, body {
+  * { box-sizing: border-box; }
+  body {
     margin: 0;
-    padding: 0;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--ink);
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f4f7fb;
+    color: #0f172a;
     line-height: 1.6;
   }
-  .container {
-    width: 100%;
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-  .site-header {
-    width: 100%;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  header {
+    background: #fff;
+    border-bottom: 1px solid #e2e8f0;
     padding: 12px 0;
   }
-  .brand {
-    font-weight: 800;
-    font-size: 1.15rem;
-    color: var(--ink);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-  }
-  .brand-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--primary);
-    display: inline-block;
-  }
-  .nav-right {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    min-width: 0;
-    max-width: 100%;
-  }
-  .nav-menu {
+  .nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
-    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
   }
-  .nav-menu a {
-    color: var(--muted);
+  .brand { font-weight: 800; font-size: 1.15rem; color: #0f172a; text-decoration: none; }
+  .links { display: flex; flex-wrap: wrap; gap: 6px; }
+  .links a {
+    color: #475569;
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 600;
-    padding: 6px 9px;
+    padding: 6px 8px;
     border-radius: 8px;
-    white-space: nowrap;
   }
-  .nav-menu a:hover {
-    color: var(--primary);
-    background: var(--soft);
-  }
+  .links a:hover { color: #2563eb; background: #eff6ff; }
   .lang-btn {
-    background: var(--primary);
+    background: #2563eb;
     color: #fff;
     border: none;
     padding: 6px 12px;
     border-radius: 8px;
     font-weight: 700;
-    font-size: 0.82rem;
     cursor: pointer;
-    flex-shrink: 0;
   }
-  .lang-btn:hover { background: var(--primary-hover); }
-  .page-head { padding: 24px 0 12px; }
-  .page-head h1 {
-    margin: 0 0 6px;
-    font-size: clamp(1.4rem, 3vw, 1.95rem);
-    letter-spacing: -0.02em;
-  }
-  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+  h1 { margin: 24px 0 6px; font-size: 1.7rem; }
+  .sub { margin: 0 0 18px; color: #475569; }
   .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
     padding: 22px;
-    box-shadow: var(--shadow);
     margin-bottom: 24px;
   }
   .card h2 { margin: 0 0 8px; font-size: 1.08rem; }
-  .card p { margin: 0 0 14px; color: var(--muted); font-size: 0.94rem; }
-  .site-footer {
-    width: 100%;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-    padding: 22px 0 32px;
+  .card p { margin: 0 0 14px; color: #475569; }
+  footer {
+    background: #fff;
+    border-top: 1px solid #e2e8f0;
+    padding: 22px 0 30px;
     text-align: center;
-    font-size: 0.86rem;
-    color: var(--muted);
-    margin-top: 24px;
+    font-size: 0.85rem;
+    color: #475569;
   }
-  .footer-links {
+  .f-links {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
   }
-  .footer-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-weight: 500;
-  }
-  .footer-links a:hover, .footer-links a.active { color: var(--primary); font-weight: 700; }
+  .f-links a { color: #475569; text-decoration: none; font-weight: 500; }
+  .f-links a:hover { color: #2563eb; }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="container nav-bar">
-    <a href="index.html" class="brand"><span class="brand-dot"></span>Calculette-tools</a>
-    <div class="nav-right">
-      <nav class="nav-menu">
-        <a href="index.html" data-t="navHome">Accueil</a>
-        <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
-        <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
-        <a href="time-calculator.html" data-t="navTc">Durées</a>
-        <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
-        <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
-        <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
-      </nav>
-      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="brand">Calculette-tools</a>
+    <div class="links">
+      <a href="index.html" data-t="n1">Accueil</a>
+      <a href="working-time-calculator.html" data-t="n2">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="n3">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="n4">Durées</a>
+      <a href="feuille-hebdo.html" data-t="n5">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="n6">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="n7">Toiture</a>
     </div>
+    <button type="button" id="lBtn" class="lang-btn" onclick="switchLang()">EN</button>
   </div>
 </header>
 
-<main class="container">
-  <div class="page-head">
-    <h1 data-t="title">Mentions Légales &amp; Clause de Non-Responsabilité</h1>
-    <p data-t="sub">Conditions d'utilisation des outils de calcul en ligne.</p>
-  </div>
+<main class="wrap">
+  <h1 data-t="t1">Mentions Légales &amp; Clause de Non-Responsabilité</h1>
+  <p class="sub" data-t="s1">Conditions d'utilisation des calculateurs en ligne Calculette-tools.</p>
 
   <div class="card">
-    <h2 data-t="h1">1. Usage indicatif des calculs</h2>
-    <p data-t="p1">Les résultats fournis par Calculette-tools (temps de travail, heures supplémentaires, estimations de paie et cotes de charpente) sont donnés à titre purement informatif et indicatif.</p>
+    <h2 data-t="h1">1. Usage indicatif des résultats</h2>
+    <p data-t="p1">Les calculs fournis sur Calculette-tools (temps de travail, heures supplémentaires, estimations de paie et cotes de charpente) sont donnés à titre purement informatif.</p>
 
     <h2 data-t="h2">2. Vérification professionnelle</h2>
-    <p style="margin-bottom:0;" data-t="p2">Avant toute validation officielle de fiche de paie, déclaration sociale ou découpe de bois sur chantier, il appartient à l'utilisateur de vérifier les résultats conformément aux conventions collectives ou aux règles de l'art en vigueur.</p>
+    <p data-t="p2">Avant toute validation officielle de fiche de paie ou découpe de bois sur chantier, il appartient à l'utilisateur de vérifier les chiffres selon les règles en vigueur.</p>
+
+    <h2 data-t="h3">3. Propriété intellectuelle</h2>
+    <p style="margin-bottom:0;" data-t="p3">L'ensemble des textes, schémas et outils du site Calculette-tools est protégé contre toute reproduction non autorisée.</p>
   </div>
 </main>
 
-<footer class="site-footer">
-  <div class="container">
+<footer>
+  <div class="wrap">
     <div>Calculette-tools</div>
-    <div class="footer-links">
-      <a href="index.html" data-t="navHome">Accueil</a>
-      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
-      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
-      <a href="time-calculator.html" data-t="navTc">Durées</a>
-      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
-      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
-      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
-    </div>
-    <div class="footer-links">
-      <a href="about.html" data-t="navAbout">À propos</a>
-      <a href="contact.html" data-t="navContact">Contact</a>
-      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
-      <a href="disclaimer.html" class="active" data-t="navDisclaimer">Mentions &amp; Clause</a>
+    <div class="f-links">
+      <a href="about.html" data-t="f1">À propos</a>
+      <a href="contact.html" data-t="f2">Contact</a>
+      <a href="privacy.html" data-t="f3">Confidentialité</a>
+      <a href="disclaimer.html" style="color:#2563eb;font-weight:700;" data-t="f4">Mentions &amp; Clause</a>
     </div>
   </div>
 </footer>
 
 <script>
-  const LANG_KEY = "calculette_lang_v1";
-  let lang = "fr";
-  const dict = {
+  var lang = "fr";
+  try {
+    if (localStorage.getItem("calculette_lang_v1") === "en") lang = "en";
+  } catch (e) {}
+
+  var txt = {
     fr: {
       btn: "EN",
-      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
-      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
-      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
-      title: "Mentions Légales & Clause de Non-Responsabilité",
-      sub: "Conditions d'utilisation des outils de calcul en ligne.",
-      h1: "1. Usage indicatif des calculs",
-      p1: "Les résultats fournis par Calculette-tools (temps de travail, heures supplémentaires, estimations de paie et cotes de charpente) sont donnés à titre purement informatif et indicatif.",
+      n1: "Accueil", n2: "Temps de Travail", n3: "Heures & Salaire", n4: "Durées", n5: "Feuille Hebdo", n6: "Convertisseur", n7: "Toiture",
+      f1: "À propos", f2: "Contact", f3: "Confidentialité", f4: "Mentions & Clause",
+      t1: "Mentions Légales & Clause de Non-Responsabilité",
+      s1: "Conditions d'utilisation des calculateurs en ligne Calculette-tools.",
+      h1: "1. Usage indicatif des résultats",
+      p1: "Les calculs fournis sur Calculette-tools (temps de travail, heures supplémentaires, estimations de paie et cotes de charpente) sont donnés à titre purement informatif.",
       h2: "2. Vérification professionnelle",
-      p2: "Avant toute validation officielle de fiche de paie, déclaration sociale ou découpe de bois sur chantier, il appartient à l'utilisateur de vérifier les résultats conformément aux conventions collectives ou aux règles de l'art en vigueur."
+      p2: "Avant toute validation officielle de fiche de paie ou découpe de bois sur chantier, il appartient à l'utilisateur de vérifier les chiffres selon les règles en vigueur.",
+      h3: "3. Propriété intellectuelle",
+      p3: "L'ensemble des textes, schémas et outils du site Calculette-tools est protégé contre toute reproduction non autorisée."
     },
     en: {
       btn: "FR",
-      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
-      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
-      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      title: "Legal Notice & Disclaimer",
-      sub: "Terms of use for our online calculation tools.",
+      n1: "Home", n2: "Working Time", n3: "Working Hours", n4: "Time Calculator", n5: "Weekly Timesheet", n6: "Decimal Converter", n7: "Hip Roof",
+      f1: "About", f2: "Contact", f3: "Privacy Policy", f4: "Disclaimer",
+      t1: "Legal Notice & Disclaimer",
+      s1: "Terms of use for Calculette-tools online calculators.",
       h1: "1. Informational Purpose Only",
-      p1: "All results generated by Calculette-tools (working time, overtime hours, pay estimates, and roof framing angles) are provided for informational and estimation purposes only.",
+      p1: "All results generated by Calculette-tools (working time, overtime hours, pay estimates, and roof framing angles) are provided for informational purposes only.",
       h2: "2. Professional Verification",
-      p2: "Before finalizing payroll records, legal filings, or structural timber cuts on site, users should verify all figures against applicable labor agreements or engineering standards."
+      p2: "Before finalizing payroll records or structural timber cuts on site, users should verify all figures against applicable standards.",
+      h3: "3. Intellectual Property",
+      p3: "All text, diagrams, and tools on Calculette-tools are protected against unauthorized reproduction."
     }
   };
-  function applyLang() {
+
+  function render() {
     document.documentElement.lang = lang;
-    const d = dict[lang];
-    document.getElementById("langBtn").textContent = d.btn;
-    document.querySelectorAll("[data-t]").forEach(el => {
-      const k = el.getAttribute("data-t");
-      if (d[k]) el.textContent = d[k];
-    });
+    var d = txt[lang];
+    document.getElementById("lBtn").textContent = d.btn;
+    var els = document.querySelectorAll("[data-t]");
+    for (var i = 0; i < els.length; i++) {
+      var k = els[i].getAttribute("data-t");
+      if (d[k]) els[i].textContent = d[k];
+    }
   }
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
-    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
-    applyLang();
+
+  function switchLang() {
+    lang = (lang === "fr") ? "en" : "fr";
+    try { localStorage.setItem("calculette_lang_v1", lang); } catch (e) {}
+    render();
   }
-  try { if (localStorage.getItem(LANG_KEY) === "en") lang = "en"; } catch (e) {}
-  applyLang();
+
+  render();
 </script>
+
 </body>
 </html>
