@@ -132,8 +132,9 @@ html, body {
   min-width: 0;
   max-width: 100%;
 }
-.card h2, .card h3 { margin: 0 0 12px; font-size: 1.06rem; }
-.card p { margin: 0 0 10px; color: var(--muted); font-size: 0.92rem; }
+.card h2, .card h3 { margin: 14px 0 8px; font-size: 1.06rem; }
+.card h2:first-child, .card h3:first-child { margin-top: 0; }
+.card p { margin: 0 0 10px; color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
 
 /* Diagram Box */
 .diagram-box {
