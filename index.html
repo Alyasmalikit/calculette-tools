@@ -215,10 +215,14 @@
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
-  .btn {
-    width: 100%;
-    max-width: 100%;
+  .btn-group {
+    display: flex;
+    gap: 8px;
     margin-top: 6px;
+  }
+  .btn {
+    flex: 1;
+    max-width: 100%;
     background: var(--primary);
     color: #fff;
     border: none;
@@ -232,6 +236,18 @@
     text-align: center;
   }
   .btn:hover { background: var(--primary-hover); }
+  .btn-reset {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+    padding: 10px 12px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .btn-reset:hover { background: #e2e8f0; }
 
   .res-box {
     margin-top: 10px;
@@ -349,8 +365,11 @@
         </div>
       </div>
       <div>
-        <button type="button" class="btn" onclick="calcWT()" data-t="calcBtn">Calculer</button>
-        <div id="wtOut" class="res-box">Net : 8h 0min (8.00 h)</div>
+        <div class="btn-group">
+          <button type="button" class="btn" onclick="calcWT()" data-t="calcBtn">Calculer</button>
+          <button type="button" class="btn-reset" onclick="resetWT()" data-t="resetBtn">Reset</button>
+        </div>
+        <div id="wtOut" class="res-box">Net : 8h 00min (8.00 h)</div>
       </div>
     </div>
 
@@ -362,16 +381,19 @@
           <a href="working-hour-calculator.html" class="full-link" data-t="fullScreen">Ouvrir →</a>
         </div>
         <div class="field-row">
-          <div><label for="whDays" data-t="lblDays">Jours</label><input id="whDays" type="number" min="1" value="5" oninput="calcWH()"></div>
-          <div><label for="whPerDay" data-t="lblHrsDay">Heures / jour</label><input id="whPerDay" type="number" min="0" step="0.25" value="8" oninput="calcWH()"></div>
+          <div><label for="whDays" data-t="lblDays">Jours</label><input id="whDays" type="number" min="0" step="any" value="5" oninput="calcWH()"></div>
+          <div><label for="whPerDay" data-t="lblHrsDay">Heures / jour</label><input id="whPerDay" type="number" min="0" step="any" value="8" oninput="calcWH()"></div>
         </div>
         <div class="field-row">
-          <div><label for="whLimit" data-t="lblLimit">Seuil (h)</label><input id="whLimit" type="number" min="0" value="35" oninput="calcWH()"></div>
-          <div><label for="whRate" data-t="lblRate">Taux horaire</label><input id="whRate" type="number" min="0" step="0.5" value="0" oninput="calcWH()"></div>
+          <div><label for="whLimit" data-t="lblLimit">Seuil (h)</label><input id="whLimit" type="number" min="0" step="any" value="35" oninput="calcWH()"></div>
+          <div><label for="whRate" data-t="lblRate">Taux horaire</label><input id="whRate" type="number" min="0" step="any" value="0" oninput="calcWH()"></div>
         </div>
       </div>
       <div>
-        <button type="button" class="btn" onclick="calcWH()" data-t="calcBtn">Calculer</button>
+        <div class="btn-group">
+          <button type="button" class="btn" onclick="calcWH()" data-t="calcBtn">Calculer</button>
+          <button type="button" class="btn-reset" onclick="resetWH()" data-t="resetBtn">Reset</button>
+        </div>
         <div id="whOut" class="res-box">Total : 40.00 h | Sup : 5.00 h</div>
       </div>
     </div>
@@ -384,8 +406,8 @@
           <a href="time-calculator.html" class="full-link" data-t="fullScreen">Ouvrir →</a>
         </div>
         <div class="field-row-3">
-          <div><label for="tcH1">H1</label><input id="tcH1" type="number" min="0" value="2" oninput="calcTC()"></div>
-          <div><label for="tcM1">Min1</label><input id="tcM1" type="number" min="0" value="45" oninput="calcTC()"></div>
+          <div><label for="tcH1">H1</label><input id="tcH1" type="number" min="0" step="1" value="2" oninput="calcTC()"></div>
+          <div><label for="tcM1">Min1</label><input id="tcM1" type="number" min="0" step="1" value="45" oninput="calcTC()"></div>
           <div>
             <label for="tcOp" data-t="lblOp">Opération</label>
             <select id="tcOp" onchange="calcTC()">
@@ -395,12 +417,15 @@
           </div>
         </div>
         <div class="field-row">
-          <div><label for="tcH2">H2</label><input id="tcH2" type="number" min="0" value="1" oninput="calcTC()"></div>
-          <div><label for="tcM2">Min2</label><input id="tcM2" type="number" min="0" value="30" oninput="calcTC()"></div>
+          <div><label for="tcH2">H2</label><input id="tcH2" type="number" min="0" step="1" value="1" oninput="calcTC()"></div>
+          <div><label for="tcM2">Min2</label><input id="tcM2" type="number" min="0" step="1" value="30" oninput="calcTC()"></div>
         </div>
       </div>
       <div>
-        <button type="button" class="btn" onclick="calcTC()" data-t="calcBtn">Calculer</button>
+        <div class="btn-group">
+          <button type="button" class="btn" onclick="calcTC()" data-t="calcBtn">Calculer</button>
+          <button type="button" class="btn-reset" onclick="resetTC()" data-t="resetBtn">Reset</button>
+        </div>
         <div id="tcOut" class="res-box">Résultat : 4h 15min</div>
       </div>
     </div>
@@ -447,21 +472,25 @@
       <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
       <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="disclaimer.html" data-t="navDisclaimer">Mentions &amp; Clause</a>
+    </div>
   </div>
 </footer>
 
 <script>
+  const LANG_KEY = "calculette_lang_v1";
   let lang = "fr";
+
   const dict = {
     fr: {
       btn: "EN",
-      navHome: "Accueil",
-      navWt: "Temps de Travail",
-      navWh: "Heures & Salaire",
-      navTc: "Durées",
-      navFh: "Feuille Hebdo",
-      navCv: "Convertisseur",
-      navTo: "Toiture",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
       heroTitle: "Calculateurs d'Heures & Temps en Ligne",
       heroSub: "Calculs instantanés sur la page + accès direct aux outils spécialisés.",
       sec1: "1. Calculateurs Instantanés",
@@ -470,16 +499,10 @@
       t2Title: "Heures & Salaire",
       t3Title: "Addition / Soustraction",
       fullScreen: "Ouvrir →",
-      lblStart: "Début",
-      lblEnd: "Fin",
-      lblBreak: "Pause (min)",
-      lblDays: "Jours",
-      lblHrsDay: "Heures / jour",
-      lblLimit: "Seuil (h)",
-      lblRate: "Taux horaire",
+      lblStart: "Début", lblEnd: "Fin", lblBreak: "Pause (min)",
+      lblDays: "Jours", lblHrsDay: "Heures / jour", lblLimit: "Seuil (h)", lblRate: "Taux horaire",
       lblOp: "Opération",
-      calcBtn: "Calculer",
-      openTool: "Ouvrir l'outil →",
+      calcBtn: "Calculer", resetBtn: "Reset", openTool: "Ouvrir l'outil →",
       l1Title: "Feuille Hebdo (35h / 39h)",
       l1Desc: "Relevé hebdomadaire jour par jour avec calcul des heures supplémentaires et impression.",
       l2Title: "Convertisseur Décimal (HH:MM)",
@@ -489,13 +512,9 @@
     },
     en: {
       btn: "FR",
-      navHome: "Home",
-      navWt: "Working Time",
-      navWh: "Working Hours",
-      navTc: "Time Calculator",
-      navFh: "Weekly Timesheet",
-      navCv: "Decimal Converter",
-      navTo: "Hip Roof",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       heroTitle: "Online Time & Working Hours Calculators",
       heroSub: "Instant calculations right on this page + direct access to specialized tools.",
       sec1: "1. Instant Calculators",
@@ -504,16 +523,10 @@
       t2Title: "Working Hours & Pay",
       t3Title: "Add / Subtract Time",
       fullScreen: "Open →",
-      lblStart: "Start Time",
-      lblEnd: "End Time",
-      lblBreak: "Break (mins)",
-      lblDays: "Days",
-      lblHrsDay: "Hours / day",
-      lblLimit: "Limit (hrs)",
-      lblRate: "Hourly Rate",
+      lblStart: "Start Time", lblEnd: "End Time", lblBreak: "Break (mins)",
+      lblDays: "Days", lblHrsDay: "Hours / day", lblLimit: "Limit (hrs)", lblRate: "Hourly Rate",
       lblOp: "Operation",
-      calcBtn: "Calculate",
-      openTool: "Open Tool →",
+      calcBtn: "Calculate", resetBtn: "Reset", openTool: "Open Tool →",
       l1Title: "Weekly Timesheet (35h / 39h)",
       l1Desc: "Day-by-day weekly timesheet with automatic overtime calculation and print layout.",
       l2Title: "Decimal Converter (HH:MM)",
@@ -523,8 +536,7 @@
     }
   };
 
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
+  function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
     document.getElementById("langBtn").textContent = d.btn;
@@ -537,6 +549,12 @@
     calcTC();
   }
 
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
   function calcWT() {
     const s = document.getElementById("wtStart").value;
     const e = document.getElementById("wtEnd").value;
@@ -547,16 +565,25 @@
     let smTotal = sh * 60 + sm, emTotal = eh * 60 + em;
     if (emTotal < smTotal) emTotal += 1440;
     const net = Math.max(0, emTotal - smTotal - b);
-    const h = Math.floor(net / 60), m = net % 60, dec = (net / 60).toFixed(2);
+    const h = String(Math.floor(net / 60)).padStart(2, "0");
+    const m = String(net % 60).padStart(2, "0");
+    const dec = (net / 60).toFixed(2);
     document.getElementById("wtOut").textContent =
       lang === "en" ? `Net: ${h}h ${m}m (${dec} hrs)` : `Net : ${h}h ${m}min (${dec} h)`;
   }
 
+  function resetWT() {
+    document.getElementById("wtStart").value = "09:00";
+    document.getElementById("wtEnd").value = "17:30";
+    document.getElementById("wtBreak").value = "30";
+    calcWT();
+  }
+
   function calcWH() {
-    const d = Math.max(0, parseFloat(document.getElementById("whDays").value || "0"));
-    const h = Math.max(0, parseFloat(document.getElementById("whPerDay").value || "0"));
-    const lim = Math.max(0, parseFloat(document.getElementById("whLimit").value || "0"));
-    const rate = Math.max(0, parseFloat(document.getElementById("whRate").value || "0"));
+    const d = Math.max(0, parseFloat(document.getElementById("whDays").value) || 0);
+    const h = Math.max(0, parseFloat(document.getElementById("whPerDay").value) || 0);
+    const lim = Math.max(0, parseFloat(document.getElementById("whLimit").value) || 0);
+    const rate = Math.max(0, parseFloat(document.getElementById("whRate").value) || 0);
     const tot = d * h;
     const ot = Math.max(0, tot - lim);
     let txt = lang === "en"
@@ -568,8 +595,44 @@
     document.getElementById("whOut").textContent = txt;
   }
 
+  function resetWH() {
+    document.getElementById("whDays").value = "5";
+    document.getElementById("whPerDay").value = "8";
+    document.getElementById("whLimit").value = "35";
+    document.getElementById("whRate").value = "0";
+    calcWH();
+  }
+
   function calcTC() {
-    const h1 = Math.max(0, parseInt(document.getElementById("tcH1").value || "0", 10));
-    const m1 = Math.max(0, parseInt(document.getElementById("tcM1").value || "0", 10));
-    const h2 = Math.max(0, parseInt(document.getElementById("tcH2").value || "0", 10));
-    const m2 = Math.max(0, parseInt(document.getElementBy
+    const h1 = Math.max(0, parseInt(document.getElementById("tcH1").value, 10) || 0);
+    const m1 = Math.max(0, parseInt(document.getElementById("tcM1").value, 10) || 0);
+    const h2 = Math.max(0, parseInt(document.getElementById("tcH2").value, 10) || 0);
+    const m2 = Math.max(0, parseInt(document.getElementById("tcM2").value, 10) || 0);
+    const op = document.getElementById("tcOp").value;
+    const t1 = h1 * 60 + m1, t2 = h2 * 60 + m2;
+    const res = op === "add" ? (t1 + t2) : (t1 - t2);
+    const sign = res < 0 ? "-" : "";
+    const abs = Math.abs(res);
+    const h = Math.floor(abs / 60), m = abs % 60;
+    document.getElementById("tcOut").textContent =
+      lang === "en" ? `Result: ${sign}${h}h ${m}m` : `Résultat : ${sign}${h}h ${m}min`;
+  }
+
+  function resetTC() {
+    document.getElementById("tcH1").value = "2";
+    document.getElementById("tcM1").value = "45";
+    document.getElementById("tcOp").value = "add";
+    document.getElementById("tcH2").value = "1";
+    document.getElementById("tcM2").value = "30";
+    calcTC();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  applyLang();
+</script>
+
+</body>
+</html>
