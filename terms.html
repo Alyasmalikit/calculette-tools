@@ -122,6 +122,8 @@
   }
   .card h2 { margin: 0 0 8px; font-size: 1.08rem; }
   .card p { margin: 0 0 14px; color: var(--muted); font-size: 0.94rem; }
+  .card a { color: var(--primary); font-weight: 600; text-decoration: none; }
+  .card a:hover { text-decoration: underline; }
   .site-footer {
     width: 100%;
     border-top: 1px solid var(--border);
@@ -181,7 +183,10 @@
     <p data-t="p2">Avant toute validation officielle de fiche de paie, déclaration sociale ou découpe de bois sur chantier, il appartient à l'utilisateur de vérifier les résultats conformément aux conventions collectives ou aux règles de l'art en vigueur.</p>
 
     <h2 data-t="h3">3. Propriété intellectuelle</h2>
-    <p style="margin-bottom:0;" data-t="p3">L'ensemble des textes, schémas techniques et interfaces du site Calculette-tools est protégé contre toute reproduction totale ou partielle sans autorisation.</p>
+    <p data-t="p3">L'ensemble des textes, schémas techniques et interfaces du site Calculette-tools est protégé contre toute reproduction totale ou partielle sans autorisation.</p>
+
+    <h2 data-t="h4">4. Confidentialité et contact</h2>
+    <p style="margin-bottom:0;" data-t="p4Body">Consultez notre <a href="privacy.html">Politique de Confidentialité</a> ou écrivez-nous via la page <a href="contact.html">Contact</a>.</p>
   </div>
 </main>
 
@@ -223,7 +228,9 @@
       h2: "2. Vérification professionnelle",
       p2: "Avant toute validation officielle de fiche de paie, déclaration sociale ou découpe de bois sur chantier, il appartient à l'utilisateur de vérifier les résultats conformément aux conventions collectives ou aux règles de l'art en vigueur.",
       h3: "3. Propriété intellectuelle",
-      p3: "L'ensemble des textes, schémas techniques et interfaces du site Calculette-tools est protégé contre toute reproduction totale ou partielle sans autorisation."
+      p3: "L'ensemble des textes, schémas techniques et interfaces du site Calculette-tools est protégé contre toute reproduction totale ou partielle sans autorisation.",
+      h4: "4. Confidentialité et contact",
+      p4Html: 'Consultez notre <a href="privacy.html">Politique de Confidentialité</a> ou écrivez-nous via la page <a href="contact.html">Contact</a>.'
     },
     en: {
       btn: "FR",
@@ -237,7 +244,9 @@
       h2: "2. Professional Verification",
       p2: "Before finalizing payroll records, legal filings, or structural timber cuts on site, users should verify all figures against applicable labor agreements or engineering standards.",
       h3: "3. Intellectual Property",
-      p3: "All text, technical diagrams, and interface elements on Calculette-tools are protected against unauthorized reproduction in whole or in part."
+      p3: "All text, technical diagrams, and interface elements on Calculette-tools are protected against unauthorized reproduction in whole or in part.",
+      h4: "4. Privacy and Contact",
+      p4Html: 'Read our <a href="privacy.html">Privacy Policy</a> or reach out via the <a href="contact.html">Contact</a> page.'
     }
   };
 
@@ -247,7 +256,11 @@
     document.getElementById("langBtn").textContent = d.btn;
     document.querySelectorAll("[data-t]").forEach(function(el) {
       const k = el.getAttribute("data-t");
-      if (d[k]) el.textContent = d[k];
+      if (k === "p4Body" && d.p4Html) {
+        el.innerHTML = d.p4Html;
+      } else if (d[k]) {
+        el.textContent = d[k];
+      }
     });
   }
 
