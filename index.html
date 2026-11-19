@@ -35,8 +35,6 @@
     margin: 0 auto;
     padding: 0 20px;
   }
-
-  /* Header */
   .site-header {
     position: sticky;
     top: 0;
@@ -107,8 +105,6 @@
     background: var(--primary);
     color: #fff;
   }
-
-  /* Hero */
   .hero {
     margin: 26px 0 22px;
     padding: 36px 24px;
@@ -141,8 +137,6 @@
     max-width: 660px;
     color: var(--muted);
   }
-
-  /* Cards Grid */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -175,8 +169,6 @@
     color: var(--muted);
     font-size: 0.92rem;
   }
-
-  /* Colored Button */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -197,8 +189,6 @@
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
   }
-
-  /* Quick Panel */
   .panel {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -237,8 +227,6 @@
     border-radius: 10px;
     font-weight: 700;
   }
-
-  /* Guide */
   .guide {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -249,8 +237,6 @@
   }
   .guide h2 { margin: 0 0 8px; font-size: 1.15rem; }
   .guide p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-
-  /* Footer */
   .site-footer {
     border-top: 1px solid var(--border);
     background: var(--surface);
@@ -281,15 +267,15 @@
     <a href="index.html" class="brand"><span class="dot"></span>Calculette-tools</a>
     <div class="nav-right">
       <nav class="nav-menu">
-        <a href="index.html" class="active" data-i18n="navHome">Accueil / Home</a>
-        <a href="working-time-calculator.html" data-i18n="navWt">Temps de Travail / Working Time</a>
-        <a href="working-hour-calculator.html" data-i18n="navWh">Heures &amp; Paie / Working Hours</a>
-        <a href="time-calculator.html" data-i18n="navTc">Durées / Time Calc</a>
-        <a href="feuille-hebdo.html" data-i18n="navFh">Feuille Hebdo</a>
-        <a href="convertisseur.html" data-i18n="navCv">Convertisseur</a>
-        <a href="toiture-croupe.html" data-i18n="navTo">Toiture</a>
+        <a href="index.html" class="active">Accueil / Home</a>
+        <a href="working-time-calculator.html">Temps de Travail / Working Time</a>
+        <a href="working-hour-calculator.html">Heures &amp; Paie / Working Hours</a>
+        <a href="time-calculator.html">Durées / Time Calc</a>
+        <a href="feuille-hebdo.html">Feuille Hebdo</a>
+        <a href="convertisseur.html">Convertisseur</a>
+        <a href="toiture-croupe.html">Toiture</a>
       </nav>
-      <button type="button" id="langToggle" class="lang-btn" onclick="toggleLang()">EN / FR</button>
+      <button type="button" id="langToggle" class="lang-btn" onclick="toggleLang()">FR / EN</button>
     </div>
   </div>
 </header>
@@ -304,48 +290,48 @@
   <section class="grid">
     <div class="card">
       <div>
-        <h2 data-i18n="c1Title">Working Time / Temps de Travail</h2>
-        <p data-i18n="c1Desc">Début, fin et pause pour obtenir les heures nettes (y compris de nuit) / Start, end &amp; break for net hours.</p>
+        <h2>Working Time / Temps de Travail</h2>
+        <p>Début, fin et pause pour obtenir les heures nettes (y compris de nuit) / Start, end &amp; break for net hours.</p>
       </div>
       <a href="working-time-calculator.html" class="btn" data-i18n="openBtn">Ouvrir / Open Tool →</a>
     </div>
 
     <div class="card">
       <div>
-        <h2 data-i18n="c2Title">Working Hours / Heures &amp; Salaire</h2>
-        <p data-i18n="c2Desc">Total d'heures, heures sup et rémunération horaire / Total hours, overtime &amp; hourly pay.</p>
+        <h2>Working Hours / Heures &amp; Salaire</h2>
+        <p>Total d'heures, heures sup et rémunération horaire / Total hours, overtime &amp; hourly pay.</p>
       </div>
       <a href="working-hour-calculator.html" class="btn" data-i18n="openBtn">Ouvrir / Open Tool →</a>
     </div>
 
     <div class="card">
       <div>
-        <h2 data-i18n="c3Title">Time Calculator / Calculateur de Temps</h2>
-        <p data-i18n="c3Desc">Additionnez ou soustrayez heures, minutes et secondes / Add or subtract hours, minutes &amp; seconds.</p>
+        <h2>Time Calculator / Calculateur de Temps</h2>
+        <p>Additionnez ou soustrayez heures, minutes et secondes / Add or subtract hours, minutes &amp; seconds.</p>
       </div>
       <a href="time-calculator.html" class="btn" data-i18n="openBtn">Ouvrir / Open Tool →</a>
     </div>
 
     <div class="card">
       <div>
-        <h2 data-i18n="c4Title">Feuille Hebdo (35h / 39h)</h2>
-        <p data-i18n="c4Desc">Relevé hebdomadaire avec calcul des heures supplémentaires / Weekly timesheet &amp; overtime.</p>
+        <h2>Feuille Hebdo (35h / 39h)</h2>
+        <p>Relevé hebdomadaire avec calcul des heures supplémentaires / Weekly timesheet &amp; overtime.</p>
       </div>
       <a href="feuille-hebdo.html" class="btn" data-i18n="openBtn">Ouvrir / Open Tool →</a>
     </div>
 
     <div class="card">
       <div>
-        <h2 data-i18n="c5Title">Convertisseur Décimal / Decimal</h2>
-        <p data-i18n="c5Desc">Convertissez HH:MM en centièmes d'heure / Convert HH:MM to decimal hours.</p>
+        <h2>Convertisseur Décimal / Decimal</h2>
+        <p>Convertissez HH:MM en centièmes d'heure / Convert HH:MM to decimal hours.</p>
       </div>
       <a href="convertisseur.html" class="btn" data-i18n="openBtn">Ouvrir / Open Tool →</a>
     </div>
 
     <div class="card">
       <div>
-        <h2 data-i18n="c6Title">Toiture à Croupe / Hip Roof</h2>
-        <p data-i18n="c6Desc">Calcul de charpente : pente, chevrons, arêtiers et surface / Roof framing &amp; surface area.</p>
+        <h2>Toiture à Croupe / Hip Roof</h2>
+        <p>Calcul de charpente : pente, chevrons, arêtiers et surface / Roof framing &amp; surface area.</p>
       </div>
       <a href="toiture-croupe.html" class="btn" data-i18n="openBtn">Ouvrir / Open Tool →</a>
     </div>
@@ -373,8 +359,8 @@
   </section>
 
   <section class="guide">
-    <h2 data-i18n="gTitle">Calculette-tools — FR &amp; EN</h2>
-    <p data-i18n="gText">Tous les outils partagent la même marque Calculette-tools, un design moderne et une prise en charge bilingue français et anglais.</p>
+    <h2>Calculette-tools — FR &amp; EN</h2>
+    <p>Tous les outils partagent la même marque Calculette-tools, un design moderne et une prise en charge bilingue français et anglais.</p>
   </section>
 </main>
 
@@ -397,7 +383,7 @@
 </footer>
 
 <script>
-  let currentLang = "bilingual"; // "bilingual" | "fr" | "en"
+  let currentLang = "bilingual";
   const i18n = {
     bilingual: {
       badge: "FR & EN • Outils Gratuits / Free Tools",
