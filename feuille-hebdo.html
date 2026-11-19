@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feuille d'Heures Hebdomadaire (35h/39h) | Calculette-tools</title>
-<meta name="description" content="Calcul automatique des heures normales et supplémentaires selon votre base contrat (35h, 39h, 40h) avec impression PDF.">
+<title>Feuille Hebdomadaire d'Heures | Calculette-tools</title>
+<meta name="description" content="Remplissez votre feuille d'heures hebdomadaire du lundi au dimanche, calculez vos heures supplémentaires, sauvegardez automatiquement et imprimez.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -15,27 +15,31 @@
     --primary: #2563eb;
     --primary-hover: #1d4ed8;
     --soft: #eff6ff;
-    --green: #15803d;
-    --accent: #0ea5e9;
     --radius: 14px;
     --shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
   }
-  * { box-sizing: border-box; }
-  body {
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
     margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--ink);
     line-height: 1.55;
   }
   .container {
+    width: 100%;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
-  /* Unified Header */
+  /* Header */
   .site-header {
+    width: 100%;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
   }
@@ -44,17 +48,18 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
-    padding: 14px 0;
+    gap: 10px;
+    padding: 12px 0;
   }
   .brand {
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--ink);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
   }
   .brand-dot {
     width: 10px;
@@ -63,87 +68,94 @@
     background: var(--primary);
     display: inline-block;
   }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+  }
   .nav-menu {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
+    min-width: 0;
   }
   .nav-menu a {
     color: var(--muted);
     text-decoration: none;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    padding: 6px 10px;
+    padding: 6px 9px;
     border-radius: 8px;
+    white-space: nowrap;
   }
   .nav-menu a:hover, .nav-menu a.active {
     color: var(--primary);
     background: var(--soft);
   }
-
-  /* Main Panel */
-  .wrap { padding: 24px 0 36px; }
-  .panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    box-shadow: var(--shadow);
-  }
-  .panel-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-bottom: 18px;
-  }
-  .panel-head h1 {
-    margin: 0;
-    font-size: clamp(1.4rem, 2.8vw, 1.85rem);
-    letter-spacing: -0.02em;
-  }
-  .panel-head p {
-    margin: 4px 0 0;
-    color: var(--muted);
-    font-size: 0.94rem;
-  }
-  .btn {
+  .lang-btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 10px 16px;
-    border-radius: 9px;
-    font-weight: 600;
-    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.82rem;
     cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    flex-shrink: 0;
   }
-  .btn:hover { background: var(--primary-hover); }
+  .lang-btn:hover { background: var(--primary-hover); }
 
-  /* Meta Inputs */
-  .meta-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 14px;
+  /* Page Head & Controls */
+  .page-head { padding: 24px 0 12px; }
+  .page-head h1 {
+    margin: 0 0 6px;
+    font-size: clamp(1.4rem, 3vw, 1.95rem);
+    letter-spacing: -0.02em;
+  }
+  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
     margin-bottom: 20px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .top-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .ctrl-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: end;
   }
   label {
     display: block;
-    font-size: 0.86rem;
+    font-size: 0.76rem;
     font-weight: 600;
-    color: var(--ink);
-    margin-bottom: 6px;
+    color: var(--muted);
+    margin-bottom: 4px;
   }
-  input, select {
+  input[type="time"], input[type="number"], select {
     width: 100%;
-    padding: 9px 11px;
+    min-width: 0;
+    padding: 8px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     background: #fff;
     color: var(--ink);
   }
@@ -153,84 +165,108 @@
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
 
-  /* Timesheet Table */
-  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
+  .btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
   }
-  th, td {
-    padding: 9px 10px;
+  .btn:hover { background: var(--primary-hover); }
+  .btn-sec {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .btn-sec:hover { background: #e2e8f0; }
+
+  /* Day Rows */
+  .day-row {
+    display: grid;
+    grid-template-columns: minmax(110px, 1.1fr) repeat(2, minmax(0, 1fr)) minmax(0, 0.85fr) minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
     border: 1px solid var(--border);
-    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #fafcff;
   }
-  th {
-    background: var(--soft);
+  @media (max-width: 820px) {
+    .day-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .day-name {
+      grid-column: 1 / -1;
+    }
+  }
+  .day-name {
     font-weight: 700;
+    font-size: 0.92rem;
     color: var(--ink);
   }
-  td input {
-    max-width: 110px;
-    text-align: center;
-    padding: 7px 8px;
-  }
-
-  /* Summary Stats */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 14px;
+  .out-pill {
+    padding: 8px 10px;
     background: var(--soft);
     border: 1px solid #bfdbfe;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.86rem;
+    text-align: center;
+    white-space: nowrap;
   }
-  .stat-lbl {
+
+  /* Summary Bar */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+  .sum-box {
+    background: var(--soft);
+    border: 1px solid #93c5fd;
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .sum-lbl {
     display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.76rem;
+    font-weight: 700;
     color: var(--muted);
     margin-bottom: 4px;
   }
-  .stat-val {
-    font-size: 1.15rem;
+  .sum-val {
+    font-size: 1.05rem;
     font-weight: 800;
     color: var(--ink);
   }
 
-  /* Signatures */
-  .sign-box {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin-top: 24px;
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-  .sign-col {
-    flex: 1 1 240px;
-    border-top: 1px solid #94a3b8;
-    padding-top: 8px;
-  }
-
-  /* Unified Footer */
+  /* Footer & Print */
   .site-footer {
+    width: 100%;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding: 24px 0 34px;
+    padding: 22px 0 32px;
     text-align: center;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     color: var(--muted);
+    margin-top: 24px;
   }
   .footer-links {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 14px;
+    gap: 12px;
   }
   .footer-links a {
     color: var(--muted);
@@ -240,9 +276,9 @@
   .footer-links a:hover { color: var(--primary); }
 
   @media print {
-    .site-header, .site-footer, .no-print { display: none !important; }
+    .site-header, .top-controls button, .site-footer { display: none; }
     body { background: #fff; }
-    .panel { box-shadow: none; border: none; padding: 0; }
+    .card { box-shadow: none; border: 1px solid #cbd5e1; }
   }
 </style>
 </head>
@@ -251,166 +287,247 @@
 <header class="site-header">
   <div class="container nav-bar">
     <a href="index.html" class="brand"><span class="brand-dot"></span>Calculette-tools</a>
-    <nav class="nav-menu">
-      <a href="index.html">Accueil / Home</a>
-      <a href="working-time-calculator.html">Working Time</a>
-      <a href="working-hour-calculator.html">Working Hours</a>
-      <a href="time-calculator.html">Time Calculator</a>
-      <a href="feuille-hebdo.html" class="active">Feuille Hebdo</a>
-      <a href="convertisseur.html">Convertisseur</a>
-      <a href="toiture-croupe.html">Toiture</a>
-    </nav>
+    <div class="nav-right">
+      <nav class="nav-menu">
+        <a href="index.html" data-t="navHome">Accueil</a>
+        <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+        <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+        <a href="time-calculator.html" data-t="navTc">Durées</a>
+        <a href="feuille-hebdo.html" class="active" data-t="navFh">Feuille Hebdo</a>
+        <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+        <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+      </nav>
+      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
+    </div>
   </div>
 </header>
 
-<main class="container wrap">
-  <div class="panel">
-    <div class="panel-head">
-      <div>
-        <h1>Feuille d'Heures Hebdomadaire (Lundi – Dimanche)</h1>
-        <p>Calcul automatique des heures normales et supplémentaires selon votre base contrat.</p>
-      </div>
-      <button type="button" onclick="window.print()" class="btn no-print">Imprimer / PDF (A4)</button>
-    </div>
+<main class="container">
+  <div class="page-head">
+    <h1 data-t="pageTitle">Feuille d'Heures Hebdomadaire</h1>
+    <p data-t="pageSub">Saisissez vos horaires du lundi au dimanche, calculez vos heures supplémentaires et imprimez votre relevé[cite: 1].</p>
+  </div>
 
-    <div class="meta-grid">
-      <div>
-        <label for="emp-name">Nom / Salarié :</label>
-        <input id="emp-name" type="text" placeholder="Ex : Jean Dupont">
+  <div class="card">
+    <div class="top-controls">
+      <div class="ctrl-group">
+        <div>
+          <label for="baseSelect" data-t="lblBase">Base hebdomadaire</label>
+          <select id="baseSelect" onchange="calcWeek()">
+            <option value="35" selected>35h / semaine</option>
+            <option value="39">39h / semaine</option>
+            <option value="40">40h / semaine</option>
+          </select>
+        </div>
       </div>
-      <div>
-        <label for="wk-site">Semaine / Chantier :</label>
-        <input id="wk-site" type="text" placeholder="Ex : Semaine 47 — Chantier Lyon">
-      </div>
-      <div>
-        <label for="base-hrs">Base Hebdomadaire :</label>
-        <select id="base-hrs">
-          <option value="35" selected>35 heures (Légal France)</option>
-          <option value="39">39 heures (BTP / Hôtellerie)</option>
-          <option value="40">40 heures (Suisse / International)</option>
-        </select>
+      <div class="ctrl-group">
+        <button type="button" class="btn" onclick="window.print()" data-t="btnPrint">Imprimer</button>
+        <button type="button" class="btn-sec" onclick="resetWeek()" data-t="btnReset">Reset</button>
       </div>
     </div>
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Jour</th>
-            <th>Début</th>
-            <th>Fin</th>
-            <th>Pause (min)</th>
-            <th>Total Jour (HH:MM)</th>
-            <th>Décimal</th>
-          </tr>
-        </thead>
-        <tbody id="wk-body"></tbody>
-      </table>
-    </div>
+    <div id="daysContainer"></div>
 
-    <div class="stats">
-      <div>
-        <span class="stat-lbl">Total Semaine (HH:MM)</span>
-        <span class="stat-val" id="wk-hm" style="color:var(--green);">00h 00min</span>
+    <div class="summary-grid">
+      <div class="sum-box">
+        <span class="sum-lbl" data-t="sTotHM">Total Hebdo (HH:MM)</span>
+        <span class="sum-val" id="wkTotHM">00h 00min</span>
       </div>
-      <div>
-        <span class="stat-lbl">Total Décimal</span>
-        <span class="stat-val" id="wk-dec">0.00 h</span>
+      <div class="sum-box">
+        <span class="sum-lbl" data-t="sTotDec">Total Hebdo (1/100e)</span>
+        <span class="sum-val" id="wkTotDec">0.00 h</span>
       </div>
-      <div>
-        <span class="stat-lbl">Heures Normales</span>
-        <span class="stat-val" id="wk-norm">0.00 h</span>
+      <div class="sum-box">
+        <span class="sum-lbl" data-t="sOt">Heures Supplémentaires</span>
+        <span class="sum-val" id="wkOt">0.00 h</span>
       </div>
-      <div>
-        <span class="stat-lbl">Heures Supplémentaires</span>
-        <span class="stat-val" id="wk-ot" style="color:var(--accent);">0.00 h</span>
-      </div>
-    </div>
-
-    <div class="sign-box">
-      <div class="sign-col">Signature du Salarié :</div>
-      <div class="sign-col">Validation Responsable / Client :</div>
     </div>
   </div>
 </main>
 
 <footer class="site-footer">
   <div class="container">
-    <div>Calculette-tools — Calculateurs gratuits / Free online calculators</div>
+    <div>Calculette-tools</div>
     <div class="footer-links">
-      <a href="index.html">Accueil / Home</a>
-      <a href="working-time-calculator.html">Working Time</a>
-      <a href="working-hour-calculator.html">Working Hours</a>
-      <a href="time-calculator.html">Time Calculator</a>
-      <a href="feuille-hebdo.html">Feuille Hebdo</a>
-      <a href="convertisseur.html">Convertisseur</a>
-      <a href="toiture-croupe.html">Toiture</a>
-      <a href="about.html">About / À propos</a>
-      <a href="privacy.html">Privacy / Confidentialité</a>
-      <a href="terms.html">Terms / Conditions</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
   </div>
 </footer>
 
 <script>
-(function(){
-  const days = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-  const tbody = document.getElementById('wk-body');
-  const baseSel = document.getElementById('base-hrs');
+  const STORAGE_KEY = "calculette_feuille_hebdo_v1";
+  let lang = "fr";
 
-  days.forEach((d, i) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td><strong>${d}</strong></td>
-      <td><input type="text" data-d="${i}" data-k="s" value="${i < 5 ? '08:00' : ''}" placeholder="08:00"></td>
-      <td><input type="text" data-d="${i}" data-k="e" value="${i < 5 ? '16:00' : ''}" placeholder="16:00"></td>
-      <td><input type="number" data-d="${i}" data-k="b" value="${i < 5 ? 60 : 0}"></td>
-      <td><strong id="d-hm-${i}">00h 00min</strong></td>
-      <td><span id="d-dec-${i}">0.00 h</span></td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  function parseHM(v) {
-    const p = String(v || '').split(':');
-    if (p.length !== 2 || p[0] === '' || p[1] === '') return null;
-    const h = Number(p[0]), m = Number(p[1]);
-    return (isNaN(h) || isNaN(m) || h < 0 || h > 23 || m < 0 || m > 59) ? null : h * 60 + m;
-  }
-
-  function fmtHM(m) {
-    return String(Math.floor(m / 60)).padStart(2, '0') + 'h ' + String(Math.round(m % 60)).padStart(2, '0') + 'min';
-  }
-
-  function calc() {
-    let sum = 0;
-    for (let i = 0; i < 7; i++) {
-      const s = parseHM(tbody.querySelector(`[data-d="${i}"][data-k="s"]`).value);
-      const e = parseHM(tbody.querySelector(`[data-d="${i}"][data-k="e"]`).value);
-      const b = Number(tbody.querySelector(`[data-d="${i}"][data-k="b"]`).value) || 0;
-      let net = 0;
-      if (s !== null && e !== null) {
-        let d = e - s;
-        if (d < 0) d += 1440;
-        net = Math.max(0, d - b);
-      }
-      sum += net;
-      document.getElementById(`d-hm-${i}`).textContent = fmtHM(net);
-      document.getElementById(`d-dec-${i}`).textContent = (net / 60).toFixed(2) + ' h';
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      pageTitle: "Feuille d'Heures Hebdomadaire",
+      pageSub: "Saisissez vos horaires du lundi au dimanche, calculez vos heures supplémentaires et imprimez votre relevé.",
+      lblBase: "Base hebdomadaire",
+      btnPrint: "Imprimer",
+      btnReset: "Reset",
+      sTotHM: "Total Hebdo (HH:MM)",
+      sTotDec: "Total Hebdo (1/100e)",
+      sOt: "Heures Supplémentaires",
+      lblStart: "Début", lblEnd: "Fin", lblBreak: "Pause (min)",
+      lblDayHM: "Temps", lblDayDec: "Décimal",
+      days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      pageTitle: "Weekly Timesheet",
+      pageSub: "Enter your shift times from Monday to Sunday, calculate overtime, and print your timesheet.",
+      lblBase: "Weekly base",
+      btnPrint: "Print",
+      btnReset: "Reset",
+      sTotHM: "Weekly Total (HH:MM)",
+      sTotDec: "Weekly Total (1/100e)",
+      sOt: "Overtime Hours",
+      lblStart: "Start", lblEnd: "End", lblBreak: "Break (min)",
+      lblDayHM: "Duration", lblDayDec: "Decimal",
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     }
-    const totDec = sum / 60;
-    const base = Number(baseSel.value) || 35;
-    document.getElementById('wk-hm').textContent = fmtHM(sum);
-    document.getElementById('wk-dec').textContent = totDec.toFixed(2) + ' h';
-    document.getElementById('wk-norm').textContent = Math.min(totDec, base).toFixed(2) + ' h';
-    document.getElementById('wk-ot').textContent = Math.max(0, totDec - base).toFixed(2) + ' h';
+  };
+
+  function makeDefaultDays() {
+    return [
+      { start: "09:00", end: "17:30", brk: 30 },
+      { start: "09:00", end: "17:30", brk: 30 },
+      { start: "09:00", end: "17:30", brk: 30 },
+      { start: "09:00", end: "17:30", brk: 30 },
+      { start: "09:00", end: "17:00", brk: 30 },
+      { start: "", end: "", brk: 0 },
+      { start: "", end: "", brk: 0 }
+    ];
   }
 
-  tbody.addEventListener('input', calc);
-  baseSel.addEventListener('change', calc);
-  calc();
-})();
+  let weekDays = loadDays();
+
+  function loadDays() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length === 7) return parsed;
+      }
+    } catch (e) {}
+    return makeDefaultDays();
+  }
+
+  function saveDays() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(weekDays));
+    } catch (e) {}
+  }
+
+  function fmtHM(mins) {
+    const abs = Math.max(0, Math.round(mins));
+    const h = String(Math.floor(abs / 60)).padStart(2, "0");
+    const m = String(abs % 60).padStart(2, "0");
+    return `${h}h ${m}min`;
+  }
+
+  function renderDays() {
+    const wrap = document.getElementById("daysContainer");
+    const d = dict[lang];
+    wrap.innerHTML = "";
+
+    weekDays.forEach((item, idx) => {
+      const row = document.createElement("div");
+      row.className = "day-row";
+      row.innerHTML = `
+        <div class="day-name">${d.days[idx]}</div>
+        <div>
+          <label>${d.lblStart}</label>
+          <input type="time" value="${item.start}" oninput="updateDay(${idx}, 'start', this.value)">
+        </div>
+        <div>
+          <label>${d.lblEnd}</label>
+          <input type="time" value="${item.end}" oninput="updateDay(${idx}, 'end', this.value)">
+        </div>
+        <div>
+          <label>${d.lblBreak}</label>
+          <input type="number" min="0" value="${item.brk}" oninput="updateDay(${idx}, 'brk', Number(this.value) || 0)">
+        </div>
+        <div>
+          <label>${d.lblDayHM}</label>
+          <div class="out-pill" id="dHM-${idx}">00h 00min</div>
+        </div>
+        <div>
+          <label>${d.lblDayDec}</label>
+          <div class="out-pill" id="dDec-${idx}">0.00 h</div>
+        </div>
+      `;
+      wrap.appendChild(row);
+    });
+
+    calcWeek();
+  }
+
+  function updateDay(idx, key, val) {
+    weekDays[idx][key] = val;
+    saveDays();
+    calcWeek();
+  }
+
+  function resetWeek() {
+    weekDays = makeDefaultDays();
+    saveDays();
+    renderDays();
+  }
+
+  function calcWeek() {
+    let totalMins = 0;
+    weekDays.forEach((item, idx) => {
+      let net = 0;
+      if (item.start && item.end) {
+        const [sh, sm] = item.start.split(":").map(Number);
+        const [eh, em] = item.end.split(":").map(Number);
+        let sM = sh * 60 + sm;
+        let eM = eh * 60 + em;
+        if (eM < sM) eM += 1440;
+        net = Math.max(0, (eM - sM) - (Number(item.brk) || 0));
+      }
+      totalMins += net;
+      const hmEl = document.getElementById(`dHM-${idx}`);
+      const decEl = document.getElementById(`dDec-${idx}`);
+      if (hmEl) hmEl.textContent = fmtHM(net);
+      if (decEl) decEl.textContent = `${(net / 60).toFixed(2)} h`;
+    });
+
+    const totalDec = totalMins / 60;
+    const base = Number(document.getElementById("baseSelect").value) || 35;
+    const ot = Math.max(0, totalDec - base);
+
+    document.getElementById("wkTotHM").textContent = fmtHM(totalMins);
+    document.getElementById("wkTotDec").textContent = `${totalDec.toFixed(2)} h`;
+    document.getElementById("wkOt").textContent = `${ot.toFixed(2)} h`;
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+    renderDays();
+  }
+
+  renderDays();
 </script>
+
 </body>
 </html>
