@@ -151,15 +151,20 @@
     margin-bottom: 6px;
   }
 
-  /* Ad Slot Wrapper */
+  /* Dedicated Ad Space */
   .ad-slot {
     width: 100%;
     max-width: 728px;
-    margin: 16px auto;
+    min-height: 90px;
+    margin: 18px auto;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-  }
-  .ad-slot:empty {
-    display: none;
   }
 
   /* Slot Rows */
@@ -370,8 +375,8 @@
     </div>
   </div>
 
-  <!-- Optional Ad Slot Wrapper -->
-  <div class="ad-slot" aria-hidden="true"></div>
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
 
   <div class="card">
     <h2 data-t="secSub">Soustraction de Temps (A − B)</h2>
@@ -430,6 +435,9 @@
     <h3 data-t="guideSub3">3. Bon réflexe avant validation</h3>
     <p style="margin-bottom:0;" data-t="guideP3">Cet outil est conçu pour accélérer vos calculs quotidiens et limiter les fautes de tête. Pour une fiche de paie officielle, des règles d'heures supplémentaires ou un accord d'entreprise particulier, pensez toujours à vérifier le résultat selon votre convention ou votre feuille de pointage.</p>
   </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
@@ -437,7 +445,7 @@
     <div>Calculette-tools</div>
     <div class="footer-links">
       <a href="index.html" data-t="navHome">Accueil</a>
-      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-time-calculator.html" class="active" data-t="navWt">Temps de Travail</a>
       <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
       <a href="time-calculator.html" data-t="navTc">Durées</a>
       <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
