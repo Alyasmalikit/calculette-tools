@@ -1,106 +1,29 @@
-<!-- Detailed Technical Hip Roof Épure Diagram -->
+<!-- Simple Hip Roof Diagram -->
   <div class="diagram-card">
-    <svg viewBox="0 0 820 265" role="img" aria-label="Épure détaillée d'une toiture en croupe avec arêtiers, empannons et angles">
-      <defs>
-        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
-          <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" stroke-width="0.7"/>
-        </pattern>
-        <marker id="arr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#334155"/>
-        </marker>
-        <marker id="arrGreen" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M 0 1.5 L 8.5 5 L 0 8.5 z" fill="#16a34a"/>
-        </marker>
-      </defs>
-
-      <!-- Blueprint Background -->
-      <rect x="0" y="0" width="820" height="265" rx="12" fill="#f8fafc"/>
-      <rect x="10" y="10" width="800" height="245" rx="8" fill="url(#grid)" stroke="#cbd5e1" stroke-width="1"/>
-
-      <!-- ==================== LEFT: PLAN VIEW (VUE EN PLAN / ÉPURE) ==================== -->
-      <text x="215" y="30" fill="#0f172a" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle">1. VUE EN PLAN (ÉPURE AU SOL)</text>
-
-      <!-- Outer Eaves Rectangle (Sablière / Égout) -->
-      <rect x="55" y="55" width="320" height="150" fill="#eff6ff" stroke="#1e293b" stroke-width="2.2"/>
-
-      <!-- Ridge Line (Faîtage) -->
-      <line x1="135" y1="130" x2="295" y2="130" stroke="#dc2626" stroke-width="3"/>
-
-      <!-- 4 Hip Rafters (Arêtiers) -->
-      <line x1="55" y1="55" x2="135" y2="130" stroke="#2563eb" stroke-width="2.4"/>
-      <line x1="55" y1="205" x2="135" y2="130" stroke="#2563eb" stroke-width="2.4"/>
-      <line x1="375" y1="55" x2="295" y2="130" stroke="#2563eb" stroke-width="2.4"/>
-      <line x1="375" y1="205" x2="295" y2="130" stroke="#2563eb" stroke-width="2.4"/>
-
-      <!-- Common Rafters (Chevrons courants - Long pan) -->
-      <line x1="175" y1="55" x2="175" y2="130" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="215" y1="55" x2="215" y2="130" stroke="#16a34a" stroke-width="2" stroke-dasharray="4,3"/>
-      <line x1="255" y1="55" x2="255" y2="130" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="175" y1="205" x2="175" y2="130" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="215" y1="205" x2="215" y2="130" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="255" y1="205" x2="255" y2="130" stroke="#64748b" stroke-width="1.2"/>
-
-      <!-- Hip Common Rafter (Chevron d'emprunt croupe) -->
-      <line x1="55" y1="130" x2="135" y2="130" stroke="#d97706" stroke-width="2" stroke-dasharray="4,3"/>
-
-      <!-- Jack Rafters (Empannons) -->
-      <line x1="95" y1="55" x2="95" y2="92.5" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="55" y1="92.5" x2="95" y2="92.5" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="55" y1="167.5" x2="95" y2="167.5" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="95" y1="205" x2="95" y2="167.5" stroke="#64748b" stroke-width="1.2"/>
-
-      <line x1="335" y1="55" x2="335" y2="92.5" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="375" y1="92.5" x2="335" y2="92.5" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="375" y1="167.5" x2="335" y2="167.5" stroke="#64748b" stroke-width="1.2"/>
-      <line x1="335" y1="205" x2="335" y2="167.5" stroke="#64748b" stroke-width="1.2"/>
-
-      <!-- Plan Dimension Lines -->
-      <line x1="55" y1="226" x2="375" y2="226" stroke="#334155" stroke-width="1.2" marker-start="url(#arr)" marker-end="url(#arr)"/>
-      <text x="215" y="241" fill="#0f172a" font-family="system-ui, sans-serif" font-size="10.5" font-weight="700" text-anchor="middle">Ligne d'égout totale (Long pan)</text>
-
-      <!-- Plan Callouts -->
-      <text x="215" y="123" fill="#dc2626" font-family="system-ui, sans-serif" font-size="10" font-weight="800" text-anchor="middle">Faîtage</text>
-      <text x="95" y="124" fill="#b45309" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700" text-anchor="middle">Emp. croupe</text>
-      <text x="222" y="92" fill="#15803d" font-family="system-ui, sans-serif" font-size="9.5" font-weight="700">Emp. pan</text>
-      <text x="336" y="79" fill="#1d4ed8" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" transform="rotate(-43 336 79)">Arêtier</text>
-      <text x="76" y="83" fill="#475569" font-family="system-ui, sans-serif" font-size="9" font-weight="700">Empannons</text>
-
-      <!-- Divider -->
-      <line x1="425" y1="25" x2="425" y2="245" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"/>
-
-      <!-- ==================== RIGHT: ELEVATION & CUT ANGLES ==================== -->
-      <text x="615" y="30" fill="#0f172a" font-family="system-ui, sans-serif" font-size="12" font-weight="800" text-anchor="middle">2. COUPE &amp; ANGLES DE TAILLE (APLOMB / NIVEAU)</text>
-
-      <!-- Right Triangle showing Run, Height H, and True Rafter/Hip Slope -->
-      <polygon points="465,195 695,195 695,70" fill="#dbeafe" fill-opacity="0.7" stroke="#2563eb" stroke-width="2.4"/>
-
-      <!-- Plumb Cut Detail at Top (Coupe d'aplomb) -->
-      <line x1="695" y1="70" x2="695" y2="112" stroke="#dc2626" stroke-width="3"/>
-      <path d="M 695 96 A 26 26 0 0 0 672 83" fill="none" stroke="#dc2626" stroke-width="1.6"/>
-      <text x="665" y="106" fill="#dc2626" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800" text-anchor="end">Coupe d'aplomb</text>
-
-      <!-- Seat / Level Cut Detail at Bottom Left (Coupe de niveau) -->
-      <line x1="465" y1="195" x2="515" y2="195" stroke="#d97706" stroke-width="3"/>
-      <path d="M 502 195 A 37 37 0 0 0 497 177" fill="none" stroke="#d97706" stroke-width="1.6"/>
-      <text x="510" y="182" fill="#b45309" font-family="system-ui, sans-serif" font-size="9.5" font-weight="800">Coupe de niveau (pente)</text>
-
-      <!-- Height H Dimension -->
-      <line x1="712" y1="70" x2="712" y2="195" stroke="#16a34a" stroke-width="1.5" marker-start="url(#arrGreen)" marker-end="url(#arrGreen)"/>
-      <text x="720" y="136" fill="#15803d" font-family="system-ui, sans-serif" font-size="10.5" font-weight="800">Hauteur (H)</text>
-
-      <!-- Run Dimension -->
-      <line x1="465" y1="212" x2="695" y2="212" stroke="#334155" stroke-width="1.2" marker-start="url(#arr)" marker-end="url(#arr)"/>
-      <text x="580" y="227" fill="#0f172a" font-family="system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="middle">Reculement en plan (Emprunt ou Diagonale)</text>
-
-      <!-- Sloped Rafter / Hip Label -->
-      <text x="562" y="122" fill="#1d4ed8" font-family="system-ui, sans-serif" font-size="10.5" font-weight="800" transform="rotate(-28.5 562 122)">Longueur vraie (Chevron / Arêtier)</text>
-
-      <!-- Backing Bevel Mini Inset (Délardement) -->
-      <rect x="455" y="52" width="128" height="46" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
-      <polygon points="472,88 492,88 492,68 482,62 472,68" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="1.5"/>
-      <line x1="472" y1="68" x2="492" y2="68" stroke="#dc2626" stroke-width="1" stroke-dasharray="2,2"/>
-      <text x="502" y="72" fill="#0f172a" font-family="system-ui, sans-serif" font-size="9" font-weight="800">Délardement</text>
-      <text x="502" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="8.5" font-weight="600">Chanfrein arêtier</text>
+    <svg viewBox="0 0 600 185" role="img" aria-label="Schéma géométrique d'une toiture en croupe">
+      <rect x="0" y="0" width="600" height="185" rx="10" fill="#f8fafc"/>
+      <!-- Base footprint (Égout) -->
+      <polygon points="80,145 520,145 475,115 125,115" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
+      <!-- Back slope -->
+      <polygon points="125,115 475,115 405,45 195,45" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+      <!-- Left Hip (Croupe) -->
+      <polygon points="80,145 125,115 195,45" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+      <!-- Right Hip (Croupe) -->
+      <polygon points="520,145 475,115 405,45" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
+      <!-- Front main slope (Long pan) -->
+      <polygon points="80,145 520,145 405,45 195,45" fill="#eff6ff" fill-opacity="0.88" stroke="#1d4ed8" stroke-width="2.2"/>
+      <!-- Ridge (Faîtage) -->
+      <line x1="195" y1="45" x2="405" y2="45" stroke="#dc2626" stroke-width="3"/>
+      <!-- Crown height dashed line -->
+      <line x1="300" y1="45" x2="300" y2="130" stroke="#16a34a" stroke-width="2" stroke-dasharray="5,4"/>
+      <circle cx="300" cy="45" r="3.5" fill="#16a34a"/>
+      <circle cx="300" cy="130" r="3.5" fill="#16a34a"/>
+      <!-- Labels -->
+      <text x="300" y="34" fill="#dc2626" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Faîtage</text>
+      <text x="310" y="92" fill="#16a34a" font-family="system-ui, sans-serif" font-size="11" font-weight="700">Hauteur (H)</text>
+      <text x="128" y="88" fill="#1e40af" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="end">Arêtier</text>
+      <text x="472" y="88" fill="#1e40af" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="start">Croupe</text>
+      <text x="300" y="164" fill="#334155" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Ligne d'égout (Long pan)</text>
     </svg>
-    <div class="diagram-caption" data-t="diagCap">Épure géométrique : vue en plan (faîtage, arêtiers, empannons) et élévation (coupes d'aplomb, de niveau et délardement).</div>
+    <div class="diagram-caption" data-t="diagCap">Vue schématique : ligne d'égout, hauteur de couronnement, chevrons d'emprunt et arêtiers.</div>
   </div>
