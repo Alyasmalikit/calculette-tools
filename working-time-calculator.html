@@ -434,7 +434,7 @@
       <a href="about.html" data-t="navAbout">À propos</a>
       <a href="contact.html" data-t="navContact">Contact</a>
       <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
-      <a href="disclaimer.html" data-t="navDisclaimer">"Disclaimer"</a>
+      <a href="terms.html" data-t="navDisclaimer">Disclaimer</a>
     </div>
   </div>
 </footer>
@@ -448,7 +448,7 @@
       btn: "EN",
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
-      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
       pageTitle: "Calculateur du Temps de Travail (Journée ou Semaine)",
       pageSub: "Ajoutez plusieurs plages horaires (y compris passage minuit), cochez/décochez les lignes et obtenez le total en heures-minutes et centièmes d'heure (1/100e).",
       diagCap: "Les lignes cochées s'additionnent automatiquement en HH:MM et centièmes d'heure (1/100e).",
@@ -605,34 +605,4 @@
     const bh = parseFloat(document.getElementById("subBh").value) || 0;
     const bm = parseFloat(document.getElementById("subBm").value) || 0;
     const diff = (ah * 60 + am) - (bh * 60 + bm);
-    document.getElementById("subOutHM").textContent = fmtHM(diff);
-    document.getElementById("subOutDec").textContent = `${(diff / 60).toFixed(2)} h`;
-  }
-
-  function applyLang() {
-    document.documentElement.lang = lang;
-    const d = dict[lang];
-    document.getElementById("langBtn").textContent = d.btn;
-    document.querySelectorAll("[data-t]").forEach(el => {
-      const k = el.getAttribute("data-t");
-      if (d[k]) el.textContent = d[k];
-    });
-    renderSlots();
-    calcSub();
-  }
-
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
-    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
-    applyLang();
-  }
-
-  try {
-    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
-  } catch (e) {}
-
-  applyLang();
-</script>
-
-</body>
-</html>
+    document.getElementBy
