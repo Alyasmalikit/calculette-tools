@@ -1,39 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About Us | Calculette-tools</title>
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 820px; margin: 40px auto; padding: 0 20px; color: #222; }
-    h1, h2 { color: #111; }
-    .note { background: #f5f7fa; padding: 14px 18px; border-left: 4px solid #2563eb; border-radius: 4px; }
-    .nav { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 14px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>À propos | Calculette-tools</title>
+<meta name="description" content="Découvrez Calculette-tools : des outils gratuits en ligne pour le calcul d'heures de travail, feuilles hebdomadaires, conversion décimale et charpente.">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>About Calculette-tools</h1>
-  <p>Welcome to <strong>Calculette-tools</strong>, a collection of fast, straightforward, and mobile-friendly online calculators designed to help you make quick estimates and everyday decisions.</p>
 
-  <h2>What We Offer</h2>
-  <ul>
-    <li><strong>Instant Calculations:</strong> Clear inputs and fast results without clutter.</li>
-    <li><strong>Accessible Anywhere:</strong> Built to work smoothly on desktop, tablet, and mobile screens.</li>
-    <li><strong>Practical Focus:</strong> Organized tools for common calculations, planning, and conversions.</li>
-  </ul>
+<header id="siteHeader" class="site-header"></header>
 
-  <div class="note">
-    <strong>How It Works:</strong> Our calculators run directly in your browser to give you immediate answers. Please review our <a href="terms.html">Terms &amp; Disclaimer</a> and <a href="privacy.html">Privacy Policy</a> for full details.
+<main class="container">
+  <div class="page-head">
+    <h1 data-t="title">À propos de Calculette-tools</h1>
+    <p data-t="sub">Des calculateurs rapides, précis et accessibles sur mobile comme sur ordinateur.</p>
   </div>
 
-  <h2>Get in Touch</h2>
-  <p>Spot a calculation issue, have a feature idea, or want to share feedback? Reach out through our <a href="contact.html">Contact Us</a> page.</p>
-
-  <div class="nav">
-    <a href="index.html">Home</a> |
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms &amp; Disclaimer</a> |
-    <a href="contact.html">Contact Us</a>
+  <div class="card">
+    <h2 data-t="h1">Notre Mission</h2>
+    <p data-t="p1">Calculette-tools met à disposition des salariés, indépendants, employeurs et artisans une suite complète d'outils gratuits pour simplifier le suivi du temps de travail, le calcul des heures supplémentaires, la conversion en centièmes d'heure (1/100e) et les calculs techniques de charpente à croupe.</p>
+    <h2 data-t="h2">Pourquoi utiliser nos outils ?</h2>
+    <p data-t="p2">Tous les calculs s'exécutent directement dans votre navigateur : aucune inscription n'est requise, vos données de feuille hebdomadaire restent stockées localement sur votre appareil et chaque outil est disponible en français et en anglais.</p>
   </div>
+</main>
+
+<footer id="siteFooter" class="site-footer"></footer>
+
+<script src="app.js"></script>
+<script>
+  const PAGE_DICT = {
+    fr: {
+      title: "À propos de Calculette-tools",
+      sub: "Des calculateurs rapides, précis et accessibles sur mobile comme sur ordinateur.",
+      h1: "Notre Mission",
+      p1: "Calculette-tools met à disposition des salariés, indépendants, employeurs et artisans une suite complète d'outils gratuits pour simplifier le suivi du temps de travail, le calcul des heures supplémentaires, la conversion en centièmes d'heure (1/100e) et les calculs techniques de charpente à croupe.",
+      h2: "Pourquoi utiliser nos outils ?",
+      p2: "Tous les calculs s'exécutent directement dans votre navigateur : aucune inscription n'est requise, vos données de feuille hebdomadaire restent stockées localement sur votre appareil et chaque outil est disponible en français et en anglais."
+    },
+    en: {
+      title: "About Calculette-tools",
+      sub: "Fast, accurate, and mobile-friendly online calculators for everyday work and framing.",
+      h1: "Our Mission",
+      p1: "Calculette-tools provides employees, freelancers, employers, and builders with a clean suite of free online tools to simplify work-hour tracking, overtime calculation, decimal hour conversion (1/100e), and hip roof framing geometry.",
+      h2: "Why Use Our Tools?",
+      p2: "Every calculation runs directly inside your browser: no registration is required, your weekly timesheet stays saved locally on your device, and every tool supports seamless French and English switching."
+    }
+  };
+  renderChrome("about");
+  applyLang();
+</script>
 </body>
 </html>
