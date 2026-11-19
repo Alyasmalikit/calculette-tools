@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Calculator | Calculette-tools</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 820px; margin: 40px auto; padding: 0 20px; color: #222; }
+    h1, h2 { color: #111; }
+    .box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 20px 0; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    label { display: block; font-weight: bold; margin-bottom: 6px; }
+    input, select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+    .row-space { margin-top: 14px; }
+    button { margin-top: 16px; padding: 10px 20px; background: #2563eb; color: #fff; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    .result { margin-top: 18px; padding: 14px; background: #eff6ff; border-left: 4px solid #2563eb; border-radius: 4px; font-weight: bold; }
+    .nav { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Time Calculator</h1>
+  <p>Add or subtract durations in hours, minutes, and seconds quickly with automatic carry-over and borrow conversion.</p>
+
+  <div class="box">
+    <strong>First Duration</strong>
+    <div class="grid">
+      <div><label for="h1">Hours</label><input id="h1" type="number" min="0" value="2" /></div>
+      <div><label for="m1">Minutes</label><input id="m1" type="number" min="0" value="45" /></div>
+      <div><label for="s1">Seconds</label><input id="s1" type="number" min="0" value="30" /></div>
+    </div>
+
+    <div class="row-space">
+      <label for="op">Operation</label>
+      <select id="op">
+        <option value="add">Add (+)</option>
+        <option value="sub">Subtract (-)</option>
+      </select>
+    </div>
+
+    <div class="row-space">
+      <strong>Second Duration</strong>
+      <div class="grid">
+        <div><label for="h2">Hours</label><input id="h2" type="number" min="0" value="1" /></div>
+        <div><label for="m2">Minutes</label><input id="m2" type="number" min="0" value="30" /></div>
+        <div><label for="s2">Seconds</label><input id="s2" type="number" min="0" value="45" /></div>
+      </div>
+    </div>
+
+    <button type="button" onclick="calcDuration()">Calculate Time</button>
+    <div id="tcResult" class="result">Result: 4 hours, 16 minutes, 15 seconds</div>
+  </div>
+
+  <h2>How Duration Addition &amp; Subtraction Works</h2>
+  <p>This calculator converts both time durations into total seconds, adds or subtracts them, and converts the result back into clean hours, minutes, and seconds—even if you enter more than 60 minutes or 60 seconds.</p>
+
+  <h2>Practical Uses</h2>
+  <p>Use it to combine task timers, add video or audio clip lengths, or subtract elapsed time from a total budget of hours and minutes.</p>
+
+  <h2>Frequently Asked Questions</h2>
+  <p><strong>What happens if the second duration is larger during subtraction?</strong> The result is shown in absolute duration values without breaking.</p>
+  <p><strong>Can I enter minutes above 59?</strong> Yes. Any value over 59 is automatically rolled over into hours.</p>
+
+  <div class="nav">
+    <a href="index.html">Home</a> |
+    <a href="working-time-calculator.html">Working Time Calculator</a> |
+    <a href="working-hour-calculator.html">Working Hour Calculator</a> |
+    <a href="about.html">About Us</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms &amp; Disclaimer</a> |
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <script>
+    function calcDuration() {
+      const h1 = Math.max(0, parseInt(document.getElementById("h1").value || "0", 10));
+      const m1 = Math.max(0, parseInt(document.getElementById("m1").value || "0", 10));
+      const s1 = Math.max(0, parseInt(document.getElementById("s1").value || "0", 10));
+
+      const h2 = Math.max(0, parseInt(document.getElementById("h2").value || "0", 10));
+      const m2 = Math.max(0, parseInt(document.getElementById("m2").value || "0", 10));
+      const s2 = Math.max(0, parseInt(document.getElementById("s2").value || "0", 10));
+
+      const op = document.getElementById("op").value;
+      const t1 = h1 * 3600 + m1 * 60 + s1;
+      const t2 = h2 * 3600 + m2 * 60 + s2;
+
+      let diff = op === "add" ? (t1 + t2) : Math.abs(t1 - t2);
+      const hours = Math.floor(diff / 3600);
+      diff %= 3600;
+      const minutes = Math.floor(diff / 60);
+      const seconds = diff % 60;
+
+      document.getElementById("tcResult").textContent =
+        `Result: ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    }
+  </script>
+</body>
+</html>
