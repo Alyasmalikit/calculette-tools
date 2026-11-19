@@ -559,7 +559,11 @@
     const s = document.getElementById("wtStart").value;
     const e = document.getElementById("wtEnd").value;
     const b = Math.max(0, parseInt(document.getElementById("wtBreak").value || "0", 10));
-    if (!s || !e) return;
+    if (!s || !e) {
+      document.getElementById("wtOut").textContent =
+        lang === "en" ? "Net: 0h 00m (0.00 hrs)" : "Net : 0h 00min (0.00 h)";
+      return;
+    }
     const [sh, sm] = s.split(":").map(Number);
     const [eh, em] = e.split(":").map(Number);
     let smTotal = sh * 60 + sm, emTotal = eh * 60 + em;
