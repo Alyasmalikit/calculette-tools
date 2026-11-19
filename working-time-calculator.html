@@ -117,6 +117,30 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
+  /* Diagram Card */
+  .diagram-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .diagram-card svg {
+    width: 100%;
+    max-width: 620px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .diagram-caption {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
   /* Cards */
   .card {
     background: var(--surface);
@@ -150,9 +174,7 @@
     background: #f1f5f9;
   }
   @media (max-width: 760px) {
-    .slot-row {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+    .slot-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   .slot-field label {
     display: block;
@@ -321,7 +343,24 @@
 <main class="container">
   <div class="page-head">
     <h1 data-t="pageTitle">Calculateur du Temps de Travail (Journée ou Semaine)</h1>
-    <p data-t="pageSub">Ajoutez plusieurs plages horaires (y compris passage minuit), cochez/décochez les lignes et obtenez le total en heures-minutes et centièmes d'heure (1/100e)[cite: 1].</p>
+    <p data-t="pageSub">Ajoutez plusieurs plages horaires (y compris passage minuit), cochez/décochez les lignes et obtenez le total en heures-minutes et centièmes d'heure (1/100e).</p>
+  </div>
+
+  <!-- Shift & Break Timeline SVG Diagram -->
+  <div class="diagram-card">
+    <svg viewBox="0 0 640 120" role="img" aria-label="Schéma plages horaires et pauses">
+      <rect x="0" y="0" width="640" height="120" rx="10" fill="#f8fafc"/>
+      <line x1="40" y1="62" x2="600" y2="62" stroke="#cbd5e1" stroke-width="4" stroke-linecap="round"/>
+      <rect x="55" y="48" width="185" height="28" rx="6" fill="#2563eb"/>
+      <rect x="240" y="52" width="75" height="20" rx="5" fill="#f59e0b"/>
+      <rect x="315" y="48" width="215" height="28" rx="6" fill="#16a34a"/>
+      <text x="147" y="67" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Plage 1 (Matin)</text>
+      <text x="277" y="66" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Pause</text>
+      <text x="422" y="67" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Plage 2 (Après-midi)</text>
+      <text x="55" y="96" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600">Début</text>
+      <text x="530" y="96" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="end">Fin</text>
+    </svg>
+    <div class="diagram-caption" data-t="diagCap">Les lignes cochées s'additionnent automatiquement en HH:MM et centièmes d'heure (1/100e).</div>
   </div>
 
   <div class="card">
@@ -373,6 +412,9 @@
         <div class="out-pill" id="subOutDec">4.25 h</div>
       </div>
     </div>
+    <div class="toolbar" style="margin-bottom:0;">
+      <button type="button" class="btn-sec" onclick="resetSub()" data-t="btnResetSub">Reset A − B</button>
+    </div>
   </div>
 </main>
 
@@ -388,22 +430,33 @@
       <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
       <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="disclaimer.html" data-t="navDisclaimer">Mentions &amp; Clause</a>
+    </div>
   </div>
 </footer>
 
 <script>
+  const LANG_KEY = "calculette_lang_v1";
   let lang = "fr";
+
   const dict = {
     fr: {
       btn: "EN",
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
       pageTitle: "Calculateur du Temps de Travail (Journée ou Semaine)",
       pageSub: "Ajoutez plusieurs plages horaires (y compris passage minuit), cochez/décochez les lignes et obtenez le total en heures-minutes et centièmes d'heure (1/100e).",
+      diagCap: "Les lignes cochées s'additionnent automatiquement en HH:MM et centièmes d'heure (1/100e).",
       secSlots: "Plages Horaires",
       btnAdd: "+ Ajouter une ligne",
       btnRemove: "− Supprimer une ligne",
       btnReset: "Reset",
+      btnResetSub: "Reset A − B",
       lblTotal: "TOTAL",
       secSub: "Soustraction de Temps (A − B)",
       lblResHM: "Temps (HH:MM)",
@@ -417,12 +470,15 @@
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       pageTitle: "Working Time Calculator (Day or Week)",
       pageSub: "Add multiple time slots (including overnight shifts), toggle row checkboxes, and view totals in hours-minutes and hundredths of an hour (1/100e).",
+      diagCap: "Checked rows sum automatically into HH:MM and decimal hundredths of an hour (1/100e).",
       secSlots: "Time Slots",
       btnAdd: "+ Add a line",
       btnRemove: "− Remove a line",
       btnReset: "Reset",
+      btnResetSub: "Reset A − B",
       lblTotal: "TOTAL",
       secSub: "Time Subtraction (A − B)",
       lblResHM: "Time (HH:MM)",
@@ -509,11 +565,14 @@
 
   function resetSlots() {
     slots = JSON.parse(JSON.stringify(defaultSlots));
-    document.getElementById("subAh").value = 39;
-    document.getElementById("subAm").value = 15;
-    document.getElementById("subBh").value = 35;
-    document.getElementById("subBm").value = 0;
     renderSlots();
+  }
+
+  function resetSub() {
+    document.getElementById("subAh").value = "39";
+    document.getElementById("subAm").value = "15";
+    document.getElementById("subBh").value = "35";
+    document.getElementById("subBm").value = "0";
     calcSub();
   }
 
@@ -541,17 +600,16 @@
   }
 
   function calcSub() {
-    const ah = Number(document.getElementById("subAh").value) || 0;
-    const am = Number(document.getElementById("subAm").value) || 0;
-    const bh = Number(document.getElementById("subBh").value) || 0;
-    const bm = Number(document.getElementById("subBm").value) || 0;
+    const ah = parseFloat(document.getElementById("subAh").value) || 0;
+    const am = parseFloat(document.getElementById("subAm").value) || 0;
+    const bh = parseFloat(document.getElementById("subBh").value) || 0;
+    const bm = parseFloat(document.getElementById("subBm").value) || 0;
     const diff = (ah * 60 + am) - (bh * 60 + bm);
     document.getElementById("subOutHM").textContent = fmtHM(diff);
     document.getElementById("subOutDec").textContent = `${(diff / 60).toFixed(2)} h`;
   }
 
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
+  function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
     document.getElementById("langBtn").textContent = d.btn;
@@ -563,8 +621,17 @@
     calcSub();
   }
 
-  renderSlots();
-  calcSub();
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  applyLang();
 </script>
 
 </body>
