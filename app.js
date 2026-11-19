@@ -13,7 +13,7 @@ const GLOBAL_DICT = {
     navAbout: "À propos",
     navContact: "Contact",
     navPrivacy: "Confidentialité",
-    navDisclaimer: "Mentions & Clause"
+    navDisclaimer: "Disclaimer"
   },
   en: {
     btn: "FR",
@@ -91,7 +91,7 @@ function renderChrome(activePage) {
           <a href="about.html" data-g="navAbout">À propos</a>
           <a href="contact.html" data-g="navContact">Contact</a>
           <a href="privacy.html" data-g="navPrivacy">Confidentialité</a>
-          <a href="disclaimer.html" data-g="navDisclaimer">Mentions &amp; Clause</a>
+          <a href="terms.html" data-g="navDisclaimer">Disclaimer</a>
         </div>
       </div>
     `;
