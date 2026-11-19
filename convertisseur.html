@@ -1,32 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convertisseur Minutes en Heures Décimales &amp; Tableau de Paie — Calculette-tools</title>
-<meta name="description" content="Convertissez instantanément vos minutes en centièmes d'heure pour la paie, transformez les heures décimales en HH:MM et consultez le barème complet de 1 à 60 minutes.">
-<link rel="canonical" href="https://alyasmalikit.github.io/calculette-tools/convertisseur.html">
-<style>
-:root { --navy:#0F172A; --muted:#475569; --blue-bg:#F0F7FF; --grey-bg:#F8FAFC; --border:#CBD5E1; --green:#16A34A; --r:10px; }
-* { box-sizing:border-box; }
-body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; color:var(--navy); background:#fff; line-height:1.6; }
-.nav { background:var(--navy); color:#fff; padding:0.85rem 1rem; }
-.nav-inner { max-width:1100px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.75rem; }
-.brand { font-weight:800; font-size:1.15rem; color:#fff; text-decoration:none; }
-.nav-links { display:flex; flex-wrap:wrap; gap:0.5rem; }
-.nav-links a { color:#CBD5E1; text-decoration:none; padding:0.4rem 0.75rem; border-radius:6px; font-size:0.9rem; font-weight:600; }
-.nav-links a:hover, .nav-links a.active { background:#1E293B; color:#fff; }
-.wrap { max-width:1100px; margin:0 auto; padding:1.5rem 1rem; }
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.25rem; margin-bottom:2rem; }
-.card { background:var(--grey-bg); border:1px solid var(--border); border-radius:var(--r); padding:1.25rem; }
-.card h2 { margin-top:0; font-size:1.15rem; }
-input { padding:0.45rem; border:1px solid var(--border); border-radius:6px; width:5.5rem; text-align:center; font-size:1rem; }
-.res { margin-top:1rem; padding:0.75rem; background:var(--blue-bg); border-radius:8px; font-weight:700; color:var(--green); font-size:1.15rem; }
-table { width:100%; border-collapse:collapse; margin-top:1rem; }
-th, td { border:1px solid var(--border); padding:0.5rem; text-align:center; font-size:0.9rem; }
-th { background:var(--blue-bg); }
-</style>
-</head>
+<header style="background:#ffffff;border-bottom:1px solid #e2e8f0;">
+  <div style="max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+    <a href="index.html" style="font-weight:800;font-size:1.2rem;color:#0f172a;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+      <span style="width:10px;height:10px;border-radius:50%;background:#2563eb;display:inline-block;"></span>Calculette-tools
+    </a>
+    <nav style="display:flex;flex-wrap:wrap;gap:6px;">
+      <a href="index.html" style="color:#2563eb;background:#eff6ff;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Accueil / Home</a>
+      <a href="working-time-calculator.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Working Time</a>
+      <a href="working-hour-calculator.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Working Hours</a>
+      <a href="time-calculator.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Time Calculator</a>
+      <a href="feuille-hebdo.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Feuille Hebdo</a>
+      <a href="convertisseur.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Convertisseur</a>
+      <a href="toiture-croupe.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Toiture</a>
+    </nav>
+  </div>
+</header>
 <body>
 <nav class="nav">
   <div class="nav-inner">
