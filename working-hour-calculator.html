@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Working Hour Calculator | Calculette-tools</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 820px; margin: 40px auto; padding: 0 20px; color: #222; }
+    h1, h2 { color: #111; }
+    .box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 20px 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+    label { display: block; font-weight: bold; margin-bottom: 6px; }
+    input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+    button { margin-top: 16px; padding: 10px 20px; background: #2563eb; color: #fff; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; }
+    button:hover { background: #1d4ed8; }
+    .result { margin-top: 18px; padding: 14px; background: #eff6ff; border-left: 4px solid #2563eb; border-radius: 4px; font-weight: bold; }
+    .nav { margin-top: 32px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>Working Hour Calculator</h1>
+  <p>Estimate total working hours across multiple days, overtime hours above a standard threshold, and estimated earnings from an hourly rate.</p>
+
+  <div class="box">
+    <div class="grid">
+      <div>
+        <label for="daysWorked">Days Worked</label>
+        <input id="daysWorked" type="number" min="1" max="31" value="5" />
+      </div>
+      <div>
+        <label for="hoursPerDay">Hours per Day</label>
+        <input id="hoursPerDay" type="number" min="0" step="0.25" value="8" />
+      </div>
+      <div>
+        <label for="standardHours">Regular Hours Limit</label>
+        <input id="standardHours" type="number" min="0" step="0.5" value="40" />
+      </div>
+      <div>
+        <label for="hourlyRate">Hourly Rate ($ optional)</label>
+        <input id="hourlyRate" type="number" min="0" step="0.01" value="0" />
+      </div>
+    </div>
+    <button type="button" onclick="calcWorkingHours()">Calculate Working Hours</button>
+    <div id="whResult" class="result">Total Hours: 40.00 hrs | Regular: 40.00 hrs | Overtime: 0.00 hrs</div>
+  </div>
+
+  <h2>Why Track Total Working Hours?</h2>
+  <p>Tracking total working hours helps freelancers, hourly employees, and managers plan schedules, spot overtime early, and estimate billing or payroll accurately.</p>
+
+  <h2>Example Calculation</h2>
+  <p>If you work <strong>8 hours</strong> per day for <strong>6 days</strong>, your total is <strong>48 hours</strong>. With a regular limit of 40 hours, you have <strong>40 regular hours</strong> and <strong>8 overtime hours</strong>.</p>
+
+  <h2>Frequently Asked Questions</h2>
+  <p><strong>Can I use decimal hours like 7.5?</strong> Yes. Enter decimal values such as 7.5 or 6.25 directly into the hours per day field.</p>
+  <p><strong>Is pay calculation mandatory?</strong> No. Leave the hourly rate at 0 if you only need total and overtime hours.</p>
+
+  <div class="nav">
+    <a href="index.html">Home</a> |
+    <a href="working-time-calculator.html">Working Time Calculator</a> |
+    <a href="time-calculator.html">Time Calculator</a> |
+    <a href="about.html">About Us</a> |
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="terms.html">Terms &amp; Disclaimer</a> |
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <script>
+    function calcWorkingHours() {
+      const days = Math.max(0, parseFloat(document.getElementById("daysWorked").value || "0"));
+      const perDay = Math.max(0, parseFloat(document.getElementById("hoursPerDay").value || "0"));
+      const limit = Math.max(0, parseFloat(document.getElementById("standardHours").value || "0"));
+      const rate = Math.max(0, parseFloat(document.getElementById("hourlyRate").value || "0"));
+
+      const totalHrs = days * perDay;
+      const regularHrs = Math.min(totalHrs, limit);
+      const overtimeHrs = Math.max(0, totalHrs - limit);
+
+      let text = `Total Hours: ${totalHrs.toFixed(2)} hrs | Regular: ${regularHrs.toFixed(2)} hrs | Overtime: ${overtimeHrs.toFixed(2)} hrs`;
+      if (rate > 0) {
+        const estPay = (totalHrs * rate).toFixed(2);
+        text += ` | Estimated Base Pay: $${estPay}`;
+      }
+      document.getElementById("whResult").textContent = text;
+    }
+  </script>
+</body>
+</html>
