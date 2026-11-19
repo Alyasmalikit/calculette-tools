@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Convertisseur d'Heures Décimales &amp; Minutes | Calculette-tools</title>
-<meta name="description" content="Outils instantanés pour convertir vos relevés horaires au format centième d'heure exigé par les services de paie.">
+<title>Convertisseur Heures Décimales &amp; HH:MM | Calculette-tools</title>
+<meta name="description" content="Convertissez facilement heures et minutes (HH:MM) en heures décimales (centièmes d'heure 1/100e) et inversement.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -18,22 +18,28 @@
     --radius: 14px;
     --shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
   }
-  * { box-sizing: border-box; }
-  body {
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
     margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--ink);
     line-height: 1.55;
   }
   .container {
+    width: 100%;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
-  /* Unified Header */
+  /* Header */
   .site-header {
+    width: 100%;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
   }
@@ -42,17 +48,18 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
-    padding: 14px 0;
+    gap: 10px;
+    padding: 12px 0;
   }
   .brand {
     font-weight: 800;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--ink);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
   }
   .brand-dot {
     width: 10px;
@@ -61,45 +68,61 @@
     background: var(--primary);
     display: inline-block;
   }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+  }
   .nav-menu {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
+    min-width: 0;
   }
   .nav-menu a {
     color: var(--muted);
     text-decoration: none;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    padding: 6px 10px;
+    padding: 6px 9px;
     border-radius: 8px;
+    white-space: nowrap;
   }
   .nav-menu a:hover, .nav-menu a.active {
     color: var(--primary);
     background: var(--soft);
   }
-
-  /* Page Title */
-  .page-head {
-    padding: 26px 0 14px;
+  .lang-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    flex-shrink: 0;
   }
+  .lang-btn:hover { background: var(--primary-hover); }
+
+  /* Page Head */
+  .page-head { padding: 24px 0 12px; }
   .page-head h1 {
     margin: 0 0 6px;
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(1.4rem, 3vw, 1.95rem);
     letter-spacing: -0.02em;
   }
-  .page-head p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.96rem;
-  }
+  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
-  /* Cards Grid */
-  .grid {
+  /* Grid & Cards */
+  .main-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
     gap: 18px;
-    margin: 18px 0 32px;
+    margin-bottom: 24px;
   }
   .card {
     background: var(--surface);
@@ -107,109 +130,100 @@
     border-radius: var(--radius);
     padding: 20px;
     box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 14px;
+    min-width: 0;
   }
   .card h2 {
-    margin: 0 0 12px;
-    font-size: 1.05rem;
-    color: var(--ink);
+    margin: 0 0 14px;
+    font-size: 1.08rem;
   }
-  .inline-inputs {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 10px;
-    font-size: 0.9rem;
+  .field-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .field-row > div { min-width: 0; }
+  label {
+    display: block;
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--muted);
+    margin-bottom: 4px;
   }
   input[type="number"] {
-    width: 88px;
-    padding: 8px 10px;
+    width: 100%;
+    min-width: 0;
+    padding: 9px 10px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     font-size: 0.92rem;
     background: #fff;
     color: var(--ink);
   }
-  input[type="number"]:focus {
+  input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
-  .btn {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 9px 14px;
-    border-radius: 9px;
-    font-weight: 600;
-    font-size: 0.88rem;
-    cursor: pointer;
-    width: 100%;
-  }
-  .btn:hover { background: var(--primary-hover); }
-  .res {
-    padding: 10px 12px;
+
+  .res-box {
+    margin-top: 10px;
+    padding: 12px 14px;
     background: var(--soft);
     border: 1px solid #bfdbfe;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.92rem;
+    border-radius: 10px;
+  }
+  .res-main {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 800;
     color: var(--ink);
   }
+  .res-sub {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
 
-  /* Reference Table Box */
-  .table-card {
-    background: var(--surface);
+  /* Quick Table */
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+    gap: 10px;
+  }
+  .ref-item {
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-    margin-bottom: 36px;
-  }
-  .table-card h2 {
-    margin: 0 0 14px;
-    font-size: 1.12rem;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.88rem;
-  }
-  th, td {
-    padding: 8px 10px;
-    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
     text-align: center;
+    background: #fafcff;
+    font-size: 0.86rem;
   }
-  th {
-    background: var(--soft);
-    color: var(--ink);
-    font-weight: 700;
-  }
-  tr:nth-child(even) td {
-    background: #f8fafc;
+  .ref-item strong {
+    display: block;
+    color: var(--primary);
+    font-size: 0.95rem;
   }
 
-  /* Unified Footer */
+  /* Footer */
   .site-footer {
+    width: 100%;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding: 24px 0 34px;
+    padding: 22px 0 32px;
     text-align: center;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     color: var(--muted);
+    margin-top: 24px;
   }
   .footer-links {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 14px;
+    gap: 12px;
   }
   .footer-links a {
     color: var(--muted);
@@ -224,153 +238,158 @@
 <header class="site-header">
   <div class="container nav-bar">
     <a href="index.html" class="brand"><span class="brand-dot"></span>Calculette-tools</a>
-    <nav class="nav-menu">
-      <a href="index.html">Accueil / Home</a>
-      <a href="working-time-calculator.html">Working Time</a>
-      <a href="working-hour-calculator.html">Working Hours</a>
-      <a href="time-calculator.html">Time Calculator</a>
-      <a href="feuille-hebdo.html">Feuille Hebdo</a>
-      <a href="convertisseur.html" class="active">Convertisseur</a>
-      <a href="toiture-croupe.html">Toiture</a>
-    </nav>
+    <div class="nav-right">
+      <nav class="nav-menu">
+        <a href="index.html" data-t="navHome">Accueil</a>
+        <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+        <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+        <a href="time-calculator.html" data-t="navTc">Durées</a>
+        <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+        <a href="convertisseur.html" class="active" data-t="navCv">Convertisseur</a>
+        <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+      </nav>
+      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
+    </div>
   </div>
 </header>
 
 <main class="container">
   <div class="page-head">
-    <h1>Convertisseur d'Heures Décimales &amp; Minutes</h1>
-    <p>Outils instantanés pour convertir vos relevés horaires au format centième d'heure exigé par les services de paie.</p>
+    <h1 data-t="pageTitle">Convertisseur HH:MM ↔ Heures Décimales (1/100e)</h1>
+    <p data-t="pageSub">Convertissez vos heures et minutes en centièmes d'heure décimaux pour la paie et la comptabilité, ou l'inverse.</p>
   </div>
 
-  <div class="grid" id="conv-grid">
+  <div class="main-grid">
+    <!-- 1. HH:MM -> Decimal -->
     <div class="card">
-      <div>
-        <h2>1. Heures (HH:MM) → Décimal</h2>
-        <div class="inline-inputs">
-          <input type="number" id="h1" value="7"> <span>h</span>
-          <input type="number" id="m1" value="45"> <span>min</span>
+      <h2 data-t="secToDec">Heures &amp; Minutes → Décimal (1/100e)</h2>
+      <div class="field-row">
+        <div>
+          <label for="inH" data-t="lblH">Heures</label>
+          <input type="number" id="inH" min="0" value="4" oninput="toDec()">
+        </div>
+        <div>
+          <label for="inM" data-t="lblM">Minutes</label>
+          <input type="number" id="inM" min="0" value="40" oninput="toDec()">
         </div>
       </div>
-      <div>
-        <button type="button" class="btn" onclick="upd()">Calculer / Calculate</button>
-        <div class="res" id="o1" style="margin-top:10px;">7.75 h (465 min)</div>
+      <div class="res-box">
+        <span class="res-main" id="outDec">4.67 h</span>
+        <span class="res-sub" id="outDecSub">04h 40min | 280 min</span>
       </div>
     </div>
 
+    <!-- 2. Decimal -> HH:MM -->
     <div class="card">
-      <div>
-        <h2>2. Heures Décimales → HH:MM</h2>
-        <div class="inline-inputs">
-          <input type="number" step="0.01" id="d2" value="7.50"> <span>heures décimales</span>
+      <h2 data-t="secToHM">Décimal (1/100e) → Heures &amp; Minutes</h2>
+      <div class="field-row">
+        <div style="grid-column: 1 / -1;">
+          <label for="inDec" data-t="lblDec">Heures décimales (ex. 8.42)</label>
+          <input type="number" id="inDec" min="0" step="0.01" value="8.42" oninput="toHM()">
         </div>
       </div>
-      <div>
-        <button type="button" class="btn" onclick="upd()">Calculer / Calculate</button>
-        <div class="res" id="o2" style="margin-top:10px;">07h 30min</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div>
-        <h2>3. Minutes → Heures &amp; Décimal</h2>
-        <div class="inline-inputs">
-          <input type="number" id="m3" value="450"> <span>minutes</span>
-        </div>
-      </div>
-      <div>
-        <button type="button" class="btn" onclick="upd()">Calculer / Calculate</button>
-        <div class="res" id="o3" style="margin-top:10px;">07h 30min (7.50 h)</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div>
-        <h2>4. Écart entre deux durées (A − B)</h2>
-        <div class="inline-inputs">
-          <strong>A :</strong> <input type="number" id="ah" value="39"> <span>h</span>
-          <input type="number" id="am" value="15"> <span>m</span>
-        </div>
-        <div class="inline-inputs">
-          <strong>B :</strong> <input type="number" id="bh" value="35"> <span>h</span>
-          <input type="number" id="bm" value="0"> <span>m</span>
-        </div>
-      </div>
-      <div>
-        <button type="button" class="btn" onclick="upd()">Calculer / Calculate</button>
-        <div class="res" id="o4" style="margin-top:10px;">04h 15min (4.25 h)</div>
+      <div class="res-box">
+        <span class="res-main" id="outHM">08h 25min</span>
+        <span class="res-sub" id="outHMSub">8.42 h | 505 min</span>
       </div>
     </div>
   </div>
 
-  <div class="table-card">
-    <h2>Tableau de Correspondance Rapide (Minutes → Centièmes d'Heure)</h2>
-    <div style="overflow-x:auto;">
-      <table>
-        <thead>
-          <tr>
-            <th>Minutes</th><th>Décimal</th>
-            <th>Minutes</th><th>Décimal</th>
-            <th>Minutes</th><th>Décimal</th>
-            <th>Minutes</th><th>Décimal</th>
-          </tr>
-        </thead>
-        <tbody id="ref-table"></tbody>
-      </table>
+  <div class="card">
+    <h2 data-t="secRef">Repères Rapides (Minutes ↔ Décimal)</h2>
+    <div class="ref-grid">
+      <div class="ref-item"><strong>0.08 h</strong>5 min</div>
+      <div class="ref-item"><strong>0.17 h</strong>10 min</div>
+      <div class="ref-item"><strong>0.25 h</strong>15 min</div>
+      <div class="ref-item"><strong>0.33 h</strong>20 min</div>
+      <div class="ref-item"><strong>0.50 h</strong>30 min</div>
+      <div class="ref-item"><strong>0.75 h</strong>45 min</div>
     </div>
   </div>
 </main>
 
 <footer class="site-footer">
   <div class="container">
-    <div>Calculette-tools — Calculateurs gratuits / Free online calculators</div>
+    <div>Calculette-tools</div>
     <div class="footer-links">
-      <a href="index.html">Accueil / Home</a>
-      <a href="working-time-calculator.html">Working Time</a>
-      <a href="working-hour-calculator.html">Working Hours</a>
-      <a href="time-calculator.html">Time Calculator</a>
-      <a href="feuille-hebdo.html">Feuille Hebdo</a>
-      <a href="convertisseur.html">Convertisseur</a>
-      <a href="toiture-croupe.html">Toiture</a>
-      <a href="about.html">About / À propos</a>
-      <a href="privacy.html">Privacy / Confidentialité</a>
-      <a href="terms.html">Terms / Conditions</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
   </div>
 </footer>
 
 <script>
-  function fmt(m) {
-    const s = m < 0 ? '-' : '';
-    const a = Math.abs(Math.round(m));
-    return s + String(Math.floor(a / 60)).padStart(2, '0') + 'h ' + String(a % 60).padStart(2, '0') + 'min';
-  }
-  function upd() {
-    const t1 = (Number(document.getElementById('h1').value) || 0) * 60 + (Number(document.getElementById('m1').value) || 0);
-    document.getElementById('o1').textContent = (t1 / 60).toFixed(2) + ' h (' + t1 + ' min)';
-
-    const t2 = Math.round((Number(document.getElementById('d2').value) || 0) * 60);
-    document.getElementById('o2').textContent = fmt(t2);
-
-    const t3 = Number(document.getElementById('m3').value) || 0;
-    document.getElementById('o3').textContent = fmt(t3) + ' (' + (t3 / 60).toFixed(2) + ' h)';
-
-    const a = (Number(document.getElementById('ah').value) || 0) * 60 + (Number(document.getElementById('am').value) || 0);
-    const b = (Number(document.getElementById('bh').value) || 0) * 60 + (Number(document.getElementById('bm').value) || 0);
-    document.getElementById('o4').textContent = fmt(a - b) + ' (' + ((a - b) / 60).toFixed(2) + ' h)';
-  }
-  document.getElementById('conv-grid').addEventListener('input', upd);
-  upd();
-
-  const tb = document.getElementById('ref-table');
-  for (let r = 1; r <= 15; r++) {
-    const tr = document.createElement('tr');
-    for (let c = 0; c < 4; c++) {
-      const min = r + c * 15;
-      tr.innerHTML += `<td><strong>${min} min</strong></td><td>${(min / 60).toFixed(2)}</td>`;
+  let lang = "fr";
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      pageTitle: "Convertisseur HH:MM ↔ Heures Décimales (1/100e)",
+      pageSub: "Convertissez vos heures et minutes en centièmes d'heure décimaux pour la paie et la comptabilité, ou l'inverse.",
+      secToDec: "Heures & Minutes → Décimal (1/100e)",
+      secToHM: "Décimal (1/100e) → Heures & Minutes",
+      secRef: "Repères Rapides (Minutes ↔ Décimal)",
+      lblH: "Heures",
+      lblM: "Minutes",
+      lblDec: "Heures décimales (ex. 8.42)"
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      pageTitle: "HH:MM ↔ Decimal Hours (1/100e) Converter",
+      pageSub: "Convert hours and minutes into decimal hundredths of an hour for payroll and tracking, or convert back.",
+      secToDec: "Hours & Minutes → Decimal (1/100e)",
+      secToHM: "Decimal (1/100e) → Hours & Minutes",
+      secRef: "Quick Reference (Minutes ↔ Decimal)",
+      lblH: "Hours",
+      lblM: "Minutes",
+      lblDec: "Decimal hours (e.g. 8.42)"
     }
-    tb.appendChild(tr);
+  };
+
+  function toDec() {
+    const h = Math.max(0, Number(document.getElementById("inH").value) || 0);
+    const m = Math.max(0, Number(document.getElementById("inM").value) || 0);
+    const totalMins = (h * 60) + m;
+    const dec = (totalMins / 60).toFixed(2);
+    const hh = String(Math.floor(totalMins / 60)).padStart(2, "0");
+    const mm = String(totalMins % 60).padStart(2, "0");
+
+    document.getElementById("outDec").textContent = `${dec} h`;
+    document.getElementById("outDecSub").textContent = `${hh}h ${mm}min | ${totalMins} min`;
   }
+
+  function toHM() {
+    const dec = Math.max(0, Number(document.getElementById("inDec").value) || 0);
+    const totalMins = Math.round(dec * 60);
+    const hh = String(Math.floor(totalMins / 60)).padStart(2, "0");
+    const mm = String(totalMins % 60).padStart(2, "0");
+
+    document.getElementById("outHM").textContent = `${hh}h ${mm}min`;
+    document.getElementById("outHMSub").textContent = `${dec.toFixed(2)} h | ${totalMins} min`;
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+  }
+
+  toDec();
+  toHM();
 </script>
+
 </body>
 </html>
