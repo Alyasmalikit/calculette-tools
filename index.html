@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="4xv0yELo8t3bO9FnrB3KT5-WCWVDhb8jHVW0n7cpASs">
-<title>Calculette-tools — Calculateurs d'Heures &amp; Temps / Time &amp; Working Hours</title>
-<meta name="description" content="Calculateurs gratuits en ligne : temps de travail net, heures travaillées et paie, addition/soustraction de durées, feuille hebdomadaire, convertisseur décimal et toiture à croupe.">
+<title>Calculette-tools — Calculateurs d'Heures &amp; Temps</title>
+<meta name="description" content="Calculateurs gratuits en ligne : temps de travail net, heures et salaire, durées, feuille hebdomadaire, convertisseur décimal et toiture à croupe.">
 <link rel="canonical" href="https://alyasmalikit.github.io/calculette-tools/">
 <style>
   :root {
@@ -111,9 +111,7 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Hero */
-  .hero {
-    padding: 24px 0 12px;
-  }
+  .hero { padding: 24px 0 12px; }
   .hero h1 {
     margin: 0 0 6px;
     font-size: clamp(1.4rem, 3vw, 2rem);
@@ -134,7 +132,7 @@
     color: var(--ink);
   }
 
-  /* 3 Live Calculators Grid (minmax(0, 1fr) prevents overflow) */
+  /* 3 Live Calculators Grid */
   .live-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
@@ -192,9 +190,7 @@
     margin-bottom: 10px;
     width: 100%;
   }
-  .field-row > div, .field-row-3 > div {
-    min-width: 0;
-  }
+  .field-row > div, .field-row-3 > div { min-width: 0; }
   label {
     display: block;
     font-size: 0.78rem;
@@ -315,14 +311,14 @@
     <div class="nav-right">
       <nav class="nav-menu">
         <a href="index.html" class="active" data-t="navHome">Accueil</a>
-        <a href="working-time-calculator.html" data-t="navWt">Working Time</a>
-        <a href="working-hour-calculator.html" data-t="navWh">Working Hours</a>
-        <a href="time-calculator.html" data-t="navTc">Time Calculator</a>
+        <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+        <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+        <a href="time-calculator.html" data-t="navTc">Durées</a>
         <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
         <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
         <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
       </nav>
-      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN / FR</button>
+      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
     </div>
   </div>
 </header>
@@ -393,8 +389,8 @@
           <div>
             <label for="tcOp" data-t="lblOp">Opération</label>
             <select id="tcOp">
-              <option value="add">+ (Add)</option>
-              <option value="sub">- (Sub)</option>
+              <option value="add">+</option>
+              <option value="sub">-</option>
             </select>
           </div>
         </div>
@@ -443,17 +439,13 @@
   <div class="container">
     <div>Calculette-tools</div>
     <div class="footer-links">
-      <a href="index.html">Accueil / Home</a>
-      <a href="working-time-calculator.html">Working Time</a>
-      <a href="working-hour-calculator.html">Working Hours</a>
-      <a href="time-calculator.html">Time Calculator</a>
-      <a href="feuille-hebdo.html">Feuille Hebdo</a>
-      <a href="convertisseur.html">Convertisseur</a>
-      <a href="toiture-croupe.html">Toiture</a>
-      <a href="about.html">About</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <a href="contact.html">Contact</a>
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
   </div>
 </footer>
@@ -462,8 +454,14 @@
   let lang = "fr";
   const dict = {
     fr: {
-      btn: "EN / FR",
+      btn: "EN",
       navHome: "Accueil",
+      navWt: "Temps de Travail",
+      navWh: "Heures & Salaire",
+      navTc: "Durées",
+      navFh: "Feuille Hebdo",
+      navCv: "Convertisseur",
+      navTo: "Toiture",
       heroTitle: "Calculateurs d'Heures & Temps en Ligne",
       heroSub: "Calculs instantanés sur la page + accès direct aux outils spécialisés.",
       sec1: "1. Calculateurs Instantanés",
@@ -490,8 +488,14 @@
       l3Desc: "Pente, chevrons, arêtiers, faîtage et surface réelle de toiture."
     },
     en: {
-      btn: "FR / EN",
+      btn: "FR",
       navHome: "Home",
+      navWt: "Working Time",
+      navWh: "Working Hours",
+      navTc: "Time Calculator",
+      navFh: "Weekly Timesheet",
+      navCv: "Decimal Converter",
+      navTo: "Hip Roof",
       heroTitle: "Online Time & Working Hours Calculators",
       heroSub: "Instant calculations right on this page + direct access to specialized tools.",
       sec1: "1. Instant Calculators",
