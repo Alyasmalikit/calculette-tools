@@ -1,14 +1,234 @@
-<header style="border-bottom:1px solid #e2e8f0;background:#fff;padding:14px 20px;">
-  <div style="max-width:1020px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
-    <a href="index.html" style="font-weight:800;font-size:1.15rem;color:#0f172a;text-decoration:none;">Calculette-tools</a>
-    <nav style="display:flex;flex-wrap:wrap;gap:12px;font-size:0.9rem;font-weight:600;">
-      <a href="index.html" style="color:#2563eb;text-decoration:none;">Home</a>
-      <a href="working-time-calculator.html" style="color:#475569;text-decoration:none;">Working Time</a>
-      <a href="working-hour-calculator.html" style="color:#475569;text-decoration:none;">Working Hours</a>
-      <a href="time-calculator.html" style="color:#475569;text-decoration:none;">Time Calculator</a>
-      <a href="feuille-hebdo.html" style="color:#475569;text-decoration:none;">Feuille Hebdo</a>
-      <a href="convertisseur.html" style="color:#475569;text-decoration:none;">Convertisseur</a>
-      <a href="toiture-croupe.html" style="color:#475569;text-decoration:none;">Toiture</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="4xv0yELo8t3bO9FnrB3KT5-WCWVDhb8jHVW0n7cpASs">
+<title>Calculette-tools | Time &amp; Working Hours Calculators</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --ink: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --btn: #2563eb;
+    --btn-hover: #1d4ed8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+  }
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .menu a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .menu a:hover { color: var(--btn); }
+  .hero {
+    text-align: center;
+    padding: 32px 20px;
+    margin: 24px 0;
+    background: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 14px;
+  }
+  .hero h1 { margin: 0 0 8px; font-size: 1.9rem; }
+  .hero p { margin: 0 auto; max-width: 600px; color: var(--muted); }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .card h2 { margin: 0 0 6px; font-size: 1.05rem; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+  .btn {
+    display: inline-block;
+    text-align: center;
+    background: var(--btn);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--btn-hover); }
+  .box {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 32px;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin: 14px 0;
+  }
+  label { display: block; font-size: 0.88rem; font-weight: 600; margin-bottom: 5px; }
+  input {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  .out {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: #eff6ff;
+    border-left: 4px solid var(--btn);
+    border-radius: 6px;
+    font-weight: 700;
+  }
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 22px 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer a { color: var(--muted); text-decoration: none; margin: 0 8px; }
+  footer a:hover { color: var(--btn); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="brand">Calculette-tools</a>
+    <nav class="menu">
+      <a href="working-time-calculator.html">Working Time</a>
+      <a href="working-hour-calculator.html">Working Hours</a>
+      <a href="time-calculator.html">Time Calculator</a>
+      <a href="feuille-hebdo.html">Feuille Hebdo</a>
+      <a href="convertisseur.html">Convertisseur</a>
+      <a href="toiture-croupe.html">Toiture</a>
     </nav>
   </div>
 </header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Simple Time &amp; Working Hours Calculators</h1>
+    <p>Fast, clean calculators for working time, working hours, time durations, timesheets, and specialized tools.</p>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <div><h2>Working Time Calculator</h2><p>Start, end, and break time to get net hours.</p></div>
+      <a href="working-time-calculator.html" class="btn">Open Tool</a>
+    </div>
+    <div class="card">
+      <div><h2>Working Hour Calculator</h2><p>Total hours, overtime, and estimated hourly pay.</p></div>
+      <a href="working-hour-calculator.html" class="btn">Open Tool</a>
+    </div>
+    <div class="card">
+      <div><h2>Time Calculator</h2><p>Add or subtract hours, minutes, and seconds.</p></div>
+      <a href="time-calculator.html" class="btn">Open Tool</a>
+    </div>
+    <div class="card">
+      <div><h2>Feuille Hebdo (35h/39h)</h2><p>Weekly timesheet with overtime and print view.</p></div>
+      <a href="feuille-hebdo.html" class="btn">Open Tool</a>
+    </div>
+    <div class="card">
+      <div><h2>Convertisseur Décimal</h2><p>Convert HH:MM to decimal hours and subtract times.</p></div>
+      <a href="convertisseur.html" class="btn">Open Tool</a>
+    </div>
+    <div class="card">
+      <div><h2>Toiture à Croupe</h2><p>Hip roof framing calculations and roof surface.</p></div>
+      <a href="toiture-croupe.html" class="btn">Open Tool</a>
+    </div>
+  </section>
+
+  <section class="box">
+    <h2 style="margin:0 0 6px;">Quick Daily Shift Calculator</h2>
+    <div class="row">
+      <div><label for="qStart">Start Time</label><input id="qStart" type="time" value="09:00"></div>
+      <div><label for="qEnd">End Time</label><input id="qEnd" type="time" value="17:30"></div>
+      <div><label for="qBreak">Break (mins)</label><input id="qBreak" type="number" min="0" value="30"></div>
+    </div>
+    <button type="button" class="btn" onclick="runQuickCalc()">Calculate</button>
+    <div id="qResult" class="out">Net Time: 8h 0m (8.00 decimal hours)</div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>Calculette-tools</div>
+    <div style="margin-top:8px;">
+      <a href="about.html">About Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms &amp; Disclaimer</a>
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function runQuickCalc() {
+    const sVal = document.getElementById("qStart").value;
+    const eVal = document.getElementById("qEnd").value;
+    const brk = Math.max(0, parseInt(document.getElementById("qBreak").value || "0", 10));
+    const out = document.getElementById("qResult");
+    if (!sVal || !eVal) { out.textContent = "Please enter both times."; return; }
+    const [sh, sm] = sVal.split(":").map(Number);
+    const [eh, em] = eVal.split(":").map(Number);
+    let sMin = sh * 60 + sm;
+    let eMin = eh * 60 + em;
+    if (eMin < sMin) eMin += 1440;
+    const net = Math.max(0, eMin - sMin - brk);
+    out.textContent = `Net Time: ${Math.floor(net / 60)}h ${net % 60}m (${(net / 60).toFixed(2)} decimal hours)`;
+  }
+</script>
+
+</body>
+</html>
