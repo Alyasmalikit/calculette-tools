@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculateur d'Heures Travaillées &amp; Paie | Calculette-tools</title>
-<meta name="description" content="Calculez vos heures totales, heures normales, heures supplémentaires et estimation de salaire en heures-minutes et centièmes d'heure.">
+<title>Calculateur d'Heures et Salaire | Calculette-tools</title>
+<meta name="description" content="Calculez votre rémunération à partir de vos heures travaillées, de votre taux horaire et de vos heures supplémentaires majorées.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -109,7 +109,7 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Page Head */
-  .page-head { padding: 24px 0 12px; }
+  .page-head { padding: 22px 0 14px; }
   .page-head h1 {
     margin: 0 0 6px;
     font-size: clamp(1.4rem, 3vw, 1.95rem);
@@ -117,112 +117,88 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
-  /* Diagram Card */
-  .diagram-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    box-shadow: var(--shadow);
+  /* Split Grid */
+  .split-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 18px;
     margin-bottom: 18px;
-    text-align: center;
   }
-  .diagram-card svg {
-    width: 100%;
-    max-width: 620px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-  .diagram-caption {
-    margin-top: 6px;
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-weight: 600;
+  @media (max-width: 780px) {
+    .split-grid { grid-template-columns: 1fr; }
   }
 
-  /* Grid & Cards */
-  .main-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    gap: 18px;
-    margin-bottom: 24px;
-  }
+  /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 20px;
     box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    width: 100%;
     min-width: 0;
   }
+  .split-grid .card { margin-bottom: 0; }
   .card h2 {
     margin: 0 0 14px;
     font-size: 1.08rem;
   }
+  .card h3 {
+    margin: 14px 0 6px;
+    font-size: 0.98rem;
+  }
+  .card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list {
+    margin: 6px 0 12px;
+    padding-left: 20px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list li { margin-bottom: 6px; }
 
-  .presets {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-  .chip {
-    background: var(--soft);
-    color: var(--primary);
-    border: 1px solid #bfdbfe;
-    padding: 5px 10px;
-    border-radius: 999px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .chip:hover { background: var(--primary); color: #fff; }
-
-  .field-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .field-grid > div { min-width: 0; }
-  label {
+  .field { margin-bottom: 12px; }
+  .field label {
     display: block;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.82rem;
+    font-weight: 700;
     color: var(--muted);
     margin-bottom: 4px;
   }
-  input, select {
+  input[type="number"] {
     width: 100%;
     min-width: 0;
     padding: 9px 10px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
-    font-size: 0.92rem;
+    font-size: 0.94rem;
     background: #fff;
     color: var(--ink);
   }
-  input:focus, select:focus {
+  input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
 
-  .actions {
+  .toolbar {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-top: 8px;
+    margin-top: 14px;
   }
   .btn {
-    flex: 1;
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 10px 14px;
+    padding: 9px 16px;
     border-radius: 9px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
   .btn:hover { background: var(--primary-hover); }
@@ -230,7 +206,7 @@
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 10px 14px;
+    padding: 9px 16px;
     border-radius: 9px;
     font-weight: 600;
     font-size: 0.88rem;
@@ -238,31 +214,53 @@
   }
   .btn-sec:hover { background: #e2e8f0; }
 
-  /* Summary Stats */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-  .stat-box {
-    background: var(--soft);
-    border: 1px solid #bfdbfe;
+  /* Result List */
+  .res-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 12px;
-    min-width: 0;
+    background: #fafcff;
+    margin-bottom: 10px;
   }
-  .stat-lbl {
-    display: block;
-    font-size: 0.76rem;
+  .res-row.highlight {
+    background: var(--soft);
+    border-color: #93c5fd;
+  }
+  .res-row:last-child { margin-bottom: 0; }
+  .res-label {
+    font-size: 0.88rem;
     font-weight: 600;
     color: var(--muted);
-    margin-bottom: 4px;
   }
-  .stat-val {
-    font-size: 1.05rem;
-    font-weight: 800;
+  .res-row.highlight .res-label {
     color: var(--ink);
-    overflow-wrap: break-word;
+    font-weight: 800;
+  }
+  .res-val {
+    font-size: 0.98rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-align: right;
+  }
+
+  /* Ad Space */
+  .ad-slot {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    margin: 18px auto;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   /* Footer */
@@ -274,7 +272,7 @@
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
-    margin-top: 24px;
+    margin-top: 22px;
   }
   .footer-links {
     margin-top: 10px;
@@ -313,104 +311,87 @@
 
 <main class="container">
   <div class="page-head">
-    <h1 data-t="pageTitle">Calculateur d'Heures Travaillées, Heures Sup &amp; Paie</h1>
-    <p data-t="pageSub">Calculez le volume d'heures sur une période, la répartition heures normales / supplémentaires et l'estimation de rémunération.</p>
+    <h1 data-t="pageTitle">Calculateur d'Heures de Travail &amp; Salaire</h1>
+    <p data-t="pageSub">Estimez votre montant brut ou net à partir de vos heures normales, de vos heures supplémentaires majorées et de votre taux horaire.</p>
   </div>
 
-  <!-- Regular vs Overtime SVG Diagram -->
-  <div class="diagram-card">
-    <svg viewBox="0 0 640 110" role="img" aria-label="Schéma heures normales et heures supplémentaires">
-      <rect x="0" y="0" width="640" height="110" rx="10" fill="#f8fafc"/>
-      <rect x="45" y="34" width="380" height="30" rx="6" fill="#2563eb"/>
-      <rect x="430" y="34" width="165" height="30" rx="6" fill="#16a34a"/>
-      <text x="235" y="53" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Heures Normales (Seuil / Base)</text>
-      <text x="512" y="53" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Heures Sup (Majorées)</text>
-      <text x="45" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600">0 h</text>
-      <text x="425" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Seuil</text>
-      <text x="595" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="end">Total</text>
-    </svg>
-    <div class="diagram-caption" data-t="diagCap">Répartition automatique entre heures normales et heures supplémentaires selon votre seuil.</div>
-  </div>
-
-  <div class="main-grid">
+  <div class="split-grid">
+    <!-- Left: Inputs -->
     <div class="card">
-      <h2 data-t="secInputs">Paramètres de Travail</h2>
+      <h2 data-t="secInputs">Paramètres de calcul</h2>
 
-      <div class="presets">
-        <button type="button" class="chip" onclick="applyPreset(5, 7, 35, 1.25)">35h / Semaine</button>
-        <button type="button" class="chip" onclick="applyPreset(5, 7.8, 39, 1.25)">39h BTP</button>
-        <button type="button" class="chip" onclick="applyPreset(5, 8, 40, 1.5)">40h / 1.5x OT</button>
-        <button type="button" class="chip" onclick="applyPreset(20, 8, 151.67, 1.25)">Mois (151.67h)</button>
+      <div class="field">
+        <label for="inRate" data-t="lblRate">Taux horaire (€ / heure)</label>
+        <input type="number" id="inRate" step="0.01" min="0" value="14.50" oninput="calcPay()">
       </div>
 
-      <div class="field-grid">
-        <div>
-          <label for="days" data-t="lblDays">Nombre de jours</label>
-          <input type="number" id="days" min="0" step="any" value="5" oninput="calc()">
-        </div>
-        <div>
-          <label for="hrsDay" data-t="lblHrsDay">Heures / jour (décimal)</label>
-          <input type="number" id="hrsDay" min="0" step="any" value="8" oninput="calc()">
-        </div>
-        <div>
-          <label for="baseHrs" data-t="lblBase">Seuil heures normales</label>
-          <input type="number" id="baseHrs" min="0" step="any" value="35" oninput="calc()">
-        </div>
-        <div>
-          <label for="rate" data-t="lblRate">Taux horaire (€ / $)</label>
-          <input type="number" id="rate" min="0" step="any" value="15" oninput="calc()">
-        </div>
-        <div>
-          <label for="otMult" data-t="lblMult">Majoration heures sup</label>
-          <select id="otMult" onchange="calc()">
-            <option value="1">1.00x (Standard)</option>
-            <option value="1.25" selected>1.25x (+25%)</option>
-            <option value="1.5">1.50x (+50%)</option>
-            <option value="2">2.00x (+100%)</option>
-          </select>
-        </div>
-        <div>
-          <label for="extraMins" data-t="lblExtraM">Minutes additionnelles</label>
-          <input type="number" id="extraMins" min="0" step="any" value="0" oninput="calc()">
-        </div>
+      <div class="field">
+        <label for="inRegHours" data-t="lblRegHours">Heures normales (en décimal 1/100e)</label>
+        <input type="number" id="inRegHours" step="0.01" min="0" value="35.00" oninput="calcPay()">
       </div>
 
-      <div class="actions">
-        <button type="button" class="btn" onclick="calc()" data-t="btnCalc">Calculer</button>
-        <button type="button" class="btn-sec" onclick="resetForm()" data-t="btnReset">Reset</button>
+      <div class="field">
+        <label for="inOtHours" data-t="lblOtHours">Heures supplémentaires (en décimal 1/100e)</label>
+        <input type="number" id="inOtHours" step="0.01" min="0" value="4.25" oninput="calcPay()">
+      </div>
+
+      <div class="field">
+        <label for="inOtPct" data-t="lblOtPct">Taux de majoration heures sup (%)</label>
+        <input type="number" id="inOtPct" step="1" min="0" value="25" oninput="calcPay()">
+      </div>
+
+      <div class="toolbar">
+        <button type="button" class="btn" onclick="calcPay()" data-t="btnCalc">Calculer</button>
+        <button type="button" class="btn-sec" onclick="resetPay()" data-t="btnReset">Reset</button>
       </div>
     </div>
 
+    <!-- Right: Results -->
     <div class="card">
-      <h2 data-t="secRes">Résumé &amp; Détail</h2>
-      <div class="stats-grid">
-        <div class="stat-box">
-          <span class="stat-lbl" data-t="sTotDec">Total Décimal</span>
-          <span class="stat-val" id="outTotDec">40.00 h</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-lbl" data-t="sTotHM">Total (HH:MM)</span>
-          <span class="stat-val" id="outTotHM">40h 00min</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-lbl" data-t="sReg">Heures Normales</span>
-          <span class="stat-val" id="outReg">35.00 h</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-lbl" data-t="sOt">Heures Supplémentaires</span>
-          <span class="stat-val" id="outOt">5.00 h</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-lbl" data-t="sPayReg">Paie Normale</span>
-          <span class="stat-val" id="outPayReg">525.00</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-lbl" data-t="sPayTot">Estimation Totale</span>
-          <span class="stat-val" id="outPayTot">618.75</span>
-        </div>
+      <h2 data-t="secResults">Récapitulatif estimé</h2>
+
+      <div class="res-row">
+        <span class="res-label" data-t="rTotalHours">Total heures travaillées</span>
+        <span class="res-val" id="outTotalHours">39.25 h (39h 15min)</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label" data-t="rBasePay">Montant heures normales</span>
+        <span class="res-val" id="outBasePay">507.50 €</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label" data-t="rOtRate">Taux horaire majoré</span>
+        <span class="res-val" id="outOtRate">18.13 € / h</span>
+      </div>
+      <div class="res-row">
+        <span class="res-label" data-t="rOtPay">Montant heures supplémentaires</span>
+        <span class="res-val" id="outOtPay">77.03 €</span>
+      </div>
+      <div class="res-row highlight">
+        <span class="res-label" data-t="rGrandTotal">TOTAL ESTIMÉ</span>
+        <span class="res-val" id="outGrandTotal">584.53 €</span>
       </div>
     </div>
   </div>
+
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
+
+  <!-- Practical Guide -->
+  <section class="card">
+    <h2 data-t="guideTitle">Comment estimer sa paie à partir des heures décimales</h2>
+    <p data-t="guideIntro">Pour multiplier correctement un volume d'heures par un taux horaire, il faut toujours utiliser des heures décimales (centièmes d'heure, par exemple 39,25 h pour 39h 15min) et non directement les minutes.</p>
+
+    <h3 data-t="guideSub1">Points utiles à vérifier</h3>
+    <ul class="guide-list">
+      <li data-t="guideLi1"><strong>Heures normales et majorées :</strong> indiquez séparément la base habituelle (par exemple 35 h ou 39 h) et les heures supplémentaires avec le pourcentage de majoration prévu (+10 %, +25 % ou +50 %).</li>
+      <li data-t="guideLi2"><strong>Brut ou net :</strong> si vous saisissez un taux horaire brut, le résultat correspond à une estimation brute avant cotisations ; avec un taux net estimé, vous obtenez une approximation nette.</li>
+    </ul>
+
+    <p style="margin-bottom:0;" data-t="guideP2">Ce calcul reste indicatif : primes, paniers repas, indemnités de déplacement et règles conventionnelles peuvent modifier le bulletin de paie final.</p>
+  </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
@@ -419,7 +400,7 @@
     <div class="footer-links">
       <a href="index.html" data-t="navHome">Accueil</a>
       <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
-      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="working-hour-calculator.html" class="active" data-t="navWh">Heures &amp; Salaire</a>
       <a href="time-calculator.html" data-t="navTc">Durées</a>
       <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
       <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
@@ -444,96 +425,89 @@
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      pageTitle: "Calculateur d'Heures Travaillées, Heures Sup & Paie",
-      pageSub: "Calculez le volume d'heures sur une période, la répartition heures normales / supplémentaires et l'estimation de rémunération.",
-      diagCap: "Répartition automatique entre heures normales et heures supplémentaires selon votre seuil.",
-      secInputs: "Paramètres de Travail",
-      secRes: "Résumé & Détail",
-      lblDays: "Nombre de jours",
-      lblHrsDay: "Heures / jour (décimal)",
-      lblBase: "Seuil heures normales",
-      lblRate: "Taux horaire (€ / $)",
-      lblMult: "Majoration heures sup",
-      lblExtraM: "Minutes additionnelles",
+      pageTitle: "Calculateur d'Heures de Travail & Salaire",
+      pageSub: "Estimez votre montant brut ou net à partir de vos heures normales, de vos heures supplémentaires majorées et de votre taux horaire.",
+      secInputs: "Paramètres de calcul",
+      lblRate: "Taux horaire (€ / heure)",
+      lblRegHours: "Heures normales (en décimal 1/100e)",
+      lblOtHours: "Heures supplémentaires (en décimal 1/100e)",
+      lblOtPct: "Taux de majoration heures sup (%)",
       btnCalc: "Calculer",
       btnReset: "Reset",
-      sTotDec: "Total Décimal",
-      sTotHM: "Total (HH:MM)",
-      sReg: "Heures Normales",
-      sOt: "Heures Supplémentaires",
-      sPayReg: "Paie Normale",
-      sPayTot: "Estimation Totale"
+      secResults: "Récapitulatif estimé",
+      rTotalHours: "Total heures travaillées",
+      rBasePay: "Montant heures normales",
+      rOtRate: "Taux horaire majoré",
+      rOtPay: "Montant heures supplémentaires",
+      rGrandTotal: "TOTAL ESTIMÉ",
+      guideTitle: "Comment estimer sa paie à partir des heures décimales",
+      guideIntro: "Pour multiplier correctement un volume d'heures par un taux horaire, il faut toujours utiliser des heures décimales (centièmes d'heure, par exemple 39,25 h pour 39h 15min) et non directement les minutes.",
+      guideSub1: "Points utiles à vérifier",
+      guideLi1: "Heures normales et majorées : indiquez séparément la base habituelle (par exemple 35 h ou 39 h) et les heures supplémentaires avec le pourcentage de majoration prévu (+10 %, +25 % ou +50 %).",
+      guideLi2: "Brut ou net : si vous saisissez un taux horaire brut, le résultat correspond à une estimation brute avant cotisations ; avec un taux net estimé, vous obtenez une approximation nette.",
+      guideP2: "Ce calcul reste indicatif : primes, paniers repas, indemnités de déplacement et règles conventionnelles peuvent modifier le bulletin de paie final."
     },
     en: {
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      pageTitle: "Working Hours, Overtime & Pay Calculator",
-      pageSub: "Calculate total working hours, regular vs. overtime hours, and estimated gross pay.",
-      diagCap: "Automatic split between regular hours and overtime hours based on your threshold.",
-      secInputs: "Work Parameters",
-      secRes: "Summary & Breakdown",
-      lblDays: "Number of days",
-      lblHrsDay: "Hours / day (decimal)",
-      lblBase: "Regular hours threshold",
-      lblRate: "Hourly rate (€ / $)",
-      lblMult: "Overtime multiplier",
-      lblExtraM: "Additional minutes",
+      pageTitle: "Working Hours & Pay Calculator",
+      pageSub: "Estimate gross or net earnings from regular hours, overtime multiplier, and hourly pay rate.",
+      secInputs: "Pay Calculation Inputs",
+      lblRate: "Hourly rate (€ / hour)",
+      lblRegHours: "Regular hours (decimal 1/100e)",
+      lblOtHours: "Overtime hours (decimal 1/100e)",
+      lblOtPct: "Overtime bonus percentage (%)",
       btnCalc: "Calculate",
       btnReset: "Reset",
-      sTotDec: "Total Decimal",
-      sTotHM: "Total (HH:MM)",
-      sReg: "Regular Hours",
-      sOt: "Overtime Hours",
-      sPayReg: "Regular Pay",
-      sPayTot: "Estimated Total"
+      secResults: "Estimated Summary",
+      rTotalHours: "Total hours worked",
+      rBasePay: "Regular hours pay",
+      rOtRate: "Overtime hourly rate",
+      rOtPay: "Overtime pay",
+      rGrandTotal: "ESTIMATED TOTAL",
+      guideTitle: "How to Estimate Pay from Decimal Hours",
+      guideIntro: "To multiply worked hours by an hourly rate accurately, always use decimal hundredths of an hour (for example 39.25 hrs for 39h 15min) rather than raw clock minutes.",
+      guideSub1: "Helpful Points to Check",
+      guideLi1: "Regular and overtime hours: enter standard hours (such as 35 hrs or 39 hrs) separately from overtime hours along with your overtime percentage (+10%, +25%, or +50%).",
+      guideLi2: "Gross vs. net: entering a gross hourly rate produces a gross estimate before deductions; entering an estimated net rate gives a net approximation.",
+      guideP2: "Treat this figure as an estimate: bonuses, meal allowances, travel stipends, and workplace agreements can affect the final payslip."
     }
   };
 
-  function applyPreset(d, h, b, m) {
-    document.getElementById("days").value = String(d);
-    document.getElementById("hrsDay").value = String(h);
-    document.getElementById("baseHrs").value = String(b);
-    document.getElementById("otMult").value = String(m);
-    calc();
+  function decToHM(dec) {
+    const mins = Math.round(dec * 60);
+    const h = String(Math.floor(mins / 60)).padStart(2, "0");
+    const m = String(mins % 60).padStart(2, "0");
+    return `${h}h ${m}min`;
   }
 
-  function resetForm() {
-    document.getElementById("days").value = "5";
-    document.getElementById("hrsDay").value = "8";
-    document.getElementById("baseHrs").value = "35";
-    document.getElementById("rate").value = "15";
-    document.getElementById("otMult").value = "1.25";
-    document.getElementById("extraMins").value = "0";
-    calc();
+  function calcPay() {
+    const rate = Math.max(0, parseFloat(document.getElementById("inRate").value) || 0);
+    const regH = Math.max(0, parseFloat(document.getElementById("inRegHours").value) || 0);
+    const otH = Math.max(0, parseFloat(document.getElementById("inOtHours").value) || 0);
+    const otPct = Math.max(0, parseFloat(document.getElementById("inOtPct").value) || 0);
+
+    const totalH = regH + otH;
+    const basePay = regH * rate;
+    const otRate = rate * (1 + otPct / 100);
+    const otPay = otH * otRate;
+    const grandTotal = basePay + otPay;
+
+    document.getElementById("outTotalHours").textContent = `${totalH.toFixed(2)} h (${decToHM(totalH)})`;
+    document.getElementById("outBasePay").textContent = `${basePay.toFixed(2)} €`;
+    document.getElementById("outOtRate").textContent = `${otRate.toFixed(2)} € / h`;
+    document.getElementById("outOtPay").textContent = `${otPay.toFixed(2)} €`;
+    document.getElementById("outGrandTotal").textContent = `${grandTotal.toFixed(2)} €`;
   }
 
-  function calc() {
-    const days = Math.max(0, parseFloat(document.getElementById("days").value) || 0);
-    const hrsDay = Math.max(0, parseFloat(document.getElementById("hrsDay").value) || 0);
-    const base = Math.max(0, parseFloat(document.getElementById("baseHrs").value) || 0);
-    const rate = Math.max(0, parseFloat(document.getElementById("rate").value) || 0);
-    const mult = parseFloat(document.getElementById("otMult").value) || 1;
-    const extraM = Math.max(0, parseFloat(document.getElementById("extraMins").value) || 0);
-
-    const totalHrs = (days * hrsDay) + (extraM / 60);
-    const regHrs = Math.min(totalHrs, base);
-    const otHrs = Math.max(0, totalHrs - base);
-    const totalMinsRounded = Math.round(totalHrs * 60);
-    const hh = String(Math.floor(totalMinsRounded / 60)).padStart(2, "0");
-    const mm = String(totalMinsRounded % 60).padStart(2, "0");
-
-    const payReg = regHrs * rate;
-    const payOt = otHrs * rate * mult;
-    const payTot = payReg + payOt;
-
-    document.getElementById("outTotDec").textContent = `${totalHrs.toFixed(2)} h`;
-    document.getElementById("outTotHM").textContent = `${hh}h ${mm}min`;
-    document.getElementById("outReg").textContent = `${regHrs.toFixed(2)} h`;
-    document.getElementById("outOt").textContent = `${otHrs.toFixed(2)} h`;
-    document.getElementById("outPayReg").textContent = payReg.toFixed(2);
-    document.getElementById("outPayTot").textContent = payTot.toFixed(2);
+  function resetPay() {
+    document.getElementById("inRate").value = "14.50";
+    document.getElementById("inRegHours").value = "35.00";
+    document.getElementById("inOtHours").value = "4.25";
+    document.getElementById("inOtPct").value = "25";
+    calcPay();
   }
 
   function applyLang() {
@@ -544,6 +518,7 @@
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
+    calcPay();
   }
 
   function toggleLang() {
@@ -557,7 +532,6 @@
   } catch (e) {}
 
   applyLang();
-  calc();
 </script>
 
 </body>
