@@ -1,116 +1,414 @@
 <!DOCTYPE html>
 <html lang="fr">
-<header style="background:#ffffff;border-bottom:1px solid #e2e8f0;">
-  <div style="max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <a href="index.html" style="font-weight:800;font-size:1.2rem;color:#0f172a;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-      <span style="width:10px;height:10px;border-radius:50%;background:#2563eb;display:inline-block;"></span>Calculette-tools
-    </a>
-    <nav style="display:flex;flex-wrap:wrap;gap:6px;">
-      <a href="index.html" style="color:#2563eb;background:#eff6ff;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Accueil / Home</a>
-      <a href="working-time-calculator.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Working Time</a>
-      <a href="working-hour-calculator.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Working Hours</a>
-      <a href="time-calculator.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Time Calculator</a>
-      <a href="feuille-hebdo.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Feuille Hebdo</a>
-      <a href="convertisseur.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Convertisseur</a>
-      <a href="toiture-croupe.html" style="color:#475569;text-decoration:none;font-size:0.88rem;font-weight:600;padding:6px 10px;border-radius:8px;">Toiture</a>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feuille d'Heures Hebdomadaire (35h/39h) | Calculette-tools</title>
+<meta name="description" content="Calcul automatique des heures normales et supplémentaires selon votre base contrat (35h, 39h, 40h) avec impression PDF.">
+<style>
+  :root {
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --ink: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --soft: #eff6ff;
+    --green: #15803d;
+    --accent: #0ea5e9;
+    --radius: 14px;
+    --shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Unified Header */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 0;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .brand-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: inline-block;
+  }
+  .nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .nav-menu a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 8px;
+  }
+  .nav-menu a:hover, .nav-menu a.active {
+    color: var(--primary);
+    background: var(--soft);
+  }
+
+  /* Main Panel */
+  .wrap { padding: 24px 0 36px; }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .panel-head h1 {
+    margin: 0;
+    font-size: clamp(1.4rem, 2.8vw, 1.85rem);
+    letter-spacing: -0.02em;
+  }
+  .panel-head p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 0.94rem;
+  }
+  .btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn:hover { background: var(--primary-hover); }
+
+  /* Meta Inputs */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  input, select {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    background: #fff;
+    color: var(--ink);
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+
+  /* Timesheet Table */
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  th, td {
+    padding: 9px 10px;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  th {
+    background: var(--soft);
+    font-weight: 700;
+    color: var(--ink);
+  }
+  td input {
+    max-width: 110px;
+    text-align: center;
+    padding: 7px 8px;
+  }
+
+  /* Summary Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 22px;
+  }
+  .stat-lbl {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .stat-val {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+
+  /* Signatures */
+  .sign-box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 24px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .sign-col {
+    flex: 1 1 240px;
+    border-top: 1px solid #94a3b8;
+    padding-top: 8px;
+  }
+
+  /* Unified Footer */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 24px 0 34px;
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+  .footer-links {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-links a:hover { color: var(--primary); }
+
+  @media print {
+    .site-header, .site-footer, .no-print { display: none !important; }
+    body { background: #fff; }
+    .panel { box-shadow: none; border: none; padding: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav-bar">
+    <a href="index.html" class="brand"><span class="brand-dot"></span>Calculette-tools</a>
+    <nav class="nav-menu">
+      <a href="index.html">Accueil / Home</a>
+      <a href="working-time-calculator.html">Working Time</a>
+      <a href="working-hour-calculator.html">Working Hours</a>
+      <a href="time-calculator.html">Time Calculator</a>
+      <a href="feuille-hebdo.html" class="active">Feuille Hebdo</a>
+      <a href="convertisseur.html">Convertisseur</a>
+      <a href="toiture-croupe.html">Toiture</a>
     </nav>
   </div>
 </header>
-<body>
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="index.html" class="brand">Calculette-tools</a>
-    <div class="nav-links">
-      <a href="index.html">Heures Journalières</a>
-      <a href="feuille-hebdo.html" class="active">Feuille Hebdo (35h/39h)</a>
-      <a href="convertisseur.html">Convertisseurs</a>
-      <a href="toiture-croupe.html">Toiture à Croupe</a>
-    </div>
-  </div>
-</nav>
 
-<main class="wrap">
+<main class="container wrap">
   <div class="panel">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:1rem;">
+    <div class="panel-head">
       <div>
-        <h1 style="margin:0;font-size:1.6rem;">Feuille d'Heures Hebdomadaire (Lundi – Dimanche)</h1>
-        <p style="margin:0.25rem 0 0;color:var(--muted);">Calcul automatique des heures normales et supplémentaires selon votre base contrat.</p>
+        <h1>Feuille d'Heures Hebdomadaire (Lundi – Dimanche)</h1>
+        <p>Calcul automatique des heures normales et supplémentaires selon votre base contrat.</p>
       </div>
-      <button type="button" onclick="window.print()" class="btn no-print">Imprimer / Enregistrer en PDF (A4)</button>
+      <button type="button" onclick="window.print()" class="btn no-print">Imprimer / PDF (A4)</button>
     </div>
 
     <div class="meta-grid">
-      <div><label><strong>Nom / Salarié :</strong><input type="text" placeholder="Ex : Jean Dupont"></label></div>
-      <div><label><strong>Semaine / Chantier :</strong><input type="text" placeholder="Ex : Semaine 47 — Chantier Lyon"></label></div>
-      <div><label><strong>Base Hebdomadaire :</strong>
+      <div>
+        <label for="emp-name">Nom / Salarié :</label>
+        <input id="emp-name" type="text" placeholder="Ex : Jean Dupont">
+      </div>
+      <div>
+        <label for="wk-site">Semaine / Chantier :</label>
+        <input id="wk-site" type="text" placeholder="Ex : Semaine 47 — Chantier Lyon">
+      </div>
+      <div>
+        <label for="base-hrs">Base Hebdomadaire :</label>
         <select id="base-hrs">
           <option value="35" selected>35 heures (Légal France)</option>
           <option value="39">39 heures (BTP / Hôtellerie)</option>
           <option value="40">40 heures (Suisse / International)</option>
         </select>
-      </label></div>
+      </div>
     </div>
 
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Jour</th><th>Début</th><th>Fin</th><th>Pause (min)</th><th>Total Jour (HH:MM)</th><th>Décimal</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Jour</th>
+            <th>Début</th>
+            <th>Fin</th>
+            <th>Pause (min)</th>
+            <th>Total Jour (HH:MM)</th>
+            <th>Décimal</th>
+          </tr>
+        </thead>
         <tbody id="wk-body"></tbody>
       </table>
     </div>
 
     <div class="stats">
-      <div><span class="stat-lbl">Total Semaine (HH:MM)</span><span class="stat-val" id="wk-hm" style="color:var(--green);">00h 00min</span></div>
-      <div><span class="stat-lbl">Total Décimal</span><span class="stat-val" id="wk-dec">0.00 h</span></div>
-      <div><span class="stat-lbl">Heures Normales</span><span class="stat-val" id="wk-norm">0.00 h</span></div>
-      <div><span class="stat-lbl">Heures Supplémentaires</span><span class="stat-val" id="wk-ot" style="color:var(--accent);">0.00 h</span></div>
+      <div>
+        <span class="stat-lbl">Total Semaine (HH:MM)</span>
+        <span class="stat-val" id="wk-hm" style="color:var(--green);">00h 00min</span>
+      </div>
+      <div>
+        <span class="stat-lbl">Total Décimal</span>
+        <span class="stat-val" id="wk-dec">0.00 h</span>
+      </div>
+      <div>
+        <span class="stat-lbl">Heures Normales</span>
+        <span class="stat-val" id="wk-norm">0.00 h</span>
+      </div>
+      <div>
+        <span class="stat-lbl">Heures Supplémentaires</span>
+        <span class="stat-val" id="wk-ot" style="color:var(--accent);">0.00 h</span>
+      </div>
     </div>
 
     <div class="sign-box">
-      <div style="width:45%;border-top:1px solid #000;padding-top:0.5rem;">Signature du Salarié :</div>
-      <div style="width:45%;border-top:1px solid #000;padding-top:0.5rem;">Validation Responsable / Client :</div>
+      <div class="sign-col">Signature du Salarié :</div>
+      <div class="sign-col">Validation Responsable / Client :</div>
     </div>
   </div>
 </main>
 
+<footer class="site-footer">
+  <div class="container">
+    <div>Calculette-tools — Calculateurs gratuits / Free online calculators</div>
+    <div class="footer-links">
+      <a href="index.html">Accueil / Home</a>
+      <a href="working-time-calculator.html">Working Time</a>
+      <a href="working-hour-calculator.html">Working Hours</a>
+      <a href="time-calculator.html">Time Calculator</a>
+      <a href="feuille-hebdo.html">Feuille Hebdo</a>
+      <a href="convertisseur.html">Convertisseur</a>
+      <a href="toiture-croupe.html">Toiture</a>
+      <a href="about.html">About / À propos</a>
+      <a href="privacy.html">Privacy / Confidentialité</a>
+      <a href="terms.html">Terms / Conditions</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
 <script>
 (function(){
-  const days=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-  const tbody=document.getElementById('wk-body');
-  const baseSel=document.getElementById('base-hrs');
-  days.forEach((d,i)=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`<td><strong>${d}</strong></td>
-      <td><input type="text" data-d="${i}" data-k="s" value="${i<5?'08:00':''}" placeholder="08:00"></td>
-      <td><input type="text" data-d="${i}" data-k="e" value="${i<5?'16:00':''}" placeholder="16:00"></td>
-      <td><input type="number" data-d="${i}" data-k="b" value="${i<5?60:0}"></td>
+  const days = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+  const tbody = document.getElementById('wk-body');
+  const baseSel = document.getElementById('base-hrs');
+
+  days.forEach((d, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><strong>${d}</strong></td>
+      <td><input type="text" data-d="${i}" data-k="s" value="${i < 5 ? '08:00' : ''}" placeholder="08:00"></td>
+      <td><input type="text" data-d="${i}" data-k="e" value="${i < 5 ? '16:00' : ''}" placeholder="16:00"></td>
+      <td><input type="number" data-d="${i}" data-k="b" value="${i < 5 ? 60 : 0}"></td>
       <td><strong id="d-hm-${i}">00h 00min</strong></td>
-      <td><span id="d-dec-${i}">0.00 h</span></td>`;
+      <td><span id="d-dec-${i}">0.00 h</span></td>
+    `;
     tbody.appendChild(tr);
   });
-  function parseHM(v){
-    const p=String(v||'').split(':'); if(p.length!==2||p[0]===''||p[1]==='') return null;
-    const h=Number(p[0]),m=Number(p[1]); return (isNaN(h)||isNaN(m)||h<0||h>23||m<0||m>59)?null:h*60+m;
+
+  function parseHM(v) {
+    const p = String(v || '').split(':');
+    if (p.length !== 2 || p[0] === '' || p[1] === '') return null;
+    const h = Number(p[0]), m = Number(p[1]);
+    return (isNaN(h) || isNaN(m) || h < 0 || h > 23 || m < 0 || m > 59) ? null : h * 60 + m;
   }
-  function fmtHM(m){ return String(Math.floor(m/60)).padStart(2,'0')+'h '+String(Math.round(m%60)).padStart(2,'0')+'min'; }
-  function calc(){
-    let sum=0;
-    for(let i=0;i<7;i++){
-      const s=parseHM(tbody.querySelector(`[data-d="${i}"][data-k="s"]`).value);
-      const e=parseHM(tbody.querySelector(`[data-d="${i}"][data-k="e"]`).value);
-      const b=Number(tbody.querySelector(`[data-d="${i}"][data-k="b"]`).value)||0;
-      let net=0; if(s!==null&&e!==null){let d=e-s;if(d<0)d+=1440;net=Math.max(0,d-b);}
-      sum+=net;
-      document.getElementById(`d-hm-${i}`).textContent=fmtHM(net);
-      document.getElementById(`d-dec-${i}`).textContent=(net/60).toFixed(2)+' h';
+
+  function fmtHM(m) {
+    return String(Math.floor(m / 60)).padStart(2, '0') + 'h ' + String(Math.round(m % 60)).padStart(2, '0') + 'min';
+  }
+
+  function calc() {
+    let sum = 0;
+    for (let i = 0; i < 7; i++) {
+      const s = parseHM(tbody.querySelector(`[data-d="${i}"][data-k="s"]`).value);
+      const e = parseHM(tbody.querySelector(`[data-d="${i}"][data-k="e"]`).value);
+      const b = Number(tbody.querySelector(`[data-d="${i}"][data-k="b"]`).value) || 0;
+      let net = 0;
+      if (s !== null && e !== null) {
+        let d = e - s;
+        if (d < 0) d += 1440;
+        net = Math.max(0, d - b);
+      }
+      sum += net;
+      document.getElementById(`d-hm-${i}`).textContent = fmtHM(net);
+      document.getElementById(`d-dec-${i}`).textContent = (net / 60).toFixed(2) + ' h';
     }
-    const totDec=sum/60, base=Number(baseSel.value)||35;
-    document.getElementById('wk-hm').textContent=fmtHM(sum);
-    document.getElementById('wk-dec').textContent=totDec.toFixed(2)+' h';
-    document.getElementById('wk-norm').textContent=Math.min(totDec,base).toFixed(2)+' h';
-    document.getElementById('wk-ot').textContent=Math.max(0,totDec-base).toFixed(2)+' h';
+    const totDec = sum / 60;
+    const base = Number(baseSel.value) || 35;
+    document.getElementById('wk-hm').textContent = fmtHM(sum);
+    document.getElementById('wk-dec').textContent = totDec.toFixed(2) + ' h';
+    document.getElementById('wk-norm').textContent = Math.min(totDec, base).toFixed(2) + ' h';
+    document.getElementById('wk-ot').textContent = Math.max(0, totDec - base).toFixed(2) + ' h';
   }
-  tbody.addEventListener('input',calc);
-  baseSel.addEventListener('change',calc);
+
+  tbody.addEventListener('input', calc);
+  baseSel.addEventListener('change', calc);
   calc();
 })();
 </script>
