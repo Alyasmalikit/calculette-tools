@@ -217,16 +217,16 @@
   .res-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.88rem;
+    font-size: 0.86rem;
   }
   .res-table th, .res-table td {
-    padding: 9px 10px;
+    padding: 8px 8px;
     border-bottom: 1px solid var(--border);
     text-align: left;
   }
   .res-table th {
     color: var(--muted);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
   }
@@ -234,6 +234,7 @@
     font-weight: 700;
     color: var(--ink);
     text-align: right;
+    white-space: nowrap;
   }
 
   /* Footer */
@@ -292,26 +293,17 @@
   <div class="diagram-card">
     <svg viewBox="0 0 620 270" role="img" aria-label="Schéma toiture à croupe CE1 CE2 E1 E2 HC">
       <rect x="0" y="0" width="620" height="270" rx="12" fill="#f8fafc"/>
-      <!-- Reference construction lines -->
       <line x1="70" y1="150" x2="550" y2="150" stroke="#ef4444" stroke-width="1.6" stroke-dasharray="6,5"/>
       <line x1="310" y1="24" x2="310" y2="230" stroke="#ef4444" stroke-width="1.6" stroke-dasharray="6,5"/>
-
-      <!-- Eaves lines E1 and E2 -->
       <line x1="120" y1="150" x2="120" y2="210" stroke="#0f172a" stroke-width="2.5"/>
       <line x1="500" y1="150" x2="500" y2="232" stroke="#0f172a" stroke-width="2.5"/>
       <line x1="120" y1="210" x2="500" y2="232" stroke="#0f172a" stroke-width="2.5"/>
-
-      <!-- Hip rafters (Arêtier 1 & Arêtier 2) & Ridge peak -->
       <line x1="310" y1="45" x2="120" y2="210" stroke="#2563eb" stroke-width="3"/>
       <line x1="310" y1="45" x2="500" y2="232" stroke="#2563eb" stroke-width="3"/>
       <line x1="310" y1="45" x2="310" y2="150" stroke="#16a34a" stroke-width="2.5"/>
-
-      <!-- Peak & corner nodes -->
       <circle cx="310" cy="45" r="4.5" fill="#2563eb"/>
       <circle cx="120" cy="210" r="4" fill="#0f172a"/>
       <circle cx="500" cy="232" r="4" fill="#0f172a"/>
-
-      <!-- Labels -->
       <text x="195" y="138" fill="#16a34a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">CE1</text>
       <text x="405" y="138" fill="#16a34a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">CE2</text>
       <text x="86" y="185" fill="#0f172a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">E1</text>
@@ -330,203 +322,24 @@
       <div class="field-grid">
         <div>
           <label for="ce1">CE1 (m)</label>
-          <input type="number" id="ce1" min="0.01" step="0.01" value="1.00" oninput="calcRoof()">
+          <input type="number" id="ce1" min="0" step="any" value="1.000" oninput="calcRoof()">
         </div>
         <div>
           <label for="ce2">CE2 (m)</label>
-          <input type="number" id="ce2" min="0.01" step="0.01" value="1.00" oninput="calcRoof()">
+          <input type="number" id="ce2" min="0" step="any" value="1.000" oninput="calcRoof()">
         </div>
         <div>
           <label for="e1">E1 (m)</label>
-          <input type="number" id="e1" min="0.01" step="0.01" value="1.00" oninput="calcRoof()">
+          <input type="number" id="e1" min="0" step="any" value="1.000" oninput="calcRoof()">
         </div>
         <div>
           <label for="e2">E2 (m)</label>
-          <input type="number" id="e2" min="0.01" step="0.01" value="1.00" oninput="calcRoof()">
+          <input type="number" id="e2" min="0" step="any" value="1.000" oninput="calcRoof()">
         </div>
         <div style="grid-column: 1 / -1;">
           <label for="hc" data-t="lblHc">Hauteur de couronnement HC (m)</label>
-          <input type="number" id="hc" min="0.01" step="0.01" value="1.00" oninput="calcRoof()">
+          <input type="number" id="hc" min="0" step="any" value="1.000" oninput="calcRoof()">
         </div>
       </div>
       <div>
-        <button type="button" class="btn" onclick="calcRoof()" data-t="btnCalc">Calculer</button>
-        <button type="button" class="btn-sec" onclick="resetRoof()" data-t="btnReset">Reset</button>
-      </div>
-    </div>
-
-    <!-- Outputs -->
-    <div class="card">
-      <h2 data-t="secRes">Résultats Arêtiers &amp; Coupes</h2>
-      <table class="res-table">
-        <thead>
-          <tr>
-            <th data-t="colParam">Paramètre</th>
-            <th style="text-align:right;" data-t="colHip1">Arêtier 1</th>
-            <th style="text-align:right;" data-t="colHip2">Arêtier 2</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-t="rPlan">Longueur en plan</td>
-            <td class="num" id="p1">1.414 m</td>
-            <td class="num" id="p2">1.414 m</td>
-          </tr>
-          <tr>
-            <td data-t="rTrue">Vraie grandeur</td>
-            <td class="num" id="tg1">1.732 m</td>
-            <td class="num" id="tg2">1.732 m</td>
-          </tr>
-          <tr>
-            <td data-t="rPlumb">Coupe aplomb</td>
-            <td class="num" id="ca1">54.7°</td>
-            <td class="num" id="ca2">54.7°</td>
-          </tr>
-          <tr>
-            <td data-t="rLevel">Coupe de niveau</td>
-            <td class="num" id="cn1">35.3°</td>
-            <td class="num" id="cn2">35.3°</td>
-          </tr>
-          <tr>
-            <td data-t="rChamfer">Délardement</td>
-            <td class="num" id="dl1">30.0°</td>
-            <td class="num" id="dl2">30.0°</td>
-          </tr>
-          <tr>
-            <td data-t="rJoint">Engeulement</td>
-            <td class="num" id="eg1">45.0°</td>
-            <td class="num" id="eg2">45.0°</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</main>
-
-<footer class="site-footer">
-  <div class="container">
-    <div>Calculette-tools</div>
-    <div class="footer-links">
-      <a href="index.html" data-t="navHome">Accueil</a>
-      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
-      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
-      <a href="time-calculator.html" data-t="navTc">Durées</a>
-      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
-      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
-      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-  let lang = "fr";
-  const dict = {
-    fr: {
-      btn: "EN",
-      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
-      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
-      pageTitle: "Calculateur Toiture à Croupe (Arêtiers & Coupes)",
-      pageSub: "À partir des dimensions de base (CE1, CE2, E1, E2, HC), calculez les longueurs d'arêtiers, pentes et angles de coupe.",
-      diagCap: "Schéma de principe : CE1/CE2 (chevrons d'emprunt), E1/E2 (lignes d'égout), HC (hauteur de couronnement).",
-      secData: "Données de Base (m)",
-      secRes: "Résultats Arêtiers & Coupes",
-      lblHc: "Hauteur de couronnement HC (m)",
-      btnCalc: "Calculer",
-      btnReset: "Reset",
-      colParam: "Paramètre",
-      colHip1: "Arêtier 1",
-      colHip2: "Arêtier 2",
-      rPlan: "Longueur en plan",
-      rTrue: "Vraie grandeur",
-      rPlumb: "Coupe aplomb",
-      rLevel: "Coupe de niveau",
-      rChamfer: "Délardement",
-      rJoint: "Engeulement"
-    },
-    en: {
-      btn: "FR",
-      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
-      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
-      pageTitle: "Hip Roof Framing Calculator (Hips & Cuts)",
-      pageSub: "From base dimensions (CE1, CE2, E1, E2, HC), calculate hip rafter lengths, slopes, and cutting angles.",
-      diagCap: "Reference diagram: CE1/CE2 (borrowed rafters), E1/E2 (eaves lines), HC (crowning height).",
-      secData: "Base Dimensions (m)",
-      secRes: "Hip Rafters & Cuts Results",
-      lblHc: "Crowning height HC (m)",
-      btnCalc: "Calculate",
-      btnReset: "Reset",
-      colParam: "Parameter",
-      colHip1: "Hip 1",
-      colHip2: "Hip 2",
-      rPlan: "Plan length",
-      rTrue: "True length",
-      rPlumb: "Plumb cut",
-      rLevel: "Level cut",
-      rChamfer: "Chamfer angle",
-      rJoint: "Cheek / joint angle"
-    }
-  };
-
-  function toDeg(rad) {
-    return (rad * 180) / Math.PI;
-  }
-
-  function calcHip(ce, e, hc) {
-    const plan = Math.hypot(ce, e);
-    const trueLen = Math.hypot(plan, hc);
-    const plumb = plan > 0 ? toDeg(Math.atan2(plan, hc)) : 0;
-    const level = hc > 0 ? toDeg(Math.atan2(hc, plan)) : 0;
-    const chamfer = trueLen > 0 ? toDeg(Math.asin(Math.min(1, (hc * e) / (trueLen * Math.max(0.0001, plan))))) : 0;
-    const joint = plan > 0 ? toDeg(Math.atan2(ce, e)) : 45;
-    return { plan, trueLen, plumb, level, chamfer, joint };
-  }
-
-  function calcRoof() {
-    const ce1 = Math.max(0.01, Number(document.getElementById("ce1").value) || 1);
-    const ce2 = Math.max(0.01, Number(document.getElementById("ce2").value) || 1);
-    const e1 = Math.max(0.01, Number(document.getElementById("e1").value) || 1);
-    const e2 = Math.max(0.01, Number(document.getElementById("e2").value) || 1);
-    const hc = Math.max(0.01, Number(document.getElementById("hc").value) || 1);
-
-    const h1 = calcHip(ce1, e1, hc);
-    const h2 = calcHip(ce2, e2, hc);
-
-    document.getElementById("p1").textContent = `${h1.plan.toFixed(3)} m`;
-    document.getElementById("p2").textContent = `${h2.plan.toFixed(3)} m`;
-    document.getElementById("tg1").textContent = `${h1.trueLen.toFixed(3)} m`;
-    document.getElementById("tg2").textContent = `${h2.trueLen.toFixed(3)} m`;
-    document.getElementById("ca1").textContent = `${h1.plumb.toFixed(1)}°`;
-    document.getElementById("ca2").textContent = `${h2.plumb.toFixed(1)}°`;
-    document.getElementById("cn1").textContent = `${h1.level.toFixed(1)}°`;
-    document.getElementById("cn2").textContent = `${h2.level.toFixed(1)}°`;
-    document.getElementById("dl1").textContent = `${h1.chamfer.toFixed(1)}°`;
-    document.getElementById("dl2").textContent = `${h2.chamfer.toFixed(1)}°`;
-    document.getElementById("eg1").textContent = `${h1.joint.toFixed(1)}°`;
-    document.getElementById("eg2").textContent = `${h2.joint.toFixed(1)}°`;
-  }
-
-  function resetRoof() {
-    document.getElementById("ce1").value = "1.00";
-    document.getElementById("ce2").value = "1.00";
-    document.getElementById("e1").value = "1.00";
-    document.getElementById("e2").value = "1.00";
-    document.getElementById("hc").value = "1.00";
-    calcRoof();
-  }
-
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
-    document.documentElement.lang = lang;
-    const d = dict[lang];
-    document.getElementById("langBtn").textContent = d.btn;
-    document.querySelectorAll("[data-t]").forEach(el => {
-      const k = el.getAttribute("data-t");
-      if (d[k]) el.textContent = d[k];
-    });
-  }
-
-  calcRoof();
-</script>
-
-</body>
-</html>
+        <button type="button" class="btn" onclick="calcRoof()" data-t="btnCalc">Calculer les coupes</button>
