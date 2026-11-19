@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <meta name="google-site-verification" content="4xv0yELo8t3bO9FnrB3KT5-WCWVDhb8jHVW0n7cpASs" />
+<meta name="google-site-verification" content="4xv0yELo8t3bO9FnrB3KT5-WCWVDhb8jHVW0n7cpASs" />
 <title>ChronoCharpente Pro — Calculateur d'Heures, Feuille Hebdo &amp; Toiture à Croupe</title>
 <meta name="description" content="Suite complète de calculateurs gratuits : calculateur d'heures journalières avec taux horaire, feuille d'heures hebdomadaire 35h/39h imprimable, convertisseur décimal et calculateur de charpente toiture à croupe.">
 <link rel="canonical" href="https://alyasmalikit.github.io/calculette-tools/">
@@ -44,6 +44,9 @@ input[type="text"], input[type="number"] { padding:0.45rem; border:1px solid var
 details { border-bottom:1px solid var(--border); padding:0.75rem 0; }
 summary { font-weight:600; cursor:pointer; }
 footer { text-align:center; color:var(--muted); font-size:0.88rem; margin-top:2rem; padding:1.5rem 0; border-top:1px solid var(--border); }
+footer .footer-links { margin-top:10px; font-size:14px; }
+footer .footer-links a { margin:0 8px; color:var(--muted); text-decoration:none; }
+footer .footer-links a:hover { color:var(--navy); text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -54,6 +57,9 @@ footer { text-align:center; color:var(--muted); font-size:0.88rem; margin-top:2r
       <a href="index.html" class="active">Heures Journalières</a>
       <a href="feuille-hebdo.html">Feuille Hebdo (35h/39h)</a>
       <a href="convertisseur.html">Convertisseurs</a>
+      <a href="working-time-calculator.html">Working Time</a>
+      <a href="working-hour-calculator.html">Working Hour</a>
+      <a href="time-calculator.html">Time Calculator</a>
       <a href="toiture-croupe.html">Toiture à Croupe</a>
     </div>
   </div>
@@ -79,7 +85,19 @@ footer { text-align:center; color:var(--muted); font-size:0.88rem; margin-top:2r
       <a href="convertisseur.html" class="btn btn-outline">Ouvrir le convertisseur →</a>
     </div>
     <div class="card">
-      <div><h3>4. Toiture à Croupe</h3><p>Calculateur de charpente avec schéma dynamique : pente, chevrons, arêtiers, faîtage et surface réelle.</p></div>
+      <div><h3>4. Working Time Calculator</h3><p>Calculez le temps de travail net entre l'heure de début et de fin, avec pause et horaires de nuit.</p></div>
+      <a href="working-time-calculator.html" class="btn btn-outline">Ouvrir l'outil →</a>
+    </div>
+    <div class="card">
+      <div><h3>5. Working Hour Calculator</h3><p>Estimez le total d'heures travaillées, les heures supplémentaires et la rémunération horaire.</p></div>
+      <a href="working-hour-calculator.html" class="btn btn-outline">Ouvrir l'outil →</a>
+    </div>
+    <div class="card">
+      <div><h3>6. Time Calculator</h3><p>Additionnez ou soustrayez des durées en heures, minutes et secondes facilement.</p></div>
+      <a href="time-calculator.html" class="btn btn-outline">Ouvrir l'outil →</a>
+    </div>
+    <div class="card">
+      <div><h3>7. Toiture à Croupe</h3><p>Calculateur de charpente avec schéma dynamique : pente, chevrons, arêtiers, faîtage et surface réelle.</p></div>
       <a href="toiture-croupe.html" class="btn btn-outline">Ouvrir l'outil charpente →</a>
     </div>
   </div>
@@ -123,7 +141,18 @@ footer { text-align:center; color:var(--muted); font-size:0.88rem; margin-top:2r
     <details><summary>Mes données sont-elles enregistrées ?</summary><p>Vos horaires sont mémorisés uniquement sur votre propre appareil (via le stockage local du navigateur) pour que vous ne perdiez pas votre saisie en fermant l'onglet. Aucune donnée n'est envoyée sur un serveur.</p></details>
   </section>
 
-  <footer>ChronoCharpente Pro — Outils gratuits de gestion du temps et de charpente.</footer>
+  <footer>
+    <div>ChronoCharpente Pro — Outils gratuits de gestion du temps et de charpente.</div>
+    <div class="footer-links">
+      <a href="working-time-calculator.html">Working Time Calculator</a> |
+      <a href="working-hour-calculator.html">Working Hour Calculator</a> |
+      <a href="time-calculator.html">Time Calculator</a> |
+      <a href="about.html">About Us</a> |
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="terms.html">Terms &amp; Disclaimer</a> |
+      <a href="contact.html">Contact Us</a>
+    </div>
+  </footer>
 </main>
 
 <script>
@@ -215,11 +244,5 @@ footer { text-align:center; color:var(--muted); font-size:0.88rem; margin-top:2r
   render();
 })();
 </script>
- <footer style="margin-top: 40px; padding: 20px 0; border-top: 1px solid #e5e7eb; text-align: center; font-size: 14px;">
-  <a href="about.html" style="margin: 0 10px;">About Us</a> |
-  <a href="privacy.html" style="margin: 0 10px;">Privacy Policy</a> |
-  <a href="terms.html" style="margin: 0 10px;">Terms &amp; Disclaimer</a> |
-  <a href="contact.html" style="margin: 0 10px;">Contact Us</a>
-</footer>
- </body>
+</body>
 </html>
