@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculateur de Charpente (Croupe) | Calculette-tools</title>
-<meta name="description" content="Calculez simplement la longueur de l'arêtier, la pente, les angles de coupe et la surface d'une toiture en croupe.">
+<title>Calculateur Charpente : Toiture en Croupe | Calculette-tools</title>
+<meta name="description" content="Calculez les longueurs de chevrons d'emprunt, d'arêtiers, la pente, les angles de coupe et la surface des herses d'une toiture en croupe.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -109,7 +109,7 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Page Head */
-  .page-head { padding: 20px 0 12px; }
+  .page-head { padding: 22px 0 12px; }
   .page-head h1 {
     margin: 0 0 6px;
     font-size: clamp(1.4rem, 3vw, 1.95rem);
@@ -117,12 +117,12 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
-  /* Diagram Card */
+  /* Simple Diagram Card */
   .diagram-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 14px;
+    padding: 14px 16px;
     box-shadow: var(--shadow);
     margin-bottom: 18px;
     text-align: center;
@@ -135,20 +135,20 @@
     margin: 0 auto;
   }
   .diagram-caption {
-    margin-top: 6px;
+    margin-top: 8px;
     font-size: 0.82rem;
     color: var(--muted);
     font-weight: 600;
   }
 
-  /* Split Grid */
+  /* Two-column layout */
   .split-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
     gap: 18px;
     margin-bottom: 18px;
   }
-  @media (max-width: 780px) {
+  @media (max-width: 820px) {
     .split-grid { grid-template-columns: 1fr; }
   }
 
@@ -168,11 +168,22 @@
     margin: 0 0 14px;
     font-size: 1.08rem;
   }
+  .card h3 {
+    margin: 14px 0 6px;
+    font-size: 0.98rem;
+  }
   .card p {
     margin: 0 0 10px;
     color: var(--muted);
     font-size: 0.92rem;
   }
+  .guide-list {
+    margin: 6px 0 12px;
+    padding-left: 20px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list li { margin-bottom: 6px; }
 
   .field { margin-bottom: 12px; }
   .field label {
@@ -227,32 +238,44 @@
   }
   .btn-sec:hover { background: #e2e8f0; }
 
-  /* Result List */
+  /* Results list */
+  .res-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
   .res-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    padding: 10px 12px;
+    padding: 9px 12px;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 9px;
     background: #fafcff;
-    margin-bottom: 9px;
   }
-  .res-row:last-child { margin-bottom: 0; }
+  .res-row.highlight {
+    background: var(--soft);
+    border-color: #93c5fd;
+  }
   .res-label {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--muted);
   }
+  .res-row.highlight .res-label {
+    color: var(--ink);
+    font-weight: 700;
+  }
   .res-val {
-    font-size: 0.96rem;
+    font-size: 0.92rem;
     font-weight: 800;
     color: var(--primary);
     text-align: right;
+    white-space: nowrap;
   }
 
-  /* Ad Space */
+  /* Dedicated Ad Space */
   .ad-slot {
     width: 100%;
     max-width: 728px;
@@ -316,17 +339,16 @@
 
 <main class="container">
   <div class="page-head">
-    <h1 data-t="pageTitle">Calculateur de Charpente : Toiture en Croupe</h1>
-    <p data-t="pageSub">Calculez les longueurs de chevrons, la longueur de l'arêtier, les angles de coupe et la surface estimée des pans.</p>
+    <h1 data-t="pageTitle">Calculateur Charpente : Toiture en Croupe</h1>
+    <p data-t="pageSub">Calculez les longueurs réelles des chevrons, des arêtiers, la pente, les angles de coupe et la surface totale des versants.</p>
   </div>
 
-  <!-- Hip Roof Diagram -->
+  <!-- Simple Hip Roof Diagram -->
   <div class="diagram-card">
     <svg viewBox="0 0 600 185" role="img" aria-label="Schéma géométrique d'une toiture en croupe">
       <rect x="0" y="0" width="600" height="185" rx="10" fill="#f8fafc"/>
       <!-- Base footprint (Égout) -->
       <polygon points="80,145 520,145 475,115 125,115" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
-      <!-- Hip Roof Planes -->
       <!-- Back slope -->
       <polygon points="125,115 475,115 405,45 195,45" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
       <!-- Left Hip (Croupe) -->
@@ -351,81 +373,107 @@
     <div class="diagram-caption" data-t="diagCap">Vue schématique : ligne d'égout, hauteur de couronnement, chevrons d'emprunt et arêtiers.</div>
   </div>
 
+  <!-- Calculator Split -->
   <div class="split-grid">
-    <!-- Left: Simple Inputs -->
+    <!-- Inputs -->
     <div class="card">
-      <h2 data-t="secInputs">Dimensions de la croupe (m)</h2>
+      <h2 data-t="secInputs">1. Cotes de la toiture (en mètres)</h2>
 
       <div class="field">
-        <label for="inEmpPan" data-t="lblEmpPan">Chevron d'emprunt — Long pan (m)</label>
-        <input type="number" id="inEmpPan" step="0.01" min="0.1" value="3.50" oninput="calcRoof()">
+        <label for="inEmpPan" data-t="lblEmpPan">Emprunt du long pan (m)</label>
+        <input type="number" id="inEmpPan" step="0.01" min="0" value="0" oninput="calcRoof()">
       </div>
 
       <div class="field">
-        <label for="inEmpCroupe" data-t="lblEmpCroupe">Chevron d'emprunt — Croupe (m)</label>
-        <input type="number" id="inEmpCroupe" step="0.01" min="0.1" value="3.50" oninput="calcRoof()">
+        <label for="inEmpCroupe" data-t="lblEmpCroupe">Emprunt de la croupe (m)</label>
+        <input type="number" id="inEmpCroupe" step="0.01" min="0" value="0" oninput="calcRoof()">
       </div>
 
       <div class="field">
-        <label for="inEgout" data-t="lblEgout">Longueur ligne d'égout totale (m)</label>
-        <input type="number" id="inEgout" step="0.01" min="0.1" value="10.00" oninput="calcRoof()">
+        <label for="inEgout" data-t="lblEgout">Longueur totale de la ligne d'égout (m)</label>
+        <input type="number" id="inEgout" step="0.01" min="0" value="0" oninput="calcRoof()">
       </div>
 
       <div class="field">
-        <label for="inHaut" data-t="lblHaut">Hauteur de couronnement (m)</label>
-        <input type="number" id="inHaut" step="0.01" min="0.1" value="2.20" oninput="calcRoof()">
+        <label for="inHaut" data-t="lblHaut">Hauteur de couronnement H (m)</label>
+        <input type="number" id="inHaut" step="0.01" min="0" value="0" oninput="calcRoof()">
       </div>
 
       <div class="toolbar">
         <button type="button" class="btn" onclick="calcRoof()" data-t="btnCalc">Calculer</button>
-        <button type="button" class="btn-sec" onclick="resetRoof()" data-t="btnReset">Reset</button>
+        <button type="button" class="btn-sec" onclick="resetRoof()" data-t="btnReset">Reset (0)</button>
       </div>
     </div>
 
-    <!-- Right: Clean Results -->
+    <!-- Outputs -->
     <div class="card">
-      <h2 data-t="secResults">Résultats des coupes &amp; surfaces</h2>
-
-      <div class="res-row">
-        <span class="res-label" data-t="rChevPan">Chevron long pan (pente)</span>
-        <span class="res-val" id="outChevPan">—</span>
-      </div>
-      <div class="res-row">
-        <span class="res-label" data-t="rChevCroupe">Chevron croupe (pente)</span>
-        <span class="res-val" id="outChevCroupe">—</span>
-      </div>
-      <div class="res-row">
-        <span class="res-label" data-t="rAretier">Longueur de l'arêtier</span>
-        <span class="res-val" id="outAretier">—</span>
-      </div>
-      <div class="res-row">
-        <span class="res-label" data-t="rCoupesAretier">Coupes arêtier (aplomb / niveau)</span>
-        <span class="res-val" id="outAretierCuts">—</span>
-      </div>
-      <div class="res-row">
-        <span class="res-label" data-t="rDelard">Délardement &amp; empannons</span>
-        <span class="res-val" id="outDelardEmp">—</span>
-      </div>
-      <div class="res-row">
-        <span class="res-label" data-t="rPanne">Inclinaison scie circulaire (pannes)</span>
-        <span class="res-val" id="outPanne">—</span>
-      </div>
-      <div class="res-row">
-        <span class="res-label" data-t="rSurface">Surface totale des herses</span>
-        <span class="res-val" id="outSurface">—</span>
+      <h2 data-t="secResults">2. Résultats géométriques</h2>
+      <div class="res-list">
+        <div class="res-row">
+          <span class="res-label" data-t="rFaitage">Longueur du faîtage</span>
+          <span class="res-val" id="outFaitage">0.00 m</span>
+        </div>
+        <div class="res-row">
+          <span class="res-label" data-t="rChevPan">Chevron d'emprunt (long pan)</span>
+          <span class="res-val" id="outChevPan">0.00 m</span>
+        </div>
+        <div class="res-row">
+          <span class="res-label" data-t="rChevCroupe">Chevron d'emprunt (croupe)</span>
+          <span class="res-val" id="outChevCroupe">0.00 m</span>
+        </div>
+        <div class="res-row">
+          <span class="res-label" data-t="rAretierPlan">Projection horizontale de l'arêtier</span>
+          <span class="res-val" id="outAretierPlan">0.00 m</span>
+        </div>
+        <div class="res-row highlight">
+          <span class="res-label" data-t="rAretierReel">Longueur réelle de l'arêtier</span>
+          <span class="res-val" id="outAretierReel">0.00 m</span>
+        </div>
+        <div class="res-row">
+          <span class="res-label" data-t="rPentePan">Pente du long pan (degrés / %)</span>
+          <span class="res-val" id="outPentePan">0.00° (0.0 %)</span>
+        </div>
+        <div class="res-row">
+          <span class="res-label" data-t="rPenteCroupe">Pente de la croupe (degrés / %)</span>
+          <span class="res-val" id="outPenteCroupe">0.00° (0.0 %)</span>
+        </div>
+        <div class="res-row">
+          <span class="res-label" data-t="rCoupeAplomb">Angle de coupe d'aplomb (arêtier)</span>
+          <span class="res-val" id="outCoupeAplomb">0.00°</span>
+        </div>
+        <div class="res-row">
+          <span class="res-label" data-t="rCoupePied">Angle de coupe de pied (arêtier)</span>
+          <span class="res-val" id="outCoupePied">0.00°</span>
+        </div>
+        <div class="res-row highlight">
+          <span class="res-label" data-t="rSurface">Surface totale des versants (4 pans)</span>
+          <span class="res-val" id="outSurface">0.00 m²</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Ad Space -->
-  <div class="ad-slot" id="adSlotMid" aria-label="Advertisement space"></div>
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
 
-  <!-- Simple Guide -->
+  <!-- Practical Guide -->
   <section class="card">
-    <h2 data-t="guideTitle">Repères pour la taille d'une croupe</h2>
-    <p data-t="guideP1">À partir des longueurs en plan des chevrons d'emprunt, de la ligne d'égout et de la hauteur de couronnement, cet outil estime les longueurs réelles des bois, les angles de coupes d'aplomb et de niveau, le délardement de l'arêtier, l'angle d'alignement des empannons, le réglage de la scie circulaire pour les pannes ainsi que la surface des herses.</p>
-    <p style="margin-bottom:0;" data-t="guideP2">Les résultats correspondent à un calcul géométrique théorique : vérifiez toujours les cotes sur place et faites un essai sur chute avant de tailler les pièces définitives.</p>
+    <h2 data-t="guideTitle">Guide pratique : comprendre les cotes d'une toiture en croupe</h2>
+    <p data-t="guideIntro">La toiture en croupe (ou toit à quatre pans) se distingue par l'absence de pignons verticaux : les deux extrémités du bâtiment sont fermées par des versants inclinés reliés au reste de la couverture par des arêtiers.</p>
+
+    <h3 data-t="guideSub1">1. Définition des mesures à saisir</h3>
+    <ul class="guide-list">
+      <li data-t="guideLi1"><strong>Emprunt du long pan :</strong> distance horizontale mesurée en plan entre la sablière (ligne d'égout du grand côté) et l'axe du faîtage. Pour un bâtiment symétrique, il correspond à la moitié de la largeur hors-tout.</li>
+      <li data-t="guideLi2"><strong>Emprunt de la croupe :</strong> recul horizontal mesuré en plan depuis la ligne d'égout du petit côté jusqu'au poinçon de ferme. Lorsque les deux emprunts sont égaux, l'arêtier est à 45° en plan.</li>
+      <li data-t="guideLi3"><strong>Hauteur de couronnement (H) :</strong> élévation verticale entre le niveau d'appui des chevrons sur la sablière et le dessus du faîtage.</li>
+    </ul>
+
+    <h3 data-t="guideSub2">2. Exploitation des résultats sur chantier</h3>
+    <p data-t="guideP2">Les longueurs calculées correspondent aux axes théoriques épure (hors débord d'égout, épaisseur de faîtage et délardement de l'arêtier). Pensez toujours à ajouter la longueur de queue de chevron prévue pour l'avant-toit et à contrôler vos traits sur épure avant le débit définitif des bois.</p>
   </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
@@ -459,127 +507,38 @@
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      pageTitle: "Calculateur de Charpente : Toiture en Croupe",
-      pageSub: "Calculez les longueurs de chevrons, la longueur de l'arêtier, les angles de coupe et la surface estimée des pans.",
+      pageTitle: "Calculateur Charpente : Toiture en Croupe",
+      pageSub: "Calculez les longueurs réelles des chevrons, des arêtiers, la pente, les angles de coupe et la surface totale des versants.",
       diagCap: "Vue schématique : ligne d'égout, hauteur de couronnement, chevrons d'emprunt et arêtiers.",
-      secInputs: "Dimensions de la croupe (m)",
-      lblEmpPan: "Chevron d'emprunt — Long pan (m)",
-      lblEmpCroupe: "Chevron d'emprunt — Croupe (m)",
-      lblEgout: "Longueur ligne d'égout totale (m)",
-      lblHaut: "Hauteur de couronnement (m)",
+      secInputs: "1. Cotes de la toiture (en mètres)",
+      lblEmpPan: "Emprunt du long pan (m)",
+      lblEmpCroupe: "Emprunt de la croupe (m)",
+      lblEgout: "Longueur totale de la ligne d'égout (m)",
+      lblHaut: "Hauteur de couronnement H (m)",
       btnCalc: "Calculer",
-      btnReset: "Reset",
-      secResults: "Résultats des coupes & surfaces",
-      rChevPan: "Chevron long pan (pente)",
-      rChevCroupe: "Chevron croupe (pente)",
-      rAretier: "Longueur de l'arêtier",
-      rCoupesAretier: "Coupes arêtier (aplomb / niveau)",
-      rDelard: "Délardement & empannons",
-      rPanne: "Inclinaison scie circulaire (pannes)",
-      rSurface: "Surface totale des herses",
-      guideTitle: "Repères pour la taille d'une croupe",
-      guideP1: "À partir des longueurs en plan des chevrons d'emprunt, de la ligne d'égout et de la hauteur de couronnement, cet outil estime les longueurs réelles des bois, les angles de coupes d'aplomb et de niveau, le délardement de l'arêtier, l'angle d'alignement des empannons, le réglage de la scie circulaire pour les pannes ainsi que la surface des herses.",
-      guideP2: "Les résultats correspondent à un calcul géométrique théorique : vérifiez toujours les cotes sur place et faites un essai sur chute avant de tailler les pièces définitives."
+      btnReset: "Reset (0)",
+      secResults: "2. Résultats géométriques",
+      rFaitage: "Longueur du faîtage",
+      rChevPan: "Chevron d'emprunt (long pan)",
+      rChevCroupe: "Chevron d'emprunt (croupe)",
+      rAretierPlan: "Projection horizontale de l'arêtier",
+      rAretierReel: "Longueur réelle de l'arêtier",
+      rPentePan: "Pente du long pan (degrés / %)",
+      rPenteCroupe: "Pente de la croupe (degrés / %)",
+      rCoupeAplomb: "Angle de coupe d'aplomb (arêtier)",
+      rCoupePied: "Angle de coupe de pied (arêtier)",
+      rSurface: "Surface totale des versants (4 pans)",
+      guideTitle: "Guide pratique : comprendre les cotes d'une toiture en croupe",
+      guideIntro: "La toiture en croupe (ou toit à quatre pans) se distingue par l'absence de pignons verticaux : les deux extrémités du bâtiment sont fermées par des versants inclinés reliés au reste de la couverture par des arêtiers.",
+      guideSub1: "1. Définition des mesures à saisir",
+      guideLi1: "Emprunt du long pan : distance horizontale mesurée en plan entre la sablière (ligne d'égout du grand côté) et l'axe du faîtage. Pour un bâtiment symétrique, il correspond à la moitié de la largeur hors-tout.",
+      guideLi2: "Emprunt de la croupe : recul horizontal mesuré en plan depuis la ligne d'égout du petit côté jusqu'au poinçon de ferme. Lorsque les deux emprunts sont égaux, l'arêtier est à 45° en plan.",
+      guideLi3: "Hauteur de couronnement (H) : élévation verticale entre le niveau d'appui des chevrons sur la sablière et le dessus du faîtage.",
+      guideSub2: "2. Exploitation des résultats sur chantier",
+      guideP2: "Les longueurs calculées correspondent aux axes théoriques épure (hors débord d'égout, épaisseur de faîtage et délardement de l'arêtier). Pensez toujours à ajouter la longueur de queue de chevron prévue pour l'avant-toit et à contrôler vos traits sur épure avant le débit définitif des bois."
     },
     en: {
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      pageTitle: "Hip Roof Framing Calculator",
-      pageSub: "Calculate common rafter lengths, hip rafter length, cut angles, and estimated roof slope area.",
-      diagCap: "Schematic view: eaves line, crown height, common rafter runs, and hip rafters.",
-      secInputs: "Hip Roof Dimensions (m)",
-      lblEmpPan: "Common rafter run — Main slope (m)",
-      lblEmpCroupe: "Common rafter run — Hip end (m)",
-      lblEgout: "Total eaves length (m)",
-      lblHaut: "Ridge / crown height (m)",
-      btnCalc: "Calculate",
-      btnReset: "Reset",
-      secResults: "Cuts & Surface Results",
-      rChevPan: "Main slope rafter (pitch)",
-      rChevCroupe: "Hip end rafter (pitch)",
-      rAretier: "Hip rafter length",
-      rCoupesAretier: "Hip cuts (plumb / seat)",
-      rDelard: "Backing bevel & jack cheek",
-      rPanne: "Purlin circular saw tilt",
-      rSurface: "Total roof slope area",
-      guideTitle: "Notes for Hip Roof Framing",
-      guideP1: "From the plan runs of the common rafters, total eaves length, and crown height, this tool estimates true timber lengths, plumb and seat cut angles, hip backing bevel, jack rafter alignment angle, purlin circular saw tilt, and total roof slope surface.",
-      guideP2: "Outputs are theoretical geometric values: always verify on-site dimensions and test cuts on scrap timber before cutting final pieces."
-    }
-  };
-
-  function toDeg(rad) {
-    return (rad * 180) / Math.PI;
-  }
-
-  function calcRoof() {
-    const rPan = Math.max(0.05, parseFloat(document.getElementById("inEmpPan").value) || 0.05);
-    const rCroupe = Math.max(0.05, parseFloat(document.getElementById("inEmpCroupe").value) || 0.05);
-    const lEgout = Math.max(0.1, parseFloat(document.getElementById("inEgout").value) || 0.1);
-    const h = Math.max(0.05, parseFloat(document.getElementById("inHaut").value) || 0.05);
-
-    const chevPan = Math.hypot(rPan, h);
-    const chevCroupe = Math.hypot(rCroupe, h);
-    const alphaPan = Math.atan2(h, rPan);
-    const alphaCroupe = Math.atan2(h, rCroupe);
-
-    const hipPlan = Math.hypot(rPan, rCroupe);
-    const hipLen = Math.hypot(hipPlan, h);
-    const hipPitch = Math.atan2(h, hipPlan);
-    const hipPlumb = 90 - toDeg(hipPitch);
-
-    const sinBacking = Math.sin(hipPitch) * Math.sin(Math.atan2(rPan, rCroupe));
-    const backingDeg = toDeg(Math.asin(Math.min(1, sinBacking)));
-    const empCheekDeg = toDeg(Math.atan2(rCroupe, chevPan));
-    const sawTiltDeg = toDeg(alphaPan);
-
-    const ridgeLen = Math.max(0, lEgout - 2 * rCroupe);
-    const areaMain = 2 * (((lEgout + ridgeLen) / 2) * chevPan);
-    const areaHips = 2 * (((2 * rPan) * chevCroupe) / 2);
-    const totalArea = areaMain + areaHips;
-
-    document.getElementById("outChevPan").textContent = `${chevPan.toFixed(2)} m (${toDeg(alphaPan).toFixed(1)}°)`;
-    document.getElementById("outChevCroupe").textContent = `${chevCroupe.toFixed(2)} m (${toDeg(alphaCroupe).toFixed(1)}°)`;
-    document.getElementById("outAretier").textContent = `${hipLen.toFixed(2)} m`;
-    document.getElementById("outAretierCuts").textContent = `${hipPlumb.toFixed(1)}° / ${toDeg(hipPitch).toFixed(1)}°`;
-    document.getElementById("outDelardEmp").textContent = `${backingDeg.toFixed(1)}° / ${empCheekDeg.toFixed(1)}°`;
-    document.getElementById("outPanne").textContent = `${sawTiltDeg.toFixed(1)}°`;
-    document.getElementById("outSurface").textContent = `${totalArea.toFixed(2)} m²`;
-  }
-
-  function resetRoof() {
-    document.getElementById("inEmpPan").value = "3.50";
-    document.getElementById("inEmpCroupe").value = "3.50";
-    document.getElementById("inEgout").value = "10.00";
-    document.getElementById("inHaut").value = "2.20";
-    calcRoof();
-  }
-
-  function applyLang() {
-    document.documentElement.lang = lang;
-    const d = dict[lang];
-    document.getElementById("langBtn").textContent = d.btn;
-    document.querySelectorAll("[data-t]").forEach(el => {
-      const k = el.getAttribute("data-t");
-      if (d[k]) el.textContent = d[k];
-    });
-    calcRoof();
-  }
-
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
-    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
-    applyLang();
-  }
-
-  try {
-    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
-  } catch (e) {}
-
-  applyLang();
-</script>
-
-</body>
-</html>
