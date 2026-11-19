@@ -28,7 +28,7 @@
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--ink);
-    line-height: 1.5;
+    line-height: 1.55;
   }
   .container {
     width: 100%;
@@ -49,7 +49,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 10px 0;
+    padding: 12px 0;
   }
   .brand {
     font-weight: 800;
@@ -109,49 +109,53 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Page Head */
-  .page-head { padding: 18px 0 10px; }
+  .page-head { padding: 22px 0 12px; }
   .page-head h1 {
-    margin: 0 0 4px;
-    font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+    margin: 0 0 6px;
+    font-size: clamp(1.4rem, 3vw, 1.95rem);
     letter-spacing: -0.02em;
   }
-  .page-head p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
   /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 16px 18px;
+    padding: 20px;
     box-shadow: var(--shadow);
-    margin-bottom: 14px;
+    margin-bottom: 18px;
     width: 100%;
     min-width: 0;
   }
   .card h2 {
-    margin: 0 0 10px;
-    font-size: 1.04rem;
+    margin: 0 0 12px;
+    font-size: 1.08rem;
+  }
+  .card h3 {
+    margin: 14px 0 6px;
+    font-size: 0.98rem;
   }
   .card p {
-    margin: 0 0 8px;
+    margin: 0 0 10px;
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 0.92rem;
   }
   .guide-list {
-    margin: 4px 0 0;
-    padding-left: 18px;
+    margin: 6px 0 12px;
+    padding-left: 20px;
     color: var(--muted);
-    font-size: 0.89rem;
+    font-size: 0.92rem;
   }
   .guide-list li {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 
-  /* Ad Slot Wrapper (hidden until populated with ad script) */
+  /* Ad Slot Wrapper */
   .ad-slot {
     width: 100%;
     max-width: 728px;
-    margin: 14px auto;
+    margin: 16px auto;
     text-align: center;
   }
   .ad-slot:empty {
@@ -162,12 +166,12 @@
   .slot-row {
     display: grid;
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.9fr) auto;
-    gap: 8px;
+    gap: 10px;
     align-items: center;
-    padding: 8px 10px;
+    padding: 10px;
     border: 1px solid var(--border);
     border-radius: 10px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     background: #fafcff;
   }
   .slot-row.disabled {
@@ -179,18 +183,18 @@
   }
   .slot-field label {
     display: block;
-    font-size: 0.74rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: var(--muted);
-    margin-bottom: 2px;
+    margin-bottom: 3px;
   }
   input[type="time"], input[type="number"] {
     width: 100%;
     min-width: 0;
-    padding: 7px 8px;
+    padding: 8px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
-    font-size: 0.88rem;
+    font-size: 0.9rem;
     background: #fff;
     color: var(--ink);
   }
@@ -200,12 +204,12 @@
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
   .out-pill {
-    padding: 7px 9px;
+    padding: 8px 10px;
     background: var(--soft);
     border: 1px solid #bfdbfe;
     border-radius: 8px;
     font-weight: 700;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     text-align: center;
     white-space: nowrap;
   }
@@ -213,7 +217,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 12px;
+    padding-top: 14px;
   }
   .chk-wrap input {
     width: 18px;
@@ -225,17 +229,17 @@
   .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin: 10px 0 12px;
+    gap: 10px;
+    margin: 14px 0 18px;
   }
   .btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 8px 13px;
+    padding: 9px 14px;
     border-radius: 9px;
     font-weight: 600;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
   .btn:hover { background: var(--primary-hover); }
@@ -243,10 +247,10 @@
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 8px 13px;
+    padding: 9px 14px;
     border-radius: 9px;
     font-weight: 600;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
   .btn-sec:hover { background: #e2e8f0; }
@@ -257,14 +261,14 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 12px 14px;
+    gap: 12px;
+    padding: 14px 16px;
     background: var(--soft);
     border: 1px solid #93c5fd;
     border-radius: 12px;
   }
   .total-label {
-    font-size: 0.96rem;
+    font-size: 1rem;
     font-weight: 800;
     color: var(--ink);
   }
@@ -273,15 +277,15 @@
     flex-wrap: wrap;
     gap: 12px;
     font-weight: 800;
-    font-size: 0.96rem;
+    font-size: 1rem;
     color: var(--primary);
   }
 
   /* Subtraction A - B */
   .sub-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+    gap: 14px;
     align-items: end;
   }
   .hm-pair {
@@ -300,11 +304,11 @@
     width: 100%;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding: 20px 0 28px;
+    padding: 22px 0 32px;
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
-    margin-top: 18px;
+    margin-top: 22px;
   }
   .footer-links {
     margin-top: 10px;
@@ -344,7 +348,7 @@
 <main class="container">
   <div class="page-head">
     <h1 data-t="pageTitle">Calculateur du Temps de Travail (Journée ou Semaine)</h1>
-    <p data-t="pageSub">Additionnez vos plages horaires (passage minuit inclus), décochez les pauses et obtenez le total en HH:MM et centièmes d'heure (1/100e).</p>
+    <p data-t="pageSub">Ajoutez plusieurs plages horaires (y compris passage minuit), cochez/décochez les lignes et obtenez le total en heures-minutes et centièmes d'heure (1/100e).</p>
   </div>
 
   <div class="card">
@@ -366,7 +370,7 @@
     </div>
   </div>
 
-  <!-- Optional Ad Slot Wrapper (stays hidden until ad code is placed inside) -->
+  <!-- Optional Ad Slot Wrapper -->
   <div class="ad-slot" aria-hidden="true"></div>
 
   <div class="card">
@@ -404,14 +408,27 @@
     </div>
   </div>
 
-  <!-- Compact Guide -->
+  <!-- Detailed Guide -->
   <section class="card">
-    <h2 data-t="guideTitle">Repères rapides</h2>
-    <p data-t="guideIntro">Outil conçu pour le suivi quotidien des heures, le passage minuit et la lecture en heures-minutes ou centièmes (1/100e).</p>
+    <h2 data-t="guideTitle">Guide complet : calculer et vérifier ses heures de travail</h2>
+    <p data-t="guideIntro">Que vous soyez salarié, artisan, chef d'équipe ou indépendant, faire le compte de ses heures en fin de journée ou en fin de semaine demande parfois d'additionner plusieurs morceaux de journée, des pauses et des horaires décalés.</p>
+
+    <h3 data-t="guideSub1">1. Plages horaires, pauses et passage minuit</h3>
     <ul class="guide-list">
-      <li data-t="guideLi1"><strong>Pauses et nuits :</strong> décochez une ligne pour ignorer une pause ; si l'heure de fin est plus petite que le début, le calcul passe au lendemain.</li>
-      <li data-t="guideLi2"><strong>Centièmes (1/100e) :</strong> 15 min = 0,25 h, 30 min = 0,50 h, 45 min = 0,75 h — vérifiez toujours avant validation officielle.</li>
+      <li data-t="guideLi1"><strong>Plusieurs créneaux dans la même journée :</strong> ajoutez autant de lignes que nécessaire (matin, après-midi, intervention supplémentaire, déplacement) et vérifiez chaque ligne d'un coup d'œil.</li>
+      <li data-t="guideLi2"><strong>Gestion des pauses :</strong> si une ligne correspond à un temps de pause ou une période à ne pas compter dans le total, il suffit de décocher sa case plutôt que de tout effacer.</li>
+      <li data-t="guideLi3"><strong>Postes de nuit :</strong> lorsqu'une équipe commence le soir et finit le lendemain (par exemple 22:15 à 06:15), l'heure de fin est inférieure à l'heure de début : le calcul gère automatiquement le passage minuit.</li>
     </ul>
+
+    <h3 data-t="guideSub2">2. Heures-minutes (HH:MM) et centièmes d'heure (1/100e)</h3>
+    <p data-t="guideP2">Sur une horloge ou une feuille de route, une heure compte 60 minutes. Dans beaucoup de feuilles de paie, de pointages ou de tableaux de suivi, la même durée s'exprime en centièmes d'heure (base 100) afin de faciliter les multiplications par un taux horaire.</p>
+    <ul class="guide-list">
+      <li data-t="guideLi4"><strong>Repères courants :</strong> 6 min = 0,10 h ; 15 min = 0,25 h ; 30 min = 0,50 h ; 45 min = 0,75 h ; 54 min = 0,90 h.</li>
+      <li data-t="guideLi5"><strong>Soustraction A − B :</strong> utile pour comparer un total d'heures effectué à une durée de référence (par exemple 39h 15min moins 35h 00min = 4h 15min, soit 4,25 h) ou vérifier un écart.</li>
+    </ul>
+
+    <h3 data-t="guideSub3">3. Bon réflexe avant validation</h3>
+    <p style="margin-bottom:0;" data-t="guideP3">Cet outil est conçu pour accélérer vos calculs quotidiens et limiter les fautes de tête. Pour une fiche de paie officielle, des règles d'heures supplémentaires ou un accord d'entreprise particulier, pensez toujours à vérifier le résultat selon votre convention ou votre feuille de pointage.</p>
   </section>
 </main>
 
@@ -447,7 +464,7 @@
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
       pageTitle: "Calculateur du Temps de Travail (Journée ou Semaine)",
-      pageSub: "Additionnez vos plages horaires (passage minuit inclus), décochez les pauses et obtenez le total en HH:MM et centièmes d'heure (1/100e).",
+      pageSub: "Ajoutez plusieurs plages horaires (y compris passage minuit), cochez/décochez les lignes et obtenez le total en heures-minutes et centièmes d'heure (1/100e).",
       secSlots: "Plages Horaires",
       btnAdd: "+ Ajouter une ligne",
       btnRemove: "− Supprimer une ligne",
@@ -461,10 +478,18 @@
       lblEnd: "Heure fin",
       lblTime: "Temps",
       lblDec: "Temps 1/100e",
-      guideTitle: "Repères rapides",
-      guideIntro: "Outil conçu pour le suivi quotidien des heures, le passage minuit et la lecture en heures-minutes ou centièmes (1/100e).",
-      guideLi1: "Pauses et nuits : décochez une ligne pour ignorer une pause ; si l'heure de fin est plus petite que le début, le calcul passe au lendemain.",
-      guideLi2: "Centièmes (1/100e) : 15 min = 0,25 h, 30 min = 0,50 h, 45 min = 0,75 h — vérifiez toujours avant validation officielle."
+      guideTitle: "Guide complet : calculer et vérifier ses heures de travail",
+      guideIntro: "Que vous soyez salarié, artisan, chef d'équipe ou indépendant, faire le compte de ses heures en fin de journée ou en fin de semaine demande parfois d'additionner plusieurs morceaux de journée, des pauses et des horaires décalés.",
+      guideSub1: "1. Plages horaires, pauses et passage minuit",
+      guideLi1: "Plusieurs créneaux dans la même journée : ajoutez autant de lignes que nécessaire (matin, après-midi, intervention supplémentaire, déplacement) et vérifiez chaque ligne d'un coup d'œil.",
+      guideLi2: "Gestion des pauses : si une ligne correspond à un temps de pause ou une période à ne pas compter dans le total, il suffit de décocher sa case plutôt que de tout effacer.",
+      guideLi3: "Postes de nuit : lorsqu'une équipe commence le soir et finit le lendemain (par exemple 22:15 à 06:15), l'heure de fin est inférieure à l'heure de début : le calcul gère automatiquement le passage minuit.",
+      guideSub2: "2. Heures-minutes (HH:MM) et centièmes d'heure (1/100e)",
+      guideP2: "Sur une horloge ou une feuille de route, une heure compte 60 minutes. Dans beaucoup de feuilles de paie, de pointages ou de tableaux de suivi, la même durée s'exprime en centièmes d'heure (base 100) afin de faciliter les multiplications par un taux horaire.",
+      guideLi4: "Repères courants : 6 min = 0,10 h ; 15 min = 0,25 h ; 30 min = 0,50 h ; 45 min = 0,75 h ; 54 min = 0,90 h.",
+      guideLi5: "Soustraction A − B : utile pour comparer un total d'heures effectué à une durée de référence (par exemple 39h 15min moins 35h 00min = 4h 15min, soit 4,25 h) ou vérifier un écart.",
+      guideSub3: "3. Bon réflexe avant validation",
+      guideP3: "Cet outil est conçu pour accélérer vos calculs quotidiens et limiter les fautes de tête. Pour une fiche de paie officielle, des règles d'heures supplémentaires ou un accord d'entreprise particulier, pensez toujours à vérifier le résultat selon votre convention ou votre feuille de pointage."
     },
     en: {
       btn: "FR",
@@ -472,7 +497,7 @@
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       pageTitle: "Working Time Calculator (Day or Week)",
-      pageSub: "Add time slots (including overnight shifts), uncheck breaks, and view totals in HH:MM and hundredths of an hour (1/100e).",
+      pageSub: "Add multiple time slots (including overnight shifts), toggle row checkboxes, and view totals in hours-minutes and hundredths of an hour (1/100e).",
       secSlots: "Time Slots",
       btnAdd: "+ Add a line",
       btnRemove: "− Remove a line",
@@ -486,10 +511,18 @@
       lblEnd: "End time",
       lblTime: "Duration",
       lblDec: "Decimal 1/100e",
-      guideTitle: "Quick Notes",
-      guideIntro: "Built for daily shift tracking, overnight rollovers, and viewing time in hours-minutes or hundredths of an hour (1/100e).",
-      guideLi1: "Breaks and night shifts: uncheck a row to skip a break; if end time is earlier than start time, it rolls over to the next day.",
-      guideLi2: "Hundredths (1/100e): 15 min = 0.25 hrs, 30 min = 0.50 hrs, 45 min = 0.75 hrs — double-check before official sign-off."
+      guideTitle: "Complete Guide: Calculating and Checking Working Hours",
+      guideIntro: "Whether you are an employee, tradesperson, supervisor, or freelancer, adding up hours at the end of a day or week often means combining split shifts, break windows, and overnight schedules.",
+      guideSub1: "1. Time Slots, Breaks, and Overnight Shifts",
+      guideLi1: "Multiple slots in one day: add as many rows as needed (morning, afternoon, extra call-out, travel) and check each row at a glance.",
+      guideLi2: "Handling breaks: if a row represents a break or time that should not be counted, uncheck its box instead of deleting your entries.",
+      guideLi3: "Overnight shifts: when a shift starts in the evening and ends the next morning (for example 22:15 to 06:15), the end time is earlier than the start time and rolls over to the next day automatically.",
+      guideSub2: "2. Hours-Minutes (HH:MM) and Hundredths of an Hour (1/100e)",
+      guideP2: "A clock hour has 60 minutes, while many timesheets and payroll tools express durations in hundredths of an hour (base 100) to make hourly rate calculations easier.",
+      guideLi4: "Common equivalents: 6 min = 0.10 hrs; 15 min = 0.25 hrs; 30 min = 0.50 hrs; 45 min = 0.75 hrs; 54 min = 0.90 hrs.",
+      guideLi5: "Subtraction A − B: useful for comparing actual hours worked against a reference target (for example 39h 15min minus 35h 00min = 4h 15min, or 4.25 hrs) or checking a difference.",
+      guideSub3: "3. Good Practice Before Sign-Off",
+      guideP3: "This tool is built to speed up everyday tracking and reduce mental arithmetic mistakes. For official payroll records, overtime rules, or specific workplace agreements, always double-check your numbers against your timesheet or policy."
     }
   };
 
