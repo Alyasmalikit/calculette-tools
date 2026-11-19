@@ -28,13 +28,13 @@
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--ink);
-    line-height: 1.55;
+    line-height: 1.45;
   }
   .container {
     width: 100%;
     max-width: 1080px;
     margin: 0 auto;
-    padding: 0 16px;
+    padding: 0 14px;
   }
 
   /* Header */
@@ -48,8 +48,8 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
-    padding: 12px 0;
+    gap: 8px;
+    padding: 10px 0;
   }
   .brand {
     font-weight: 800;
@@ -72,7 +72,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     min-width: 0;
     max-width: 100%;
   }
@@ -87,7 +87,7 @@
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 600;
-    padding: 6px 9px;
+    padding: 5px 8px;
     border-radius: 8px;
     white-space: nowrap;
   }
@@ -99,7 +99,7 @@
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 6px 12px;
+    padding: 5px 11px;
     border-radius: 8px;
     font-weight: 700;
     font-size: 0.82rem;
@@ -109,55 +109,53 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Page Head */
-  .page-head { padding: 22px 0 12px; }
+  .page-head { padding: 16px 0 10px; }
   .page-head h1 {
-    margin: 0 0 6px;
-    font-size: clamp(1.4rem, 3vw, 1.95rem);
+    margin: 0 0 4px;
+    font-size: clamp(1.35rem, 2.8vw, 1.85rem);
     letter-spacing: -0.02em;
   }
-  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+  .page-head p { margin: 0; color: var(--muted); font-size: 0.9rem; }
 
   /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 20px;
+    padding: 14px 16px;
     box-shadow: var(--shadow);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     width: 100%;
     min-width: 0;
   }
   .card h2 {
-    margin: 0 0 12px;
-    font-size: 1.08rem;
+    margin: 0 0 10px;
+    font-size: 1.05rem;
   }
   .card h3 {
-    margin: 14px 0 6px;
-    font-size: 0.98rem;
+    margin: 12px 0 4px;
+    font-size: 0.95rem;
   }
   .card p {
-    margin: 0 0 10px;
+    margin: 0 0 8px;
     color: var(--muted);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
   }
   .guide-list {
-    margin: 6px 0 12px;
-    padding-left: 20px;
+    margin: 4px 0 10px;
+    padding-left: 18px;
     color: var(--muted);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
   }
-  .guide-list li {
-    margin-bottom: 6px;
-  }
+  .guide-list li { margin-bottom: 4px; }
 
   /* Dedicated Ad Space */
   .ad-slot {
     width: 100%;
     max-width: 728px;
     min-height: 90px;
-    margin: 18px auto;
-    padding: 10px;
+    margin: 14px auto;
+    padding: 8px;
     background: #f8fafc;
     border: 1px dashed #cbd5e1;
     border-radius: 12px;
@@ -173,105 +171,114 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
-    padding: 12px 14px;
+    gap: 8px;
+    padding: 8px 12px;
     background: #f8fafc;
     border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 14px;
+    border-radius: 10px;
+    margin-bottom: 10px;
   }
   .week-nav {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    flex-wrap: wrap;
   }
   .week-info {
     font-weight: 800;
-    font-size: 0.98rem;
+    font-size: 0.94rem;
     color: var(--ink);
   }
   .week-dates {
-    font-size: 0.86rem;
+    font-size: 0.82rem;
     color: var(--muted);
     font-weight: 600;
   }
 
-  /* Day Block */
+  /* Compact Day Row */
   .day-box {
+    display: grid;
+    grid-template-columns: 165px minmax(0, 1fr) 150px;
+    gap: 8px;
+    align-items: start;
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 14px;
-    margin-bottom: 12px;
+    border-radius: 9px;
+    padding: 7px 10px;
+    margin-bottom: 6px;
     background: #fafcff;
   }
   .day-box.off {
-    opacity: 0.6;
+    opacity: 0.55;
     background: #f1f5f9;
   }
-  .day-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 10px;
+  @media (max-width: 820px) {
+    .day-box {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
   }
   .day-title {
-    font-weight: 800;
-    font-size: 0.96rem;
+    font-weight: 700;
+    font-size: 0.88rem;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    padding-top: 5px;
+    white-space: nowrap;
   }
   .day-totals {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
     gap: 8px;
-    font-size: 0.86rem;
-    font-weight: 700;
+    font-size: 0.84rem;
+    font-weight: 800;
     color: var(--primary);
+    padding-top: 5px;
+    white-space: nowrap;
+  }
+  @media (max-width: 820px) {
+    .day-totals { justify-content: flex-start; padding-top: 0; }
   }
 
-  /* Slot Row */
+  /* Compact Slot Row */
+  .slots-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
   .slot-row {
     display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.9fr) auto;
-    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 84px 74px 34px;
+    gap: 6px;
     align-items: center;
-    margin-bottom: 8px;
   }
-  @media (max-width: 760px) {
+  @media (max-width: 560px) {
     .slot-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  .slot-field label {
-    display: block;
-    font-size: 0.73rem;
-    font-weight: 600;
-    color: var(--muted);
-    margin-bottom: 2px;
   }
   input[type="time"] {
     width: 100%;
     min-width: 0;
-    padding: 7px 8px;
+    padding: 4px 6px;
     border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 0.88rem;
+    border-radius: 6px;
+    font-size: 0.84rem;
     background: #fff;
     color: var(--ink);
   }
   input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
   }
   .out-pill {
-    padding: 7px 9px;
+    padding: 4px 6px;
     background: var(--soft);
     border: 1px solid #bfdbfe;
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     text-align: center;
     white-space: nowrap;
   }
@@ -279,12 +286,13 @@
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    padding: 4px 0;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 12px;
+    line-height: 1.2;
   }
   .btn-mini:hover { background: #e2e8f0; }
 
@@ -292,17 +300,17 @@
   .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin: 14px 0 18px;
+    gap: 8px;
+    margin: 10px 0 12px;
   }
   .btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 9px 14px;
-    border-radius: 9px;
+    padding: 8px 13px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     cursor: pointer;
   }
   .btn:hover { background: var(--primary-hover); }
@@ -310,10 +318,10 @@
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 9px 14px;
-    border-radius: 9px;
+    padding: 7px 12px;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     cursor: pointer;
   }
   .btn-sec:hover { background: #e2e8f0; }
@@ -323,14 +331,14 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    padding: 14px 16px;
+    gap: 10px;
+    padding: 10px 14px;
     background: var(--soft);
     border: 1px solid #93c5fd;
-    border-radius: 12px;
+    border-radius: 10px;
   }
   .total-label {
-    font-size: 1rem;
+    font-size: 0.94rem;
     font-weight: 800;
     color: var(--ink);
   }
@@ -339,7 +347,7 @@
     flex-wrap: wrap;
     gap: 14px;
     font-weight: 800;
-    font-size: 1.02rem;
+    font-size: 0.98rem;
     color: var(--primary);
   }
 
@@ -348,14 +356,14 @@
     width: 100%;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding: 22px 0 32px;
+    padding: 18px 0 26px;
     text-align: center;
-    font-size: 0.86rem;
+    font-size: 0.85rem;
     color: var(--muted);
-    margin-top: 22px;
+    margin-top: 18px;
   }
   .footer-links {
-    margin-top: 10px;
+    margin-top: 8px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -373,7 +381,8 @@
       display: none !important;
     }
     body { background: #fff; }
-    .card { box-shadow: none; border: 1px solid #cbd5e1; }
+    .card { box-shadow: none; border: 1px solid #cbd5e1; padding: 10px; }
+    .day-box { padding: 5px 8px; margin-bottom: 4px; }
   }
 </style>
 </head>
@@ -400,19 +409,19 @@
 <main class="container">
   <div class="page-head">
     <h1 data-t="pageTitle">Feuille de Pointage Hebdomadaire</h1>
-    <p data-t="pageSub">Saisissez vos heures jour après jour du lundi au dimanche, naviguez entre les semaines et obtenez le total en heures-minutes et centièmes d'heure (1/100e).</p>
+    <p data-t="pageSub">Saisissez vos heures du lundi au dimanche, naviguez entre les semaines et obtenez le total en heures-minutes et centièmes (1/100e).</p>
   </div>
 
   <div class="card">
     <div class="week-bar">
       <div>
-        <div class="week-info" id="weekLabel">Semaine</div>
-        <div class="week-dates" id="weekDates"></div>
+        <span class="week-info" id="weekLabel">Semaine</span>
+        <span class="week-dates" id="weekDates" style="margin-left:8px;"></span>
       </div>
       <div class="week-nav">
-        <button type="button" class="btn-sec" onclick="shiftWeek(-1)" data-t="btnPrevWeek">← Semaine préc.</button>
-        <button type="button" class="btn-sec" onclick="shiftWeek(0)" data-t="btnCurrWeek">Semaine actuelle</button>
-        <button type="button" class="btn-sec" onclick="shiftWeek(1)" data-t="btnNextWeek">Semaine suiv. →</button>
+        <button type="button" class="btn-sec" onclick="shiftWeek(-1)" data-t="btnPrevWeek">← Préc.</button>
+        <button type="button" class="btn-sec" onclick="shiftWeek(0)" data-t="btnCurrWeek">Actuelle</button>
+        <button type="button" class="btn-sec" onclick="shiftWeek(1)" data-t="btnNextWeek">Suiv. →</button>
       </div>
     </div>
 
@@ -442,8 +451,8 @@
 
     <h3 data-t="guideSub1">1. Organisation du lundi au dimanche</h3>
     <ul class="guide-list">
-      <li data-t="guideLi1"><strong>Plusieurs plages par jour :</strong> ajoutez ou supprimez des lignes sur un jour donné pour séparer le matin, l'après-midi ou une intervention ponctuelle.</li>
-      <li data-t="guideLi2"><strong>Jours travaillés ou non :</strong> activez ou désactivez chaque jour selon votre planning (par exemple samedi ou dimanche) tout en gardant vos créneaux enregistrés.</li>
+      <li data-t="guideLi1"><strong>Plusieurs plages par jour :</strong> cliquez sur « + » pour ajouter une plage sur un jour donné afin de séparer le matin, l'après-midi ou une intervention ponctuelle.</li>
+      <li data-t="guideLi2"><strong>Jours travaillés ou non :</strong> cochez ou décochez chaque jour selon votre planning (par exemple samedi ou dimanche) tout en gardant vos créneaux enregistrés.</li>
       <li data-t="guideLi3"><strong>Navigation par semaine :</strong> utilisez les flèches pour consulter ou préparer une semaine précédente ou suivante, avec le numéro de semaine et les dates affichés automatiquement.</li>
     </ul>
 
@@ -490,26 +499,20 @@
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
       pageTitle: "Feuille de Pointage Hebdomadaire",
-      pageSub: "Saisissez vos heures jour après jour du lundi au dimanche, naviguez entre les semaines et obtenez le total en heures-minutes et centièmes d'heure (1/100e).",
-      btnPrevWeek: "← Semaine préc.",
-      btnCurrWeek: "Semaine actuelle",
-      btnNextWeek: "Semaine suiv. →",
+      pageSub: "Saisissez vos heures du lundi au dimanche, naviguez entre les semaines et obtenez le total en heures-minutes et centièmes (1/100e).",
+      btnPrevWeek: "← Préc.",
+      btnCurrWeek: "Actuelle",
+      btnNextWeek: "Suiv. →",
       btnPrint: "Version imprimable",
       btnReset: "Reset semaine",
       lblWeekTotal: "TOTAL HEBDOMADAIRE",
-      lblStart: "Début",
-      lblEnd: "Fin",
-      lblDur: "Durée",
-      lblDec: "1/100e",
-      btnAddRow: "+ Ligne",
-      btnDelRow: "− Ligne",
       days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
       weekWord: "Semaine",
       guideTitle: "Guide pratique : tenir et vérifier sa feuille d'heures hebdomadaire",
       guideIntro: "Que vous soyez salarié, ouvrier, technicien ou responsable d'équipe, rassembler les heures de toute la semaine sur un seul tableau aide à garder une vue claire avant de transmettre le relevé.",
       guideSub1: "1. Organisation du lundi au dimanche",
-      guideLi1: "Plusieurs plages par jour : ajoutez ou supprimez des lignes sur un jour donné pour séparer le matin, l'après-midi ou une intervention ponctuelle.",
-      guideLi2: "Jours travaillés ou non : activez ou désactivez chaque jour selon votre planning (par exemple samedi ou dimanche) tout en gardant vos créneaux enregistrés.",
+      guideLi1: "Plusieurs plages par jour : cliquez sur « + » pour ajouter une plage sur un jour donné afin de séparer le matin, l'après-midi ou une intervention ponctuelle.",
+      guideLi2: "Jours travaillés ou non : cochez ou décochez chaque jour selon votre planning (par exemple samedi ou dimanche) tout en gardant vos créneaux enregistrés.",
       guideLi3: "Navigation par semaine : utilisez les flèches pour consulter ou préparer une semaine précédente ou suivante, avec le numéro de semaine et les dates affichés automatiquement.",
       guideSub2: "2. Sauvegarde locale, impression et centièmes (1/100e)",
       guideP2: "Vos saisies restent enregistrées dans votre navigateur tant que vous n'appuyez pas sur « Reset semaine », ce qui évite de perdre une feuille en cours de remplissage. Le total s'affiche à la fois en heures-minutes (HH:MM) et en centièmes d'heure (1/100e), avec une mise en page prête pour l'impression.",
@@ -521,26 +524,20 @@
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       pageTitle: "Weekly Timesheet",
-      pageSub: "Enter hours day by day from Monday to Sunday, switch weeks, and view totals in hours-minutes and hundredths of an hour (1/100e).",
-      btnPrevWeek: "← Prev. week",
-      btnCurrWeek: "Current week",
-      btnNextWeek: "Next week →",
+      pageSub: "Enter hours from Monday to Sunday, switch weeks, and view totals in hours-minutes and hundredths of an hour (1/100e).",
+      btnPrevWeek: "← Prev.",
+      btnCurrWeek: "Current",
+      btnNextWeek: "Next →",
       btnPrint: "Printable view",
       btnReset: "Reset week",
       lblWeekTotal: "WEEKLY TOTAL",
-      lblStart: "Start",
-      lblEnd: "End",
-      lblDur: "Duration",
-      lblDec: "1/100e",
-      btnAddRow: "+ Row",
-      btnDelRow: "− Row",
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
       weekWord: "Week",
       guideTitle: "Practical Guide: Keeping and Checking a Weekly Timesheet",
       guideIntro: "Whether you are an employee, tradesperson, technician, or team lead, grouping the whole week on one sheet makes it easier to review hours before submitting them.",
       guideSub1: "1. Monday through Sunday Layout",
-      guideLi1: "Multiple slots per day: add or remove rows on any day to separate morning work, afternoon work, or extra tasks.",
-      guideLi2: "Active or off days: toggle a day on or off according to your schedule (such as Saturday or Sunday) while keeping your entered rows intact.",
+      guideLi1: "Multiple slots per day: click + on any day to add another row for morning work, afternoon work, or extra tasks.",
+      guideLi2: "Active or off days: check or uncheck a day according to your schedule (such as Saturday or Sunday) while keeping your entered rows intact.",
       guideLi3: "Week navigation: use the arrow buttons to check or prepare previous or upcoming weeks, with week number and dates updated automatically.",
       guideSub2: "2. Local Save, Print View, and Hundredths (1/100e)",
       guideP2: "Your entries stay saved in your browser until you click Reset week, helping prevent accidental data loss mid-week. Totals display in both hours-minutes (HH:MM) and hundredths of an hour (1/100e), with a print-ready layout.",
@@ -654,41 +651,27 @@
         const mins = calcSlotMins(s);
         return `
           <div class="slot-row">
-            <div class="slot-field">
-              <label>${d.lblStart}</label>
-              <input type="time" value="${s.start}" oninput="updateSlot(${dIdx}, ${sIdx}, 'start', this.value)">
-            </div>
-            <div class="slot-field">
-              <label>${d.lblEnd}</label>
-              <input type="time" value="${s.end}" oninput="updateSlot(${dIdx}, ${sIdx}, 'end', this.value)">
-            </div>
-            <div class="slot-field">
-              <label>${d.lblDur}</label>
-              <div class="out-pill">${fmtHM(mins)}</div>
-            </div>
-            <div class="slot-field">
-              <label>${d.lblDec}</label>
-              <div class="out-pill">${(mins / 60).toFixed(2)} h</div>
-            </div>
-            <div>
-              ${sIdx === 0 ? `<button type="button" class="btn-mini" onclick="addDaySlot(${dIdx})">${d.btnAddRow}</button>` : `<button type="button" class="btn-mini" onclick="delDaySlot(${dIdx}, ${sIdx})">${d.btnDelRow}</button>`}
-            </div>
+            <input type="time" value="${s.start}" oninput="updateSlot(${dIdx}, ${sIdx}, 'start', this.value)">
+            <input type="time" value="${s.end}" oninput="updateSlot(${dIdx}, ${sIdx}, 'end', this.value)">
+            <div class="out-pill">${fmtHM(mins)}</div>
+            <div class="out-pill">${(mins / 60).toFixed(2)} h</div>
+            ${sIdx === 0
+              ? `<button type="button" class="btn-mini" title="Ajouter" onclick="addDaySlot(${dIdx})">+</button>`
+              : `<button type="button" class="btn-mini" title="Supprimer" onclick="delDaySlot(${dIdx}, ${sIdx})">−</button>`}
           </div>
         `;
       }).join("");
 
       box.innerHTML = `
-        <div class="day-head">
-          <div class="day-title">
-            <input type="checkbox" ${dayObj.active ? "checked" : ""} onchange="toggleDay(${dIdx}, this.checked)">
-            <span>${d.days[dIdx]} (${fmtDateShort(dayDate).slice(0, 5)})</span>
-          </div>
-          <div class="day-totals">
-            <span>${fmtHM(dayMins)}</span>
-            <span>${(dayMins / 60).toFixed(2)} h</span>
-          </div>
+        <div class="day-title">
+          <input type="checkbox" ${dayObj.active ? "checked" : ""} onchange="toggleDay(${dIdx}, this.checked)">
+          <span>${d.days[dIdx]} ${fmtDateShort(dayDate).slice(0, 5)}</span>
         </div>
-        ${slotsHtml}
+        <div class="slots-col">${slotsHtml}</div>
+        <div class="day-totals">
+          <span>${fmtHM(dayMins)}</span>
+          <span>${(dayMins / 60).toFixed(2)} h</span>
+        </div>
       `;
 
       container.appendChild(box);
