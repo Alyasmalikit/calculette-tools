@@ -153,8 +153,34 @@
     min-width: 0;
   }
   .card h2 {
-    margin: 0 0 14px;
+    margin: 0 0 12px;
     font-size: 1.08rem;
+  }
+  .card h3 {
+    margin: 14px 0 6px;
+    font-size: 0.98rem;
+  }
+  .card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list {
+    margin: 6px 0 12px;
+    padding-left: 20px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list li {
+    margin-bottom: 6px;
+  }
+
+  /* Ad Slot Wrapper */
+  .ad-slot {
+    width: 100%;
+    max-width: 728px;
+    margin: 16px auto;
+    text-align: center;
   }
 
   /* Slot Rows */
@@ -382,6 +408,9 @@
     </div>
   </div>
 
+  <!-- Optional Ad Slot Wrapper -->
+  <div class="ad-slot" aria-hidden="true"></div>
+
   <div class="card">
     <h2 data-t="secSub">Soustraction de Temps (A − B)</h2>
     <div class="sub-grid">
@@ -416,6 +445,22 @@
       <button type="button" class="btn-sec" onclick="resetSub()" data-t="btnResetSub">Reset A − B</button>
     </div>
   </div>
+
+  <!-- Practical Guide -->
+  <section class="card">
+    <h2 data-t="guideTitle">Comment utiliser ce calculateur au quotidien</h2>
+    <p data-t="guideIntro">Que vous notiez vos heures sur un chantier, en atelier, au bureau ou sur une feuille de pointage papier, cet outil évite les erreurs de conversion entre 60 minutes par heure et les centièmes utilisés en paie.</p>
+
+    <h3 data-t="guideSub1">Pratique sur le terrain</h3>
+    <ul class="guide-list">
+      <li data-t="guideLi1"><strong>Plages multiples et pauses :</strong> ajoutez autant de lignes que nécessaire dans la journée ; il suffit de décocher une ligne pour exclure un temps de pause ou une interruption temporaire sans effacer vos saisies.</li>
+      <li data-t="guideLi2"><strong>Postes de nuit :</strong> si l'heure de fin est plus petite que l'heure de début (par exemple 22:00 à 06:00), le calcul passe automatiquement sur le lendemain.</li>
+      <li data-t="guideLi3"><strong>Écart d'heures (A − B) :</strong> pratique pour comparer un total réalisé (comme 39h 15min) à une base contractuelle (comme 35h 00min) et voir l'écart en heures-minutes et en décimal.</li>
+    </ul>
+
+    <h3 data-t="guideSub2">Pourquoi afficher les centièmes d'heure (1/100e) ?</h3>
+    <p style="margin-bottom:0;" data-t="guideP2">Beaucoup de logiciels de paie et de feuilles de suivi expriment les durées en base décimale : 15 minutes valent 0,25 h, 30 minutes valent 0,50 h et 45 minutes valent 0,75 h. Gardez toutefois en tête qu'il s'agit d'un outil d'aide au calcul et qu'une vérification reste conseillée avant validation officielle.</p>
+  </section>
 </main>
 
 <footer class="site-footer">
@@ -464,7 +509,15 @@
       lblStart: "Heure début",
       lblEnd: "Heure fin",
       lblTime: "Temps",
-      lblDec: "Temps 1/100e"
+      lblDec: "Temps 1/100e",
+      guideTitle: "Comment utiliser ce calculateur au quotidien",
+      guideIntro: "Que vous notiez vos heures sur un chantier, en atelier, au bureau ou sur une feuille de pointage papier, cet outil évite les erreurs de conversion entre 60 minutes par heure et les centièmes utilisés en paie.",
+      guideSub1: "Pratique sur le terrain",
+      guideLi1: "Plages multiples et pauses : ajoutez autant de lignes que nécessaire dans la journée ; il suffit de décocher une ligne pour exclure un temps de pause ou une interruption temporaire sans effacer vos saisies.",
+      guideLi2: "Postes de nuit : si l'heure de fin est plus petite que l'heure de début (par exemple 22:00 à 06:00), le calcul passe automatiquement sur le lendemain.",
+      guideLi3: "Écart d'heures (A − B) : pratique pour comparer un total réalisé (comme 39h 15min) à une base contractuelle (comme 35h 00min) et voir l'écart en heures-minutes et en décimal.",
+      guideSub2: "Pourquoi afficher les centièmes d'heure (1/100e) ?",
+      guideP2: "Beaucoup de logiciels de paie et de feuilles de suivi expriment les durées en base décimale : 15 minutes valent 0,25 h, 30 minutes valent 0,50 h et 45 minutes valent 0,75 h. Gardez toutefois en tête qu'il s'agit d'un outil d'aide au calcul et qu'une vérification reste conseillée avant validation officielle."
     },
     en: {
       btn: "FR",
@@ -486,7 +539,15 @@
       lblStart: "Start time",
       lblEnd: "End time",
       lblTime: "Duration",
-      lblDec: "Decimal 1/100e"
+      lblDec: "Decimal 1/100e",
+      guideTitle: "Using This Calculator in Everyday Work",
+      guideIntro: "Whether you track hours on a job site, in a workshop, at the office, or on a paper timesheet, this tool helps avoid mix-ups between 60-minute clock time and decimal hours used for payroll.",
+      guideSub1: "Practical Day-to-Day Use",
+      guideLi1: "Multiple slots and breaks: add as many rows as you need for the day, and uncheck a row to exclude a break or pause without wiping out your entries.",
+      guideLi2: "Overnight shifts: if the end time is earlier than the start time (for example 22:00 to 06:00), the calculation rolls over to the next day automatically.",
+      guideLi3: "Time difference (A − B): handy for comparing actual hours worked (such as 39h 15min) against a standard schedule (such as 35h 00min) in both hours-minutes and decimals.",
+      guideSub2: "Why Show Hundredths of an Hour (1/100e)?",
+      guideP2: "Many timesheets and payroll systems use decimal hours: 15 minutes equals 0.25 hrs, 30 minutes equals 0.50 hrs, and 45 minutes equals 0.75 hrs. Treat the output as a practical calculation aid and double-check figures before official sign-off."
     }
   };
 
