@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Feuille d'Heures Hebdomadaire (35h / 39h) | Calculette-tools</title>
-<meta name="description" content="Remplissez votre feuille d'heures de la semaine jour par jour, calculez automatiquement les heures supplémentaires et imprimez votre relevé.">
+<title>Feuille de Pointage Hebdomadaire | Calculette-tools</title>
+<meta name="description" content="Remplissez et imprimez votre feuille d'heures hebdomadaire du lundi au dimanche en heures-minutes et centièmes d'heure (1/100e), avec sauvegarde locale.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -36,6 +36,8 @@
     margin: 0 auto;
     padding: 0 16px;
   }
+
+  /* Header */
   .site-header {
     width: 100%;
     background: var(--surface);
@@ -105,86 +107,202 @@
     flex-shrink: 0;
   }
   .lang-btn:hover { background: var(--primary-hover); }
-  .page-head { padding: 24px 0 12px; }
+
+  /* Page Head */
+  .page-head { padding: 22px 0 12px; }
   .page-head h1 {
     margin: 0 0 6px;
     font-size: clamp(1.4rem, 3vw, 1.95rem);
     letter-spacing: -0.02em;
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
-  .diagram-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    box-shadow: var(--shadow);
-    margin-bottom: 18px;
-    text-align: center;
-  }
-  .diagram-card svg {
-    width: 100%;
-    max-width: 620px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-  .diagram-caption {
-    margin-top: 6px;
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-weight: 600;
-  }
+
+  /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 20px;
     box-shadow: var(--shadow);
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+    width: 100%;
     min-width: 0;
   }
-  .top-bar {
+  .card h2 {
+    margin: 0 0 12px;
+    font-size: 1.08rem;
+  }
+  .card h3 {
+    margin: 14px 0 6px;
+    font-size: 0.98rem;
+  }
+  .card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list {
+    margin: 6px 0 12px;
+    padding-left: 20px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list li {
+    margin-bottom: 6px;
+  }
+
+  /* Dedicated Ad Space */
+  .ad-slot {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    margin: 18px auto;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Week Bar */
+  .week-bar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 16px;
+    gap: 10px;
+    padding: 12px 14px;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 14px;
   }
-  .target-box {
+  .week-nav {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.88rem;
+  }
+  .week-info {
+    font-weight: 800;
+    font-size: 0.98rem;
+    color: var(--ink);
+  }
+  .week-dates {
+    font-size: 0.86rem;
+    color: var(--muted);
     font-weight: 600;
   }
-  select, input[type="time"], input[type="number"] {
+
+  /* Day Block */
+  .day-box {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    background: #fafcff;
+  }
+  .day-box.off {
+    opacity: 0.6;
+    background: #f1f5f9;
+  }
+  .day-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .day-title {
+    font-weight: 800;
+    font-size: 0.96rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .day-totals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* Slot Row */
+  .slot-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.9fr) auto;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 760px) {
+    .slot-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .slot-field label {
+    display: block;
+    font-size: 0.73rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+  input[type="time"] {
+    width: 100%;
+    min-width: 0;
     padding: 7px 8px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     font-size: 0.88rem;
     background: #fff;
     color: var(--ink);
-    min-width: 0;
   }
-  input:focus, select:focus {
+  input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
-  .btn-group {
+  .out-pill {
+    padding: 7px 9px;
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .btn-mini {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+  }
+  .btn-mini:hover { background: #e2e8f0; }
+
+  /* Toolbar & Total */
+  .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
+    margin: 14px 0 18px;
   }
   .btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 9px 14px;
+    border-radius: 9px;
     font-weight: 600;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
   .btn:hover { background: var(--primary-hover); }
@@ -192,61 +310,40 @@
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 9px 14px;
+    border-radius: 9px;
     font-weight: 600;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
   .btn-sec:hover { background: #e2e8f0; }
-  .table-wrap {
-    width: 100%;
-    overflow-x: auto;
-  }
-  table.ts-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 620px;
-    font-size: 0.88rem;
-  }
-  .ts-table th, .ts-table td {
-    padding: 9px 8px;
-    border-bottom: 1px solid var(--border);
-    text-align: left;
-  }
-  .ts-table th {
-    font-size: 0.76rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: var(--muted);
-    background: #f8fafc;
-  }
-  .day-name { font-weight: 700; color: var(--ink); }
-  .net-cell { font-weight: 700; color: var(--primary); white-space: nowrap; }
-  .sum-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
+
+  .total-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     gap: 12px;
-    margin-top: 18px;
-  }
-  .sum-box {
+    padding: 14px 16px;
     background: var(--soft);
-    border: 1px solid #bfdbfe;
-    border-radius: 10px;
-    padding: 12px;
+    border: 1px solid #93c5fd;
+    border-radius: 12px;
   }
-  .sum-lbl {
-    display: block;
-    font-size: 0.76rem;
-    font-weight: 600;
-    color: var(--muted);
-    margin-bottom: 3px;
-  }
-  .sum-val {
-    font-size: 1.05rem;
+  .total-label {
+    font-size: 1rem;
     font-weight: 800;
     color: var(--ink);
   }
+  .total-vals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-weight: 800;
+    font-size: 1.02rem;
+    color: var(--primary);
+  }
+
+  /* Footer */
   .site-footer {
     width: 100%;
     border-top: 1px solid var(--border);
@@ -255,7 +352,7 @@
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
-    margin-top: 24px;
+    margin-top: 22px;
   }
   .footer-links {
     margin-top: 10px;
@@ -270,8 +367,11 @@
     font-weight: 500;
   }
   .footer-links a:hover { color: var(--primary); }
+
   @media print {
-    .site-header, .btn-group, .diagram-card, .site-footer { display: none !important; }
+    .site-header, .site-footer, .ad-slot, .toolbar, .week-nav, .btn-mini, .guide-card {
+      display: none !important;
+    }
     body { background: #fff; }
     .card { box-shadow: none; border: 1px solid #cbd5e1; }
   }
@@ -299,79 +399,61 @@
 
 <main class="container">
   <div class="page-head">
-    <h1 data-t="pageTitle">Feuille d'Heures Hebdomadaire (35h / 39h)</h1>
-    <p data-t="pageSub">Saisissez vos horaires quotidiens (début, fin, pause) pour obtenir le total net hebdomadaire et les heures supplémentaires.</p>
-  </div>
-
-  <div class="diagram-card">
-    <svg viewBox="0 0 640 105" role="img" aria-label="Schéma cycle hebdomadaire Lundi au Dimanche">
-      <rect x="0" y="0" width="640" height="105" rx="10" fill="#f8fafc"/>
-      <rect x="35" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
-      <rect x="115" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
-      <rect x="195" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
-      <rect x="275" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
-      <rect x="355" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
-      <rect x="435" y="34" width="72" height="28" rx="5" fill="#64748b"/>
-      <rect x="515" y="34" width="90" height="28" rx="5" fill="#16a34a"/>
-      <text x="71" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Lun</text>
-      <text x="151" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Mar</text>
-      <text x="231" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Mer</text>
-      <text x="311" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Jeu</text>
-      <text x="391" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Ven</text>
-      <text x="471" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Sam/Dim</text>
-      <text x="560" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Total + Sup</text>
-      <text x="320" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Sauvegarde automatique locale + impression directe</text>
-    </svg>
-    <div class="diagram-caption" data-t="diagCap">Chaque jour calcule : (Fin − Début) − Pause, puis cumule la semaine complète.</div>
+    <h1 data-t="pageTitle">Feuille de Pointage Hebdomadaire</h1>
+    <p data-t="pageSub">Saisissez vos heures jour après jour du lundi au dimanche, naviguez entre les semaines et obtenez le total en heures-minutes et centièmes d'heure (1/100e).</p>
   </div>
 
   <div class="card">
-    <div class="top-bar">
-      <div class="target-box">
-        <label for="weekTarget" style="margin:0;" data-t="lblTarget">Base hebdomadaire :</label>
-        <select id="weekTarget" onchange="saveAndCalc()">
-          <option value="35" selected>35h / semaine</option>
-          <option value="39">39h / semaine</option>
-          <option value="40">40h / semaine</option>
-        </select>
+    <div class="week-bar">
+      <div>
+        <div class="week-info" id="weekLabel">Semaine</div>
+        <div class="week-dates" id="weekDates"></div>
       </div>
-      <div class="btn-group">
-        <button type="button" class="btn" onclick="window.print()" data-t="btnPrint">Imprimer</button>
-        <button type="button" class="btn-sec" onclick="resetSheet()" data-t="btnReset">Reset</button>
+      <div class="week-nav">
+        <button type="button" class="btn-sec" onclick="shiftWeek(-1)" data-t="btnPrevWeek">← Semaine préc.</button>
+        <button type="button" class="btn-sec" onclick="shiftWeek(0)" data-t="btnCurrWeek">Semaine actuelle</button>
+        <button type="button" class="btn-sec" onclick="shiftWeek(1)" data-t="btnNextWeek">Semaine suiv. →</button>
       </div>
     </div>
 
-    <div class="table-wrap">
-      <table class="ts-table">
-        <thead>
-          <tr>
-            <th data-t="colDay">Jour</th>
-            <th data-t="colStart">Début</th>
-            <th data-t="colEnd">Fin</th>
-            <th data-t="colBreak">Pause (min)</th>
-            <th data-t="colNet">Net (HH:MM)</th>
-            <th data-t="colDec">Décimal (1/100e)</th>
-          </tr>
-        </thead>
-        <tbody id="sheetBody"></tbody>
-      </table>
+    <div id="daysContainer"></div>
+
+    <div class="toolbar">
+      <button type="button" class="btn" onclick="window.print()" data-t="btnPrint">Version imprimable</button>
+      <button type="button" class="btn-sec" onclick="resetWeek()" data-t="btnReset">Reset semaine</button>
     </div>
 
-    <div class="sum-grid">
-      <div class="sum-box">
-        <span class="sum-lbl" data-t="sTotHM">Total Semaine (HH:MM)</span>
-        <span class="sum-val" id="outHM">37h 30min</span>
-      </div>
-      <div class="sum-box">
-        <span class="sum-lbl" data-t="sTotDec">Total Décimal (1/100e)</span>
-        <span class="sum-val" id="outDec">37.50 h</span>
-      </div>
-      <div class="sum-box">
-        <span class="sum-lbl" data-t="sOt">Heures Supplémentaires</span>
-        <span class="sum-val" id="outOt">2.50 h</span>
+    <div class="total-bar">
+      <span class="total-label" data-t="lblWeekTotal">TOTAL HEBDOMADAIRE</span>
+      <div class="total-vals">
+        <span id="weekTotalHM">00h 00min</span>
+        <span id="weekTotalDec">0.00 h</span>
       </div>
     </div>
   </div>
+
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
+
+  <!-- Practical Guide -->
+  <section class="card guide-card">
+    <h2 data-t="guideTitle">Guide pratique : tenir et vérifier sa feuille d'heures hebdomadaire</h2>
+    <p data-t="guideIntro">Que vous soyez salarié, ouvrier, technicien ou responsable d'équipe, rassembler les heures de toute la semaine sur un seul tableau aide à garder une vue claire avant de transmettre le relevé.</p>
+
+    <h3 data-t="guideSub1">1. Organisation du lundi au dimanche</h3>
+    <ul class="guide-list">
+      <li data-t="guideLi1"><strong>Plusieurs plages par jour :</strong> ajoutez ou supprimez des lignes sur un jour donné pour séparer le matin, l'après-midi ou une intervention ponctuelle.</li>
+      <li data-t="guideLi2"><strong>Jours travaillés ou non :</strong> activez ou désactivez chaque jour selon votre planning (par exemple samedi ou dimanche) tout en gardant vos créneaux enregistrés.</li>
+      <li data-t="guideLi3"><strong>Navigation par semaine :</strong> utilisez les flèches pour consulter ou préparer une semaine précédente ou suivante, avec le numéro de semaine et les dates affichés automatiquement.</li>
+    </ul>
+
+    <h3 data-t="guideSub2">2. Sauvegarde locale, impression et centièmes (1/100e)</h3>
+    <p data-t="guideP2">Vos saisies restent enregistrées dans votre navigateur tant que vous n'appuyez pas sur « Reset semaine », ce qui évite de perdre une feuille en cours de remplissage. Le total s'affiche à la fois en heures-minutes (HH:MM) et en centièmes d'heure (1/100e), avec une mise en page prête pour l'impression.</p>
+    <p style="margin-bottom:0;" data-t="guideP3">Pour les décomptes officiels, heures supplémentaires ou règles propres à votre entreprise, pensez toujours à contrôler le récapitulatif final avec votre employeur ou votre service paie.</p>
+  </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
@@ -382,7 +464,7 @@
       <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
       <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
       <a href="time-calculator.html" data-t="navTc">Durées</a>
-      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="feuille-hebdo.html" class="active" data-t="navFh">Feuille Hebdo</a>
       <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
       <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
@@ -397,8 +479,9 @@
 
 <script>
   const LANG_KEY = "calculette_lang_v1";
-  const SHEET_KEY = "calculette_feuille_hebdo_v2";
+  const STORE_PREFIX = "calculette_feuille_hebdo_v1_";
   let lang = "fr";
+  let weekOffset = 0;
 
   const dict = {
     fr: {
@@ -406,153 +489,260 @@
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      pageTitle: "Feuille d'Heures Hebdomadaire (35h / 39h)",
-      pageSub: "Saisissez vos horaires quotidiens (début, fin, pause) pour obtenir le total net hebdomadaire et les heures supplémentaires.",
-      diagCap: "Chaque jour calcule : (Fin − Début) − Pause, puis cumule la semaine complète.",
-      lblTarget: "Base hebdomadaire :",
-      btnPrint: "Imprimer",
-      btnReset: "Reset",
-      colDay: "Jour", colStart: "Début", colEnd: "Fin", colBreak: "Pause (min)", colNet: "Net (HH:MM)", colDec: "Décimal (1/100e)",
-      sTotHM: "Total Semaine (HH:MM)", sTotDec: "Total Décimal (1/100e)", sOt: "Heures Supplémentaires",
-      days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+      pageTitle: "Feuille de Pointage Hebdomadaire",
+      pageSub: "Saisissez vos heures jour après jour du lundi au dimanche, naviguez entre les semaines et obtenez le total en heures-minutes et centièmes d'heure (1/100e).",
+      btnPrevWeek: "← Semaine préc.",
+      btnCurrWeek: "Semaine actuelle",
+      btnNextWeek: "Semaine suiv. →",
+      btnPrint: "Version imprimable",
+      btnReset: "Reset semaine",
+      lblWeekTotal: "TOTAL HEBDOMADAIRE",
+      lblStart: "Début",
+      lblEnd: "Fin",
+      lblDur: "Durée",
+      lblDec: "1/100e",
+      btnAddRow: "+ Ligne",
+      btnDelRow: "− Ligne",
+      days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+      weekWord: "Semaine",
+      guideTitle: "Guide pratique : tenir et vérifier sa feuille d'heures hebdomadaire",
+      guideIntro: "Que vous soyez salarié, ouvrier, technicien ou responsable d'équipe, rassembler les heures de toute la semaine sur un seul tableau aide à garder une vue claire avant de transmettre le relevé.",
+      guideSub1: "1. Organisation du lundi au dimanche",
+      guideLi1: "Plusieurs plages par jour : ajoutez ou supprimez des lignes sur un jour donné pour séparer le matin, l'après-midi ou une intervention ponctuelle.",
+      guideLi2: "Jours travaillés ou non : activez ou désactivez chaque jour selon votre planning (par exemple samedi ou dimanche) tout en gardant vos créneaux enregistrés.",
+      guideLi3: "Navigation par semaine : utilisez les flèches pour consulter ou préparer une semaine précédente ou suivante, avec le numéro de semaine et les dates affichés automatiquement.",
+      guideSub2: "2. Sauvegarde locale, impression et centièmes (1/100e)",
+      guideP2: "Vos saisies restent enregistrées dans votre navigateur tant que vous n'appuyez pas sur « Reset semaine », ce qui évite de perdre une feuille en cours de remplissage. Le total s'affiche à la fois en heures-minutes (HH:MM) et en centièmes d'heure (1/100e), avec une mise en page prête pour l'impression.",
+      guideP3: "Pour les décomptes officiels, heures supplémentaires ou règles propres à votre entreprise, pensez toujours à contrôler le récapitulatif final avec votre employeur ou votre service paie."
     },
     en: {
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      pageTitle: "Weekly Timesheet (35h / 39h)",
-      pageSub: "Enter daily start, end, and break times to calculate net weekly hours and overtime automatically.",
-      diagCap: "Each day computes (End − Start) − Break and rolls up into your weekly total.",
-      lblTarget: "Weekly base:",
-      btnPrint: "Print",
-      btnReset: "Reset",
-      colDay: "Day", colStart: "Start", colEnd: "End", colBreak: "Break (min)", colNet: "Net (HH:MM)", colDec: "Decimal (1/100e)",
-      sTotHM: "Weekly Total (HH:MM)", sTotDec: "Weekly Decimal (1/100e)", sOt: "Overtime Hours",
-      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+      pageTitle: "Weekly Timesheet",
+      pageSub: "Enter hours day by day from Monday to Sunday, switch weeks, and view totals in hours-minutes and hundredths of an hour (1/100e).",
+      btnPrevWeek: "← Prev. week",
+      btnCurrWeek: "Current week",
+      btnNextWeek: "Next week →",
+      btnPrint: "Printable view",
+      btnReset: "Reset week",
+      lblWeekTotal: "WEEKLY TOTAL",
+      lblStart: "Start",
+      lblEnd: "End",
+      lblDur: "Duration",
+      lblDec: "1/100e",
+      btnAddRow: "+ Row",
+      btnDelRow: "− Row",
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      weekWord: "Week",
+      guideTitle: "Practical Guide: Keeping and Checking a Weekly Timesheet",
+      guideIntro: "Whether you are an employee, tradesperson, technician, or team lead, grouping the whole week on one sheet makes it easier to review hours before submitting them.",
+      guideSub1: "1. Monday through Sunday Layout",
+      guideLi1: "Multiple slots per day: add or remove rows on any day to separate morning work, afternoon work, or extra tasks.",
+      guideLi2: "Active or off days: toggle a day on or off according to your schedule (such as Saturday or Sunday) while keeping your entered rows intact.",
+      guideLi3: "Week navigation: use the arrow buttons to check or prepare previous or upcoming weeks, with week number and dates updated automatically.",
+      guideSub2: "2. Local Save, Print View, and Hundredths (1/100e)",
+      guideP2: "Your entries stay saved in your browser until you click Reset week, helping prevent accidental data loss mid-week. Totals display in both hours-minutes (HH:MM) and hundredths of an hour (1/100e), with a print-ready layout.",
+      guideP3: "For official payroll records, overtime rules, or company-specific policies, always verify the final summary with your employer or payroll team."
     }
   };
 
-  function makeDefaultRows() {
-    return [
-      { start: "09:00", end: "17:30", brk: 60 },
-      { start: "09:00", end: "17:30", brk: 60 },
-      { start: "09:00", end: "17:30", brk: 60 },
-      { start: "09:00", end: "17:30", brk: 60 },
-      { start: "09:00", end: "17:30", brk: 60 },
-      { start: "", end: "", brk: 0 },
-      { start: "", end: "", brk: 0 }
-    ];
+  function getMondayOfOffset(offset) {
+    const now = new Date();
+    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const day = d.getDay();
+    const diffToMon = (day === 0 ? -6 : 1 - day) + offset * 7;
+    d.setDate(d.getDate() + diffToMon);
+    return d;
   }
 
-  let rows = makeDefaultRows();
+  function getISOWeekNumber(date) {
+    const tmp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = tmp.getUTCDay() || 7;
+    tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+    return Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
+  }
 
-  function loadSaved() {
+  function fmtDateShort(date) {
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const yyyy = date.getFullYear();
+    return `${dd}/${mm}/${yyyy}`;
+  }
+
+  function getWeekKey(monday) {
+    return STORE_PREFIX + `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, "0")}-${String(monday.getDate()).padStart(2, "0")}`;
+  }
+
+  function makeDefaultWeek() {
+    return Array.from({ length: 7 }, (_, idx) => ({
+      active: idx < 5,
+      slots: idx < 5 ? [{ start: "08:00", end: "17:00" }] : [{ start: "08:00", end: "12:00" }]
+    }));
+  }
+
+  let weekData = makeDefaultWeek();
+
+  function loadWeekData(monday) {
     try {
-      const raw = localStorage.getItem(SHEET_KEY);
+      const raw = localStorage.getItem(getWeekKey(monday));
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed.rows) && parsed.rows.length === 7) {
-          rows = parsed.rows;
-        }
-        if (parsed.target) {
-          document.getElementById("weekTarget").value = String(parsed.target);
+        if (Array.isArray(parsed) && parsed.length === 7) {
+          weekData = parsed;
+          return;
         }
       }
     } catch (e) {}
+    weekData = makeDefaultWeek();
   }
 
-  function persistState() {
+  function saveWeekData(monday) {
     try {
-      localStorage.setItem(SHEET_KEY, JSON.stringify({
-        rows: rows,
-        target: document.getElementById("weekTarget").value
-      }));
+      localStorage.setItem(getWeekKey(monday), JSON.stringify(weekData));
     } catch (e) {}
   }
 
-  function onRowChange(i, field, val) {
-    if (field === "brk") {
-      rows[i].brk = Math.max(0, parseInt(val, 10) || 0);
-    } else {
-      rows[i][field] = val;
+  function fmtHM(mins) {
+    const abs = Math.max(0, Math.round(mins));
+    const h = String(Math.floor(abs / 60)).padStart(2, "0");
+    const m = String(abs % 60).padStart(2, "0");
+    return `${h}h ${m}min`;
+  }
+
+  function calcSlotMins(s) {
+    if (!s.start || !s.end) return 0;
+    const [sh, sm] = s.start.split(":").map(Number);
+    const [eh, em] = s.end.split(":").map(Number);
+    let startM = sh * 60 + sm;
+    let endM = eh * 60 + em;
+    if (endM < startM) endM += 1440;
+    return Math.max(0, endM - startM);
+  }
+
+  function renderWeek() {
+    const d = dict[lang];
+    const monday = getMondayOfOffset(weekOffset);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const wkNum = getISOWeekNumber(monday);
+
+    document.getElementById("weekLabel").textContent = `${d.weekWord} ${wkNum} (${monday.getFullYear()})`;
+    document.getElementById("weekDates").textContent = `${fmtDateShort(monday)} – ${fmtDateShort(sunday)}`;
+
+    const container = document.getElementById("daysContainer");
+    container.innerHTML = "";
+
+    let weekMins = 0;
+
+    weekData.forEach((dayObj, dIdx) => {
+      const dayDate = new Date(monday);
+      dayDate.setDate(monday.getDate() + dIdx);
+
+      let dayMins = 0;
+      dayObj.slots.forEach(s => {
+        if (dayObj.active) dayMins += calcSlotMins(s);
+      });
+      weekMins += dayMins;
+
+      const box = document.createElement("div");
+      box.className = "day-box" + (dayObj.active ? "" : " off");
+
+      const slotsHtml = dayObj.slots.map((s, sIdx) => {
+        const mins = calcSlotMins(s);
+        return `
+          <div class="slot-row">
+            <div class="slot-field">
+              <label>${d.lblStart}</label>
+              <input type="time" value="${s.start}" oninput="updateSlot(${dIdx}, ${sIdx}, 'start', this.value)">
+            </div>
+            <div class="slot-field">
+              <label>${d.lblEnd}</label>
+              <input type="time" value="${s.end}" oninput="updateSlot(${dIdx}, ${sIdx}, 'end', this.value)">
+            </div>
+            <div class="slot-field">
+              <label>${d.lblDur}</label>
+              <div class="out-pill">${fmtHM(mins)}</div>
+            </div>
+            <div class="slot-field">
+              <label>${d.lblDec}</label>
+              <div class="out-pill">${(mins / 60).toFixed(2)} h</div>
+            </div>
+            <div>
+              ${sIdx === 0 ? `<button type="button" class="btn-mini" onclick="addDaySlot(${dIdx})">${d.btnAddRow}</button>` : `<button type="button" class="btn-mini" onclick="delDaySlot(${dIdx}, ${sIdx})">${d.btnDelRow}</button>`}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      box.innerHTML = `
+        <div class="day-head">
+          <div class="day-title">
+            <input type="checkbox" ${dayObj.active ? "checked" : ""} onchange="toggleDay(${dIdx}, this.checked)">
+            <span>${d.days[dIdx]} (${fmtDateShort(dayDate).slice(0, 5)})</span>
+          </div>
+          <div class="day-totals">
+            <span>${fmtHM(dayMins)}</span>
+            <span>${(dayMins / 60).toFixed(2)} h</span>
+          </div>
+        </div>
+        ${slotsHtml}
+      `;
+
+      container.appendChild(box);
+    });
+
+    document.getElementById("weekTotalHM").textContent = fmtHM(weekMins);
+    document.getElementById("weekTotalDec").textContent = `${(weekMins / 60).toFixed(2)} h`;
+    saveWeekData(monday);
+  }
+
+  function shiftWeek(delta) {
+    weekOffset = delta === 0 ? 0 : weekOffset + delta;
+    loadWeekData(getMondayOfOffset(weekOffset));
+    renderWeek();
+  }
+
+  function toggleDay(dIdx, checked) {
+    weekData[dIdx].active = checked;
+    renderWeek();
+  }
+
+  function updateSlot(dIdx, sIdx, key, val) {
+    weekData[dIdx].slots[sIdx][key] = val;
+    renderWeek();
+  }
+
+  function addDaySlot(dIdx) {
+    weekData[dIdx].slots.push({ start: "14:00", end: "18:00" });
+    renderWeek();
+  }
+
+  function delDaySlot(dIdx, sIdx) {
+    if (weekData[dIdx].slots.length > 1) {
+      weekData[dIdx].slots.splice(sIdx, 1);
+      renderWeek();
     }
-    saveAndCalc();
   }
 
-  function renderTable() {
-    const tbody = document.getElementById("sheetBody");
-    const dayNames = dict[lang].days;
-    let html = "";
-    for (let i = 0; i < 7; i++) {
-      const r = rows[i];
-      html += '<tr>' +
-        '<td class="day-name">' + dayNames[i] + '</td>' +
-        '<td><input type="time" value="' + (r.start || "") + '" oninput="onRowChange(' + i + ', \'start\', this.value)"></td>' +
-        '<td><input type="time" value="' + (r.end || "") + '" oninput="onRowChange(' + i + ', \'end\', this.value)"></td>' +
-        '<td><input type="number" min="0" value="' + (r.brk || 0) + '" style="width:84px;" oninput="onRowChange(' + i + ', \'brk\', this.value)"></td>' +
-        '<td class="net-cell" id="dHM-' + i + '">00h 00min</td>' +
-        '<td id="dDec-' + i + '">0.00 h</td>' +
-      '</tr>';
-    }
-    tbody.innerHTML = html;
-    calcWeek();
-  }
-
-  function calcWeek() {
-    let totalMins = 0;
-    for (let i = 0; i < 7; i++) {
-      const r = rows[i];
-      let net = 0;
-      if (r.start && r.end) {
-        const sParts = r.start.split(":");
-        const eParts = r.end.split(":");
-        let sM = (parseInt(sParts[0], 10) || 0) * 60 + (parseInt(sParts[1], 10) || 0);
-        let eM = (parseInt(eParts[0], 10) || 0) * 60 + (parseInt(eParts[1], 10) || 0);
-        if (eM < sM) eM += 1440;
-        net = Math.max(0, (eM - sM) - (parseInt(r.brk, 10) || 0));
-      }
-      totalMins += net;
-      const h = String(Math.floor(net / 60)).padStart(2, "0");
-      const m = String(net % 60).padStart(2, "0");
-      const hmEl = document.getElementById("dHM-" + i);
-      const decEl = document.getElementById("dDec-" + i);
-      if (hmEl) hmEl.textContent = h + "h " + m + "min";
-      if (decEl) decEl.textContent = (net / 60).toFixed(2) + " h";
-    }
-
-    const totDec = totalMins / 60;
-    const target = parseFloat(document.getElementById("weekTarget").value) || 35;
-    const ot = Math.max(0, totDec - target);
-    const th = String(Math.floor(totalMins / 60)).padStart(2, "0");
-    const tm = String(totalMins % 60).padStart(2, "0");
-
-    document.getElementById("outHM").textContent = th + "h " + tm + "min";
-    document.getElementById("outDec").textContent = totDec.toFixed(2) + " h";
-    document.getElementById("outOt").textContent = ot.toFixed(2) + " h";
-  }
-
-  function saveAndCalc() {
-    persistState();
-    calcWeek();
-  }
-
-  function resetSheet() {
-    rows = makeDefaultRows();
-    document.getElementById("weekTarget").value = "35";
-    try { localStorage.removeItem(SHEET_KEY); } catch (e) {}
-    renderTable();
+  function resetWeek() {
+    const monday = getMondayOfOffset(weekOffset);
+    try { localStorage.removeItem(getWeekKey(monday)); } catch (e) {}
+    weekData = makeDefaultWeek();
+    renderWeek();
   }
 
   function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
     document.getElementById("langBtn").textContent = d.btn;
-    document.querySelectorAll("[data-t]").forEach(function(el) {
+    document.querySelectorAll("[data-t]").forEach(el => {
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
-    renderTable();
+    renderWeek();
   }
 
   function toggleLang() {
@@ -565,7 +755,7 @@
     if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
   } catch (e) {}
 
-  loadSaved();
+  loadWeekData(getMondayOfOffset(weekOffset));
   applyLang();
 </script>
 
