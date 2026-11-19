@@ -117,6 +117,30 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
+  /* Diagram Card */
+  .diagram-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .diagram-card svg {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .diagram-caption {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
   /* Grid & Cards */
   .main-grid {
     display: grid;
@@ -261,7 +285,42 @@
 <main class="container">
   <div class="page-head">
     <h1 data-t="pageTitle">Calculateur Toiture à Croupe (Arêtiers &amp; Coupes)</h1>
-    <p data-t="pageSub">À partir des dimensions de base (CE1, CE2, E1, E2, HC), calculez les longueurs d'arêtiers, pentes et angles de coupe[cite: 2].</p>
+    <p data-t="pageSub">À partir des dimensions de base (CE1, CE2, E1, E2, HC), calculez les longueurs d'arêtiers, pentes et angles de coupe.</p>
+  </div>
+
+  <!-- Hip Roof Technical SVG Diagram -->
+  <div class="diagram-card">
+    <svg viewBox="0 0 620 270" role="img" aria-label="Schéma toiture à croupe CE1 CE2 E1 E2 HC">
+      <rect x="0" y="0" width="620" height="270" rx="12" fill="#f8fafc"/>
+      <!-- Reference construction lines -->
+      <line x1="70" y1="150" x2="550" y2="150" stroke="#ef4444" stroke-width="1.6" stroke-dasharray="6,5"/>
+      <line x1="310" y1="24" x2="310" y2="230" stroke="#ef4444" stroke-width="1.6" stroke-dasharray="6,5"/>
+
+      <!-- Eaves lines E1 and E2 -->
+      <line x1="120" y1="150" x2="120" y2="210" stroke="#0f172a" stroke-width="2.5"/>
+      <line x1="500" y1="150" x2="500" y2="232" stroke="#0f172a" stroke-width="2.5"/>
+      <line x1="120" y1="210" x2="500" y2="232" stroke="#0f172a" stroke-width="2.5"/>
+
+      <!-- Hip rafters (Arêtier 1 & Arêtier 2) & Ridge peak -->
+      <line x1="310" y1="45" x2="120" y2="210" stroke="#2563eb" stroke-width="3"/>
+      <line x1="310" y1="45" x2="500" y2="232" stroke="#2563eb" stroke-width="3"/>
+      <line x1="310" y1="45" x2="310" y2="150" stroke="#16a34a" stroke-width="2.5"/>
+
+      <!-- Peak & corner nodes -->
+      <circle cx="310" cy="45" r="4.5" fill="#2563eb"/>
+      <circle cx="120" cy="210" r="4" fill="#0f172a"/>
+      <circle cx="500" cy="232" r="4" fill="#0f172a"/>
+
+      <!-- Labels -->
+      <text x="195" y="138" fill="#16a34a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">CE1</text>
+      <text x="405" y="138" fill="#16a34a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">CE2</text>
+      <text x="86" y="185" fill="#0f172a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">E1</text>
+      <text x="512" y="195" fill="#0f172a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">E2</text>
+      <text x="320" y="96" fill="#16a34a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">HC</text>
+      <text x="165" y="112" fill="#2563eb" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Arêtier 1</text>
+      <text x="405" y="112" fill="#2563eb" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Arêtier 2</text>
+    </svg>
+    <div class="diagram-caption" data-t="diagCap">Schéma de principe : CE1/CE2 (chevrons d'emprunt), E1/E2 (lignes d'égout), HC (hauteur de couronnement).</div>
   </div>
 
   <div class="main-grid">
@@ -368,6 +427,7 @@
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       pageTitle: "Calculateur Toiture à Croupe (Arêtiers & Coupes)",
       pageSub: "À partir des dimensions de base (CE1, CE2, E1, E2, HC), calculez les longueurs d'arêtiers, pentes et angles de coupe.",
+      diagCap: "Schéma de principe : CE1/CE2 (chevrons d'emprunt), E1/E2 (lignes d'égout), HC (hauteur de couronnement).",
       secData: "Données de Base (m)",
       secRes: "Résultats Arêtiers & Coupes",
       lblHc: "Hauteur de couronnement HC (m)",
@@ -389,6 +449,7 @@
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       pageTitle: "Hip Roof Framing Calculator (Hips & Cuts)",
       pageSub: "From base dimensions (CE1, CE2, E1, E2, HC), calculate hip rafter lengths, slopes, and cutting angles.",
+      diagCap: "Reference diagram: CE1/CE2 (borrowed rafters), E1/E2 (eaves lines), HC (crowning height).",
       secData: "Base Dimensions (m)",
       secRes: "Hip Rafters & Cuts Results",
       lblHc: "Crowning height HC (m)",
