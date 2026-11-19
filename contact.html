@@ -1,65 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact Us | Calculette-tools</title>
-  <style>
-    body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 820px; margin: 40px auto; padding: 0 20px; color: #222; }
-    h1 { color: #111; }
-    form { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
-    label { font-weight: bold; }
-    input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
-    button { width: fit-content; padding: 10px 20px; background: #2563eb; color: #fff; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer; }
-    button:hover { background: #1d4ed8; }
-    .direct { margin-top: 24px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
-    .nav { margin-top: 24px; font-size: 14px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Calculette-tools</title>
+<meta name="description" content="Contactez l'équipe Calculette-tools pour toute question, suggestion d'amélioration ou signalement d'erreur.">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Contact Us</h1>
-  <p>Have a question, found a bug in a calculator, or want to request a new tool? Send us a message below.</p>
 
-  <form id="contactForm" onsubmit="sendMail(event)">
-    <div>
-      <label for="name">Your Name</label>
-      <input id="name" name="name" type="text" required />
-    </div>
+<header id="siteHeader" class="site-header"></header>
 
-    <div>
-      <label for="email">Your Email</label>
-      <input id="email" name="email" type="email" required />
-    </div>
-
-    <div>
-      <label for="message">Message</label>
-      <textarea id="message" name="message" rows="5" required></textarea>
-    </div>
-
-    <button type="submit">Send Message</button>
-  </form>
-
-  <div class="direct">
-    <p>Prefer email directly? Write to us at <a href="mailto:aliasmalik@gmail.com">aliasmalik@gmail.com</a>.</p>
+<main class="container">
+  <div class="page-head">
+    <h1 data-t="title">Contactez-nous</h1>
+    <p data-t="sub">Une suggestion de nouvel outil ou une remarque ? Envoyez-nous un message.</p>
   </div>
 
-  <div class="nav">
-    <a href="index.html">Home</a> |
-    <a href="about.html">About Us</a> |
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms &amp; Disclaimer</a>
-  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h2 data-t="formTitle">Formulaire de Contact</h2>
+      <form onsubmit="handleContact(event)">
+        <div style="margin-bottom:10px;">
+          <label for="cName" data-t="lblName">Votre nom</label>
+          <input type="text" id="cName" required>
+        </div>
+        <div style="margin-bottom:10px;">
+          <label for="cEmail" data-t="lblEmail">Votre email</label>
+          <input type="email" id="cEmail" required>
+        </div>
+        <div style="margin-bottom:10px;">
+          <label for="cMsg" data-t="lblMsg">Message</label>
+          <textarea id="cMsg" rows="4" required></textarea>
+        </div>
+        <div class="btn-row">
+          <button type="submit" class="btn" data-t="btnSend">Envoyer</button>
+          <button type="button" class="btn-sec" onclick="resetContact()" data-t="btnReset">Reset</button>
+        </div>
+      </form>
+      <div id="cStatus" class="res-box" style="display:none;"></div>
+    </div>
 
-  <script>
-    function sendMail(event) {
-      event.preventDefault();
-      const name = encodeURIComponent(document.getElementById("name").value);
-      const email = encodeURIComponent(document.getElementById("email").value);
-      const message = encodeURIComponent(document.getElementById("message").value);
-      const subject = encodeURIComponent("Message from Calculette-tools");
-      const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
-      window.location.href = `mailto:aliasmalik@gmail.com?subject=${subject}&body=${body}`;
+    <div class="card">
+      <h2 data-t="infoTitle">Informations</h2>
+      <p data-t="infoP1">Nous lisons chaque message afin d'améliorer la précision et l'ergonomie de nos calculateurs.</p>
+      <p data-t="infoP2">Pour signaler un bug sur un calculateur précis, indiquez le nom de l'outil et les valeurs saisies.</p>
+    </div>
+  </div>
+</main>
+
+<footer id="siteFooter" class="site-footer"></footer>
+
+<script src="app.js"></script>
+<script>
+  const PAGE_DICT = {
+    fr: {
+      title: "Contactez-nous",
+      sub: "Une suggestion de nouvel outil ou une remarque ? Envoyez-nous un message.",
+      formTitle: "Formulaire de Contact",
+      lblName: "Votre nom",
+      lblEmail: "Votre email",
+      lblMsg: "Message",
+      btnSend: "Envoyer",
+      btnReset: "Reset",
+      infoTitle: "Informations",
+      infoP1: "Nous lisons chaque message afin d'améliorer la précision et l'ergonomie de nos calculateurs.",
+      infoP2: "Pour signaler un bug sur un calculateur précis, indiquez le nom de l'outil et les valeurs saisies."
+    },
+    en: {
+      title: "Contact Us",
+      sub: "Have a feature suggestion or feedback? Send us a message.",
+      formTitle: "Contact Form",
+      lblName: "Your name",
+      lblEmail: "Your email",
+      lblMsg: "Message",
+      btnSend: "Send Message",
+      btnReset: "Reset",
+      infoTitle: "Information",
+      infoP1: "We review every message to improve the accuracy and usability of our calculators.",
+      infoP2: "If you are reporting a calculation issue, please mention the tool name and the numbers entered."
     }
-  </script>
+  };
+
+  function handleContact(e) {
+    e.preventDefault();
+    const box = document.getElementById("cStatus");
+    box.style.display = "block";
+    box.textContent = getLang() === "en"
+      ? "Thank you! Your message has been recorded."
+      : "Merci ! Votre message a bien été enregistré.";
+  }
+
+  function resetContact() {
+    document.getElementById("cName").value = "";
+    document.getElementById("cEmail").value = "";
+    document.getElementById("cMsg").value = "";
+    const box = document.getElementById("cStatus");
+    box.style.display = "none";
+    box.textContent = "";
+  }
+
+  renderChrome("contact");
+  applyLang();
+</script>
 </body>
 </html>
