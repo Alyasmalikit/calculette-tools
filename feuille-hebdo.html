@@ -36,8 +36,6 @@
     margin: 0 auto;
     padding: 0 16px;
   }
-
-  /* Header */
   .site-header {
     width: 100%;
     background: var(--surface);
@@ -107,8 +105,6 @@
     flex-shrink: 0;
   }
   .lang-btn:hover { background: var(--primary-hover); }
-
-  /* Page Head */
   .page-head { padding: 24px 0 12px; }
   .page-head h1 {
     margin: 0 0 6px;
@@ -116,8 +112,6 @@
     letter-spacing: -0.02em;
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
-
-  /* Diagram Card */
   .diagram-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -140,8 +134,6 @@
     color: var(--muted);
     font-weight: 600;
   }
-
-  /* Card */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -207,8 +199,6 @@
     cursor: pointer;
   }
   .btn-sec:hover { background: #e2e8f0; }
-
-  /* Timesheet Table */
   .table-wrap {
     width: 100%;
     overflow-x: auto;
@@ -216,7 +206,7 @@
   table.ts-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 640px;
+    min-width: 620px;
     font-size: 0.88rem;
   }
   .ts-table th, .ts-table td {
@@ -233,8 +223,6 @@
   }
   .day-name { font-weight: 700; color: var(--ink); }
   .net-cell { font-weight: 700; color: var(--primary); white-space: nowrap; }
-
-  /* Summary Grid */
   .sum-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
@@ -259,8 +247,6 @@
     font-weight: 800;
     color: var(--ink);
   }
-
-  /* Footer */
   .site-footer {
     width: 100%;
     border-top: 1px solid var(--border);
@@ -284,7 +270,6 @@
     font-weight: 500;
   }
   .footer-links a:hover { color: var(--primary); }
-
   @media print {
     .site-header, .btn-group, .diagram-card, .site-footer { display: none !important; }
     body { background: #fff; }
@@ -315,11 +300,274 @@
 <main class="container">
   <div class="page-head">
     <h1 data-t="pageTitle">Feuille d'Heures Hebdomadaire (35h / 39h)</h1>
-    <p data-t="pageSub">Saisissez vos horaires quotidiens (matin, après-midi, pause) pour obtenir le total net hebdomadaire et les heures supplémentaires.</p>
+    <p data-t="pageSub">Saisissez vos horaires quotidiens (début, fin, pause) pour obtenir le total net hebdomadaire et les heures supplémentaires.</p>
   </div>
 
-  <!-- Weekly Cycle SVG Diagram -->
   <div class="diagram-card">
     <svg viewBox="0 0 640 105" role="img" aria-label="Schéma cycle hebdomadaire Lundi au Dimanche">
       <rect x="0" y="0" width="640" height="105" rx="10" fill="#f8fafc"/>
-      <rect x="3
+      <rect x="35" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
+      <rect x="115" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
+      <rect x="195" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
+      <rect x="275" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
+      <rect x="355" y="34" width="72" height="28" rx="5" fill="#2563eb"/>
+      <rect x="435" y="34" width="72" height="28" rx="5" fill="#64748b"/>
+      <rect x="515" y="34" width="90" height="28" rx="5" fill="#16a34a"/>
+      <text x="71" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Lun</text>
+      <text x="151" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Mar</text>
+      <text x="231" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Mer</text>
+      <text x="311" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Jeu</text>
+      <text x="391" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Ven</text>
+      <text x="471" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Sam/Dim</text>
+      <text x="560" y="52" fill="#fff" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Total + Sup</text>
+      <text x="320" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Sauvegarde automatique locale + impression directe</text>
+    </svg>
+    <div class="diagram-caption" data-t="diagCap">Chaque jour calcule : (Fin − Début) − Pause, puis cumule la semaine complète.</div>
+  </div>
+
+  <div class="card">
+    <div class="top-bar">
+      <div class="target-box">
+        <label for="weekTarget" style="margin:0;" data-t="lblTarget">Base hebdomadaire :</label>
+        <select id="weekTarget" onchange="saveAndCalc()">
+          <option value="35" selected>35h / semaine</option>
+          <option value="39">39h / semaine</option>
+          <option value="40">40h / semaine</option>
+        </select>
+      </div>
+      <div class="btn-group">
+        <button type="button" class="btn" onclick="window.print()" data-t="btnPrint">Imprimer</button>
+        <button type="button" class="btn-sec" onclick="resetSheet()" data-t="btnReset">Reset</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table class="ts-table">
+        <thead>
+          <tr>
+            <th data-t="colDay">Jour</th>
+            <th data-t="colStart">Début</th>
+            <th data-t="colEnd">Fin</th>
+            <th data-t="colBreak">Pause (min)</th>
+            <th data-t="colNet">Net (HH:MM)</th>
+            <th data-t="colDec">Décimal (1/100e)</th>
+          </tr>
+        </thead>
+        <tbody id="sheetBody"></tbody>
+      </table>
+    </div>
+
+    <div class="sum-grid">
+      <div class="sum-box">
+        <span class="sum-lbl" data-t="sTotHM">Total Semaine (HH:MM)</span>
+        <span class="sum-val" id="outHM">37h 30min</span>
+      </div>
+      <div class="sum-box">
+        <span class="sum-lbl" data-t="sTotDec">Total Décimal (1/100e)</span>
+        <span class="sum-val" id="outDec">37.50 h</span>
+      </div>
+      <div class="sum-box">
+        <span class="sum-lbl" data-t="sOt">Heures Supplémentaires</span>
+        <span class="sum-val" id="outOt">2.50 h</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>Calculette-tools</div>
+    <div class="footer-links">
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+    </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="disclaimer.html" data-t="navDisclaimer">Mentions &amp; Clause</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const LANG_KEY = "calculette_lang_v1";
+  const SHEET_KEY = "calculette_feuille_hebdo_v2";
+  let lang = "fr";
+
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
+      pageTitle: "Feuille d'Heures Hebdomadaire (35h / 39h)",
+      pageSub: "Saisissez vos horaires quotidiens (début, fin, pause) pour obtenir le total net hebdomadaire et les heures supplémentaires.",
+      diagCap: "Chaque jour calcule : (Fin − Début) − Pause, puis cumule la semaine complète.",
+      lblTarget: "Base hebdomadaire :",
+      btnPrint: "Imprimer",
+      btnReset: "Reset",
+      colDay: "Jour", colStart: "Début", colEnd: "Fin", colBreak: "Pause (min)", colNet: "Net (HH:MM)", colDec: "Décimal (1/100e)",
+      sTotHM: "Total Semaine (HH:MM)", sTotDec: "Total Décimal (1/100e)", sOt: "Heures Supplémentaires",
+      days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
+      pageTitle: "Weekly Timesheet (35h / 39h)",
+      pageSub: "Enter daily start, end, and break times to calculate net weekly hours and overtime automatically.",
+      diagCap: "Each day computes (End − Start) − Break and rolls up into your weekly total.",
+      lblTarget: "Weekly base:",
+      btnPrint: "Print",
+      btnReset: "Reset",
+      colDay: "Day", colStart: "Start", colEnd: "End", colBreak: "Break (min)", colNet: "Net (HH:MM)", colDec: "Decimal (1/100e)",
+      sTotHM: "Weekly Total (HH:MM)", sTotDec: "Weekly Decimal (1/100e)", sOt: "Overtime Hours",
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    }
+  };
+
+  function makeDefaultRows() {
+    return [
+      { start: "09:00", end: "17:30", brk: 60 },
+      { start: "09:00", end: "17:30", brk: 60 },
+      { start: "09:00", end: "17:30", brk: 60 },
+      { start: "09:00", end: "17:30", brk: 60 },
+      { start: "09:00", end: "17:30", brk: 60 },
+      { start: "", end: "", brk: 0 },
+      { start: "", end: "", brk: 0 }
+    ];
+  }
+
+  let rows = makeDefaultRows();
+
+  function loadSaved() {
+    try {
+      const raw = localStorage.getItem(SHEET_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed.rows) && parsed.rows.length === 7) {
+          rows = parsed.rows;
+        }
+        if (parsed.target) {
+          document.getElementById("weekTarget").value = String(parsed.target);
+        }
+      }
+    } catch (e) {}
+  }
+
+  function persistState() {
+    try {
+      localStorage.setItem(SHEET_KEY, JSON.stringify({
+        rows: rows,
+        target: document.getElementById("weekTarget").value
+      }));
+    } catch (e) {}
+  }
+
+  function onRowChange(i, field, val) {
+    if (field === "brk") {
+      rows[i].brk = Math.max(0, parseInt(val, 10) || 0);
+    } else {
+      rows[i][field] = val;
+    }
+    saveAndCalc();
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById("sheetBody");
+    const dayNames = dict[lang].days;
+    let html = "";
+    for (let i = 0; i < 7; i++) {
+      const r = rows[i];
+      html += '<tr>' +
+        '<td class="day-name">' + dayNames[i] + '</td>' +
+        '<td><input type="time" value="' + (r.start || "") + '" oninput="onRowChange(' + i + ', \'start\', this.value)"></td>' +
+        '<td><input type="time" value="' + (r.end || "") + '" oninput="onRowChange(' + i + ', \'end\', this.value)"></td>' +
+        '<td><input type="number" min="0" value="' + (r.brk || 0) + '" style="width:84px;" oninput="onRowChange(' + i + ', \'brk\', this.value)"></td>' +
+        '<td class="net-cell" id="dHM-' + i + '">00h 00min</td>' +
+        '<td id="dDec-' + i + '">0.00 h</td>' +
+      '</tr>';
+    }
+    tbody.innerHTML = html;
+    calcWeek();
+  }
+
+  function calcWeek() {
+    let totalMins = 0;
+    for (let i = 0; i < 7; i++) {
+      const r = rows[i];
+      let net = 0;
+      if (r.start && r.end) {
+        const sParts = r.start.split(":");
+        const eParts = r.end.split(":");
+        let sM = (parseInt(sParts[0], 10) || 0) * 60 + (parseInt(sParts[1], 10) || 0);
+        let eM = (parseInt(eParts[0], 10) || 0) * 60 + (parseInt(eParts[1], 10) || 0);
+        if (eM < sM) eM += 1440;
+        net = Math.max(0, (eM - sM) - (parseInt(r.brk, 10) || 0));
+      }
+      totalMins += net;
+      const h = String(Math.floor(net / 60)).padStart(2, "0");
+      const m = String(net % 60).padStart(2, "0");
+      const hmEl = document.getElementById("dHM-" + i);
+      const decEl = document.getElementById("dDec-" + i);
+      if (hmEl) hmEl.textContent = h + "h " + m + "min";
+      if (decEl) decEl.textContent = (net / 60).toFixed(2) + " h";
+    }
+
+    const totDec = totalMins / 60;
+    const target = parseFloat(document.getElementById("weekTarget").value) || 35;
+    const ot = Math.max(0, totDec - target);
+    const th = String(Math.floor(totalMins / 60)).padStart(2, "0");
+    const tm = String(totalMins % 60).padStart(2, "0");
+
+    document.getElementById("outHM").textContent = th + "h " + tm + "min";
+    document.getElementById("outDec").textContent = totDec.toFixed(2) + " h";
+    document.getElementById("outOt").textContent = ot.toFixed(2) + " h";
+  }
+
+  function saveAndCalc() {
+    persistState();
+    calcWeek();
+  }
+
+  function resetSheet() {
+    rows = makeDefaultRows();
+    document.getElementById("weekTarget").value = "35";
+    try { localStorage.removeItem(SHEET_KEY); } catch (e) {}
+    renderTable();
+  }
+
+  function applyLang() {
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(function(el) {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+    renderTable();
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  loadSaved();
+  applyLang();
+</script>
+
+</body>
+</html>
