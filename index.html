@@ -109,17 +109,20 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Hero */
-  .hero { padding: 26px 0 14px; }
+  .hero {
+    text-align: center;
+    padding: 34px 0 20px;
+  }
   .hero h1 {
     margin: 0 0 8px;
-    font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+    font-size: clamp(1.55rem, 3.4vw, 2.2rem);
     letter-spacing: -0.02em;
   }
   .hero p {
-    margin: 0;
+    margin: 0 auto;
     color: var(--muted);
     font-size: 0.96rem;
-    max-width: 760px;
+    max-width: 680px;
   }
 
   /* Tools Grid */
@@ -127,23 +130,28 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 16px;
-    margin: 16px 0 18px;
+    margin: 14px 0 32px;
   }
   .tool-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 18px;
+    padding: 20px;
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 12px;
+    gap: 14px;
+    transition: transform 0.15s ease, border-color 0.15s ease;
     min-width: 0;
+  }
+  .tool-card:hover {
+    transform: translateY(-2px);
+    border-color: #93c5fd;
   }
   .tool-card h2 {
     margin: 0 0 6px;
-    font-size: 1.06rem;
+    font-size: 1.08rem;
     color: var(--ink);
   }
   .tool-card p {
@@ -154,55 +162,15 @@
   .tool-link {
     display: inline-block;
     align-self: flex-start;
-    background: var(--soft);
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.86rem;
-    padding: 7px 12px;
-    border-radius: 8px;
-  }
-  .tool-link:hover {
     background: var(--primary);
     color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 8px 14px;
+    border-radius: 8px;
   }
-
-  /* Cards */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-    margin-bottom: 18px;
-    width: 100%;
-    min-width: 0;
-  }
-  .card h2 {
-    margin: 0 0 10px;
-    font-size: 1.1rem;
-  }
-  .card p {
-    margin: 0 0 10px;
-    color: var(--muted);
-    font-size: 0.92rem;
-  }
-
-  /* Ad Space */
-  .ad-slot {
-    width: 100%;
-    max-width: 728px;
-    min-height: 90px;
-    margin: 18px auto;
-    padding: 10px;
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
+  .tool-link:hover { background: var(--primary-hover); }
 
   /* Footer */
   .site-footer {
@@ -213,7 +181,7 @@
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
-    margin-top: 22px;
+    margin-top: 24px;
   }
   .footer-links {
     margin-top: 10px;
@@ -253,70 +221,58 @@
 <main class="container">
   <section class="hero">
     <h1 data-t="heroTitle">Outils Pratiques de Temps, Paie et Charpente</h1>
-    <p data-t="heroSub">Calculez vos journées de travail, tenez votre feuille hebdomadaire, convertissez les heures en centièmes (1/100e) et estimez vos coupes de croupe directement dans votre navigateur.</p>
+    <p data-t="heroSub">Des calculateurs simples, rapides et gratuits directement dans votre navigateur, sans inscription.</p>
   </section>
 
   <section class="tools-grid">
     <article class="tool-card">
       <div>
         <h2 data-t="t1Title">Temps de Travail Journalier</h2>
-        <p data-t="t1Desc">Additionnez plusieurs plages horaires dans la journée ou soustrayez deux durées en HH:MM et centièmes (1/100e).</p>
+        <p data-t="t1Desc">Additionnez vos plages horaires de la journée ou soustrayez deux durées en HH:MM et 1/100e.</p>
       </div>
-      <a href="working-time-calculator.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+      <a href="working-time-calculator.html" class="tool-link" data-t="openTool">Ouvrir →</a>
     </article>
 
     <article class="tool-card">
       <div>
-        <h2 data-t="t2Title">Feuille de Pointage Hebdomadaire</h2>
-        <p data-t="t2Desc">Saisissez vos heures du lundi au dimanche avec sauvegarde locale, navigation par semaine et version imprimable.</p>
+        <h2 data-t="t2Title">Feuille Hebdomadaire</h2>
+        <p data-t="t2Desc">Pointage du lundi au dimanche avec sauvegarde locale, navigation par semaine et impression.</p>
       </div>
-      <a href="feuille-hebdo.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+      <a href="feuille-hebdo.html" class="tool-link" data-t="openTool">Ouvrir →</a>
     </article>
 
     <article class="tool-card">
       <div>
         <h2 data-t="t3Title">Heures &amp; Salaire</h2>
-        <p data-t="t3Desc">Estimez votre rémunération à partir de vos heures normales, de vos heures supplémentaires majorées et du taux horaire.</p>
+        <p data-t="t3Desc">Estimez votre rémunération à partir de vos heures normales, heures sup et taux horaire.</p>
       </div>
-      <a href="working-hour-calculator.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+      <a href="working-hour-calculator.html" class="tool-link" data-t="openTool">Ouvrir →</a>
     </article>
 
     <article class="tool-card">
       <div>
         <h2 data-t="t4Title">Calculateur de Durées</h2>
-        <p data-t="t4Desc">Additionnez ou soustrayez des durées en heures et minutes avec affichage simultané en centièmes d'heure.</p>
+        <p data-t="t4Desc">Additionnez ou soustrayez des durées en heures et minutes avec résultat en centièmes.</p>
       </div>
-      <a href="time-calculator.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+      <a href="time-calculator.html" class="tool-link" data-t="openTool">Ouvrir →</a>
     </article>
 
     <article class="tool-card">
       <div>
         <h2 data-t="t5Title">Convertisseur 1/100e</h2>
-        <p data-t="t5Desc">Convertissez rapidement des heures et minutes en centièmes d'heure décimaux et inversement.</p>
+        <p data-t="t5Desc">Convertissez vos heures et minutes en centièmes d'heure décimaux et inversement.</p>
       </div>
-      <a href="convertisseur.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+      <a href="convertisseur.html" class="tool-link" data-t="openTool">Ouvrir →</a>
     </article>
 
     <article class="tool-card">
       <div>
-        <h2 data-t="t6Title">Charpente : Toiture en Croupe</h2>
-        <p data-t="t6Desc">Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe, la pente et la surface des herses.</p>
+        <h2 data-t="t6Title">Toiture en Croupe</h2>
+        <p data-t="t6Desc">Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe et la surface des pans.</p>
       </div>
-      <a href="toiture-croupe.html" class="tool-link" data-t="openTool">Ouvrir l'outil →</a>
+      <a href="toiture-croupe.html" class="tool-link" data-t="openTool">Ouvrir →</a>
     </article>
   </section>
-
-  <!-- Ad Space 1 -->
-  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
-
-  <section class="card">
-    <h2 data-t="aboutSiteTitle">À propos de Calculette-tools</h2>
-    <p data-t="aboutSiteP1">Calculette-tools rassemble des utilitaires simples et rapides pour le suivi du temps de travail, la conversion en centièmes d'heure (1/100e) et les calculs géométriques de charpente.</p>
-    <p style="margin-bottom:0;" data-t="aboutSiteP2">Tous les calculs s'exécutent localement dans votre navigateur (avec sauvegarde locale sur la feuille hebdomadaire) sans inscription obligatoire.</p>
-  </section>
-
-  <!-- Ad Space 2 -->
-  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
@@ -351,23 +307,20 @@
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
       heroTitle: "Outils Pratiques de Temps, Paie et Charpente",
-      heroSub: "Calculez vos journées de travail, tenez votre feuille hebdomadaire, convertissez les heures en centièmes (1/100e) et estimez vos coupes de croupe directement dans votre navigateur.",
+      heroSub: "Des calculateurs simples, rapides et gratuits directement dans votre navigateur, sans inscription.",
       t1Title: "Temps de Travail Journalier",
-      t1Desc: "Additionnez plusieurs plages horaires dans la journée ou soustrayez deux durées en HH:MM et centièmes (1/100e).",
-      t2Title: "Feuille de Pointage Hebdomadaire",
-      t2Desc: "Saisissez vos heures du lundi au dimanche avec sauvegarde locale, navigation par semaine et version imprimable.",
+      t1Desc: "Additionnez vos plages horaires de la journée ou soustrayez deux durées en HH:MM et 1/100e.",
+      t2Title: "Feuille Hebdomadaire",
+      t2Desc: "Pointage du lundi au dimanche avec sauvegarde locale, navigation par semaine et impression.",
       t3Title: "Heures & Salaire",
-      t3Desc: "Estimez votre rémunération à partir de vos heures normales, de vos heures supplémentaires majorées et du taux horaire.",
+      t3Desc: "Estimez votre rémunération à partir de vos heures normales, heures sup et taux horaire.",
       t4Title: "Calculateur de Durées",
-      t4Desc: "Additionnez ou soustrayez des durées en heures et minutes avec affichage simultané en centièmes d'heure.",
+      t4Desc: "Additionnez ou soustrayez des durées en heures et minutes avec résultat en centièmes.",
       t5Title: "Convertisseur 1/100e",
-      t5Desc: "Convertissez rapidement des heures et minutes en centièmes d'heure décimaux et inversement.",
-      t6Title: "Charpente : Toiture en Croupe",
-      t6Desc: "Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe, la pente et la surface des herses.",
-      openTool: "Ouvrir l'outil →",
-      aboutSiteTitle: "À propos de Calculette-tools",
-      aboutSiteP1: "Calculette-tools rassemble des utilitaires simples et rapides pour le suivi du temps de travail, la conversion en centièmes d'heure (1/100e) et les calculs géométriques de charpente.",
-      aboutSiteP2: "Tous les calculs s'exécutent localement dans votre navigateur (avec sauvegarde locale sur la feuille hebdomadaire) sans inscription obligatoire."
+      t5Desc: "Convertissez vos heures et minutes en centièmes d'heure décimaux et inversement.",
+      t6Title: "Toiture en Croupe",
+      t6Desc: "Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe et la surface des pans.",
+      openTool: "Ouvrir →"
     },
     en: {
       btn: "FR",
@@ -375,23 +328,20 @@
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       heroTitle: "Practical Time, Payroll & Framing Calculators",
-      heroSub: "Calculate daily work shifts, keep a weekly timesheet, convert hours into hundredths (1/100e), and estimate hip roof cuts right in your browser.",
+      heroSub: "Simple, fast, and free calculators directly in your browser, with no sign-up required.",
       t1Title: "Daily Working Time",
-      t1Desc: "Add multiple daily time slots or subtract two durations in HH:MM and decimal hundredths (1/100e).",
+      t1Desc: "Add daily work shifts or subtract two durations in HH:MM and decimal hundredths (1/100e).",
       t2Title: "Weekly Timesheet",
-      t2Desc: "Enter hours from Monday to Sunday with local browser save, week switching, and a printable layout.",
+      t2Desc: "Monday-to-Sunday timesheet with local save, week switching, and printable view.",
       t3Title: "Working Hours & Pay",
       t3Desc: "Estimate earnings from regular hours, overtime bonus percentage, and hourly pay rate.",
       t4Title: "Time Duration Calculator",
-      t4Desc: "Add or subtract hours and minutes with simultaneous output in decimal hundredths of an hour.",
+      t4Desc: "Add or subtract hours and minutes with simultaneous decimal hundredths output.",
       t5Title: "1/100e Converter",
-      t5Desc: "Convert between hours and minutes and decimal hundredths of an hour quickly in either direction.",
-      t6Title: "Framing: Hip Roof",
-      t6Desc: "Calculate common and hip rafter lengths, cut angles, roof pitch, and total slope surface area.",
-      openTool: "Open tool →",
-      aboutSiteTitle: "About Calculette-tools",
-      aboutSiteP1: "Calculette-tools brings together straightforward tools for tracking work hours, converting to decimal hundredths (1/100e), and working out roof framing geometry.",
-      aboutSiteP2: "All calculations run locally in your browser (with local storage on the weekly timesheet) with no sign-up required."
+      t5Desc: "Convert hours and minutes into decimal hundredths of an hour and back.",
+      t6Title: "Hip Roof Framing",
+      t6Desc: "Calculate common and hip rafter lengths, cut angles, roof pitch, and slope surface area.",
+      openTool: "Open →"
     }
   };
 
