@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculateur Toiture à Croupe | Calculette-tools</title>
-<meta name="description" content="Calculez les longueurs d'arêtiers, coupes d'aplomb, coupes de niveau, délardements, engeulements et pentes d'une toiture à croupe.">
+<title>Calculateur de Charpente : Croupe Droite ou Biaise | Calculette-tools</title>
+<meta name="description" content="Calculez les longueurs d'arêtiers, angles de coupes aplomb et niveau, délardement, coupe des pannes à la scie circulaire et surface de couverture d'une croupe.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -109,7 +109,7 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Page Head */
-  .page-head { padding: 24px 0 12px; }
+  .page-head { padding: 22px 0 12px; }
   .page-head h1 {
     margin: 0 0 6px;
     font-size: clamp(1.4rem, 3vw, 1.95rem);
@@ -117,60 +117,66 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
-  /* Diagram Card */
-  .diagram-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    box-shadow: var(--shadow);
-    margin-bottom: 18px;
-    text-align: center;
-  }
-  .diagram-card svg {
-    width: 100%;
-    max-width: 560px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-  .diagram-caption {
-    margin-top: 8px;
-    font-size: 0.82rem;
-    color: var(--muted);
-    font-weight: 600;
-  }
-
-  /* Grid & Cards */
-  .main-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    gap: 18px;
-    margin-bottom: 24px;
-  }
+  /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 20px;
     box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    width: 100%;
     min-width: 0;
   }
   .card h2 {
-    margin: 0 0 14px;
+    margin: 0 0 12px;
     font-size: 1.08rem;
   }
-  .field-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin-bottom: 14px;
+  .card h3 {
+    margin: 14px 0 6px;
+    font-size: 0.98rem;
   }
-  .field-grid > div { min-width: 0; }
-  label {
+  .card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list {
+    margin: 6px 0 12px;
+    padding-left: 20px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list li {
+    margin-bottom: 6px;
+  }
+
+  /* Dedicated Ad Space */
+  .ad-slot {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    margin: 18px auto;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Form Grid */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+    gap: 14px;
+  }
+  .field label {
     display: block;
-    font-size: 0.78rem;
-    font-weight: 600;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: var(--muted);
     margin-bottom: 4px;
   }
@@ -189,19 +195,22 @@
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
-  .btn-row {
+
+  /* Toolbar */
+  .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
+    margin: 16px 0 6px;
   }
   .btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 10px 16px;
+    padding: 9px 15px;
     border-radius: 9px;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
   .btn:hover { background: var(--primary-hover); }
@@ -209,7 +218,7 @@
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 10px 16px;
+    padding: 9px 15px;
     border-radius: 9px;
     font-weight: 600;
     font-size: 0.88rem;
@@ -217,28 +226,33 @@
   }
   .btn-sec:hover { background: #e2e8f0; }
 
-  /* Results Table */
-  .res-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.86rem;
+  /* Results Grid */
+  .res-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 12px;
   }
-  .res-table th, .res-table td {
-    padding: 8px 8px;
-    border-bottom: 1px solid var(--border);
-    text-align: left;
+  .res-item {
+    background: #fafcff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
   }
-  .res-table th {
-    color: var(--muted);
-    font-size: 0.76rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-  .res-table td.num {
+  .res-item .res-k {
+    font-size: 0.78rem;
     font-weight: 700;
-    color: var(--ink);
-    text-align: right;
-    white-space: nowrap;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .res-item .res-v {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--primary);
+  }
+  .res-item .res-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
   }
 
   /* Footer */
@@ -250,7 +264,7 @@
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
-    margin-top: 24px;
+    margin-top: 22px;
   }
   .footer-links {
     margin-top: 10px;
@@ -289,124 +303,99 @@
 
 <main class="container">
   <div class="page-head">
-    <h1 data-t="pageTitle">Calculateur Toiture à Croupe (Arêtiers &amp; Coupes)</h1>
-    <p data-t="pageSub">À partir des dimensions de base (CE1, CE2, E1, E2, HC), calculez les longueurs d'arêtiers, pentes et angles de coupe.</p>
+    <h1 data-t="pageTitle">Calculer les Coupes d'une Charpente (Croupe)</h1>
+    <p data-t="pageSub">Étude géométrique d'une croupe droite ou biaise : longueurs des arêtiers, angles de coupes aplomb et niveau, délardement, pannes et surface des herses.</p>
   </div>
 
-  <!-- Hip Roof Technical SVG Diagram -->
-  <div class="diagram-card">
-    <svg viewBox="0 0 620 270" role="img" aria-label="Schéma toiture à croupe CE1 CE2 E1 E2 HC">
-      <rect x="0" y="0" width="620" height="270" rx="12" fill="#f8fafc"/>
-      <line x1="70" y1="150" x2="550" y2="150" stroke="#ef4444" stroke-width="1.6" stroke-dasharray="6,5"/>
-      <line x1="310" y1="24" x2="310" y2="230" stroke="#ef4444" stroke-width="1.6" stroke-dasharray="6,5"/>
-      <line x1="120" y1="150" x2="120" y2="210" stroke="#0f172a" stroke-width="2.5"/>
-      <line x1="500" y1="150" x2="500" y2="232" stroke="#0f172a" stroke-width="2.5"/>
-      <line x1="120" y1="210" x2="500" y2="232" stroke="#0f172a" stroke-width="2.5"/>
-      <line x1="310" y1="45" x2="120" y2="210" stroke="#2563eb" stroke-width="3"/>
-      <line x1="310" y1="45" x2="500" y2="232" stroke="#2563eb" stroke-width="3"/>
-      <line x1="310" y1="45" x2="310" y2="150" stroke="#16a34a" stroke-width="2.5"/>
-      <circle cx="310" cy="45" r="4.5" fill="#2563eb"/>
-      <circle cx="120" cy="210" r="4" fill="#0f172a"/>
-      <circle cx="500" cy="232" r="4" fill="#0f172a"/>
-      <text x="195" y="138" fill="#16a34a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">CE1</text>
-      <text x="405" y="138" fill="#16a34a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">CE2</text>
-      <text x="86" y="185" fill="#0f172a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">E1</text>
-      <text x="512" y="195" fill="#0f172a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">E2</text>
-      <text x="320" y="96" fill="#16a34a" font-family="system-ui, sans-serif" font-size="14" font-weight="800">HC</text>
-      <text x="165" y="112" fill="#2563eb" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Arêtier 1</text>
-      <text x="405" y="112" fill="#2563eb" font-family="system-ui, sans-serif" font-size="13" font-weight="700">Arêtier 2</text>
-    </svg>
-    <div class="diagram-caption" data-t="diagCap">Schéma de principe : CE1/CE2 (chevrons d'emprunt), E1/E2 (lignes d'égout), HC (hauteur de couronnement).</div>
-  </div>
-
-  <div class="main-grid">
-    <!-- Inputs -->
-    <div class="card">
-      <h2 data-t="secData">Données de Base (m)</h2>
-      <div class="field-grid">
-        <div>
-          <label for="ce1">CE1 (m)</label>
-          <input type="number" id="ce1" min="0" step="any" value="1.000" oninput="calcRoof()">
-        </div>
-        <div>
-          <label for="ce2">CE2 (m)</label>
-          <input type="number" id="ce2" min="0" step="any" value="1.000" oninput="calcRoof()">
-        </div>
-        <div>
-          <label for="e1">E1 (m)</label>
-          <input type="number" id="e1" min="0" step="any" value="1.000" oninput="calcRoof()">
-        </div>
-        <div>
-          <label for="e2">E2 (m)</label>
-          <input type="number" id="e2" min="0" step="any" value="1.000" oninput="calcRoof()">
-        </div>
-        <div style="grid-column: 1 / -1;">
-          <label for="hc" data-t="lblHc">Hauteur de couronnement HC (m)</label>
-          <input type="number" id="hc" min="0" step="any" value="1.000" oninput="calcRoof()">
-        </div>
+  <div class="card">
+    <h2 data-t="secInputs">Données de base de la croupe (en mètres)</h2>
+    <div class="form-grid">
+      <div class="field">
+        <label for="inEmpPan" data-t="lblEmpPan">Chevron d'emprunt — Long pan (m)</label>
+        <input type="number" id="inEmpPan" step="0.01" min="0.1" value="3.50" oninput="calcRoof()">
       </div>
-      <div class="btn-row">
-        <button type="button" class="btn" onclick="calcRoof()" data-t="btnCalc">Calculer les coupes</button>
-        <button type="button" class="btn-sec" id="resetBtn" onclick="resetRoof()" data-t="btnReset">Reset</button>
+      <div class="field">
+        <label for="inEmpCroupe" data-t="lblEmpCroupe">Chevron d'emprunt — Croupe (m)</label>
+        <input type="number" id="inEmpCroupe" step="0.01" min="0.1" value="3.50" oninput="calcRoof()">
+      </div>
+      <div class="field">
+        <label for="inEgout" data-t="lblEgout">Longueur ligne d'égout totale (m)</label>
+        <input type="number" id="inEgout" step="0.01" min="0.1" value="10.00" oninput="calcRoof()">
+      </div>
+      <div class="field">
+        <label for="inHaut" data-t="lblHaut">Hauteur de couronnement (m)</label>
+        <input type="number" id="inHaut" step="0.01" min="0.1" value="2.20" oninput="calcRoof()">
       </div>
     </div>
 
-    <!-- Outputs -->
-    <div class="card">
-      <h2 data-t="secRes">Résultats Arêtiers &amp; Coupes</h2>
-      <table class="res-table">
-        <thead>
-          <tr>
-            <th data-t="colParam">Paramètre</th>
-            <th style="text-align:right;" data-t="colHip1">Arêtier 1</th>
-            <th style="text-align:right;" data-t="colHip2">Arêtier 2</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td data-t="rPlan">Longueur en plan</td>
-            <td class="num" id="p1">1.414 m</td>
-            <td class="num" id="p2">1.414 m</td>
-          </tr>
-          <tr>
-            <td data-t="rTrue">Vraie grandeur</td>
-            <td class="num" id="tg1">1.732 m</td>
-            <td class="num" id="tg2">1.732 m</td>
-          </tr>
-          <tr>
-            <td data-t="rPlumb">Coupe aplomb</td>
-            <td class="num" id="ca1">54.7°</td>
-            <td class="num" id="ca2">54.7°</td>
-          </tr>
-          <tr>
-            <td data-t="rLevel">Coupe de niveau</td>
-            <td class="num" id="cn1">35.3°</td>
-            <td class="num" id="cn2">35.3°</td>
-          </tr>
-          <tr>
-            <td data-t="rChamferL">Délardement côté long-pan</td>
-            <td class="num" id="dll1">30.0°</td>
-            <td class="num" id="dll2">30.0°</td>
-          </tr>
-          <tr>
-            <td data-t="rChamferC">Délardement côté croupe</td>
-            <td class="num" id="dlc1">30.0°</td>
-            <td class="num" id="dlc2">30.0°</td>
-          </tr>
-          <tr>
-            <td data-t="rJointL">Engeulement côté long-pan</td>
-            <td class="num" id="egl1">45.0°</td>
-            <td class="num" id="egl2">45.0°</td>
-          </tr>
-          <tr>
-            <td data-t="rJointC">Engeulement côté croupe</td>
-            <td class="num" id="egc1">45.0°</td>
-            <td class="num" id="egc2">45.0°</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="toolbar">
+      <button type="button" class="btn" onclick="calcRoof()" data-t="btnCalc">Calculer</button>
+      <button type="button" class="btn-sec" onclick="resetRoof()" data-t="btnReset">Reset</button>
     </div>
   </div>
+
+  <div class="card">
+    <h2 data-t="secResults">Longueurs, Angles de Coupe et Surfaces</h2>
+    <div class="res-grid">
+      <div class="res-item">
+        <div class="res-k" data-t="kChevPan">Chevron d'emprunt (Long pan)</div>
+        <div class="res-v" id="outChevPan">—</div>
+        <div class="res-sub" id="outPentePan">—</div>
+      </div>
+      <div class="res-item">
+        <div class="res-k" data-t="kChevCroupe">Chevron d'emprunt (Croupe)</div>
+        <div class="res-v" id="outChevCroupe">—</div>
+        <div class="res-sub" id="outPenteCroupe">—</div>
+      </div>
+      <div class="res-item">
+        <div class="res-k" data-t="kAretier">Longueur de l'arêtier</div>
+        <div class="res-v" id="outAretierLen">—</div>
+        <div class="res-sub" id="outAretierAngles">—</div>
+      </div>
+      <div class="res-item">
+        <div class="res-k" data-t="kDelard">Angle de délardement (arêtier)</div>
+        <div class="res-v" id="outDelard">—</div>
+        <div class="res-sub" data-t="subDelard">Délardement de la face supérieure</div>
+      </div>
+      <div class="res-item">
+        <div class="res-k" data-t="kEmpannon">Coupe d'alignement des empannons</div>
+        <div class="res-v" id="outEmpAngle">—</div>
+        <div class="res-sub" id="outChevCuts">—</div>
+      </div>
+      <div class="res-item">
+        <div class="res-k" data-t="kPanne">Coupe des pannes &amp; scie circulaire</div>
+        <div class="res-v" id="outPanneScie">—</div>
+        <div class="res-sub" id="outPanneAlign">—</div>
+      </div>
+      <div class="res-item">
+        <div class="res-k" data-t="kHerse">Surface estimée des herses</div>
+        <div class="res-v" id="outSurface">—</div>
+        <div class="res-sub" data-t="subHerse">2 longs pans + 2 croupes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
+
+  <!-- Practical Guide -->
+  <section class="card">
+    <h2 data-t="guideTitle">Guide pratique : préparer les coupes d'une croupe sans épure complète</h2>
+    <p data-t="guideIntro">Lorsqu'on taille une charpente traditionnelle comportant une croupe droite (pentes égales) ou une croupe biaise (reculement différent du long pan), quelques cotes relevées en plan suffisent à déduire les longueurs vraies et les angles de réglage à la sauterelle ou à la scie circulaire.</p>
+
+    <h3 data-t="guideSub1">1. Ce que donnent les 4 cotes de départ</h3>
+    <ul class="guide-list">
+      <li data-t="guideLi1"><strong>Chevrons d'emprunt et hauteur de couronnement :</strong> ils fixent la pente réelle du long pan et celle de la croupe, ainsi que les coupes d'aplomb (verticales) et de niveau (horizontales) des chevrons courants.</li>
+      <li data-t="guideLi2"><strong>Arêtier et délardement :</strong> l'arêtier suit la diagonale entre les deux versants ; l'angle de délardement permet de déligner ou chanfreiner sa face supérieure pour qu'elle affleure exactement les deux plans de couverture.</li>
+      <li data-t="guideLi3"><strong>Empannons et pannes :</strong> les empannons viennent s'appuyer contre l'arêtier avec une coupe biaisée d'alignement, tandis que les pannes demandent un angle d'inclinaison sur la lame de scie circulaire lors de la coupe en bout.</li>
+    </ul>
+
+    <h3 data-t="guideSub2">2. Contrôle sur chantier avant de tailler le bois</h3>
+    <p style="margin-bottom:0;" data-t="guideP2">Les résultats fournis sont des valeurs théoriques calculées à partir d'une géométrie idéale sans débord ni jeu d'assemblage. Avant d'attaquer une pièce maîtresse, contrôlez toujours l'équerrage des murs, les sections réelles des bois et faites un essai sur une chute.</p>
+  </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
@@ -419,7 +408,7 @@
       <a href="time-calculator.html" data-t="navTc">Durées</a>
       <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
       <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
-      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+      <a href="toiture-croupe.html" class="active" data-t="navTo">Toiture</a>
     </div>
     <div class="footer-links">
       <a href="about.html" data-t="navAbout">À propos</a>
@@ -440,50 +429,66 @@
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      pageTitle: "Calculateur Toiture à Croupe (Arêtiers & Coupes)",
-      pageSub: "À partir des dimensions de base (CE1, CE2, E1, E2, HC), calculez les longueurs d'arêtiers, pentes et angles de coupe.",
-      diagCap: "Schéma de principe : CE1/CE2 (chevrons d'emprunt), E1/E2 (lignes d'égout), HC (hauteur de couronnement).",
-      secData: "Données de Base (m)",
-      secRes: "Résultats Arêtiers & Coupes",
-      lblHc: "Hauteur de couronnement HC (m)",
-      btnCalc: "Calculer les coupes",
+      pageTitle: "Calculer les Coupes d'une Charpente (Croupe)",
+      pageSub: "Étude géométrique d'une croupe droite ou biaise : longueurs des arêtiers, angles de coupes aplomb et niveau, délardement, pannes et surface des herses.",
+      secInputs: "Données de base de la croupe (en mètres)",
+      lblEmpPan: "Chevron d'emprunt — Long pan (m)",
+      lblEmpCroupe: "Chevron d'emprunt — Croupe (m)",
+      lblEgout: "Longueur ligne d'égout totale (m)",
+      lblHaut: "Hauteur de couronnement (m)",
+      btnCalc: "Calculer",
       btnReset: "Reset",
-      colParam: "Paramètre",
-      colHip1: "Arêtier 1",
-      colHip2: "Arêtier 2",
-      rPlan: "Longueur en plan",
-      rTrue: "Vraie grandeur",
-      rPlumb: "Coupe aplomb",
-      rLevel: "Coupe de niveau",
-      rChamferL: "Délardement côté long-pan",
-      rChamferC: "Délardement côté croupe",
-      rJointL: "Engeulement côté long-pan",
-      rJointC: "Engeulement côté croupe"
+      secResults: "Longueurs, Angles de Coupe et Surfaces",
+      kChevPan: "Chevron d'emprunt (Long pan)",
+      kChevCroupe: "Chevron d'emprunt (Croupe)",
+      kAretier: "Longueur de l'arêtier",
+      kDelard: "Angle de délardement (arêtier)",
+      subDelard: "Délardement de la face supérieure",
+      kEmpannon: "Coupe d'alignement des empannons",
+      kPanne: "Coupe des pannes & scie circulaire",
+      kHerse: "Surface estimée des herses",
+      subHerse: "2 longs pans + 2 croupes",
+      guideTitle: "Guide pratique : préparer les coupes d'une croupe sans épure complète",
+      guideIntro: "Lorsqu'on taille une charpente traditionnelle comportant une croupe droite (pentes égales) ou une croupe biaise (reculement différent du long pan), quelques cotes relevées en plan suffisent à déduire les longueurs vraies et les angles de réglage à la sauterelle ou à la scie circulaire.",
+      guideSub1: "1. Ce que donnent les 4 cotes de départ",
+      guideLi1: "Chevrons d'emprunt et hauteur de couronnement : ils fixent la pente réelle du long pan et celle de la croupe, ainsi que les coupes d'aplomb (verticales) et de niveau (horizontales) des chevrons courants.",
+      guideLi2: "Arêtier et délardement : l'arêtier suit la diagonale entre les deux versants ; l'angle de délardement permet de déligner ou chanfreiner sa face supérieure pour qu'elle affleure exactement les deux plans de couverture.",
+      guideLi3: "Empannons et pannes : les empannons viennent s'appuyer contre l'arêtier avec une coupe biaisée d'alignement, tandis que les pannes demandent un angle d'inclinaison sur la lame de scie circulaire lors de la coupe en bout.",
+      guideSub2: "2. Contrôle sur chantier avant de tailler le bois",
+      guideP2: "Les résultats fournis sont des valeurs théoriques calculées à partir d'une géométrie idéale sans débord ni jeu d'assemblage. Avant d'attaquer une pièce maîtresse, contrôlez toujours l'équerrage des murs, les sections réelles des bois et faites un essai sur une chute."
     },
     en: {
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      pageTitle: "Hip Roof Framing Calculator (Hips & Cuts)",
-      pageSub: "From base dimensions (CE1, CE2, E1, E2, HC), calculate hip rafter lengths, slopes, and cutting angles.",
-      diagCap: "Reference diagram: CE1/CE2 (borrowed rafters), E1/E2 (eaves lines), HC (crowning height).",
-      secData: "Base Dimensions (m)",
-      secRes: "Hip Rafters & Cuts Results",
-      lblHc: "Crowning height HC (m)",
-      btnCalc: "Calculate cuts",
+      pageTitle: "Hip Roof Framing Cuts Calculator",
+      pageSub: "Geometric layout for equal or unequal hip roofs: hip rafter lengths, plumb and seat cuts, backing bevels, purlin saw angles, and roof slope areas.",
+      secInputs: "Base Hip Roof Dimensions (in meters)",
+      lblEmpPan: "Common rafter run — Main slope (m)",
+      lblEmpCroupe: "Common rafter run — Hip end (m)",
+      lblEgout: "Total eaves length (m)",
+      lblHaut: "Ridge / crown height (m)",
+      btnCalc: "Calculate",
       btnReset: "Reset",
-      colParam: "Parameter",
-      colHip1: "Hip 1",
-      colHip2: "Hip 2",
-      rPlan: "Plan length",
-      rTrue: "True length",
-      rPlumb: "Plumb cut",
-      rLevel: "Level cut",
-      rChamferL: "Chamfer (main roof side)",
-      rChamferC: "Chamfer (hip end side)",
-      rJointL: "Cheek cut (main roof side)",
-      rJointC: "Cheek cut (hip end side)"
+      secResults: "Lengths, Cut Angles & Roof Areas",
+      kChevPan: "Common Rafter Length (Main)",
+      kChevCroupe: "Common Rafter Length (Hip)",
+      kAretier: "Hip Rafter Length",
+      kDelard: "Hip Backing Bevel Angle",
+      subDelard: "Top edge bevel to match both slopes",
+      kEmpannon: "Jack Rafter Side / Cheek Cut",
+      kPanne: "Purlin Bevel & Circular Saw Tilt",
+      kHerse: "Estimated Roof Slope Area",
+      subHerse: "2 main slopes + 2 hip ends",
+      guideTitle: "Practical Guide: Laying Out Hip Roof Cuts Without Full Lofting",
+      guideIntro: "When framing a traditional roof with an equal-pitch or unequal-pitch hip, four base plan measurements let you work out true timber lengths and bevel angles for a sliding bevel or circular saw.",
+      guideSub1: "1. What the 4 Base Measurements Determine",
+      guideLi1: "Common runs and crown height: define the true pitch of the main slope and hip end, giving the vertical plumb cut and horizontal seat cut for common rafters.",
+      guideLi2: "Hip rafter and backing angle: the hip runs diagonally between two roof planes; the backing angle lets you bevel its top arris so sheathing sits flush on both sides.",
+      guideLi3: "Jack rafters and purlins: jack rafters meet the hip at a compound cheek angle, while purlins require a blade tilt angle on the circular saw for end cuts.",
+      guideSub2: "2. On-Site Verification Before Cutting Timber",
+      guideP2: "Calculated outputs represent ideal geometric values without overhangs or joinery tolerances. Always check wall squareness, actual timber dimensions, and test angles on a scrap offcut before cutting primary members."
     }
   };
 
@@ -491,65 +496,88 @@
     return (rad * 180) / Math.PI;
   }
 
-  function calcHip(ce, e, hc) {
-    const plan = Math.sqrt(ce * ce + e * e);
-    const trueLen = Math.sqrt(plan * plan + hc * hc);
-    if (plan === 0 || trueLen === 0 || hc === 0) {
-      return { plan: 0, trueLen: 0, plumb: 0, level: 0, chamferL: 0, chamferC: 0, jointL: 0, jointC: 0 };
-    }
-    const plumb = toDeg(Math.atan2(plan, hc));
-    const level = toDeg(Math.atan2(hc, plan));
-    const chamferL = toDeg(Math.atan((hc * ce) / (e * trueLen)));
-    const chamferC = toDeg(Math.atan((hc * e) / (ce * trueLen)));
-    const jointL = toDeg(Math.atan((e * trueLen) / (ce * plan)));
-    const jointC = toDeg(Math.atan((ce * trueLen) / (e * plan)));
-    return { plan, trueLen, plumb, level, chamferL, chamferC, jointL, jointC };
-  }
-
-  function getVal(id) {
-    const raw = document.getElementById(id).value;
-    const num = parseFloat(raw);
-    return Number.isFinite(num) && num > 0 ? num : 0;
-  }
-
   function calcRoof() {
-    const ce1 = getVal("ce1");
-    const ce2 = getVal("ce2");
-    const e1 = getVal("e1");
-    const e2 = getVal("e2");
-    const hc = getVal("hc");
+    const rPan = Math.max(0.05, parseFloat(document.getElementById("inEmpPan").value) || 0.05);
+    const rCroupe = Math.max(0.05, parseFloat(document.getElementById("inEmpCroupe").value) || 0.05);
+    const lEgout = Math.max(0.1, parseFloat(document.getElementById("inEgout").value) || 0.1);
+    const h = Math.max(0.05, parseFloat(document.getElementById("inHaut").value) || 0.05);
 
-    const h1 = calcHip(ce1, e1, hc);
-    const h2 = calcHip(ce2, e2, hc);
+    // True common rafter lengths
+    const chevPan = Math.hypot(rPan, h);
+    const chevCroupe = Math.hypot(rCroupe, h);
 
-    document.getElementById("p1").textContent = h1.plan.toFixed(3) + " m";
-    document.getElementById("p2").textContent = h2.plan.toFixed(3) + " m";
-    document.getElementById("tg1").textContent = h1.trueLen.toFixed(3) + " m";
-    document.getElementById("tg2").textContent = h2.trueLen.toFixed(3) + " m";
-    document.getElementById("ca1").textContent = h1.plumb.toFixed(1) + "°";
-    document.getElementById("ca2").textContent = h2.plumb.toFixed(1) + "°";
-    document.getElementById("cn1").textContent = h1.level.toFixed(1) + "°";
-    document.getElementById("cn2").textContent = h2.level.toFixed(1) + "°";
-    document.getElementById("dll1").textContent = h1.chamferL.toFixed(1) + "°";
-    document.getElementById("dll2").textContent = h2.chamferL.toFixed(1) + "°";
-    document.getElementById("dlc1").textContent = h1.chamferC.toFixed(1) + "°";
-    document.getElementById("dlc2").textContent = h2.chamferC.toFixed(1) + "°";
-    document.getElementById("egl1").textContent = h1.jointL.toFixed(1) + "°";
-    document.getElementById("egl2").textContent = h2.jointL.toFixed(1) + "°";
-    document.getElementById("egc1").textContent = h1.jointC.toFixed(1) + "°";
-    document.getElementById("egc2").textContent = h2.jointC.toFixed(1) + "°";
+    // Slopes (pitch angles from horizontal)
+    const alphaPan = Math.atan2(h, rPan);
+    const alphaCroupe = Math.atan2(h, rCroupe);
+    const pctPan = (h / rPan) * 100;
+    const pctCroupe = (h / rCroupe) * 100;
+
+    // Hip run in plan & true hip rafter length
+    const hipPlan = Math.hypot(rPan, rCroupe);
+    const hipLen = Math.hypot(hipPlan, h);
+    const hipPitch = Math.atan2(h, hipPlan); // seat/level cut angle
+    const hipPlumb = 90 - toDeg(hipPitch);
+
+    // Hip backing angle (délardement)
+    const sinBacking = Math.sin(hipPitch) * Math.sin(Math.atan2(rPan, rCroupe));
+    const backingDeg = toDeg(Math.asin(Math.min(1, sinBacking)));
+
+    // Jack rafter cheek / alignment cut against hip
+    const empCheekDeg = toDeg(Math.atan2(rCroupe, chevPan));
+
+    // Purlin alignment & circular saw tilt angle
+    const sawTiltDeg = toDeg(alphaPan);
+    const panneAlignDeg = toDeg(Math.atan2(rCroupe, rPan));
+
+    // Roof surfaces (2 trapezoidal main slopes + 2 triangular hip ends)
+    const ridgeLen = Math.max(0, lEgout - 2 * rCroupe);
+    const areaMain = 2 * (((lEgout + ridgeLen) / 2) * chevPan);
+    const widthEnd = 2 * rPan;
+    const areaHips = 2 * ((widthEnd * chevCroupe) / 2);
+    const totalArea = areaMain + areaHips;
+
+    const isFr = lang === "fr";
+    document.getElementById("outChevPan").textContent = `${chevPan.toFixed(3)} m`;
+    document.getElementById("outPentePan").textContent = isFr
+      ? `Pente : ${toDeg(alphaPan).toFixed(1)}° (${pctPan.toFixed(1)}%)`
+      : `Pitch: ${toDeg(alphaPan).toFixed(1)}° (${pctPan.toFixed(1)}%)`;
+
+    document.getElementById("outChevCroupe").textContent = `${chevCroupe.toFixed(3)} m`;
+    document.getElementById("outPenteCroupe").textContent = isFr
+      ? `Pente : ${toDeg(alphaCroupe).toFixed(1)}° (${pctCroupe.toFixed(1)}%)`
+      : `Pitch: ${toDeg(alphaCroupe).toFixed(1)}° (${pctCroupe.toFixed(1)}%)`;
+
+    document.getElementById("outAretierLen").textContent = `${hipLen.toFixed(3)} m`;
+    document.getElementById("outAretierAngles").textContent = isFr
+      ? `Aplomb : ${hipPlumb.toFixed(1)}° | Niveau : ${toDeg(hipPitch).toFixed(1)}°`
+      : `Plumb: ${hipPlumb.toFixed(1)}° | Seat: ${toDeg(hipPitch).toFixed(1)}°`;
+
+    document.getElementById("outDelard").textContent = `${backingDeg.toFixed(1)}°`;
+
+    document.getElementById("outEmpAngle").textContent = `${empCheekDeg.toFixed(1)}°`;
+    document.getElementById("outChevCuts").textContent = isFr
+      ? `Chevron aplomb : ${(90 - toDeg(alphaPan)).toFixed(1)}° | Niveau : ${toDeg(alphaPan).toFixed(1)}°`
+      : `Rafter plumb: ${(90 - toDeg(alphaPan)).toFixed(1)}° | Seat: ${toDeg(alphaPan).toFixed(1)}°`;
+
+    document.getElementById("outPanneScie").textContent = isFr
+      ? `Scie : ${sawTiltDeg.toFixed(1)}°`
+      : `Saw tilt: ${sawTiltDeg.toFixed(1)}°`;
+    document.getElementById("outPanneAlign").textContent = isFr
+      ? `Alignement plan : ${panneAlignDeg.toFixed(1)}°`
+      : `Plan alignment: ${panneAlignDeg.toFixed(1)}°`;
+
+    document.getElementById("outSurface").textContent = `${totalArea.toFixed(2)} m²`;
   }
 
   function resetRoof() {
-    document.getElementById("ce1").value = "1.000";
-    document.getElementById("ce2").value = "1.000";
-    document.getElementById("e1").value = "1.000";
-    document.getElementById("e2").value = "1.000";
-    document.getElementById("hc").value = "1.000";
+    document.getElementById("inEmpPan").value = "3.50";
+    document.getElementById("inEmpCroupe").value = "3.50";
+    document.getElementById("inEgout").value = "10.00";
+    document.getElementById("inHaut").value = "2.20";
     calcRoof();
   }
 
-  function applyLangUI() {
+  function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
     document.getElementById("langBtn").textContent = d.btn;
@@ -557,20 +585,20 @@
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
+    calcRoof();
   }
 
   function toggleLang() {
     lang = lang === "fr" ? "en" : "fr";
     try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
-    applyLangUI();
+    applyLang();
   }
 
   try {
     if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
   } catch (e) {}
 
-  applyLangUI();
-  calcRoof();
+  applyLang();
 </script>
 
 </body>
