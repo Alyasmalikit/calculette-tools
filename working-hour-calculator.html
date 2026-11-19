@@ -117,6 +117,30 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
+  /* Diagram Card */
+  .diagram-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .diagram-card svg {
+    width: 100%;
+    max-width: 620px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+  .diagram-caption {
+    margin-top: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
   /* Grid & Cards */
   .main-grid {
     display: grid;
@@ -293,6 +317,21 @@
     <p data-t="pageSub">Calculez le volume d'heures sur une période, la répartition heures normales / supplémentaires et l'estimation de rémunération.</p>
   </div>
 
+  <!-- Regular vs Overtime SVG Diagram -->
+  <div class="diagram-card">
+    <svg viewBox="0 0 640 110" role="img" aria-label="Schéma heures normales et heures supplémentaires">
+      <rect x="0" y="0" width="640" height="110" rx="10" fill="#f8fafc"/>
+      <rect x="45" y="34" width="380" height="30" rx="6" fill="#2563eb"/>
+      <rect x="430" y="34" width="165" height="30" rx="6" fill="#16a34a"/>
+      <text x="235" y="53" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Heures Normales (Seuil / Base)</text>
+      <text x="512" y="53" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Heures Sup (Majorées)</text>
+      <text x="45" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600">0 h</text>
+      <text x="425" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Seuil</text>
+      <text x="595" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="end">Total</text>
+    </svg>
+    <div class="diagram-caption" data-t="diagCap">Répartition automatique entre heures normales et heures supplémentaires selon votre seuil.</div>
+  </div>
+
   <div class="main-grid">
     <div class="card">
       <h2 data-t="secInputs">Paramètres de Travail</h2>
@@ -307,19 +346,19 @@
       <div class="field-grid">
         <div>
           <label for="days" data-t="lblDays">Nombre de jours</label>
-          <input type="number" id="days" min="0" step="0.5" value="5" oninput="calc()">
+          <input type="number" id="days" min="0" step="any" value="5" oninput="calc()">
         </div>
         <div>
           <label for="hrsDay" data-t="lblHrsDay">Heures / jour (décimal)</label>
-          <input type="number" id="hrsDay" min="0" step="0.25" value="8" oninput="calc()">
+          <input type="number" id="hrsDay" min="0" step="any" value="8" oninput="calc()">
         </div>
         <div>
           <label for="baseHrs" data-t="lblBase">Seuil heures normales</label>
-          <input type="number" id="baseHrs" min="0" step="0.5" value="35" oninput="calc()">
+          <input type="number" id="baseHrs" min="0" step="any" value="35" oninput="calc()">
         </div>
         <div>
           <label for="rate" data-t="lblRate">Taux horaire (€ / $)</label>
-          <input type="number" id="rate" min="0" step="0.5" value="15" oninput="calc()">
+          <input type="number" id="rate" min="0" step="any" value="15" oninput="calc()">
         </div>
         <div>
           <label for="otMult" data-t="lblMult">Majoration heures sup</label>
@@ -332,7 +371,7 @@
         </div>
         <div>
           <label for="extraMins" data-t="lblExtraM">Minutes additionnelles</label>
-          <input type="number" id="extraMins" min="0" step="1" value="0" oninput="calc()">
+          <input type="number" id="extraMins" min="0" step="any" value="0" oninput="calc()">
         </div>
       </div>
 
@@ -386,18 +425,28 @@
       <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
       <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
     </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="disclaimer.html" data-t="navDisclaimer">Mentions &amp; Clause</a>
+    </div>
   </div>
 </footer>
 
 <script>
+  const LANG_KEY = "calculette_lang_v1";
   let lang = "fr";
+
   const dict = {
     fr: {
       btn: "EN",
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Mentions & Clause",
       pageTitle: "Calculateur d'Heures Travaillées, Heures Sup & Paie",
       pageSub: "Calculez le volume d'heures sur une période, la répartition heures normales / supplémentaires et l'estimation de rémunération.",
+      diagCap: "Répartition automatique entre heures normales et heures supplémentaires selon votre seuil.",
       secInputs: "Paramètres de Travail",
       secRes: "Résumé & Détail",
       lblDays: "Nombre de jours",
@@ -419,8 +468,10 @@
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       pageTitle: "Working Hours, Overtime & Pay Calculator",
       pageSub: "Calculate total working hours, regular vs. overtime hours, and estimated gross pay.",
+      diagCap: "Automatic split between regular hours and overtime hours based on your threshold.",
       secInputs: "Work Parameters",
       secRes: "Summary & Breakdown",
       lblDays: "Number of days",
@@ -441,30 +492,30 @@
   };
 
   function applyPreset(d, h, b, m) {
-    document.getElementById("days").value = d;
-    document.getElementById("hrsDay").value = h;
-    document.getElementById("baseHrs").value = b;
+    document.getElementById("days").value = String(d);
+    document.getElementById("hrsDay").value = String(h);
+    document.getElementById("baseHrs").value = String(b);
     document.getElementById("otMult").value = String(m);
     calc();
   }
 
   function resetForm() {
-    document.getElementById("days").value = 5;
-    document.getElementById("hrsDay").value = 8;
-    document.getElementById("baseHrs").value = 35;
-    document.getElementById("rate").value = 15;
+    document.getElementById("days").value = "5";
+    document.getElementById("hrsDay").value = "8";
+    document.getElementById("baseHrs").value = "35";
+    document.getElementById("rate").value = "15";
     document.getElementById("otMult").value = "1.25";
-    document.getElementById("extraMins").value = 0;
+    document.getElementById("extraMins").value = "0";
     calc();
   }
 
   function calc() {
-    const days = Math.max(0, Number(document.getElementById("days").value) || 0);
-    const hrsDay = Math.max(0, Number(document.getElementById("hrsDay").value) || 0);
-    const base = Math.max(0, Number(document.getElementById("baseHrs").value) || 0);
-    const rate = Math.max(0, Number(document.getElementById("rate").value) || 0);
-    const mult = Number(document.getElementById("otMult").value) || 1;
-    const extraM = Math.max(0, Number(document.getElementById("extraMins").value) || 0);
+    const days = Math.max(0, parseFloat(document.getElementById("days").value) || 0);
+    const hrsDay = Math.max(0, parseFloat(document.getElementById("hrsDay").value) || 0);
+    const base = Math.max(0, parseFloat(document.getElementById("baseHrs").value) || 0);
+    const rate = Math.max(0, parseFloat(document.getElementById("rate").value) || 0);
+    const mult = parseFloat(document.getElementById("otMult").value) || 1;
+    const extraM = Math.max(0, parseFloat(document.getElementById("extraMins").value) || 0);
 
     const totalHrs = (days * hrsDay) + (extraM / 60);
     const regHrs = Math.min(totalHrs, base);
@@ -485,8 +536,7 @@
     document.getElementById("outPayTot").textContent = payTot.toFixed(2);
   }
 
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
+  function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
     document.getElementById("langBtn").textContent = d.btn;
@@ -496,6 +546,17 @@
     });
   }
 
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  applyLang();
   calc();
 </script>
 
