@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculateur de Temps &amp; Durées | Calculette-tools</title>
-<meta name="description" content="Additionnez ou soustrayez des durées en heures et minutes, additionnez plusieurs durées et convertissez en centièmes d'heure.">
+<title>Calculateur de Durées (Heures &amp; Minutes) | Calculette-tools</title>
+<meta name="description" content="Additionnez ou soustrayez facilement des durées en heures et minutes, avec conversion automatique en centièmes d'heure (1/100e).">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -109,7 +109,7 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Page Head */
-  .page-head { padding: 24px 0 12px; }
+  .page-head { padding: 22px 0 14px; }
   .page-head h1 {
     margin: 0 0 6px;
     font-size: clamp(1.4rem, 3vw, 1.95rem);
@@ -117,55 +117,49 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
-  /* Diagram Card */
-  .diagram-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    box-shadow: var(--shadow);
-    margin-bottom: 18px;
-    text-align: center;
-  }
-  .diagram-card svg {
-    width: 100%;
-    max-width: 620px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-  .diagram-caption {
-    margin-top: 6px;
-    font-size: 0.8rem;
-    color: var(--muted);
-    font-weight: 600;
-  }
-
-  /* Grid & Cards */
-  .main-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-    gap: 18px;
-    margin-bottom: 24px;
-  }
+  /* Cards */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 20px;
     box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    width: 100%;
     min-width: 0;
   }
   .card h2 {
     margin: 0 0 14px;
     font-size: 1.08rem;
   }
-  label {
+  .card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  .dur-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 14px;
+    align-items: end;
+  }
+  .field label {
     display: block;
     font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .hm-pair {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hm-pair span {
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--muted);
-    margin-bottom: 4px;
   }
   input[type="number"], select {
     width: 100%;
@@ -173,7 +167,7 @@
     padding: 8px 10px;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
-    font-size: 0.9rem;
+    font-size: 0.92rem;
     background: #fff;
     color: var(--ink);
   }
@@ -182,24 +176,18 @@
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
-  .dur-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.1fr);
-    gap: 10px;
-    align-items: end;
-    margin-bottom: 12px;
-  }
+
   .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin: 12px 0;
+    gap: 10px;
+    margin-top: 16px;
   }
   .btn {
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 9px 14px;
+    padding: 9px 16px;
     border-radius: 9px;
     font-weight: 600;
     font-size: 0.88rem;
@@ -210,7 +198,7 @@
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 9px 14px;
+    padding: 9px 16px;
     border-radius: 9px;
     font-weight: 600;
     font-size: 0.88rem;
@@ -218,25 +206,46 @@
   }
   .btn-sec:hover { background: #e2e8f0; }
 
-  .res-box {
-    margin-top: 12px;
-    padding: 12px 14px;
+  .result-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+    padding: 14px 16px;
     background: var(--soft);
-    border: 1px solid #bfdbfe;
-    border-radius: 10px;
+    border: 1px solid #93c5fd;
+    border-radius: 12px;
   }
-  .res-main {
-    display: block;
-    font-size: 1.05rem;
+  .result-lbl {
     font-weight: 800;
+    font-size: 0.96rem;
     color: var(--ink);
   }
-  .res-sub {
-    display: block;
-    margin-top: 3px;
-    font-size: 0.84rem;
-    font-weight: 600;
-    color: var(--muted);
+  .result-vals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--primary);
+  }
+
+  /* Ad Space */
+  .ad-slot {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    margin: 18px auto;
+    padding: 10px;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
   }
 
   /* Footer */
@@ -248,7 +257,7 @@
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
-    margin-top: 24px;
+    margin-top: 22px;
   }
   .footer-links {
     margin-top: 10px;
@@ -287,85 +296,69 @@
 
 <main class="container">
   <div class="page-head">
-    <h1 data-t="pageTitle">Calculateur de Temps &amp; Durées</h1>
-    <p data-t="pageSub">Additionnez ou soustrayez deux durées, ou cumulez plusieurs durées avec conversion en centièmes d'heure.</p>
+    <h1 data-t="pageTitle">Calculateur de Durées (Heures &amp; Minutes)</h1>
+    <p data-t="pageSub">Additionnez ou soustrayez deux durées en heures et minutes et obtenez le résultat en HH:MM et en centièmes d'heure (1/100e).</p>
   </div>
 
-  <!-- Base-60 Carry SVG Diagram -->
-  <div class="diagram-card">
-    <svg viewBox="0 0 640 105" role="img" aria-label="Schéma report base 60 minutes vers heures">
-      <rect x="0" y="0" width="640" height="105" rx="10" fill="#f8fafc"/>
-      <rect x="45" y="32" width="230" height="32" rx="6" fill="#2563eb"/>
-      <path d="M295 48 L335 48" stroke="#0f172a" stroke-width="2.5" fill="none"/>
-      <polygon points="335,43 345,48 335,53" fill="#0f172a"/>
-      <rect x="360" y="32" width="235" height="32" rx="6" fill="#16a34a"/>
-      <text x="160" y="52" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">60 Minutes (Base 60)</text>
-      <text x="477" y="52" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="700" text-anchor="middle">1 Heure (1.00 h)</text>
-      <text x="320" y="84" fill="#475569" font-family="system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Report automatique des minutes &amp; calcul décimal</text>
-    </svg>
-    <div class="diagram-caption" data-t="diagCap">Addition et soustraction exactes en base 60 avec équivalent en centièmes d'heure.</div>
-  </div>
+  <div class="card">
+    <h2 data-t="secCalc">Addition ou Soustraction de Durées</h2>
 
-  <div class="main-grid">
-    <!-- Card 1: Add / Subtract A and B -->
-    <div class="card">
-      <h2 data-t="secPair">Addition / Soustraction de Deux Durées</h2>
-
-      <div class="dur-row">
-        <div>
-          <label for="aH" data-t="lblH">Heures (A)</label>
-          <input type="number" id="aH" min="0" step="any" value="4" oninput="calcPair()">
-        </div>
-        <div>
-          <label for="aM" data-t="lblM">Minutes (A)</label>
-          <input type="number" id="aM" min="0" step="any" value="35" oninput="calcPair()">
-        </div>
-        <div>
-          <label for="opSel" data-t="lblOp">Opération</label>
-          <select id="opSel" onchange="calcPair()">
-            <option value="add">+ (Addition)</option>
-            <option value="sub">− (Soustraction)</option>
-          </select>
+    <div class="dur-grid">
+      <div class="field">
+        <label data-t="lblA">Durée A</label>
+        <div class="hm-pair">
+          <input type="number" id="durAh" min="0" value="0" oninput="calcDur()">
+          <span>h</span>
+          <input type="number" id="durAm" min="0" max="59" value="0" oninput="calcDur()">
+          <span>min</span>
         </div>
       </div>
 
-      <div class="dur-row">
-        <div>
-          <label for="bH" data-t="lblBH">Heures (B)</label>
-          <input type="number" id="bH" min="0" step="any" value="1" oninput="calcPair()">
-        </div>
-        <div>
-          <label for="bM" data-t="lblBM">Minutes (B)</label>
-          <input type="number" id="bM" min="0" step="any" value="50" oninput="calcPair()">
-        </div>
-        <div>
-          <button type="button" class="btn-sec" style="width:100%;" onclick="resetPair()" data-t="btnReset">Reset</button>
-        </div>
+      <div class="field">
+        <label for="opSel" data-t="lblOp">Opération</label>
+        <select id="opSel" onchange="calcDur()">
+          <option value="add" data-t="opAdd">Addition (+)</option>
+          <option value="sub" data-t="opSub">Soustraction (−)</option>
+        </select>
       </div>
 
-      <div class="res-box">
-        <span class="res-main" id="pairMain">06h 25min</span>
-        <span class="res-sub" id="pairSub">385 min | 6.42 h</span>
+      <div class="field">
+        <label data-t="lblB">Durée B</label>
+        <div class="hm-pair">
+          <input type="number" id="durBh" min="0" value="0" oninput="calcDur()">
+          <span>h</span>
+          <input type="number" id="durBm" min="0" max="59" value="0" oninput="calcDur()">
+          <span>min</span>
+        </div>
       </div>
     </div>
 
-    <!-- Card 2: Sum Multiple Durations -->
-    <div class="card">
-      <h2 data-t="secMulti">Cumul de Plusieurs Durées</h2>
-      <div id="multiList"></div>
+    <div class="toolbar">
+      <button type="button" class="btn" onclick="calcDur()" data-t="btnCalc">Calculer</button>
+      <button type="button" class="btn-sec" onclick="resetDur()" data-t="btnReset">Reset</button>
+    </div>
 
-      <div class="toolbar">
-        <button type="button" class="btn" onclick="addDurRow()" data-t="btnAddDur">+ Ajouter une durée</button>
-        <button type="button" class="btn-sec" onclick="removeDurRow()" data-t="btnDelDur">− Retirer</button>
-        <button type="button" class="btn-sec" onclick="resetMulti()" data-t="btnReset">Reset</button>
-      </div>
-
-      <div class="res-box">
-        <span class="res-main" id="multiMain">05h 10min</span>
-        <span class="res-sub" id="multiSub">310 min | 5.17 h</span>
+    <div class="result-bar">
+      <span class="result-lbl" data-t="lblRes">RÉSULTAT</span>
+      <div class="result-vals">
+        <span id="outDurHM">00h 00min</span>
+        <span id="outDurDec">0.00 h</span>
       </div>
     </div>
   </div>
+
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
+
+  <!-- Guide -->
+  <section class="card">
+    <h2 data-t="guideTitle">Additionner et soustraire des heures sans erreur de retenue</h2>
+    <p data-t="guideP1">Comme 1 heure vaut 60 minutes et non 100, additionner ou soustraire des durées à la main entraîne souvent des erreurs de retenue. Cet outil convertit automatiquement les minutes au-delà de 60 en heures entières ou emprunte 60 minutes lors d'une soustraction.</p>
+    <p style="margin-bottom:0;" data-t="guideP2">Le résultat s'affiche à la fois au format heures-minutes (HH:MM) et en centièmes d'heure (1/100e) pour faciliter vos suivis d'heures ou vos calculs de facturation.</p>
+  </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
 </main>
 
 <footer class="site-footer">
@@ -375,7 +368,7 @@
       <a href="index.html" data-t="navHome">Accueil</a>
       <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
       <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
-      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="time-calculator.html" class="active" data-t="navTc">Durées</a>
       <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
       <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
       <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
@@ -399,45 +392,42 @@
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      pageTitle: "Calculateur de Temps & Durées",
-      pageSub: "Additionnez ou soustrayez deux durées, ou cumulez plusieurs durées avec conversion en centièmes d'heure.",
-      diagCap: "Addition et soustraction exactes en base 60 avec équivalent en centièmes d'heure.",
-      secPair: "Addition / Soustraction de Deux Durées",
-      secMulti: "Cumul de Plusieurs Durées",
-      lblH: "Heures (A)", lblM: "Minutes (A)",
-      lblBH: "Heures (B)", lblBM: "Minutes (B)",
+      pageTitle: "Calculateur de Durées (Heures & Minutes)",
+      pageSub: "Additionnez ou soustrayez deux durées en heures et minutes et obtenez le résultat en HH:MM et en centièmes d'heure (1/100e).",
+      secCalc: "Addition ou Soustraction de Durées",
+      lblA: "Durée A",
       lblOp: "Opération",
+      opAdd: "Addition (+)",
+      opSub: "Soustraction (−)",
+      lblB: "Durée B",
+      btnCalc: "Calculer",
       btnReset: "Reset",
-      btnAddDur: "+ Ajouter une durée",
-      btnDelDur: "− Retirer",
-      hShort: "Heures", mShort: "Minutes"
+      lblRes: "RÉSULTAT",
+      guideTitle: "Additionner et soustraire des heures sans erreur de retenue",
+      guideP1: "Comme 1 heure vaut 60 minutes et non 100, additionner ou soustraire des durées à la main entraîne souvent des erreurs de retenue. Cet outil convertit automatiquement les minutes au-delà de 60 en heures entières ou emprunte 60 minutes lors d'une soustraction.",
+      guideP2: "Le résultat s'affiche à la fois au format heures-minutes (HH:MM) et en centièmes d'heure (1/100e) pour faciliter vos suivis d'heures ou vos calculs de facturation."
     },
     en: {
       btn: "FR",
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      pageTitle: "Time & Duration Calculator",
-      pageSub: "Add or subtract two durations, or sum multiple durations with decimal hours conversion.",
-      diagCap: "Exact base-60 addition and subtraction with decimal hour equivalents.",
-      secPair: "Add / Subtract Two Durations",
-      secMulti: "Sum Multiple Durations",
-      lblH: "Hours (A)", lblM: "Minutes (A)",
-      lblBH: "Hours (B)", lblBM: "Minutes (B)",
+      pageTitle: "Time Duration Calculator (Hours & Minutes)",
+      pageSub: "Add or subtract two durations in hours and minutes and view results in HH:MM and hundredths of an hour (1/100e).",
+      secCalc: "Add or Subtract Durations",
+      lblA: "Duration A",
       lblOp: "Operation",
+      opAdd: "Addition (+)",
+      opSub: "Subtraction (−)",
+      lblB: "Duration B",
+      btnCalc: "Calculate",
       btnReset: "Reset",
-      btnAddDur: "+ Add duration",
-      btnDelDur: "− Remove",
-      hShort: "Hours", mShort: "Minutes"
+      lblRes: "RESULT",
+      guideTitle: "Adding and Subtracting Time Without Carry Errors",
+      guideP1: "Because an hour has 60 minutes rather than 100, manual time math often trips up on carry-overs or borrows. This calculator rolls extra minutes into hours on addition and borrows 60 minutes cleanly on subtraction.",
+      guideP2: "Results appear in both hours-minutes (HH:MM) and decimal hundredths of an hour (1/100e) for easy timesheet and billing work."
     }
   };
-
-  const defaultMulti = [
-    { h: 2, m: 30 },
-    { h: 1, m: 45 },
-    { h: 0, m: 55 }
-  ];
-  let multiRows = JSON.parse(JSON.stringify(defaultMulti));
 
   function fmtHM(mins) {
     const sign = mins < 0 ? "-" : "";
@@ -447,74 +437,28 @@
     return `${sign}${h}h ${m}min`;
   }
 
-  function calcPair() {
-    const aH = parseFloat(document.getElementById("aH").value) || 0;
-    const aM = parseFloat(document.getElementById("aM").value) || 0;
-    const bH = parseFloat(document.getElementById("bH").value) || 0;
-    const bM = parseFloat(document.getElementById("bM").value) || 0;
+  function calcDur() {
+    const ah = Math.max(0, parseFloat(document.getElementById("durAh").value) || 0);
+    const am = Math.min(59, Math.max(0, parseFloat(document.getElementById("durAm").value) || 0));
+    const bh = Math.max(0, parseFloat(document.getElementById("durBh").value) || 0);
+    const bm = Math.min(59, Math.max(0, parseFloat(document.getElementById("durBm").value) || 0));
     const op = document.getElementById("opSel").value;
 
-    const totalA = aH * 60 + aM;
-    const totalB = bH * 60 + bM;
-    const res = op === "add" ? (totalA + totalB) : (totalA - totalB);
+    const totalA = ah * 60 + am;
+    const totalB = bh * 60 + bm;
+    const resMins = op === "sub" ? totalA - totalB : totalA + totalB;
 
-    document.getElementById("pairMain").textContent = fmtHM(res);
-    document.getElementById("pairSub").textContent = `${Math.round(res)} min | ${(res / 60).toFixed(2)} h`;
+    document.getElementById("outDurHM").textContent = fmtHM(resMins);
+    document.getElementById("outDurDec").textContent = `${(resMins / 60).toFixed(2)} h`;
   }
 
-  function resetPair() {
-    document.getElementById("aH").value = "4";
-    document.getElementById("aM").value = "35";
-    document.getElementById("bH").value = "1";
-    document.getElementById("bM").value = "50";
+  function resetDur() {
+    document.getElementById("durAh").value = "0";
+    document.getElementById("durAm").value = "0";
+    document.getElementById("durBh").value = "0";
+    document.getElementById("durBm").value = "0";
     document.getElementById("opSel").value = "add";
-    calcPair();
-  }
-
-  function renderMulti() {
-    const wrap = document.getElementById("multiList");
-    const d = dict[lang];
-    wrap.innerHTML = "";
-    multiRows.forEach((r, idx) => {
-      const div = document.createElement("div");
-      div.className = "dur-row";
-      div.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";
-      div.innerHTML = `
-        <div>
-          <label>${d.hShort} #${idx + 1}</label>
-          <input type="number" min="0" step="any" value="${r.h}" oninput="multiRows[${idx}].h = parseFloat(this.value) || 0; calcMulti();">
-        </div>
-        <div>
-          <label>${d.mShort} #${idx + 1}</label>
-          <input type="number" min="0" step="any" value="${r.m}" oninput="multiRows[${idx}].m = parseFloat(this.value) || 0; calcMulti();">
-        </div>
-      `;
-      wrap.appendChild(div);
-    });
-    calcMulti();
-  }
-
-  function addDurRow() {
-    multiRows.push({ h: 1, m: 0 });
-    renderMulti();
-  }
-
-  function removeDurRow() {
-    if (multiRows.length > 1) {
-      multiRows.pop();
-      renderMulti();
-    }
-  }
-
-  function resetMulti() {
-    multiRows = JSON.parse(JSON.stringify(defaultMulti));
-    renderMulti();
-  }
-
-  function calcMulti() {
-    const sum = multiRows.reduce((acc, r) => acc + ((parseFloat(r.h) || 0) * 60) + (parseFloat(r.m) || 0), 0);
-    document.getElementById("multiMain").textContent = fmtHM(sum);
-    document.getElementById("multiSub").textContent = `${Math.round(sum)} min | ${(sum / 60).toFixed(2)} h`;
+    calcDur();
   }
 
   function applyLang() {
@@ -525,8 +469,7 @@
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
-    calcPair();
-    renderMulti();
+    calcDur();
   }
 
   function toggleLang() {
