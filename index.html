@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculette-tools | Calculateurs Temps de Travail, Feuille Hebdo &amp; Charpente</title>
-<meta name="description" content="Outils gratuits en ligne pour calculer le temps de travail, la feuille d'heures hebdomadaire, les durées, les centièmes d'heure (1/100e), le salaire et les coupes de croupe.">
+<title>Calculette-tools | Calculateur de Temps de Travail &amp; Outils</title>
+<meta name="description" content="Calculez votre temps de travail en heures-minutes et centièmes (1/100e), tenez votre feuille hebdomadaire et accédez à nos calculateurs gratuits.">
 <style>
   :root {
     --bg: #f4f7fb;
@@ -109,68 +109,211 @@
   .lang-btn:hover { background: var(--primary-hover); }
 
   /* Hero */
-  .hero {
-    text-align: center;
-    padding: 34px 0 20px;
-  }
-  .hero h1 {
-    margin: 0 0 8px;
-    font-size: clamp(1.55rem, 3.4vw, 2.2rem);
+  .page-head { padding: 22px 0 12px; }
+  .page-head h1 {
+    margin: 0 0 6px;
+    font-size: clamp(1.4rem, 3vw, 1.95rem);
     letter-spacing: -0.02em;
   }
-  .hero p {
-    margin: 0 auto;
-    color: var(--muted);
-    font-size: 0.96rem;
-    max-width: 680px;
-  }
+  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
 
-  /* Tools Grid */
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-    gap: 16px;
-    margin: 14px 0 32px;
-  }
-  .tool-card {
+  /* Cards */
+  .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 20px;
     box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    width: 100%;
+    min-width: 0;
+  }
+  .card h2 {
+    margin: 0 0 12px;
+    font-size: 1.08rem;
+  }
+
+  /* Time Slot Row (Cells) */
+  .slot-row {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 0.9fr) 36px;
+    gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    background: #fafcff;
+  }
+  .slot-row.disabled { opacity: 0.55; }
+  @media (max-width: 760px) {
+    .slot-row { grid-template-columns: 28px repeat(2, minmax(0, 1fr)); }
+  }
+  .slot-field label {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 3px;
+  }
+  input[type="time"], input[type="number"] {
+    width: 100%;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    background: #fff;
+    color: var(--ink);
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+  .out-pill {
+    padding: 8px 10px;
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .del-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 14px;
+  }
+  .del-btn:hover { background: #fecaca; }
+
+  /* Buttons & Total Bar */
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px 0 16px;
+  }
+  .btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--primary-hover); }
+  .btn-sec {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .btn-sec:hover { background: #e2e8f0; }
+
+  .total-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--soft);
+    border: 1px solid #93c5fd;
+    border-radius: 12px;
+  }
+  .total-label {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .total-vals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-weight: 800;
+    font-size: 1.02rem;
+    color: var(--primary);
+  }
+
+  /* Subtract Grid */
+  .sub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 12px;
+    align-items: end;
+  }
+  .hm-pair {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hm-pair span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  /* Other Tools Grid */
+  .sec-title {
+    margin: 24px 0 12px;
+    font-size: 1.12rem;
+  }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 14px;
-    transition: transform 0.15s ease, border-color 0.15s ease;
+    gap: 12px;
     min-width: 0;
   }
-  .tool-card:hover {
-    transform: translateY(-2px);
-    border-color: #93c5fd;
-  }
-  .tool-card h2 {
-    margin: 0 0 6px;
-    font-size: 1.08rem;
-    color: var(--ink);
+  .tool-card h3 {
+    margin: 0 0 5px;
+    font-size: 1rem;
   }
   .tool-card p {
     margin: 0;
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
   .tool-link {
     display: inline-block;
     align-self: flex-start;
-    background: var(--primary);
-    color: #fff;
+    background: var(--soft);
+    color: var(--primary);
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.85rem;
-    padding: 8px 14px;
+    font-weight: 700;
+    font-size: 0.84rem;
+    padding: 7px 12px;
     border-radius: 8px;
   }
-  .tool-link:hover { background: var(--primary-hover); }
+  .tool-link:hover {
+    background: var(--primary);
+    color: #fff;
+  }
 
   /* Footer */
   .site-footer {
@@ -181,7 +324,7 @@
     text-align: center;
     font-size: 0.86rem;
     color: var(--muted);
-    margin-top: 24px;
+    margin-top: 22px;
   }
   .footer-links {
     margin-top: 10px;
@@ -219,23 +362,71 @@
 </header>
 
 <main class="container">
-  <section class="hero">
-    <h1 data-t="heroTitle">Outils Pratiques de Temps, Paie et Charpente</h1>
-    <p data-t="heroSub">Des calculateurs simples, rapides et gratuits directement dans votre navigateur, sans inscription.</p>
-  </section>
+  <div class="page-head">
+    <h1 data-t="pageTitle">Calculateur de Temps de Travail</h1>
+    <p data-t="pageSub">Additionnez vos plages horaires ou soustrayez vos pauses en heures-minutes et en centièmes d'heure (1/100e).</p>
+  </div>
 
+  <!-- Main Cells: Time Slots (Initialised at 0) -->
+  <div class="card">
+    <h2 data-t="secAddTitle">1. Additionner des plages horaires</h2>
+    <div id="slotsContainer"></div>
+
+    <div class="toolbar">
+      <button type="button" class="btn" onclick="addSlot()" data-t="btnAddSlot">+ Ajouter une plage</button>
+      <button type="button" class="btn-sec" onclick="resetSlots()" data-t="btnReset">Reset (0)</button>
+    </div>
+
+    <div class="total-bar">
+      <span class="total-label" data-t="lblTotal">TOTAL</span>
+      <div class="total-vals">
+        <span id="totalHM">00h 00min</span>
+        <span id="totalDec">0.00 h</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Cells: Subtract Durations (Initialised at 0) -->
+  <div class="card">
+    <h2 data-t="secSubTitle">2. Soustraire deux durées (ex. déduire une pause)</h2>
+    <div class="sub-grid">
+      <div>
+        <label style="display:block;font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:4px;" data-t="lblDurA">Durée totale (A)</label>
+        <div class="hm-pair">
+          <input type="number" id="subAh" min="0" value="0" oninput="calcSub()">
+          <span>h</span>
+          <input type="number" id="subAm" min="0" max="59" value="0" oninput="calcSub()">
+          <span>min</span>
+        </div>
+      </div>
+
+      <div>
+        <label style="display:block;font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:4px;" data-t="lblDurB">Pause / Temps à déduire (B)</label>
+        <div class="hm-pair">
+          <input type="number" id="subBh" min="0" value="0" oninput="calcSub()">
+          <span>h</span>
+          <input type="number" id="subBm" min="0" max="59" value="0" oninput="calcSub()">
+          <span>min</span>
+        </div>
+      </div>
+
+      <div>
+        <label style="display:block;font-size:0.78rem;font-weight:600;color:var(--muted);margin-bottom:4px;" data-t="lblNetResult">Temps net (A − B)</label>
+        <div class="out-pill" id="subOut">00h 00min (0.00 h)</div>
+      </div>
+    </div>
+
+    <div class="toolbar" style="margin-bottom:0;">
+      <button type="button" class="btn-sec" onclick="resetSub()" data-t="btnReset">Reset (0)</button>
+    </div>
+  </div>
+
+  <!-- Other Tools -->
+  <h2 class="sec-title" data-t="otherToolsTitle">Autres calculateurs disponibles</h2>
   <section class="tools-grid">
     <article class="tool-card">
       <div>
-        <h2 data-t="t1Title">Temps de Travail Journalier</h2>
-        <p data-t="t1Desc">Additionnez vos plages horaires de la journée ou soustrayez deux durées en HH:MM et 1/100e.</p>
-      </div>
-      <a href="working-time-calculator.html" class="tool-link" data-t="openTool">Ouvrir →</a>
-    </article>
-
-    <article class="tool-card">
-      <div>
-        <h2 data-t="t2Title">Feuille Hebdomadaire</h2>
+        <h3 data-t="t2Title">Feuille Hebdomadaire</h3>
         <p data-t="t2Desc">Pointage du lundi au dimanche avec sauvegarde locale, navigation par semaine et impression.</p>
       </div>
       <a href="feuille-hebdo.html" class="tool-link" data-t="openTool">Ouvrir →</a>
@@ -243,7 +434,7 @@
 
     <article class="tool-card">
       <div>
-        <h2 data-t="t3Title">Heures &amp; Salaire</h2>
+        <h3 data-t="t3Title">Heures &amp; Salaire</h3>
         <p data-t="t3Desc">Estimez votre rémunération à partir de vos heures normales, heures sup et taux horaire.</p>
       </div>
       <a href="working-hour-calculator.html" class="tool-link" data-t="openTool">Ouvrir →</a>
@@ -251,7 +442,7 @@
 
     <article class="tool-card">
       <div>
-        <h2 data-t="t4Title">Calculateur de Durées</h2>
+        <h3 data-t="t4Title">Calculateur de Durées</h3>
         <p data-t="t4Desc">Additionnez ou soustrayez des durées en heures et minutes avec résultat en centièmes.</p>
       </div>
       <a href="time-calculator.html" class="tool-link" data-t="openTool">Ouvrir →</a>
@@ -259,7 +450,7 @@
 
     <article class="tool-card">
       <div>
-        <h2 data-t="t5Title">Convertisseur 1/100e</h2>
+        <h3 data-t="t5Title">Convertisseur 1/100e</h3>
         <p data-t="t5Desc">Convertissez vos heures et minutes en centièmes d'heure décimaux et inversement.</p>
       </div>
       <a href="convertisseur.html" class="tool-link" data-t="openTool">Ouvrir →</a>
@@ -267,7 +458,7 @@
 
     <article class="tool-card">
       <div>
-        <h2 data-t="t6Title">Toiture en Croupe</h2>
+        <h3 data-t="t6Title">Toiture en Croupe</h3>
         <p data-t="t6Desc">Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe et la surface des pans.</p>
       </div>
       <a href="toiture-croupe.html" class="tool-link" data-t="openTool">Ouvrir →</a>
@@ -300,16 +491,25 @@
   const LANG_KEY = "calculette_lang_v1";
   let lang = "fr";
 
+  let slots = [
+    { start: "00:00", end: "00:00", active: true },
+    { start: "00:00", end: "00:00", active: true }
+  ];
+
   const dict = {
     fr: {
       btn: "EN",
       navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
       navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
       navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      heroTitle: "Outils Pratiques de Temps, Paie et Charpente",
-      heroSub: "Des calculateurs simples, rapides et gratuits directement dans votre navigateur, sans inscription.",
-      t1Title: "Temps de Travail Journalier",
-      t1Desc: "Additionnez vos plages horaires de la journée ou soustrayez deux durées en HH:MM et 1/100e.",
+      pageTitle: "Calculateur de Temps de Travail",
+      pageSub: "Additionnez vos plages horaires ou soustrayez vos pauses en heures-minutes et en centièmes d'heure (1/100e).",
+      secAddTitle: "1. Additionner des plages horaires",
+      lblStart: "Heure début", lblEnd: "Heure fin", lblDur: "Durée", lblDec: "1/100e",
+      btnAddSlot: "+ Ajouter une plage", btnReset: "Reset (0)", lblTotal: "TOTAL",
+      secSubTitle: "2. Soustraire deux durées (ex. déduire une pause)",
+      lblDurA: "Durée totale (A)", lblDurB: "Pause / Temps à déduire (B)", lblNetResult: "Temps net (A − B)",
+      otherToolsTitle: "Autres calculateurs disponibles",
       t2Title: "Feuille Hebdomadaire",
       t2Desc: "Pointage du lundi au dimanche avec sauvegarde locale, navigation par semaine et impression.",
       t3Title: "Heures & Salaire",
@@ -327,10 +527,14 @@
       navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      heroTitle: "Practical Time, Payroll & Framing Calculators",
-      heroSub: "Simple, fast, and free calculators directly in your browser, with no sign-up required.",
-      t1Title: "Daily Working Time",
-      t1Desc: "Add daily work shifts or subtract two durations in HH:MM and decimal hundredths (1/100e).",
+      pageTitle: "Working Time Calculator",
+      pageSub: "Add daily time slots or subtract breaks in hours-minutes and hundredths of an hour (1/100e).",
+      secAddTitle: "1. Add Time Slots",
+      lblStart: "Start time", lblEnd: "End time", lblDur: "Duration", lblDec: "1/100e",
+      btnAddSlot: "+ Add time slot", btnReset: "Reset (0)", lblTotal: "TOTAL",
+      secSubTitle: "2. Subtract Two Durations (e.g. deduct a break)",
+      lblDurA: "Total duration (A)", lblDurB: "Break / Time to deduct (B)", lblNetResult: "Net time (A − B)",
+      otherToolsTitle: "More Available Calculators",
       t2Title: "Weekly Timesheet",
       t2Desc: "Monday-to-Sunday timesheet with local save, week switching, and printable view.",
       t3Title: "Working Hours & Pay",
@@ -345,6 +549,110 @@
     }
   };
 
+  function calcSlotMins(s) {
+    if (!s.start || !s.end) return 0;
+    const [sh, sm] = s.start.split(":").map(Number);
+    const [eh, em] = s.end.split(":").map(Number);
+    let startM = sh * 60 + sm;
+    let endM = eh * 60 + em;
+    if (endM < startM) endM += 1440;
+    return Math.max(0, endM - startM);
+  }
+
+  function fmtHM(mins) {
+    const sign = mins < 0 ? "-" : "";
+    const abs = Math.abs(Math.round(mins));
+    const h = String(Math.floor(abs / 60)).padStart(2, "0");
+    const m = String(abs % 60).padStart(2, "0");
+    return `${sign}${h}h ${m}min`;
+  }
+
+  function renderSlots() {
+    const d = dict[lang];
+    const container = document.getElementById("slotsContainer");
+    container.innerHTML = "";
+    let totalMins = 0;
+
+    slots.forEach((s, idx) => {
+      const mins = calcSlotMins(s);
+      if (s.active) totalMins += mins;
+
+      const row = document.createElement("div");
+      row.className = "slot-row" + (s.active ? "" : " disabled");
+      row.innerHTML = `
+        <input type="checkbox" ${s.active ? "checked" : ""} onchange="toggleSlot(${idx}, this.checked)" aria-label="Activer">
+        <div class="slot-field">
+          <label>${d.lblStart}</label>
+          <input type="time" value="${s.start}" oninput="updateSlot(${idx}, 'start', this.value)">
+        </div>
+        <div class="slot-field">
+          <label>${d.lblEnd}</label>
+          <input type="time" value="${s.end}" oninput="updateSlot(${idx}, 'end', this.value)">
+        </div>
+        <div class="slot-field">
+          <label>${d.lblDur}</label>
+          <div class="out-pill">${fmtHM(mins)}</div>
+        </div>
+        <div class="slot-field">
+          <label>${d.lblDec}</label>
+          <div class="out-pill">${(mins / 60).toFixed(2)} h</div>
+        </div>
+        <button type="button" class="del-btn" onclick="removeSlot(${idx})" title="Supprimer">×</button>
+      `;
+      container.appendChild(row);
+    });
+
+    document.getElementById("totalHM").textContent = fmtHM(totalMins);
+    document.getElementById("totalDec").textContent = `${(totalMins / 60).toFixed(2)} h`;
+  }
+
+  function updateSlot(idx, key, val) {
+    slots[idx][key] = val;
+    renderSlots();
+  }
+
+  function toggleSlot(idx, checked) {
+    slots[idx].active = checked;
+    renderSlots();
+  }
+
+  function addSlot() {
+    slots.push({ start: "00:00", end: "00:00", active: true });
+    renderSlots();
+  }
+
+  function removeSlot(idx) {
+    if (slots.length > 1) {
+      slots.splice(idx, 1);
+      renderSlots();
+    }
+  }
+
+  function resetSlots() {
+    slots = [
+      { start: "00:00", end: "00:00", active: true },
+      { start: "00:00", end: "00:00", active: true }
+    ];
+    renderSlots();
+  }
+
+  function calcSub() {
+    const ah = Math.max(0, parseFloat(document.getElementById("subAh").value) || 0);
+    const am = Math.max(0, parseFloat(document.getElementById("subAm").value) || 0);
+    const bh = Math.max(0, parseFloat(document.getElementById("subBh").value) || 0);
+    const bm = Math.max(0, parseFloat(document.getElementById("subBm").value) || 0);
+    const diff = (ah * 60 + am) - (bh * 60 + bm);
+    document.getElementById("subOut").textContent = `${fmtHM(diff)} (${(diff / 60).toFixed(2)} h)`;
+  }
+
+  function resetSub() {
+    document.getElementById("subAh").value = "0";
+    document.getElementById("subAm").value = "0";
+    document.getElementById("subBh").value = "0";
+    document.getElementById("subBm").value = "0";
+    calcSub();
+  }
+
   function applyLang() {
     document.documentElement.lang = lang;
     const d = dict[lang];
@@ -353,6 +661,8 @@
       const k = el.getAttribute("data-t");
       if (d[k]) el.textContent = d[k];
     });
+    renderSlots();
+    calcSub();
   }
 
   function toggleLang() {
