@@ -429,7 +429,7 @@
 
     <div class="toolbar">
       <button type="button" class="btn" onclick="window.print()" data-t="btnPrint">Version imprimable</button>
-      <button type="button" class="btn-sec" onclick="resetWeek()" data-t="btnReset">Reset semaine</button>
+      <button type="button" class="btn-sec" onclick="resetWeek()" data-t="btnReset">Reset semaine (0)</button>
     </div>
 
     <div class="total-bar">
@@ -488,7 +488,7 @@
 
 <script>
   const LANG_KEY = "calculette_lang_v1";
-  const STORE_PREFIX = "calculette_feuille_hebdo_v1_";
+  const STORE_PREFIX = "calculette_feuille_hebdo_v2_";
   let lang = "fr";
   let weekOffset = 0;
 
@@ -504,7 +504,7 @@
       btnCurrWeek: "Actuelle",
       btnNextWeek: "Suiv. →",
       btnPrint: "Version imprimable",
-      btnReset: "Reset semaine",
+      btnReset: "Reset semaine (0)",
       lblWeekTotal: "TOTAL HEBDOMADAIRE",
       days: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
       weekWord: "Semaine",
@@ -529,7 +529,7 @@
       btnCurrWeek: "Current",
       btnNextWeek: "Next →",
       btnPrint: "Printable view",
-      btnReset: "Reset week",
+      btnReset: "Reset week (0)",
       lblWeekTotal: "WEEKLY TOTAL",
       days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
       weekWord: "Week",
@@ -573,14 +573,14 @@
     return STORE_PREFIX + `${monday.getFullYear()}-${String(monday.getMonth() + 1).padStart(2, "0")}-${String(monday.getDate()).padStart(2, "0")}`;
   }
 
-  function makeDefaultWeek() {
+  function makeZeroWeek() {
     return Array.from({ length: 7 }, (_, idx) => ({
       active: idx < 5,
-      slots: idx < 5 ? [{ start: "08:00", end: "17:00" }] : [{ start: "08:00", end: "12:00" }]
+      slots: [{ start: "00:00", end: "00:00" }]
     }));
   }
 
-  let weekData = makeDefaultWeek();
+  let weekData = makeZeroWeek();
 
   function loadWeekData(monday) {
     try {
@@ -593,7 +593,7 @@
         }
       }
     } catch (e) {}
-    weekData = makeDefaultWeek();
+    weekData = makeZeroWeek();
   }
 
   function saveWeekData(monday) {
@@ -699,7 +699,7 @@
   }
 
   function addDaySlot(dIdx) {
-    weekData[dIdx].slots.push({ start: "14:00", end: "18:00" });
+    weekData[dIdx].slots.push({ start: "00:00", end: "00:00" });
     renderWeek();
   }
 
@@ -713,7 +713,7 @@
   function resetWeek() {
     const monday = getMondayOfOffset(weekOffset);
     try { localStorage.removeItem(getWeekKey(monday)); } catch (e) {}
-    weekData = makeDefaultWeek();
+    weekData = makeZeroWeek();
     renderWeek();
   }
 
