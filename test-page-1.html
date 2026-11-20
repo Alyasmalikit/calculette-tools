@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Page 1 — 3 Outils en 1 Page | Calculette-tools</title>
+<style>
+  :root {
+    --bg: #f1f5f9;
+    --surface: #ffffff;
+    --ink: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --soft: #eff6ff;
+    --radius: 16px;
+    --shadow: 0 10px 25px -6px rgba(15, 23, 42, 0.06);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 20px 16px 48px;
+  }
+  .top-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
+    color: #fff;
+    padding: 18px 22px;
+    border-radius: var(--radius);
+    margin-bottom: 18px;
+  }
+  .top-bar h1 {
+    margin: 0 0 4px;
+    font-size: clamp(1.25rem, 2.8vw, 1.7rem);
+  }
+  .top-bar p {
+    margin: 0;
+    color: #dbeafe;
+    font-size: 0.9rem;
+  }
+  .pill {
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .quick-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .jump-btn {
+    text-decoration: none;
+    color: var(--ink);
+    background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+    border: 1px solid #94a3b8;
+    border-bottom: 3px solid #64748b;
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
+  }
+  .jump-btn:hover {
+    color: var(--primary-dark);
+    border-color: #3b82f6;
+    border-bottom-color: #1d4ed8;
+  }
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+  }
+  .tool-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tool-head h2 {
+    margin: 0;
+    font-size: 1.08rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge-num {
+    background: var(--soft);
+    color: var(--primary-dark);
+    font-weight: 800;
+    font-size: 0.78rem;
+    padding: 3px 9px;
+    border-radius: 6px;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 14px;
+    align-items: end;
+  }
+  label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--muted);
+    margin-bottom: 5px;
+  }
+  .hm-box {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hm-box span {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  input, select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: #fff;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+  }
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .btn {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    border: none;
+    padding: 9px 15px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 0.86rem;
+    cursor: pointer;
+  }
+  .btn-sec {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+    padding: 9px 14px;
+    border-radius: 9px;
+    font-weight: 600;
+    font-size: 0.86rem;
+    cursor: pointer;
+  }
+  .out-box {
+    margin-top: 14px;
+    padding: 12px 15px;
+    border-radius: 11px;
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    font-weight: 800;
+    font-size: 0.98rem;
+    color: var(--primary-dark);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top-bar">
+    <div>
+      <h1>Test Page 1 — 3 Outils Réunis</h1>
+      <p>Prototype de test : 3 outils sur une seule page pour vérifier le confort d'utilisation sans toucher au site réel.</p>
+    </div>
+    <span class="pill">TEST SANDBOX • PAGE 1</span>
+  </div>
+
+  <div class="quick-jump">
+    <a href="#tool1" class="jump-btn">1. Addition / Soustraction Durées</a>
+    <a href="#tool2" class="jump-btn">2. Convertisseur 1/100e</a>
+    <a href="#tool3" class="jump-btn">3. Estimation Salaire</a>
+  </div>
+
+  <!-- TOOL 1: Duration Add / Subtract -->
+  <section id="tool1" class="tool-card">
+    <div class="tool-head">
+      <h2><span class="badge-num">OUTIL 1</span> Calculateur de Durées (HH:MM &amp; 1/100e)</h2>
+    </div>
+    <div class="grid-2">
+      <div>
+        <label>Durée 1</label>
+        <div class="hm-box">
+          <input type="number" id="d1h" min="0" value="0" oninput="calcDurations()">
+          <span>h</span>
+          <input type="number" id="d1m" min="0" max="59" value="0" oninput="calcDurations()">
+          <span>min</span>
+        </div>
+      </div>
+      <div>
+        <label>Opération</label>
+        <select id="dOp" onchange="calcDurations()">
+          <option value="add">Addition (+)</option>
+          <option value="sub">Soustraction (−)</option>
+        </select>
+      </div>
+      <div>
+        <label>Durée 2</label>
+        <div class="hm-box">
+          <input type="number" id="d2h" min="0" value="0" oninput="calcDurations()">
+          <span>h</span>
+          <input type="number" id="d2m" min="0" max="59" value="0" oninput="calcDurations()">
+          <span>min</span>
+        </div>
+      </div>
+    </div>
+    <div class="out-box" id="dOut">00h 00min (0.00 h)</div>
+    <div class="btn-row">
+      <button type="button" class="btn-sec" onclick="resetDurations()">Reset</button>
+    </div>
+  </section>
+
+  <!-- TOOL 2: Decimal 1/100e Converter -->
+  <section id="tool2" class="tool-card">
+    <div class="tool-head">
+      <h2><span class="badge-num">OUTIL 2</span> Convertisseur Heures-Minutes ↔ Centièmes (1/100e)</h2>
+    </div>
+    <div class="grid-2">
+      <div>
+        <label>Heures &amp; Minutes → Centièmes (1/100e)</label>
+        <div class="hm-box">
+          <input type="number" id="cvH" min="0" value="0" oninput="hmToDec()">
+          <span>h</span>
+          <input type="number" id="cvM" min="0" max="59" value="0" oninput="hmToDec()">
+          <span>min</span>
+        </div>
+        <div class="out-box" id="cvDecOut">0.00 h</div>
+      </div>
+      <div>
+        <label>Centièmes décimaux (ex. 7.50) → Heures &amp; Minutes</label>
+        <input type="number" id="cvDecIn" step="0.01" min="0" value="0" oninput="decToHm()">
+        <div class="out-box" id="cvHmOut">00h 00min</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button type="button" class="btn-sec" onclick="resetConverter()">Reset</button>
+    </div>
+  </section>
+
+  <!-- TOOL 3: Quick Hourly Pay Estimator -->
+  <section id="tool3" class="tool-card">
+    <div class="tool-head">
+      <h2><span class="badge-num">OUTIL 3</span> Estimation Rapide Salaire Horaire</h2>
+    </div>
+    <div class="grid-2">
+      <div>
+        <label>Heures (en centièmes, ex. 39.50)</label>
+        <input type="number" id="payHours" step="0.01" min="0" value="0" oninput="calcPay()">
+      </div>
+      <div>
+        <label>Taux horaire (€ / unité)</label>
+        <input type="number" id="payRate" step="0.01" min="0" value="0" oninput="calcPay()">
+      </div>
+      <div>
+        <label>Majoration / Bonus (%)</label>
+        <input type="number" id="payBonus" step="1" min="0" value="0" oninput="calcPay()">
+      </div>
+    </div>
+    <div class="out-box" id="payOut">Total estimé : 0.00</div>
+    <div class="btn-row">
+      <button type="button" class="btn-sec" onclick="resetPay()">Reset</button>
+    </div>
+  </section>
+</div>
+
+<script>
+  function fmtHM(totalMins) {
+    const sign = totalMins < 0 ? "-" : "";
+    const abs = Math.abs(Math.round(totalMins));
+    const h = String(Math.floor(abs / 60)).padStart(2, "0");
+    const m = String(abs % 60).padStart(2, "0");
+    return `${sign}${h}h ${m}min`;
+  }
+
+  function calcDurations() {
+    const h1 = Math.max(0, parseInt(document.getElementById("d1h").value, 10) || 0);
+    const m1 = Math.min(59, Math.max(0, parseInt(document.getElementById("d1m").value, 10) || 0));
+    const h2 = Math.max(0, parseInt(document.getElementById("d2h").value, 10) || 0);
+    const m2 = Math.min(59, Math.max(0, parseInt(document.getElementById("d2m").value, 10) || 0));
+    const op = document.getElementById("dOp").value;
+
+    const a = h1 * 60 + m1;
+    const b = h2 * 60 + m2;
+    const res = op === "add" ? a + b : Math.max(0, a - b);
+    document.getElementById("dOut").textContent = `${fmtHM(res)} (${(res / 60).toFixed(2)} h)`;
+  }
+
+  function resetDurations() {
+    document.getElementById("d1h").value = 0;
+    document.getElementById("d1m").value = 0;
+    document.getElementById("d2h").value = 0;
+    document.getElementById("d2m").value = 0;
+    document.getElementById("dOp").value = "add";
+    calcDurations();
+  }
+
+  function hmToDec() {
+    const h = Math.max(0, parseInt(document.getElementById("cvH").value, 10) || 0);
+    const m = Math.min(59, Math.max(0, parseInt(document.getElementById("cvM").value, 10) || 0));
+    const dec = h + m / 60;
+    document.getElementById("cvDecOut").textContent = `${dec.toFixed(2)} h`;
+  }
+
+  function decToHm() {
+    const dec = Math.max(0, parseFloat(document.getElementById("cvDecIn").value) || 0);
+    const totalMins = Math.round(dec * 60);
+    document.getElementById("cvHmOut").textContent = fmtHM(totalMins);
+  }
+
+  function resetConverter() {
+    document.getElementById("cvH").value = 0;
+    document.getElementById("cvM").value = 0;
+    document.getElementById("cvDecIn").value = 0;
+    hmToDec();
+    decToHm();
+  }
+
+  function calcPay() {
+    const hrs = Math.max(0, parseFloat(document.getElementById("payHours").value) || 0);
+    const rate = Math.max(0, parseFloat(document.getElementById("payRate").value) || 0);
+    const bonus = Math.max(0, parseFloat(document.getElementById("payBonus").value) || 0);
+    const total = hrs * rate * (1 + bonus / 100);
+    document.getElementById("payOut").textContent = `Total estimé : ${total.toFixed(2)}`;
+  }
+
+  function resetPay() {
+    document.getElementById("payHours").value = 0;
+    document.getElementById("payRate").value = 0;
+    document.getElementById("payBonus").value = 0;
+    calcPay();
+  }
+</script>
+</body>
+</html>
