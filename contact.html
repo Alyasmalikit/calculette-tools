@@ -296,7 +296,7 @@
         <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
         <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
       </nav>
-      <button type="button" id="langBtn" class="lang-btn">EN</button>
+      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
     </div>
   </div>
 </header>
@@ -310,7 +310,7 @@
   <div class="grid-2">
     <div class="card">
       <h2 data-t="formTitle">Formulaire de Contact</h2>
-      <form id="contactForm" novalidate>
+      <form id="contactForm" onsubmit="handleContact(event)" novalidate>
         <div style="margin-bottom:10px;">
           <label for="cName" data-t="lblName">Votre nom</label>
           <input type="text" id="cName" required>
@@ -325,7 +325,7 @@
         </div>
         <div class="btn-row">
           <button type="submit" class="btn" data-t="btnSend">Envoyer</button>
-          <button type="button" class="btn-sec" id="resetContactBtn" data-t="btnReset">Reset</button>
+          <button type="button" class="btn-sec" onclick="resetContact()" data-t="btnReset">Reset</button>
         </div>
       </form>
       <div id="cStatus" class="res-box" style="display:none;" role="status"></div>
@@ -366,7 +366,6 @@
 </footer>
 
 <script>
-(function () {
   const LANG_KEY = "calculette_lang_v1";
   let lang = "fr";
 
@@ -433,7 +432,7 @@
 
   function applyLang() {
     document.documentElement.lang = lang;
-    const d = dict[lang];
+    const d = dict[lang] || dict.fr;
     document.title = d.docTitle;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", d.docDesc);
@@ -441,7 +440,7 @@
     const langBtn = document.getElementById("langBtn");
     if (langBtn) langBtn.textContent = d.btn;
 
-    document.querySelectorAll("[data-t]").forEach(function (el) {
+    document.querySelectorAll("[data-t]").forEach(el => {
       const k = el.getAttribute("data-t");
       if (k && Object.prototype.hasOwnProperty.call(d, k)) {
         el.textContent = d[k];
@@ -462,6 +461,25 @@
     applyLang();
   }
 
+  function handleContact(e) {
+    e.preventDefault();
+    const d = dict[lang] || dict.fr;
+    const box = document.getElementById("cStatus");
+    const nameVal = (document.getElementById("cName").value || "").trim();
+    const emailVal = (document.getElementById("cEmail").value || "").trim();
+    const msgVal = (document.getElementById("cMsg").value || "").trim();
+
+    if (!box) return;
+    box.style.display = "block";
+    if (!nameVal || !isValidEmail(emailVal) || !msgVal) {
+      box.classList.add("status-err");
+      box.textContent = d.errEmptyMsg;
+      return;
+    }
+    box.classList.remove("status-err");
+    box.textContent = d.sentMsg;
+  }
+
   function resetContact() {
     const nameInput = document.getElementById("cName");
     const emailInput = document.getElementById("cEmail");
@@ -477,18 +495,13 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    try {
-      const saved = localStorage.getItem(LANG_KEY);
-      if (saved === "en" || saved === "fr") lang = saved;
-    } catch (e) {}
+  try {
+    const saved = localStorage.getItem(LANG_KEY);
+    if (saved === "en" || saved === "fr") lang = saved;
+  } catch (e) {}
 
-    const langBtn = document.getElementById("langBtn");
-    if (langBtn) langBtn.addEventListener("click", toggleLang);
+  applyLang();
+</script>
 
-    const form = document.getElementById("contactForm");
-    if (form) {
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const d = dict[lang];
-        const box =
+</body>
+</html>
