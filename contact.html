@@ -63,9 +63,9 @@
       <p data-t="infoP1">Nous lisons chaque message afin d'améliorer la précision et l'ergonomie de nos calculateurs.</p>
       <p data-t="infoP2">Pour signaler un bug sur un calculateur précis, indiquez le nom de l'outil et les valeurs saisies.</p>
       <ul class="contact-list">
-        <li data-t="tip1"><strong>Outil concerné :</strong> précisez la page (ex. Temps de Travail, Feuille Hebdo ou Toiture en Croupe).</li>
-        <li data-t="tip2"><strong>Valeurs saisies :</strong> indiquez les heures, taux ou cotes utilisées pour reproduire le cas.</li>
-        <li data-t="tip3"><strong>Appareil &amp; langue :</strong> mentionnez si le problème survient sur mobile, ordinateur, en FR ou en EN.</li>
+        <li data-t="tip1">Outil concerné : précisez la page (ex. Temps de Travail, Feuille Hebdo ou Toiture en Croupe).</li>
+        <li data-t="tip2">Valeurs saisies : indiquez les heures, taux ou cotes utilisées pour reproduire le cas.</li>
+        <li data-t="tip3">Appareil &amp; langue : mentionnez si le problème survient sur mobile, ordinateur, en FR ou en EN.</li>
       </ul>
     </div>
   </div>
@@ -91,7 +91,7 @@
       btnSend: "Envoyer",
       btnReset: "Reset",
       errEmptyMsg: "Veuillez renseigner votre nom, une adresse email valide et un message.",
-      sentMsg: "Merci ! Votre message a bien été préparé / enregistré.",
+      sentMsg: "Merci ! Votre message a bien été enregistré.",
       infoTitle: "Informations",
       infoP1: "Nous lisons chaque message afin d'améliorer la précision et l'ergonomie de nos calculateurs.",
       infoP2: "Pour signaler un bug sur un calculateur précis, indiquez le nom de l'outil et les valeurs saisies.",
@@ -124,17 +124,9 @@
     }
   };
 
-  function currentContactLang() {
-    if (typeof getLang === "function") {
-      const l = getLang();
-      if (PAGE_DICT[l]) return l;
-    }
-    return document.documentElement.lang === "en" ? "en" : "fr";
-  }
-
   function syncContactUi() {
-    const l = currentContactLang();
-    const d = PAGE_DICT[l];
+    const l = getLang();
+    const d = PAGE_DICT[l] || PAGE_DICT.fr;
     document.title = d.docTitle;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", d.docDesc);
@@ -153,8 +145,7 @@
 
   function handleContact(e) {
     e.preventDefault();
-    const l = currentContactLang();
-    const d = PAGE_DICT[l];
+    const d = PAGE_DICT[getLang()] || PAGE_DICT.fr;
     const box = document.getElementById("cStatus");
 
     const nameVal = document.getElementById("cName").value.trim();
@@ -182,15 +173,13 @@
     box.textContent = "";
   }
 
-  if (typeof renderChrome === "function") renderChrome("contact");
-  if (typeof applyLang === "function") applyLang();
+  renderChrome("contact");
+  applyLang();
   syncContactUi();
 
   const langBtnEl = document.getElementById("langBtn");
   if (langBtnEl) {
-    langBtnEl.addEventListener("click", () => {
-      setTimeout(syncContactUi, 0);
-    });
+    langBtnEl.addEventListener("click", () => setTimeout(syncContactUi, 0));
   }
 </script>
 </body>
