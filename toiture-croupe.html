@@ -95,24 +95,44 @@
     min-width: 0;
     max-width: 100%;
   }
-  .nav-menu {
+  .site-header .nav-menu {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 6px;
     min-width: 0;
   }
-  .nav-menu a {
-    color: var(--muted);
+  .site-header .nav-menu a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f172a;
+    background: #ffffff;
+    border: 1px solid #94a3b8;
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 6px 9px;
-    border-radius: 8px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    padding: 6px 11px;
+    border-radius: 9px;
     white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease;
   }
-  .nav-menu a:hover, .nav-menu a.active {
-    color: var(--primary);
-    background: var(--soft);
+  .site-header .nav-menu a:hover {
+    color: #1d4ed8;
+    background: #eff6ff;
+    border-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.16);
+  }
+  .site-header .nav-menu a.active {
+    color: #ffffff;
+    background: #2563eb;
+    border-color: #1d4ed8;
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.28);
+  }
+  .site-header .nav-menu a:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
   }
   .lang-btn {
     background: var(--primary);
@@ -126,6 +146,12 @@
     flex-shrink: 0;
   }
   .lang-btn:hover { background: var(--primary-hover); }
+  @media (max-width: 600px) {
+    .site-header .nav-menu a {
+      font-size: 0.8rem;
+      padding: 6px 9px;
+    }
+  }
 
   /* Page Head */
   .page-head { padding: 22px 0 12px; }
@@ -492,4 +518,257 @@
         </div>
         <div class="res-row">
           <span class="res-label" data-t="rCoupeAplomb">Angle de coupe d'aplomb (arêtier)</span>
-          <span class="res-val
+          <span class="res-val" id="outCoupeAplomb">0.00°</span>
+        </div>
+        <div class="res-row">
+          <span class="res-label" data-t="rCoupePied">Angle de coupe de pied (arêtier)</span>
+          <span class="res-val" id="outCoupePied">0.00°</span>
+        </div>
+        <div class="res-row highlight">
+          <span class="res-label" data-t="rSurface">Surface totale des versants (4 pans)</span>
+          <span class="res-val" id="outSurface">0.00 m²</span>
+        </div>
+      </div>
+      <div id="roofNotice" class="notice-box" role="status"></div>
+    </div>
+  </div>
+
+  <!-- Ad Space 1 -->
+  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
+
+  <!-- Practical Guide -->
+  <section class="card">
+    <h2 data-t="guideTitle">Guide pratique : comprendre les cotes d'une toiture en croupe</h2>
+    <p data-t="guideIntro">La toiture en croupe (ou toit à quatre pans) se distingue par l'absence de pignons verticaux : les deux extrémités du bâtiment sont fermées par des versants inclinés reliés au reste de la couverture par des arêtiers.</p>
+
+    <h3 data-t="guideSub1">1. Définition des mesures à saisir</h3>
+    <ul class="guide-list">
+      <li data-t="guideLi1"><strong>Emprunt du long pan :</strong> distance horizontale mesurée en plan entre la sablière (ligne d'égout du grand côté) et l'axe du faîtage. Pour un bâtiment symétrique, il correspond à la moitié de la largeur hors-tout.</li>
+      <li data-t="guideLi2"><strong>Emprunt de la croupe :</strong> recul horizontal mesuré en plan depuis la ligne d'égout du petit côté jusqu'au poinçon de ferme. Lorsque les deux emprunts sont égaux, l'arêtier est à 45° en plan.</li>
+      <li data-t="guideLi3"><strong>Hauteur de couronnement (H) :</strong> élévation verticale entre le niveau d'appui des chevrons sur la sablière et le dessus du faîtage.</li>
+    </ul>
+
+    <h3 data-t="guideSub2">2. Exploitation des résultats sur chantier</h3>
+    <p data-t="guideP2">Les longueurs calculées correspondent aux axes théoriques épure (hors débord d'égout, épaisseur de faîtage et délardement de l'arêtier). Pensez toujours à ajouter la longueur de queue de chevron prévue pour l'avant-toit et à contrôler vos traits sur épure avant le débit définitif des bois.</p>
+  </section>
+
+  <!-- Ad Space 2 -->
+  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>Calculette-tools</div>
+    <div class="footer-links">
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" class="active" data-t="navTo">Toiture</a>
+    </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="terms.html" data-t="navDisclaimer">Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const LANG_KEY = "calculette_lang_v1";
+  let lang = "fr";
+
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
+      pageTitle: "Calculateur Charpente : Toiture en Croupe",
+      pageSub: "Calculez les longueurs réelles des chevrons, des arêtiers, la pente, les angles de coupe et la surface totale des versants.",
+      diagCap: "Vue schématique : ligne d'égout, hauteur de couronnement, chevrons d'emprunt et arêtiers.",
+      secInputs: "1. Cotes de la toiture (en mètres)",
+      lblEmpPan: "Emprunt du long pan (m)",
+      lblEmpCroupe: "Emprunt de la croupe (m)",
+      lblEgout: "Longueur totale de la ligne d'égout (m)",
+      lblHaut: "Hauteur de couronnement H (m)",
+      btnCalc: "Calculer",
+      btnReset: "Reset (0)",
+      btnCopy: "Copier",
+      btnCopied: "Copié !",
+      ridgeShortMsg: "La longueur d'égout est inférieure ou égale à 2 × emprunt croupe : le faîtage est ramené à 0.00 m.",
+      secResults: "2. Résultats géométriques",
+      rFaitage: "Longueur du faîtage",
+      rChevPan: "Chevron d'emprunt (long pan)",
+      rChevCroupe: "Chevron d'emprunt (croupe)",
+      rAretierPlan: "Projection horizontale de l'arêtier",
+      rAretierReel: "Longueur réelle de l'arêtier",
+      rPentePan: "Pente du long pan (degrés / %)",
+      rPenteCroupe: "Pente de la croupe (degrés / %)",
+      rCoupeAplomb: "Angle de coupe d'aplomb (arêtier)",
+      rCoupePied: "Angle de coupe de pied (arêtier)",
+      rSurface: "Surface totale des versants (4 pans)",
+      guideTitle: "Guide pratique : comprendre les cotes d'une toiture en croupe",
+      guideIntro: "La toiture en croupe (ou toit à quatre pans) se distingue par l'absence de pignons verticaux : les deux extrémités du bâtiment sont fermées par des versants inclinés reliés au reste de la couverture par des arêtiers.",
+      guideSub1: "1. Définition des mesures à saisir",
+      guideLi1: "Emprunt du long pan : distance horizontale mesurée en plan entre la sablière (ligne d'égout du grand côté) et l'axe du faîtage. Pour un bâtiment symétrique, il correspond à la moitié de la largeur hors-tout.",
+      guideLi2: "Emprunt de la croupe : recul horizontal mesuré en plan depuis la ligne d'égout du petit côté jusqu'au poinçon de ferme. Lorsque les deux emprunts sont égaux, l'arêtier est à 45° en plan.",
+      guideLi3: "Hauteur de couronnement (H) : élévation verticale entre le niveau d'appui des chevrons sur la sablière et le dessus du faîtage.",
+      guideSub2: "2. Exploitation des résultats sur chantier",
+      guideP2: "Les longueurs calculées correspondent aux axes théoriques épure (hors débord d'égout, épaisseur de faîtage et délardement de l'arêtier). Pensez toujours à ajouter la longueur de queue de chevron prévue pour l'avant-toit et à contrôler vos traits sur épure avant le débit définitif des bois."
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
+      pageTitle: "Framing Calculator: Hip Roof",
+      pageSub: "Calculate true rafter lengths, hip rafters, roof pitch, bevel/plumb angles, and total slope surface area.",
+      diagCap: "Schematic view: eave line, crown height, common rafters, and hip rafters.",
+      secInputs: "1. Roof Dimensions (in meters)",
+      lblEmpPan: "Main slope run / emprunt (m)",
+      lblEmpCroupe: "Hip end run / emprunt (m)",
+      lblEgout: "Total eave line length (m)",
+      lblHaut: "Crown height H (m)",
+      btnCalc: "Calculate",
+      btnReset: "Reset (0)",
+      btnCopy: "Copy",
+      btnCopied: "Copied!",
+      ridgeShortMsg: "Eave length is less than or equal to 2 × hip run: ridge length is clamped to 0.00 m.",
+      secResults: "2. Geometric Results",
+      rFaitage: "Ridge length",
+      rChevPan: "Common rafter (main slope)",
+      rChevCroupe: "Common rafter (hip end)",
+      rAretierPlan: "Horizontal hip projection",
+      rAretierReel: "True hip rafter length",
+      rPentePan: "Main slope pitch (deg / %)",
+      rPenteCroupe: "Hip end pitch (deg / %)",
+      rCoupeAplomb: "Hip plumb cut angle",
+      rCoupePied: "Hip seat / level cut angle",
+      rSurface: "Total roof area (4 slopes)",
+      guideTitle: "Practical Guide: Understanding Hip Roof Dimensions",
+      guideIntro: "A hip roof has sloped ends instead of vertical gables, meeting the main slopes along angled hip rafters.",
+      guideSub1: "1. Key Measurements to Enter",
+      guideLi1: "Main slope run (emprunt): horizontal run from the eave wall plate to the ridge centerline (half the building width for a symmetrical span).",
+      guideLi2: "Hip end run (emprunt): horizontal setback from the end eave to the ridge end. Equal runs create a 45° plan hip.",
+      guideLi3: "Crown height (H): vertical rise from rafter bearing at the wall plate to the top of the ridge.",
+      guideSub2: "2. Using Results on Site",
+      guideP2: "Calculated lengths follow theoretical centerline geometry excluding eave overhangs, ridge thickness, and hip backing bevels. Always add overhang tail allowance and verify layout lines before cutting timber."
+    }
+  };
+
+  function clampNonNeg(el) {
+    const val = parseFloat(el.value);
+    if (!Number.isNaN(val) && val < 0) el.value = "0";
+  }
+
+  function calcRoof() {
+    const d = dict[lang];
+    const empPan = Math.max(0, parseFloat(document.getElementById("inEmpPan").value) || 0);
+    const empCroupe = Math.max(0, parseFloat(document.getElementById("inEmpCroupe").value) || 0);
+    const egout = Math.max(0, parseFloat(document.getElementById("inEgout").value) || 0);
+    const h = Math.max(0, parseFloat(document.getElementById("inHaut").value) || 0);
+
+    const notice = document.getElementById("roofNotice");
+    const rawFaitage = egout - 2 * empCroupe;
+    const faitage = Math.max(0, rawFaitage);
+
+    if (egout > 0 && rawFaitage < 0) {
+      notice.textContent = d.ridgeShortMsg;
+      notice.style.display = "block";
+    } else {
+      notice.style.display = "none";
+    }
+
+    const chevPan = Math.hypot(empPan, h);
+    const chevCroupe = Math.hypot(empCroupe, h);
+    const aretierPlan = Math.hypot(empPan, empCroupe);
+    const aretierReel = Math.hypot(aretierPlan, h);
+
+    const pitchPanDeg = empPan > 0 ? (Math.atan2(h, empPan) * 180) / Math.PI : 0;
+    const pitchPanPct = empPan > 0 ? (h / empPan) * 100 : 0;
+
+    const pitchCroupeDeg = empCroupe > 0 ? (Math.atan2(h, empCroupe) * 180) / Math.PI : 0;
+    const pitchCroupePct = empCroupe > 0 ? (h / empCroupe) * 100 : 0;
+
+    const coupeAplomb = aretierReel > 0 ? (Math.atan2(aretierPlan, h) * 180) / Math.PI : 0;
+    const coupePied = aretierPlan > 0 ? (Math.atan2(h, aretierPlan) * 180) / Math.PI : 0;
+
+    const mainSlopeArea = 2 * (((faitage + egout) / 2) * chevPan);
+    const hipEndArea = 2 * (0.5 * empPan * chevCroupe);
+    const totalArea = mainSlopeArea + hipEndArea;
+
+    document.getElementById("outFaitage").textContent = `${faitage.toFixed(2)} m`;
+    document.getElementById("outChevPan").textContent = `${chevPan.toFixed(2)} m`;
+    document.getElementById("outChevCroupe").textContent = `${chevCroupe.toFixed(2)} m`;
+    document.getElementById("outAretierPlan").textContent = `${aretierPlan.toFixed(2)} m`;
+    document.getElementById("outAretierReel").textContent = `${aretierReel.toFixed(2)} m`;
+    document.getElementById("outPentePan").textContent = `${pitchPanDeg.toFixed(2)}° (${pitchPanPct.toFixed(1)} %)`;
+    document.getElementById("outPenteCroupe").textContent = `${pitchCroupeDeg.toFixed(2)}° (${pitchCroupePct.toFixed(1)} %)`;
+    document.getElementById("outCoupeAplomb").textContent = `${coupeAplomb.toFixed(2)}°`;
+    document.getElementById("outCoupePied").textContent = `${coupePied.toFixed(2)}°`;
+    document.getElementById("outSurface").textContent = `${totalArea.toFixed(2)} m²`;
+  }
+
+  function resetRoof() {
+    document.getElementById("inEmpPan").value = "0";
+    document.getElementById("inEmpCroupe").value = "0";
+    document.getElementById("inEgout").value = "0";
+    document.getElementById("inHaut").value = "0";
+    calcRoof();
+  }
+
+  function copyRoofSummary() {
+    const d = dict[lang];
+    const rows = [
+      `${d.rFaitage}: ${document.getElementById("outFaitage").textContent}`,
+      `${d.rChevPan}: ${document.getElementById("outChevPan").textContent}`,
+      `${d.rChevCroupe}: ${document.getElementById("outChevCroupe").textContent}`,
+      `${d.rAretierPlan}: ${document.getElementById("outAretierPlan").textContent}`,
+      `${d.rAretierReel}: ${document.getElementById("outAretierReel").textContent}`,
+      `${d.rPentePan}: ${document.getElementById("outPentePan").textContent}`,
+      `${d.rPenteCroupe}: ${document.getElementById("outPenteCroupe").textContent}`,
+      `${d.rCoupeAplomb}: ${document.getElementById("outCoupeAplomb").textContent}`,
+      `${d.rCoupePied}: ${document.getElementById("outCoupePied").textContent}`,
+      `${d.rSurface}: ${document.getElementById("outSurface").textContent}`
+    ].join("\n");
+
+    const btn = document.getElementById("copyRoofBtn");
+    const showCopied = () => {
+      btn.textContent = d.btnCopied;
+      setTimeout(() => { btn.textContent = d.btnCopy; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(rows).then(showCopied).catch(() => {});
+    }
+  }
+
+  function applyLang() {
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+    calcRoof();
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  applyLang();
+</script>
+
+</body>
+</html>
