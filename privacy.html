@@ -5,7 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Politique de Confidentialité | Calculette-tools</title>
 <meta name="description" content="Politique de confidentialité et protection des données personnelles sur Calculette-tools.">
+<link rel="canonical" href="https://calculette-tools.github.io/privacy.html">
 <link rel="stylesheet" href="style.css">
+<style>
+  .privacy-note {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    color: var(--ink);
+    font-size: 0.88rem;
+  }
+  .privacy-note a {
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .privacy-note a:hover {
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
 
@@ -24,8 +44,16 @@
     <h2 data-t="h2">2. Stockage local (localStorage)</h2>
     <p data-t="p2">Notre site utilise le stockage local de votre navigateur uniquement pour mémoriser votre préférence de langue (FR/EN) ainsi que vos horaires saisis dans la feuille hebdomadaire jusqu'à ce que vous cliquiez sur Reset.</p>
 
-    <h2 data-t="h3">3. Vos droits</h2>
+    <h2 data-t="h3">3. Vos droits et contrôle des données</h2>
     <p data-t="p3">Vous pouvez effacer à tout moment les données enregistrées localement en utilisant le bouton Reset des outils ou en vidant les données de navigation de votre navigateur.</p>
+
+    <h2 data-t="h4">4. Hébergement et services tiers</h2>
+    <p data-t="p4">Lors de l'affichage des pages statiques ou d'éventuels espaces publicitaires intégrés, des informations techniques standard de connexion (telles que l'adresse IP ou le type de navigateur) peuvent être traitées par l'hébergeur ou les régies tierces selon leurs propres politiques.</p>
+
+    <div class="privacy-note">
+      <span data-t="contactPrompt">Une question concernant cette politique de confidentialité ?</span>
+      <a href="contact.html" data-t="contactLink">Contactez-nous</a>.
+    </div>
   </div>
 </main>
 
@@ -35,28 +63,56 @@
 <script>
   const PAGE_DICT = {
     fr: {
+      docTitle: "Politique de Confidentialité | Calculette-tools",
+      docDesc: "Politique de confidentialité et protection des données personnelles sur Calculette-tools.",
       title: "Politique de Confidentialité",
       sub: "Dernière mise à jour : Novembre 2026",
       h1: "1. Traitement local des données",
       p1: "Les données saisies dans nos calculateurs (horaires, taux horaires, feuilles hebdomadaires, dimensions de toiture) sont traitées exclusivement dans votre navigateur. Aucune donnée de calcul n'est transmise à un serveur externe.",
       h2: "2. Stockage local (localStorage)",
       p2: "Notre site utilise le stockage local de votre navigateur uniquement pour mémoriser votre préférence de langue (FR/EN) ainsi que vos horaires saisis dans la feuille hebdomadaire jusqu'à ce que vous cliquiez sur Reset.",
-      h3: "3. Vos droits",
-      p3: "Vous pouvez effacer à tout moment les données enregistrées localement en utilisant le bouton Reset des outils ou en vidant les données de navigation de votre navigateur."
+      h3: "3. Vos droits et contrôle des données",
+      p3: "Vous pouvez effacer à tout moment les données enregistrées localement en utilisant le bouton Reset des outils ou en vidant les données de navigation de votre navigateur.",
+      h4: "4. Hébergement et services tiers",
+      p4: "Lors de l'affichage des pages statiques ou d'éventuels espaces publicitaires intégrés, des informations techniques standard de connexion (telles que l'adresse IP ou le type de navigateur) peuvent être traitées par l'hébergeur ou les régies tierces selon leurs propres politiques.",
+      contactPrompt: "Une question concernant cette politique de confidentialité ?",
+      contactLink: "Contactez-nous"
     },
     en: {
+      docTitle: "Privacy Policy | Calculette-tools",
+      docDesc: "Privacy policy and data handling practices for Calculette-tools.",
       title: "Privacy Policy",
       sub: "Last updated: November 2026",
       h1: "1. Local Browser Processing",
       p1: "All inputs entered into our calculators (shift times, hourly rates, weekly timesheets, roof dimensions) are processed strictly inside your browser. No calculation data is sent to any external server.",
       h2: "2. Local Storage",
       p2: "Our website uses browser localStorage solely to remember your language preference (FR/EN) and save your weekly timesheet entries on your device until you click Reset.",
-      h3: "3. Your Control",
-      p3: "You may clear locally stored data at any time by clicking the Reset button inside any tool or clearing site data in your browser settings."
+      h3: "3. Your Control Over Local Data",
+      p3: "You may clear locally stored data at any time by clicking the Reset button inside any tool or clearing site data in your browser settings.",
+      h4: "4. Hosting and Third-Party Services",
+      p4: "When serving static pages or any embedded ad slots, standard connection metadata (such as IP address or browser type) may be handled by hosting or third-party providers under their respective privacy policies.",
+      contactPrompt: "Have a question about this privacy policy?",
+      contactLink: "Contact us"
     }
   };
-  renderChrome("privacy");
-  applyLang();
+
+  function syncPrivacyMeta() {
+    const currentLang = (typeof lang !== "undefined" && PAGE_DICT[lang]) ? lang : "fr";
+    document.title = PAGE_DICT[currentLang].docTitle;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute("content", PAGE_DICT[currentLang].docDesc);
+  }
+
+  if (typeof renderChrome === "function") renderChrome("privacy");
+  if (typeof applyLang === "function") applyLang();
+  syncPrivacyMeta();
+
+  const langBtnEl = document.getElementById("langBtn");
+  if (langBtnEl) {
+    langBtnEl.addEventListener("click", () => {
+      setTimeout(syncPrivacyMeta, 0);
+    });
+  }
 </script>
 </body>
 </html>
