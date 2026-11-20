@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://alyasmalikit.github.io/calculette-tools/sitemap.xml
+
+Sitemap: https://calculette-tools.github.io/sitemap.xml
