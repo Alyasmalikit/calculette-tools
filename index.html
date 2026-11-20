@@ -61,7 +61,7 @@
   /* Header */
   .site-header {
     width: 100%;
-    background: rgba(255, 255, 255, 0.94);
+    background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--border);
     position: sticky;
@@ -551,25 +551,38 @@
     width: 100%;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    padding: 24px 0 34px;
+    padding: 22px 0 32px;
     text-align: center;
-    font-size: 0.86rem;
+    font-size: 0.85rem;
     color: var(--muted);
     margin-top: 24px;
   }
+  .footer-brand {
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
   .footer-links {
-    margin-top: 10px;
+    margin-top: 8px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    align-items: center;
+    gap: 10px 14px;
   }
   .footer-links a {
     color: var(--muted);
     text-decoration: none;
     font-weight: 500;
+    padding: 2px 4px;
+    border-radius: 6px;
+    transition: color 0.15s ease, background 0.15s ease;
   }
-  .footer-links a:hover { color: var(--primary); }
+  .footer-links a:hover,
+  .footer-links a.active {
+    color: var(--primary);
+    background: var(--soft);
+  }
 </style>
 </head>
 <body>
@@ -587,7 +600,7 @@
         <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
         <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
       </nav>
-      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
+      <button type="button" id="langBtn" class="lang-btn">EN</button>
     </div>
   </div>
 </header>
@@ -613,8 +626,8 @@
     <div id="slotsContainer"></div>
 
     <div class="toolbar">
-      <button type="button" class="btn" onclick="addSlot()" data-t="btnAddSlot">+ Ajouter une plage</button>
-      <button type="button" class="btn-sec" onclick="resetSlots()" data-t="btnReset">Reset (0)</button>
+      <button type="button" class="btn" id="addSlotBtn" data-t="btnAddSlot">+ Ajouter une plage</button>
+      <button type="button" class="btn-sec" id="resetSlotsBtn" data-t="btnReset">Reset (0)</button>
     </div>
 
     <div class="total-bar">
@@ -622,7 +635,7 @@
       <div class="total-vals">
         <span class="total-badge" id="totalHM">00h 00min</span>
         <span class="total-badge" id="totalDec">0.00 h</span>
-        <button type="button" class="btn-sec" id="copyTotalBtn" onclick="copyDailyTotal()" data-t="btnCopy">Copier</button>
+        <button type="button" class="btn-sec" id="copyTotalBtn" data-t="btnCopy">Copier</button>
       </div>
     </div>
   </div>
@@ -635,21 +648,21 @@
 
     <div class="sub-grid">
       <div>
-        <label data-t="lblDurA" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;">Durée totale (A)</label>
+        <label for="subAh" data-t="lblDurA" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;">Durée totale (A)</label>
         <div class="hm-pair">
-          <input type="number" id="subAh" min="0" value="0" oninput="clampNonNeg(this); calcSub()">
+          <input type="number" id="subAh" min="0" value="0">
           <span>h</span>
-          <input type="number" id="subAm" min="0" max="59" value="0" oninput="clampMins(this); calcSub()">
+          <input type="number" id="subAm" min="0" max="59" value="0">
           <span>min</span>
         </div>
       </div>
 
       <div>
-        <label data-t="lblDurB" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;">Pause / Temps à déduire (B)</label>
+        <label for="subBh" data-t="lblDurB" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;">Pause / Temps à déduire (B)</label>
         <div class="hm-pair">
-          <input type="number" id="subBh" min="0" value="0" oninput="clampNonNeg(this); calcSub()">
+          <input type="number" id="subBh" min="0" value="0">
           <span>h</span>
-          <input type="number" id="subBm" min="0" max="59" value="0" oninput="clampMins(this); calcSub()">
+          <input type="number" id="subBm" min="0" max="59" value="0">
           <span>min</span>
         </div>
       </div>
@@ -663,7 +676,7 @@
     <div id="subNotice" class="notice-box" role="status"></div>
 
     <div class="toolbar" style="margin-bottom:0;">
-      <button type="button" class="btn-sec" onclick="resetSub()" data-t="btnReset">Reset (0)</button>
+      <button type="button" class="btn-sec" id="resetSubBtn" data-t="btnReset">Reset (0)</button>
     </div>
   </div>
 
@@ -719,4 +732,106 @@
     <a href="convertisseur.html" class="tool-card">
       <div class="tool-top">
         <div class="tool-ico ico-amber">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="17 1 21 5 17
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+        </div>
+        <div>
+          <h3 data-t="t5Title">Convertisseur 1/100e</h3>
+          <p data-t="t5Desc">Convertissez vos heures et minutes en centièmes d'heure décimaux et inversement.</p>
+        </div>
+      </div>
+      <span class="tool-cta" data-t="openTool">Ouvrir l'outil →</span>
+    </a>
+
+    <a href="toiture-croupe.html" class="tool-card">
+      <div class="tool-top">
+        <div class="tool-ico ico-rose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+        </div>
+        <div>
+          <h3 data-t="t6Title">Toiture en Croupe</h3>
+          <p data-t="t6Desc">Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe et la surface des pans.</p>
+        </div>
+      </div>
+      <span class="tool-cta" data-t="openTool">Ouvrir l'outil →</span>
+    </a>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-brand">Calculette-tools</div>
+    <nav class="footer-links" aria-label="Navigation pied de page">
+      <a href="index.html" class="active" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+    </nav>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="terms.html" data-t="navDisclaimer">Disclaimer</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const LANG_KEY = "calculette_lang_v1";
+  let lang = "fr";
+
+  let slots = [
+    { start: "00:00", end: "00:00", active: true },
+    { start: "00:00", end: "00:00", active: true }
+  ];
+
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
+      heroPill: "100% Gratuit • Sans Inscription",
+      pageTitle: "Calculateur de Temps de Travail & Outils",
+      pageSub: "Additionnez vos plages horaires ou soustrayez vos pauses en heures-minutes et en centièmes d'heure (1/100e), directement ci-dessous.",
+      secAddTitle: "Additionner des plages horaires",
+      lblStart: "Heure début", lblEnd: "Heure fin", lblDur: "Durée", lblDec: "1/100e",
+      overnightBadge: "+1j",
+      btnAddSlot: "+ Ajouter une plage", btnReset: "Reset (0)", lblTotal: "TOTAL JOURNALIER",
+      btnCopy: "Copier", btnCopied: "Copié !",
+      subExceedMsg: "La pause (B) dépasse la durée totale (A) : le temps net est ramené à 00h 00min.",
+      secSubTitle: "Soustraire deux durées (ex. déduire une pause)",
+      lblDurA: "Durée totale (A)", lblDurB: "Pause / Temps à déduire (B)", lblNetResult: "Temps net (A − B)",
+      otherToolsTitle: "Suite complète d'outils",
+      otherToolsSub: "Cliquez sur un outil pour l'ouvrir",
+      t2Title: "Feuille Hebdomadaire",
+      t2Desc: "Pointage du lundi au dimanche avec sauvegarde locale, navigation par semaine et impression.",
+      t3Title: "Heures & Salaire",
+      t3Desc: "Estimez votre rémunération à partir de vos heures normales, heures sup et taux horaire.",
+      t4Title: "Calculateur de Durées",
+      t4Desc: "Additionnez ou soustrayez des durées en heures et minutes avec résultat en centièmes.",
+      t5Title: "Convertisseur 1/100e",
+      t5Desc: "Convertissez vos heures et minutes en centièmes d'heure décimaux et inversement.",
+      t6Title: "Toiture en Croupe",
+      t6Desc: "Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe et la surface des pans.",
+      openTool: "Ouvrir l'outil →"
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
+      heroPill: "100% Free • No Sign-Up",
+      pageTitle: "Working Time Calculator & Tools",
+      pageSub: "Add daily time slots or subtract breaks in hours-minutes and hundredths of an hour (1/100e) right below.",
+      secAddTitle: "Add Time Slots",
+      lblStart: "Start time", lblEnd: "End time", lblDur: "Duration", lblDec: "1/100e",
+      overnightBadge: "+1d",
+      btnAddSlot: "+ Add time slot", btnReset: "Reset (0)", lblTotal: "DAILY TOTAL",
+      btnCopy: "Copy", btnCopied: "Copied!",
+      subExceedMsg: "Break (B) exceeds total duration (A): net time is clamped to 00h 00min.",
+      secSubTitle: "Subtract Two Durations (e.g. deduct a break)",
+      lblDurA: "Total duration (A)", lblDurB: "Break / Time to deduct
