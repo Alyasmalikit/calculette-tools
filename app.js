@@ -1,6 +1,15 @@
 const LANG_KEY = "calculette_lang_v1";
+let lang = "fr";
 
-const GLOBAL_DICT = {
+try {
+  if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+} catch (e) {}
+
+function getLang() {
+  return lang;
+}
+
+const CHROME_DICT = {
   fr: {
     btn: "EN",
     navHome: "Accueil",
@@ -31,28 +40,10 @@ const GLOBAL_DICT = {
   }
 };
 
-function getLang() {
-  try {
-    return localStorage.getItem(LANG_KEY) === "en" ? "en" : "fr";
-  } catch (e) {
-    return "fr";
-  }
-}
-
-function setLang(newLang) {
-  try {
-    localStorage.setItem(LANG_KEY, newLang);
-  } catch (e) {}
-  applyLang();
-}
-
-function toggleLang() {
-  setLang(getLang() === "fr" ? "en" : "fr");
-}
-
 function renderChrome(activePage) {
   const headerEl = document.getElementById("siteHeader");
   const footerEl = document.getElementById("siteFooter");
+  const isAct = (key) => (activePage === key ? ' class="active"' : "");
 
   if (headerEl) {
     headerEl.innerHTML = `
@@ -60,13 +51,13 @@ function renderChrome(activePage) {
         <a href="index.html" class="brand"><span class="brand-dot"></span>Calculette-tools</a>
         <div class="nav-right">
           <nav class="nav-menu">
-            <a href="index.html" class="${activePage === 'home' ? 'active' : ''}" data-g="navHome">Accueil</a>
-            <a href="working-time-calculator.html" class="${activePage === 'wt' ? 'active' : ''}" data-g="navWt">Temps de Travail</a>
-            <a href="working-hour-calculator.html" class="${activePage === 'wh' ? 'active' : ''}" data-g="navWh">Heures &amp; Salaire</a>
-            <a href="time-calculator.html" class="${activePage === 'tc' ? 'active' : ''}" data-g="navTc">Durées</a>
-            <a href="feuille-hebdo.html" class="${activePage === 'fh' ? 'active' : ''}" data-g="navFh">Feuille Hebdo</a>
-            <a href="convertisseur.html" class="${activePage === 'cv' ? 'active' : ''}" data-g="navCv">Convertisseur</a>
-            <a href="toiture-croupe.html" class="${activePage === 'to' ? 'active' : ''}" data-g="navTo">Toiture</a>
+            <a href="index.html"${isAct("home")} data-t="navHome">Accueil</a>
+            <a href="working-time-calculator.html"${isAct("wt")} data-t="navWt">Temps de Travail</a>
+            <a href="working-hour-calculator.html"${isAct("wh")} data-t="navWh">Heures &amp; Salaire</a>
+            <a href="time-calculator.html"${isAct("tc")} data-t="navTc">Durées</a>
+            <a href="feuille-hebdo.html"${isAct("fh")} data-t="navFh">Feuille Hebdo</a>
+            <a href="convertisseur.html"${isAct("cv")} data-t="navCv">Convertisseur</a>
+            <a href="toiture-croupe.html"${isAct("to")} data-t="navTo">Toiture</a>
           </nav>
           <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
         </div>
@@ -77,21 +68,21 @@ function renderChrome(activePage) {
   if (footerEl) {
     footerEl.innerHTML = `
       <div class="container">
-        <div><strong>Calculette-tools</strong> — © 2026</div>
+        <div>Calculette-tools</div>
         <div class="footer-links">
-          <a href="index.html" data-g="navHome">Accueil</a>
-          <a href="working-time-calculator.html" data-g="navWt">Temps de Travail</a>
-          <a href="working-hour-calculator.html" data-g="navWh">Heures &amp; Salaire</a>
-          <a href="time-calculator.html" data-g="navTc">Durées</a>
-          <a href="feuille-hebdo.html" data-g="navFh">Feuille Hebdo</a>
-          <a href="convertisseur.html" data-g="navCv">Convertisseur</a>
-          <a href="toiture-croupe.html" data-g="navTo">Toiture</a>
+          <a href="index.html"${isAct("home")} data-t="navHome">Accueil</a>
+          <a href="working-time-calculator.html"${isAct("wt")} data-t="navWt">Temps de Travail</a>
+          <a href="working-hour-calculator.html"${isAct("wh")} data-t="navWh">Heures &amp; Salaire</a>
+          <a href="time-calculator.html"${isAct("tc")} data-t="navTc">Durées</a>
+          <a href="feuille-hebdo.html"${isAct("fh")} data-t="navFh">Feuille Hebdo</a>
+          <a href="convertisseur.html"${isAct("cv")} data-t="navCv">Convertisseur</a>
+          <a href="toiture-croupe.html"${isAct("to")} data-t="navTo">Toiture</a>
         </div>
         <div class="footer-links">
-          <a href="about.html" data-g="navAbout">À propos</a>
-          <a href="contact.html" data-g="navContact">Contact</a>
-          <a href="privacy.html" data-g="navPrivacy">Confidentialité</a>
-          <a href="terms.html" data-g="navDisclaimer">Disclaimer</a>
+          <a href="about.html"${isAct("about")} data-t="navAbout">À propos</a>
+          <a href="contact.html"${isAct("contact")} data-t="navContact">Contact</a>
+          <a href="privacy.html"${isAct("privacy")} data-t="navPrivacy">Confidentialité</a>
+          <a href="terms.html"${isAct("terms")} data-t="navDisclaimer">Disclaimer</a>
         </div>
       </div>
     `;
@@ -99,26 +90,22 @@ function renderChrome(activePage) {
 }
 
 function applyLang() {
-  const lang = getLang();
   document.documentElement.lang = lang;
-  const g = GLOBAL_DICT[lang];
+  const cd = CHROME_DICT[lang] || CHROME_DICT.fr;
+  const pd = (typeof PAGE_DICT !== "undefined" && PAGE_DICT[lang]) ? PAGE_DICT[lang] : {};
+  const merged = Object.assign({}, cd, pd);
+
   const btn = document.getElementById("langBtn");
-  if (btn) btn.textContent = g.btn;
+  if (btn && cd.btn) btn.textContent = cd.btn;
 
-  document.querySelectorAll("[data-g]").forEach(el => {
-    const key = el.getAttribute("data-g");
-    if (g[key]) el.textContent = g[key];
+  document.querySelectorAll("[data-t]").forEach((el) => {
+    const k = el.getAttribute("data-t");
+    if (merged[k] !== undefined) el.textContent = merged[k];
   });
+}
 
-  if (typeof PAGE_DICT !== "undefined" && PAGE_DICT[lang]) {
-    const p = PAGE_DICT[lang];
-    document.querySelectorAll("[data-t]").forEach(el => {
-      const key = el.getAttribute("data-t");
-      if (p[key]) el.textContent = p[key];
-    });
-  }
-
-  if (typeof onPageLangChange === "function") {
-    onPageLangChange(lang);
-  }
+function toggleLang() {
+  lang = lang === "fr" ? "en" : "fr";
+  try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+  applyLang();
 }
