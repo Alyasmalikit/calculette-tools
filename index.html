@@ -834,4 +834,263 @@
       btnCopy: "Copy", btnCopied: "Copied!",
       subExceedMsg: "Break (B) exceeds total duration (A): net time is clamped to 00h 00min.",
       secSubTitle: "Subtract Two Durations (e.g. deduct a break)",
-      lblDurA: "Total duration (A)", lblDurB: "Break / Time to deduct
+      lblDurA: "Total duration (A)", lblDurB: "Break / Time to deduct (B)", lblNetResult: "Net time (A − B)",
+      otherToolsTitle: "Complete Tool Suite",
+      otherToolsSub: "Select a tool to launch",
+      t2Title: "Weekly Timesheet",
+      t2Desc: "Monday-to-Sunday timesheet with local save, week switching, and printable view.",
+      t3Title: "Working Hours & Pay",
+      t3Desc: "Estimate earnings from regular hours, overtime bonus percentage, and hourly pay rate.",
+      t4Title: "Time Duration Calculator",
+      t4Desc: "Add or subtract hours and minutes with simultaneous decimal hundredths output.",
+      t5Title: "1/100e Converter",
+      t5Desc: "Convert hours and minutes into decimal hundredths of an hour and back.",
+      t6Title: "Hip Roof Framing",
+      t6Desc: "Calculate common and hip rafter lengths, cut angles, roof pitch, and slope surface area.",
+      openTool: "Open tool →"
+    }
+  };
+
+  function clampNonNeg(el) {
+    const val = parseFloat(el.value);
+    if (!Number.isNaN(val) && val < 0) el.value = "0";
+  }
+
+  function clampMins(el) {
+    const val = parseFloat(el.value);
+    if (Number.isNaN(val)) return;
+    if (val < 0) el.value = "0";
+    else if (val > 59) el.value = "59";
+  }
+
+  function calcSlotInfo(s) {
+    if (!s.start || !s.end) return { mins: 0, overnight: false };
+    const [sh, sm] = s.start.split(":").map(Number);
+    const [eh, em] = s.end.split(":").map(Number);
+    if ([sh, sm, eh, em].some(Number.isNaN)) return { mins: 0, overnight: false };
+    const startM = sh * 60 + sm;
+    let endM = eh * 60 + em;
+    const overnight = endM < startM;
+    if (overnight) endM += 1440;
+    return { mins: Math.max(0, endM - startM), overnight };
+  }
+
+  function fmtHM(mins) {
+    const sign = mins < 0 ? "-" : "";
+    const abs = Math.abs(Math.round(mins));
+    const h = String(Math.floor(abs / 60)).padStart(2, "0");
+    const m = String(abs % 60).padStart(2, "0");
+    return `${sign}${h}h ${m}min`;
+  }
+
+  function renderSlots() {
+    const d = dict[lang];
+    const container = document.getElementById("slotsContainer");
+    if (!container) return;
+    container.innerHTML = "";
+    let totalMins = 0;
+
+    slots.forEach((s, idx) => {
+      const { mins, overnight } = calcSlotInfo(s);
+      if (s.active) totalMins += mins;
+
+      const badge = overnight ? `<span class="overnight-tag">${d.overnightBadge}</span>` : "";
+      const row = document.createElement("div");
+      row.className = "slot-row" + (s.active ? "" : " disabled");
+
+      const chk = document.createElement("input");
+      chk.type = "checkbox";
+      chk.className = "slot-check";
+      chk.checked = !!s.active;
+      chk.setAttribute("aria-label", "Activer");
+      chk.addEventListener("change", function () {
+        slots[idx].active = this.checked;
+        renderSlots();
+      });
+
+      const f1 = document.createElement("div");
+      f1.className = "slot-field";
+      f1.innerHTML = `<label>${d.lblStart}</label>`;
+      const inpStart = document.createElement("input");
+      inpStart.type = "time";
+      inpStart.value = s.start;
+      inpStart.addEventListener("input", function () {
+        slots[idx].start = this.value;
+        renderSlots();
+      });
+      f1.appendChild(inpStart);
+
+      const f2 = document.createElement("div");
+      f2.className = "slot-field";
+      f2.innerHTML = `<label>${d.lblEnd}</label>`;
+      const inpEnd = document.createElement("input");
+      inpEnd.type = "time";
+      inpEnd.value = s.end;
+      inpEnd.addEventListener("input", function () {
+        slots[idx].end = this.value;
+        renderSlots();
+      });
+      f2.appendChild(inpEnd);
+
+      const f3 = document.createElement("div");
+      f3.className = "slot-field";
+      f3.innerHTML = `<label>${d.lblDur}</label><div class="out-pill">${fmtHM(mins)}${badge}</div>`;
+
+      const f4 = document.createElement("div");
+      f4.className = "slot-field";
+      f4.innerHTML = `<label>${d.lblDec}</label><div class="out-pill">${(mins / 60).toFixed(2)} h</div>`;
+
+      const delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "del-btn";
+      delBtn.textContent = "×";
+      delBtn.title = "Supprimer";
+      delBtn.disabled = slots.length <= 1;
+      delBtn.addEventListener("click", function () {
+        if (slots.length > 1) {
+          slots.splice(idx, 1);
+          renderSlots();
+        }
+      });
+
+      row.appendChild(chk);
+      row.appendChild(f1);
+      row.appendChild(f2);
+      row.appendChild(f3);
+      row.appendChild(f4);
+      row.appendChild(delBtn);
+      container.appendChild(row);
+    });
+
+    const totalHM = document.getElementById("totalHM");
+    const totalDec = document.getElementById("totalDec");
+    if (totalHM) totalHM.textContent = fmtHM(totalMins);
+    if (totalDec) totalDec.textContent = `${(totalMins / 60).toFixed(2)} h`;
+  }
+
+  function calcSub() {
+    const d = dict[lang];
+    const ahEl = document.getElementById("subAh");
+    const amEl = document.getElementById("subAm");
+    const bhEl = document.getElementById("subBh");
+    const bmEl = document.getElementById("subBm");
+    const subOut = document.getElementById("subOut");
+    const notice = document.getElementById("subNotice");
+    if (!ahEl || !amEl || !bhEl || !bmEl || !subOut || !notice) return;
+
+    const ah = Math.max(0, Math.floor(parseFloat(ahEl.value) || 0));
+    const am = Math.min(59, Math.max(0, Math.floor(parseFloat(amEl.value) || 0)));
+    const bh = Math.max(0, Math.floor(parseFloat(bhEl.value) || 0));
+    const bm = Math.min(59, Math.max(0, Math.floor(parseFloat(bmEl.value) || 0)));
+
+    const rawDiff = (ah * 60 + am) - (bh * 60 + bm);
+
+    if (rawDiff < 0) {
+      notice.textContent = d.subExceedMsg;
+      notice.style.display = "block";
+      subOut.textContent = "00h 00min (0.00 h)";
+      return;
+    }
+
+    notice.style.display = "none";
+    subOut.textContent = `${fmtHM(rawDiff)} (${(rawDiff / 60).toFixed(2)} h)`;
+  }
+
+  function applyLang() {
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    const langBtn = document.getElementById("langBtn");
+    if (langBtn) langBtn.textContent = d.btn;
+
+    document.querySelectorAll("[data-t]").forEach(function (el) {
+      const k = el.getAttribute("data-t");
+      if (k && Object.prototype.hasOwnProperty.call(d, k)) {
+        el.textContent = d[k];
+      }
+    });
+
+    renderSlots();
+    calcSub();
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    try {
+      const saved = localStorage.getItem(LANG_KEY);
+      if (saved === "en" || saved === "fr") lang = saved;
+    } catch (e) {}
+
+    const langBtn = document.getElementById("langBtn");
+    if (langBtn) langBtn.addEventListener("click", toggleLang);
+
+    const addSlotBtn = document.getElementById("addSlotBtn");
+    if (addSlotBtn) {
+      addSlotBtn.addEventListener("click", function () {
+        slots.push({ start: "00:00", end: "00:00", active: true });
+        renderSlots();
+      });
+    }
+
+    const resetSlotsBtn = document.getElementById("resetSlotsBtn");
+    if (resetSlotsBtn) {
+      resetSlotsBtn.addEventListener("click", function () {
+        slots = [
+          { start: "00:00", end: "00:00", active: true },
+          { start: "00:00", end: "00:00", active: true }
+        ];
+        renderSlots();
+      });
+    }
+
+    const copyTotalBtn = document.getElementById("copyTotalBtn");
+    if (copyTotalBtn) {
+      copyTotalBtn.addEventListener("click", function () {
+        const d = dict[lang];
+        const hm = document.getElementById("totalHM").textContent;
+        const dec = document.getElementById("totalDec").textContent;
+        const text = `${hm} (${dec})`;
+        const showCopied = function () {
+          copyTotalBtn.textContent = d.btnCopied;
+          setTimeout(function () { copyTotalBtn.textContent = d.btnCopy; }, 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(showCopied).catch(showCopied);
+        } else {
+          showCopied();
+        }
+      });
+    }
+
+    ["subAh", "subBh"].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", function () { clampNonNeg(this); calcSub(); });
+    });
+
+    ["subAm", "subBm"].forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", function () { clampMins(this); calcSub(); });
+    });
+
+    const resetSubBtn = document.getElementById("resetSubBtn");
+    if (resetSubBtn) {
+      resetSubBtn.addEventListener("click", function () {
+        ["subAh", "subAm", "subBh", "subBm"].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.value = "0";
+        });
+        calcSub();
+      });
+    }
+
+    applyLang();
+  });
+})();
+</script>
+
+</body>
+</html>
