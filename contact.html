@@ -5,7 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact | Calculette-tools</title>
 <meta name="description" content="Contactez l'équipe Calculette-tools pour toute question, suggestion d'amélioration ou signalement d'erreur.">
+<link rel="canonical" href="https://calculette-tools.github.io/contact.html">
 <link rel="stylesheet" href="style.css">
+<style>
+  .contact-list {
+    margin: 8px 0 12px;
+    padding-left: 20px;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .contact-list li {
+    margin-bottom: 6px;
+  }
+  .status-err {
+    background: #fef2f2;
+    border-color: #fecaca;
+    color: #991b1b;
+  }
+</style>
 </head>
 <body>
 
@@ -20,7 +37,7 @@
   <div class="grid-2">
     <div class="card">
       <h2 data-t="formTitle">Formulaire de Contact</h2>
-      <form onsubmit="handleContact(event)">
+      <form id="contactForm" onsubmit="handleContact(event)" novalidate>
         <div style="margin-bottom:10px;">
           <label for="cName" data-t="lblName">Votre nom</label>
           <input type="text" id="cName" required>
@@ -38,13 +55,18 @@
           <button type="button" class="btn-sec" onclick="resetContact()" data-t="btnReset">Reset</button>
         </div>
       </form>
-      <div id="cStatus" class="res-box" style="display:none;"></div>
+      <div id="cStatus" class="res-box" style="display:none;" role="status"></div>
     </div>
 
     <div class="card">
       <h2 data-t="infoTitle">Informations</h2>
       <p data-t="infoP1">Nous lisons chaque message afin d'améliorer la précision et l'ergonomie de nos calculateurs.</p>
       <p data-t="infoP2">Pour signaler un bug sur un calculateur précis, indiquez le nom de l'outil et les valeurs saisies.</p>
+      <ul class="contact-list">
+        <li data-t="tip1"><strong>Outil concerné :</strong> précisez la page (ex. Temps de Travail, Feuille Hebdo ou Toiture en Croupe).</li>
+        <li data-t="tip2"><strong>Valeurs saisies :</strong> indiquez les heures, taux ou cotes utilisées pour reproduire le cas.</li>
+        <li data-t="tip3"><strong>Appareil &amp; langue :</strong> mentionnez si le problème survient sur mobile, ordinateur, en FR ou en EN.</li>
+      </ul>
     </div>
   </div>
 </main>
@@ -55,40 +77,99 @@
 <script>
   const PAGE_DICT = {
     fr: {
+      docTitle: "Contact | Calculette-tools",
+      docDesc: "Contactez l'équipe Calculette-tools pour toute question, suggestion d'amélioration ou signalement d'erreur.",
       title: "Contactez-nous",
       sub: "Une suggestion de nouvel outil ou une remarque ? Envoyez-nous un message.",
       formTitle: "Formulaire de Contact",
       lblName: "Votre nom",
+      phName: "Ex. Camille Laurent",
       lblEmail: "Votre email",
+      phEmail: "nom@exemple.fr",
       lblMsg: "Message",
+      phMsg: "Décrivez votre question, suggestion ou remarque...",
       btnSend: "Envoyer",
       btnReset: "Reset",
+      errEmptyMsg: "Veuillez renseigner votre nom, une adresse email valide et un message.",
+      sentMsg: "Merci ! Votre message a bien été préparé / enregistré.",
       infoTitle: "Informations",
       infoP1: "Nous lisons chaque message afin d'améliorer la précision et l'ergonomie de nos calculateurs.",
-      infoP2: "Pour signaler un bug sur un calculateur précis, indiquez le nom de l'outil et les valeurs saisies."
+      infoP2: "Pour signaler un bug sur un calculateur précis, indiquez le nom de l'outil et les valeurs saisies.",
+      tip1: "Outil concerné : précisez la page (ex. Temps de Travail, Feuille Hebdo ou Toiture en Croupe).",
+      tip2: "Valeurs saisies : indiquez les heures, taux ou cotes utilisées pour reproduire le cas.",
+      tip3: "Appareil & langue : mentionnez si le problème survient sur mobile, ordinateur, en FR ou en EN."
     },
     en: {
+      docTitle: "Contact | Calculette-tools",
+      docDesc: "Contact the Calculette-tools team for questions, feature ideas, or calculation feedback.",
       title: "Contact Us",
       sub: "Have a feature suggestion or feedback? Send us a message.",
       formTitle: "Contact Form",
       lblName: "Your name",
+      phName: "e.g. Alex Morgan",
       lblEmail: "Your email",
+      phEmail: "name@example.com",
       lblMsg: "Message",
+      phMsg: "Share your question, feature idea, or feedback...",
       btnSend: "Send Message",
       btnReset: "Reset",
+      errEmptyMsg: "Please enter your name, a valid email address, and a message.",
+      sentMsg: "Thank you! Your message has been recorded.",
       infoTitle: "Information",
       infoP1: "We review every message to improve the accuracy and usability of our calculators.",
-      infoP2: "If you are reporting a calculation issue, please mention the tool name and the numbers entered."
+      infoP2: "If you are reporting a calculation issue, please mention the tool name and the numbers entered.",
+      tip1: "Affected tool: mention the page (e.g. Working Time, Weekly Timesheet, or Hip Roof).",
+      tip2: "Entered values: share the hours, rates, or dimensions used so we can check the case.",
+      tip3: "Device & language: let us know if you noticed it on mobile, desktop, FR, or EN."
     }
   };
 
+  function currentContactLang() {
+    if (typeof getLang === "function") {
+      const l = getLang();
+      if (PAGE_DICT[l]) return l;
+    }
+    return document.documentElement.lang === "en" ? "en" : "fr";
+  }
+
+  function syncContactUi() {
+    const l = currentContactLang();
+    const d = PAGE_DICT[l];
+    document.title = d.docTitle;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute("content", d.docDesc);
+
+    const nameInput = document.getElementById("cName");
+    const emailInput = document.getElementById("cEmail");
+    const msgInput = document.getElementById("cMsg");
+    if (nameInput) nameInput.placeholder = d.phName;
+    if (emailInput) emailInput.placeholder = d.phEmail;
+    if (msgInput) msgInput.placeholder = d.phMsg;
+  }
+
+  function isValidEmail(val) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val);
+  }
+
   function handleContact(e) {
     e.preventDefault();
+    const l = currentContactLang();
+    const d = PAGE_DICT[l];
     const box = document.getElementById("cStatus");
+
+    const nameVal = document.getElementById("cName").value.trim();
+    const emailVal = document.getElementById("cEmail").value.trim();
+    const msgVal = document.getElementById("cMsg").value.trim();
+
     box.style.display = "block";
-    box.textContent = getLang() === "en"
-      ? "Thank you! Your message has been recorded."
-      : "Merci ! Votre message a bien été enregistré.";
+    if (!nameVal || !isValidEmail(emailVal) || !msgVal) {
+      box.classList.add("status-err");
+      box.textContent = d.errEmptyMsg;
+      return;
+    }
+
+    box.classList.remove("status-err");
+    box.textContent = d.sentMsg;
   }
 
   function resetContact() {
@@ -96,12 +177,21 @@
     document.getElementById("cEmail").value = "";
     document.getElementById("cMsg").value = "";
     const box = document.getElementById("cStatus");
+    box.classList.remove("status-err");
     box.style.display = "none";
     box.textContent = "";
   }
 
-  renderChrome("contact");
-  applyLang();
+  if (typeof renderChrome === "function") renderChrome("contact");
+  if (typeof applyLang === "function") applyLang();
+  syncContactUi();
+
+  const langBtnEl = document.getElementById("langBtn");
+  if (langBtnEl) {
+    langBtnEl.addEventListener("click", () => {
+      setTimeout(syncContactUi, 0);
+    });
+  }
 </script>
 </body>
 </html>
