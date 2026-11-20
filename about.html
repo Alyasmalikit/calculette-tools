@@ -5,7 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>À propos | Calculette-tools</title>
 <meta name="description" content="Découvrez Calculette-tools : des outils gratuits en ligne pour le calcul d'heures de travail, feuilles hebdomadaires, conversion décimale et charpente.">
+<link rel="canonical" href="https://calculette-tools.github.io/about.html">
 <link rel="stylesheet" href="style.css">
+<style>
+  .about-list {
+    margin: 8px 0 16px;
+    padding-left: 20px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .about-list li {
+    margin-bottom: 6px;
+  }
+  .about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+</style>
 </head>
 <body>
 
@@ -20,8 +40,21 @@
   <div class="card">
     <h2 data-t="h1">Notre Mission</h2>
     <p data-t="p1">Calculette-tools met à disposition des salariés, indépendants, employeurs et artisans une suite complète d'outils gratuits pour simplifier le suivi du temps de travail, le calcul des heures supplémentaires, la conversion en centièmes d'heure (1/100e) et les calculs techniques de charpente à croupe.</p>
+
     <h2 data-t="h2">Pourquoi utiliser nos outils ?</h2>
     <p data-t="p2">Tous les calculs s'exécutent directement dans votre navigateur : aucune inscription n'est requise, vos données de feuille hebdomadaire restent stockées localement sur votre appareil et chaque outil est disponible en français et en anglais.</p>
+
+    <ul class="about-list">
+      <li data-t="b1"><strong>Calcul instantané :</strong> affichage simultané en heures-minutes (HH:MM) et en centièmes d'heure (1/100e) pour la paie et la facturation.</li>
+      <li data-t="b2"><strong>Confidentialité locale :</strong> vos plages horaires et feuilles hebdomadaires restent dans votre navigateur sans création de compte.</li>
+      <li data-t="b3"><strong>Adapté au terrain :</strong> interface réactive sur téléphone et ordinateur, avec aperçu imprimable pour les feuilles d'heures.</li>
+    </ul>
+
+    <div class="about-actions">
+      <a href="working-time-calculator.html" class="btn" data-t="ctaWt">Calculer le temps de travail</a>
+      <a href="feuille-hebdo.html" class="btn-sec" data-t="ctaFh">Ouvrir la feuille hebdo</a>
+      <a href="contact.html" class="btn-sec" data-t="ctaContact">Nous contacter</a>
+    </div>
   </div>
 </main>
 
@@ -31,24 +64,56 @@
 <script>
   const PAGE_DICT = {
     fr: {
+      docTitle: "À propos | Calculette-tools",
+      docDesc: "Découvrez Calculette-tools : des outils gratuits en ligne pour le calcul d'heures de travail, feuilles hebdomadaires, conversion décimale et charpente.",
       title: "À propos de Calculette-tools",
       sub: "Des calculateurs rapides, précis et accessibles sur mobile comme sur ordinateur.",
       h1: "Notre Mission",
       p1: "Calculette-tools met à disposition des salariés, indépendants, employeurs et artisans une suite complète d'outils gratuits pour simplifier le suivi du temps de travail, le calcul des heures supplémentaires, la conversion en centièmes d'heure (1/100e) et les calculs techniques de charpente à croupe.",
       h2: "Pourquoi utiliser nos outils ?",
-      p2: "Tous les calculs s'exécutent directement dans votre navigateur : aucune inscription n'est requise, vos données de feuille hebdomadaire restent stockées localement sur votre appareil et chaque outil est disponible en français et en anglais."
+      p2: "Tous les calculs s'exécutent directement dans votre navigateur : aucune inscription n'est requise, vos données de feuille hebdomadaire restent stockées localement sur votre appareil et chaque outil est disponible en français et en anglais.",
+      b1: "Calcul instantané : affichage simultané en heures-minutes (HH:MM) et en centièmes d'heure (1/100e) pour la paie et la facturation.",
+      b2: "Confidentialité locale : vos plages horaires et feuilles hebdomadaires restent dans votre navigateur sans création de compte.",
+      b3: "Adapté au terrain : interface réactive sur téléphone et ordinateur, avec aperçu imprimable pour les feuilles d'heures.",
+      ctaWt: "Calculer le temps de travail",
+      ctaFh: "Ouvrir la feuille hebdo",
+      ctaContact: "Nous contacter"
     },
     en: {
+      docTitle: "About | Calculette-tools",
+      docDesc: "Learn about Calculette-tools: free online calculators for working hours, weekly timesheets, decimal hour conversion, and hip roof framing.",
       title: "About Calculette-tools",
       sub: "Fast, accurate, and mobile-friendly online calculators for everyday work and framing.",
       h1: "Our Mission",
       p1: "Calculette-tools provides employees, freelancers, employers, and builders with a clean suite of free online tools to simplify work-hour tracking, overtime calculation, decimal hour conversion (1/100e), and hip roof framing geometry.",
       h2: "Why Use Our Tools?",
-      p2: "Every calculation runs directly inside your browser: no registration is required, your weekly timesheet stays saved locally on your device, and every tool supports seamless French and English switching."
+      p2: "Every calculation runs directly inside your browser: no registration is required, your weekly timesheet stays saved locally on your device, and every tool supports seamless French and English switching.",
+      b1: "Instant dual output: view results in both hours-minutes (HH:MM) and decimal hundredths (1/100e) for payroll and invoicing.",
+      b2: "Local privacy: your time slots and weekly sheets stay in your browser with no account required.",
+      b3: "Built for real workflows: responsive layout on phone and desktop, plus print-ready weekly sheets.",
+      ctaWt: "Calculate working time",
+      ctaFh: "Open weekly timesheet",
+      ctaContact: "Contact us"
     }
   };
-  renderChrome("about");
-  applyLang();
+
+  function syncAboutMeta() {
+    const currentLang = (typeof lang !== "undefined" && PAGE_DICT[lang]) ? lang : "fr";
+    document.title = PAGE_DICT[currentLang].docTitle;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute("content", PAGE_DICT[currentLang].docDesc);
+  }
+
+  if (typeof renderChrome === "function") renderChrome("about");
+  if (typeof applyLang === "function") applyLang();
+  syncAboutMeta();
+
+  const langBtnEl = document.getElementById("langBtn");
+  if (langBtnEl) {
+    langBtnEl.addEventListener("click", () => {
+      setTimeout(syncAboutMeta, 0);
+    });
+  }
 </script>
 </body>
 </html>
