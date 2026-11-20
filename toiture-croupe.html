@@ -31,6 +31,9 @@
     --primary: #2563eb;
     --primary-hover: #1d4ed8;
     --soft: #eff6ff;
+    --warn-bg: #fffbeb;
+    --warn-border: #fde68a;
+    --warn-ink: #92400e;
     --radius: 14px;
     --shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
   }
@@ -115,7 +118,7 @@
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 6px 12px;
+    padding: 7px 13px;
     border-radius: 8px;
     font-weight: 700;
     font-size: 0.82rem;
@@ -180,6 +183,15 @@
     min-width: 0;
   }
   .split-grid .card { margin-bottom: 0; }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .card-head h2 { margin: 0; font-size: 1.08rem; }
   .card h2 {
     margin: 0 0 14px;
     font-size: 1.08rem;
@@ -253,6 +265,17 @@
     cursor: pointer;
   }
   .btn-sec:hover { background: #e2e8f0; }
+  .btn-mini {
+    background: #f1f5f9;
+    color: var(--ink);
+    border: 1px solid #cbd5e1;
+    padding: 5px 11px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.78rem;
+    cursor: pointer;
+  }
+  .btn-mini:hover { background: #e2e8f0; }
 
   /* Results list */
   .res-list {
@@ -289,6 +312,25 @@
     color: var(--primary);
     text-align: right;
     white-space: nowrap;
+  }
+  @media (max-width: 520px) {
+    .res-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+    }
+    .res-val { text-align: left; }
+  }
+  .notice-box {
+    margin-top: 10px;
+    padding: 9px 12px;
+    border-radius: 9px;
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    color: var(--warn-ink);
+    font-size: 0.84rem;
+    font-weight: 600;
+    display: none;
   }
 
   /* Dedicated Ad Space */
@@ -363,23 +405,15 @@
   <div class="diagram-card">
     <svg viewBox="0 0 600 185" role="img" aria-label="Schéma géométrique d'une toiture en croupe">
       <rect x="0" y="0" width="600" height="185" rx="10" fill="#f8fafc"/>
-      <!-- Base footprint (Égout) -->
       <polygon points="80,145 520,145 475,115 125,115" fill="#e2e8f0" stroke="#64748b" stroke-width="2"/>
-      <!-- Back slope -->
       <polygon points="125,115 475,115 405,45 195,45" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
-      <!-- Left Hip (Croupe) -->
       <polygon points="80,145 125,115 195,45" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
-      <!-- Right Hip (Croupe) -->
       <polygon points="520,145 475,115 405,45" fill="#bfdbfe" stroke="#2563eb" stroke-width="2"/>
-      <!-- Front main slope (Long pan) -->
       <polygon points="80,145 520,145 405,45 195,45" fill="#eff6ff" fill-opacity="0.88" stroke="#1d4ed8" stroke-width="2.2"/>
-      <!-- Ridge (Faîtage) -->
       <line x1="195" y1="45" x2="405" y2="45" stroke="#dc2626" stroke-width="3"/>
-      <!-- Crown height dashed line -->
       <line x1="300" y1="45" x2="300" y2="130" stroke="#16a34a" stroke-width="2" stroke-dasharray="5,4"/>
       <circle cx="300" cy="45" r="3.5" fill="#16a34a"/>
       <circle cx="300" cy="130" r="3.5" fill="#16a34a"/>
-      <!-- Labels -->
       <text x="300" y="34" fill="#dc2626" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Faîtage</text>
       <text x="310" y="92" fill="#16a34a" font-family="system-ui, sans-serif" font-size="11" font-weight="700">Hauteur (H)</text>
       <text x="128" y="88" fill="#1e40af" font-family="system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="end">Arêtier</text>
@@ -397,22 +431,22 @@
 
       <div class="field">
         <label for="inEmpPan" data-t="lblEmpPan">Emprunt du long pan (m)</label>
-        <input type="number" id="inEmpPan" step="0.01" min="0" value="0" oninput="calcRoof()">
+        <input type="number" id="inEmpPan" step="0.01" min="0" value="0" oninput="clampNonNeg(this); calcRoof()">
       </div>
 
       <div class="field">
         <label for="inEmpCroupe" data-t="lblEmpCroupe">Emprunt de la croupe (m)</label>
-        <input type="number" id="inEmpCroupe" step="0.01" min="0" value="0" oninput="calcRoof()">
+        <input type="number" id="inEmpCroupe" step="0.01" min="0" value="0" oninput="clampNonNeg(this); calcRoof()">
       </div>
 
       <div class="field">
         <label for="inEgout" data-t="lblEgout">Longueur totale de la ligne d'égout (m)</label>
-        <input type="number" id="inEgout" step="0.01" min="0" value="0" oninput="calcRoof()">
+        <input type="number" id="inEgout" step="0.01" min="0" value="0" oninput="clampNonNeg(this); calcRoof()">
       </div>
 
       <div class="field">
         <label for="inHaut" data-t="lblHaut">Hauteur de couronnement H (m)</label>
-        <input type="number" id="inHaut" step="0.01" min="0" value="0" oninput="calcRoof()">
+        <input type="number" id="inHaut" step="0.01" min="0" value="0" oninput="clampNonNeg(this); calcRoof()">
       </div>
 
       <div class="toolbar">
@@ -423,7 +457,10 @@
 
     <!-- Outputs -->
     <div class="card">
-      <h2 data-t="secResults">2. Résultats géométriques</h2>
+      <div class="card-head">
+        <h2 data-t="secResults">2. Résultats géométriques</h2>
+        <button type="button" class="btn-mini" id="copyRoofBtn" onclick="copyRoofSummary()" data-t="btnCopy">Copier</button>
+      </div>
       <div class="res-list">
         <div class="res-row">
           <span class="res-label" data-t="rFaitage">Longueur du faîtage</span>
@@ -455,106 +492,4 @@
         </div>
         <div class="res-row">
           <span class="res-label" data-t="rCoupeAplomb">Angle de coupe d'aplomb (arêtier)</span>
-          <span class="res-val" id="outCoupeAplomb">0.00°</span>
-        </div>
-        <div class="res-row">
-          <span class="res-label" data-t="rCoupePied">Angle de coupe de pied (arêtier)</span>
-          <span class="res-val" id="outCoupePied">0.00°</span>
-        </div>
-        <div class="res-row highlight">
-          <span class="res-label" data-t="rSurface">Surface totale des versants (4 pans)</span>
-          <span class="res-val" id="outSurface">0.00 m²</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ad Space 1 -->
-  <div class="ad-slot" id="adSlotTop" aria-label="Advertisement space"></div>
-
-  <!-- Practical Guide -->
-  <section class="card">
-    <h2 data-t="guideTitle">Guide pratique : comprendre les cotes d'une toiture en croupe</h2>
-    <p data-t="guideIntro">La toiture en croupe (ou toit à quatre pans) se distingue par l'absence de pignons verticaux : les deux extrémités du bâtiment sont fermées par des versants inclinés reliés au reste de la couverture par des arêtiers.</p>
-
-    <h3 data-t="guideSub1">1. Définition des mesures à saisir</h3>
-    <ul class="guide-list">
-      <li data-t="guideLi1"><strong>Emprunt du long pan :</strong> distance horizontale mesurée en plan entre la sablière (ligne d'égout du grand côté) et l'axe du faîtage. Pour un bâtiment symétrique, il correspond à la moitié de la largeur hors-tout.</li>
-      <li data-t="guideLi2"><strong>Emprunt de la croupe :</strong> recul horizontal mesuré en plan depuis la ligne d'égout du petit côté jusqu'au poinçon de ferme. Lorsque les deux emprunts sont égaux, l'arêtier est à 45° en plan.</li>
-      <li data-t="guideLi3"><strong>Hauteur de couronnement (H) :</strong> élévation verticale entre le niveau d'appui des chevrons sur la sablière et le dessus du faîtage.</li>
-    </ul>
-
-    <h3 data-t="guideSub2">2. Exploitation des résultats sur chantier</h3>
-    <p data-t="guideP2">Les longueurs calculées correspondent aux axes théoriques épure (hors débord d'égout, épaisseur de faîtage et délardement de l'arêtier). Pensez toujours à ajouter la longueur de queue de chevron prévue pour l'avant-toit et à contrôler vos traits sur épure avant le débit définitif des bois.</p>
-  </section>
-
-  <!-- Ad Space 2 -->
-  <div class="ad-slot" id="adSlotBottom" aria-label="Advertisement space"></div>
-</main>
-
-<footer class="site-footer">
-  <div class="container">
-    <div>Calculette-tools</div>
-    <div class="footer-links">
-      <a href="index.html" data-t="navHome">Accueil</a>
-      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
-      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
-      <a href="time-calculator.html" data-t="navTc">Durées</a>
-      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
-      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
-      <a href="toiture-croupe.html" class="active" data-t="navTo">Toiture</a>
-    </div>
-    <div class="footer-links">
-      <a href="about.html" data-t="navAbout">À propos</a>
-      <a href="contact.html" data-t="navContact">Contact</a>
-      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
-      <a href="terms.html" data-t="navDisclaimer">Disclaimer</a>
-    </div>
-  </div>
-</footer>
-
-<script>
-  const LANG_KEY = "calculette_lang_v1";
-  let lang = "fr";
-
-  const dict = {
-    fr: {
-      btn: "EN",
-      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
-      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
-      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      pageTitle: "Calculateur Charpente : Toiture en Croupe",
-      pageSub: "Calculez les longueurs réelles des chevrons, des arêtiers, la pente, les angles de coupe et la surface totale des versants.",
-      diagCap: "Vue schématique : ligne d'égout, hauteur de couronnement, chevrons d'emprunt et arêtiers.",
-      secInputs: "1. Cotes de la toiture (en mètres)",
-      lblEmpPan: "Emprunt du long pan (m)",
-      lblEmpCroupe: "Emprunt de la croupe (m)",
-      lblEgout: "Longueur totale de la ligne d'égout (m)",
-      lblHaut: "Hauteur de couronnement H (m)",
-      btnCalc: "Calculer",
-      btnReset: "Reset (0)",
-      secResults: "2. Résultats géométriques",
-      rFaitage: "Longueur du faîtage",
-      rChevPan: "Chevron d'emprunt (long pan)",
-      rChevCroupe: "Chevron d'emprunt (croupe)",
-      rAretierPlan: "Projection horizontale de l'arêtier",
-      rAretierReel: "Longueur réelle de l'arêtier",
-      rPentePan: "Pente du long pan (degrés / %)",
-      rPenteCroupe: "Pente de la croupe (degrés / %)",
-      rCoupeAplomb: "Angle de coupe d'aplomb (arêtier)",
-      rCoupePied: "Angle de coupe de pied (arêtier)",
-      rSurface: "Surface totale des versants (4 pans)",
-      guideTitle: "Guide pratique : comprendre les cotes d'une toiture en croupe",
-      guideIntro: "La toiture en croupe (ou toit à quatre pans) se distingue par l'absence de pignons verticaux : les deux extrémités du bâtiment sont fermées par des versants inclinés reliés au reste de la couverture par des arêtiers.",
-      guideSub1: "1. Définition des mesures à saisir",
-      guideLi1: "Emprunt du long pan : distance horizontale mesurée en plan entre la sablière (ligne d'égout du grand côté) et l'axe du faîtage. Pour un bâtiment symétrique, il correspond à la moitié de la largeur hors-tout.",
-      guideLi2: "Emprunt de la croupe : recul horizontal mesuré en plan depuis la ligne d'égout du petit côté jusqu'au poinçon de ferme. Lorsque les deux emprunts sont égaux, l'arêtier est à 45° en plan.",
-      guideLi3: "Hauteur de couronnement (H) : élévation verticale entre le niveau d'appui des chevrons sur la sablière et le dessus du faîtage.",
-      guideSub2: "2. Exploitation des résultats sur chantier",
-      guideP2: "Les longueurs calculées correspondent aux axes théoriques épure (hors débord d'égout, épaisseur de faîtage et délardement de l'arêtier). Pensez toujours à ajouter la longueur de queue de chevron prévue pour l'avant-toit et à contrôler vos traits sur épure avant le débit définitif des bois."
-    },
-    en: {
-      btn: "FR",
-      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
-      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
-      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
+          <span class="res-val
