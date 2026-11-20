@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Page 1 — 3 Outils en 1 Page | Calculette-tools</title>
+<title>Calculette-tools | 3 Outils Temps &amp; 1/100e</title>
+<meta name="description" content="Additionnez vos plages horaires, soustrayez vos pauses et convertissez vos heures-minutes en centièmes d'heure (1/100e) sur une seule page.">
+<link rel="canonical" href="https://calculette-tools.github.io/">
 <style>
   :root {
     --bg: #f1f5f9;
@@ -13,357 +15,983 @@
     --border: #e2e8f0;
     --primary: #2563eb;
     --primary-dark: #1e40af;
+    --primary-hover: #1d4ed8;
     --soft: #eff6ff;
+    --warn-bg: #fffbeb;
+    --warn-border: #fde68a;
+    --warn-ink: #92400e;
     --radius: 16px;
-    --shadow: 0 10px 25px -6px rgba(15, 23, 42, 0.06);
+    --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
   }
   *, *::before, *::after { box-sizing: border-box; }
-  body {
+  html, body {
     margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--ink);
-    line-height: 1.5;
+    line-height: 1.6;
   }
-  .wrap {
-    max-width: 1060px;
+  .container {
+    width: 100%;
+    max-width: 1080px;
     margin: 0 auto;
-    padding: 20px 16px 48px;
+    padding: 0 18px;
   }
-  .top-bar {
+
+  /* Header */
+  .site-header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .nav-bar {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 0;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.18rem;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-left: 20px;
+    flex-shrink: 0;
+  }
+  .brand-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: #fff;
-    padding: 18px 22px;
-    border-radius: var(--radius);
-    margin-bottom: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 900;
+    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
   }
-  .top-bar h1 {
-    margin: 0 0 4px;
-    font-size: clamp(1.25rem, 2.8vw, 1.7rem);
-  }
-  .top-bar p {
-    margin: 0;
-    color: #dbeafe;
-    font-size: 0.9rem;
-  }
-  .pill {
-    background: rgba(255, 255, 255, 0.16);
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 0.78rem;
-    font-weight: 700;
-  }
-  .quick-jump {
+  .nav-right {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 20px;
+    min-width: 0;
+    max-width: 100%;
   }
-  .jump-btn {
-    text-decoration: none;
-    color: var(--ink);
+  .site-header .nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    min-width: 0;
+  }
+  .site-header .nav-menu a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f172a;
     background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
     border: 1px solid #94a3b8;
-    border-bottom: 3px solid #64748b;
-    padding: 7px 14px;
-    border-radius: 10px;
-    font-size: 0.84rem;
+    border-bottom: 2px solid #64748b;
+    text-decoration: none;
+    font-size: 0.78rem;
     font-weight: 700;
-    box-shadow: 0 2px 5px rgba(15, 23, 42, 0.08);
+    padding: 4px 8px;
+    border-radius: 7px;
+    white-space: nowrap;
+    box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(15, 23, 42, 0.12);
+    transition: transform 0.1s ease, box-shadow 0.12s ease, background 0.12s ease;
   }
-  .jump-btn:hover {
-    color: var(--primary-dark);
+  .site-header .nav-menu a:hover {
+    color: #1d4ed8;
+    background: linear-gradient(180deg, #ffffff 0%, #dbeafe 100%);
     border-color: #3b82f6;
     border-bottom-color: #1d4ed8;
+    transform: translateY(-1px);
   }
-  .tool-card {
+  .site-header .nav-menu a:active {
+    transform: translateY(1px);
+  }
+  .site-header .nav-menu a.active {
+    color: #ffffff;
+    background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+    border-color: #1d4ed8;
+    border-bottom-color: #1e3a8a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 3px rgba(29, 78, 216, 0.3);
+  }
+  .lang-btn {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    padding: 7px 13px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .lang-btn:hover { background: var(--primary); }
+  @media (max-width: 600px) {
+    .site-header .nav-menu a {
+      font-size: 0.76rem;
+      padding: 4px 7px;
+    }
+  }
+
+  /* Hero */
+  .hero-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 65%, #2563eb 100%);
+    color: #fff;
+    padding: 32px 0 40px;
+    margin-bottom: -16px;
+  }
+  .hero-pill {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #dbeafe;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .hero-banner h1 {
+    margin: 0 0 8px;
+    font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  .hero-banner p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 0.96rem;
+    max-width: 720px;
+  }
+
+  /* Stacked Tool Sections */
+  .tools-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-bottom: 24px;
+  }
+
+  .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 20px;
+    padding: 26px 24px;
     box-shadow: var(--shadow);
-    margin-bottom: 18px;
+    width: 100%;
+    min-width: 0;
   }
-  .tool-head {
+  .card-head {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
+    margin-bottom: 12px;
     padding-bottom: 12px;
-    margin-bottom: 16px;
     border-bottom: 1px solid var(--border);
   }
-  .tool-head h2 {
+  .card-head h2 {
     margin: 0;
-    font-size: 1.08rem;
+    font-size: 1.14rem;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
   }
-  .badge-num {
+  .step-tag {
     background: var(--soft);
-    color: var(--primary-dark);
+    color: var(--primary);
+    font-size: 0.8rem;
     font-weight: 800;
-    font-size: 0.78rem;
-    padding: 3px 9px;
-    border-radius: 6px;
+    padding: 4px 10px;
+    border-radius: 7px;
   }
-  .grid-2 {
+  .tool-intro {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+
+  /* Tool 1 Cells: Time Slot Row */
+  .slot-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    grid-template-columns: 30px minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1.15fr) minmax(0, 0.9fr) 38px;
     gap: 14px;
-    align-items: end;
-  }
-  label {
-    display: block;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: var(--muted);
-    margin-bottom: 5px;
-  }
-  .hm-box {
-    display: flex;
     align-items: center;
-    gap: 6px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 14px;
+    background: #f8fafc;
   }
-  .hm-box span {
-    font-size: 0.82rem;
+  .slot-row:hover {
+    border-color: #cbd5e1;
+    background: #ffffff;
+  }
+  .slot-row.disabled { opacity: 0.5; }
+  .slot-check {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    justify-self: center;
+    margin-top: 16px;
+  }
+  @media (max-width: 760px) {
+    .slot-row {
+      grid-template-columns: 32px repeat(2, minmax(0, 1fr)) 38px;
+      gap: 12px;
+    }
+    .slot-check, .del-btn { margin-top: 0; }
+  }
+  .slot-field label {
+    display: block;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--muted);
+    margin-bottom: 6px;
   }
-  input, select {
+  input[type="time"], input[type="number"] {
     width: 100%;
-    padding: 9px 10px;
+    min-width: 0;
+    padding: 9px 11px;
     border: 1px solid #cbd5e1;
-    border-radius: 9px;
-    font-size: 0.94rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
     font-weight: 600;
-    color: var(--ink);
     background: #fff;
+    color: var(--ink);
   }
-  input:focus, select:focus {
+  input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
   }
-  .btn-row {
+  .out-pill {
+    padding: 9px 12px;
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--primary-dark);
+    text-align: center;
+    white-space: nowrap;
+  }
+  .overnight-tag {
+    display: inline-block;
+    margin-left: 5px;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1e40af;
+    font-size: 0.7rem;
+    font-weight: 800;
+    vertical-align: middle;
+  }
+  .del-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+  .del-btn:hover:not(:disabled) { background: #fecaca; }
+  .del-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+  .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 14px;
+    gap: 12px;
+    margin: 16px 0 18px;
   }
   .btn {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: #fff;
     border: none;
-    padding: 9px 15px;
+    padding: 9px 16px;
     border-radius: 9px;
     font-weight: 700;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     cursor: pointer;
+    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.22);
   }
+  .btn:hover { transform: translateY(-1px); }
   .btn-sec {
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 9px 14px;
+    padding: 9px 15px;
     border-radius: 9px;
     font-weight: 600;
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     cursor: pointer;
   }
-  .out-box {
-    margin-top: 14px;
-    padding: 12px 15px;
-    border-radius: 11px;
-    background: var(--soft);
-    border: 1px solid #bfdbfe;
+  .btn-sec:hover { background: #e2e8f0; }
+
+  .total-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 1px solid #93c5fd;
+    border-radius: 12px;
+  }
+  .total-label {
+    font-size: 0.96rem;
     font-weight: 800;
-    font-size: 0.98rem;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .total-vals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+  .total-badge {
+    background: #fff;
+    border: 1px solid #bfdbfe;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1.05rem;
     color: var(--primary-dark);
+  }
+  .notice-box {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 9px;
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    color: var(--warn-ink);
+    font-size: 0.86rem;
+    font-weight: 600;
+    display: none;
+  }
+
+  /* Tool 2 & Tool 3 Grids with Generous Cell Spacing */
+  .sub-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 18px;
+    align-items: end;
+  }
+  .hm-pair {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hm-pair span {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+
+  .conv-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 20px;
+  }
+  .conv-box {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .conv-box h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--ink);
+  }
+
+  /* Editorial Guide Content Below the 3 Tools */
+  .guide-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+  }
+  .guide-card h2 {
+    margin: 0 0 10px;
+    font-size: 1.15rem;
+  }
+  .guide-card h3 {
+    margin: 18px 0 6px;
+    font-size: 1rem;
+  }
+  .guide-card p {
+    margin: 0 0 12px;
+    color: var(--muted);
+    font-size: 0.94rem;
+  }
+  .guide-list {
+    margin: 8px 0 0;
+    padding-left: 20px;
+    color: var(--muted);
+    font-size: 0.92rem;
+  }
+  .guide-list li {
+    margin-bottom: 8px;
+  }
+
+  /* Footer */
+  .site-footer {
+    width: 100%;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 24px 0 34px;
+    text-align: center;
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin-top: 28px;
+  }
+  .footer-links {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-links a:hover,
+  .footer-links a.active {
+    color: var(--primary);
+    font-weight: 700;
   }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="top-bar">
-    <div>
-      <h1>Test Page 1 — 3 Outils Réunis</h1>
-      <p>Prototype de test : 3 outils sur une seule page pour vérifier le confort d'utilisation sans toucher au site réel.</p>
+
+<header class="site-header">
+  <div class="container nav-bar">
+    <a href="index.html" class="brand"><span class="brand-badge">C</span>Calculette-tools</a>
+    <div class="nav-right">
+      <nav class="nav-menu">
+        <a href="index.html" class="active" data-t="navHome">Accueil</a>
+        <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+        <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+        <a href="time-calculator.html" data-t="navTc">Durées</a>
+        <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+        <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+        <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+      </nav>
+      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
     </div>
-    <span class="pill">TEST SANDBOX • PAGE 1</span>
+  </div>
+</header>
+
+<section class="hero-banner">
+  <div class="container">
+    <span class="hero-pill" data-t="heroPill">3 Outils Réunis • Calcul Instantané</span>
+    <h1 data-t="pageTitle">Calculateur de Temps, Pauses &amp; Centièmes (1/100e)</h1>
+    <p data-t="pageSub">Retrouvez vos trois calculateurs essentiels sur une seule page espacée : addition des plages horaires, déduction des pauses et conversion décimale.</p>
+  </div>
+</section>
+
+<main class="container">
+  <div class="tools-stack">
+
+    <!-- TOOL 01: Add Time Slots -->
+    <section class="card" aria-labelledby="t1Heading">
+      <div class="card-head">
+        <h2 id="t1Heading"><span class="step-tag">01</span> <span data-t="secAddTitle">Additionner des plages horaires</span></h2>
+      </div>
+      <p class="tool-intro" data-t="secAddDesc">Saisissez vos heures de début et de fin pour obtenir la durée de chaque plage et le total journalier en heures-minutes et en centièmes.</p>
+
+      <div id="slotsContainer"></div>
+
+      <div class="toolbar">
+        <button type="button" class="btn" id="addSlotBtn" data-t="btnAddSlot">+ Ajouter une plage</button>
+        <button type="button" class="btn-sec" id="resetSlotsBtn" data-t="btnReset">Reset (0)</button>
+      </div>
+
+      <div class="total-bar">
+        <span class="total-label" data-t="lblTotal">TOTAL JOURNALIER</span>
+        <div class="total-vals">
+          <span class="total-badge" id="totalHM">00h 00min</span>
+          <span class="total-badge" id="totalDec">0.00 h</span>
+          <button type="button" class="btn-sec" id="copyTotalBtn" data-t="btnCopy">Copier</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOOL 02: Subtract Durations -->
+    <section class="card" aria-labelledby="t2Heading">
+      <div class="card-head">
+        <h2 id="t2Heading"><span class="step-tag">02</span> <span data-t="secSubTitle">Soustraire deux durées (ex. déduire une pause)</span></h2>
+      </div>
+      <p class="tool-intro" data-t="secSubDesc">Déduisez une pause ou un temps d'arrêt (B) d'une durée globale (A) pour calculer le temps de travail effectif.</p>
+
+      <div class="sub-grid">
+        <div>
+          <label for="subAh" data-t="lblDurA" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;">Durée totale (A)</label>
+          <div class="hm-pair">
+            <input type="number" id="subAh" min="0" value="0">
+            <span>h</span>
+            <input type="number" id="subAm" min="0" max="59" value="0">
+            <span>min</span>
+          </div>
+        </div>
+
+        <div>
+          <label for="subBh" data-t="lblDurB" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;">Pause / Temps à déduire (B)</label>
+          <div class="hm-pair">
+            <input type="number" id="subBh" min="0" value="0">
+            <span>h</span>
+            <input type="number" id="subBm" min="0" max="59" value="0">
+            <span>min</span>
+          </div>
+        </div>
+
+        <div>
+          <label data-t="lblNetResult" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;">Temps net (A − B)</label>
+          <div class="out-pill" id="subOut">00h 00min (0.00 h)</div>
+        </div>
+      </div>
+
+      <div id="subNotice" class="notice-box" role="status"></div>
+
+      <div class="toolbar" style="margin-bottom:0;">
+        <button type="button" class="btn-sec" id="resetSubBtn" data-t="btnReset">Reset (0)</button>
+      </div>
+    </section>
+
+    <!-- TOOL 03: Decimal 1/100e Converter -->
+    <section class="card" aria-labelledby="t3Heading">
+      <div class="card-head">
+        <h2 id="t3Heading"><span class="step-tag">03</span> <span data-t="secConvTitle">Convertisseur Heures-Minutes ↔ Centièmes (1/100e)</span></h2>
+      </div>
+      <p class="tool-intro" data-t="secConvDesc">Convertissez rapidement des heures et minutes en heures décimales (base 100) ou des heures décimales en heures et minutes.</p>
+
+      <div class="conv-grid">
+        <div class="conv-box">
+          <h3 data-t="convHmToDecTitle">Heures &amp; Minutes → Centièmes (1/100e)</h3>
+          <div class="hm-pair">
+            <input type="number" id="convH" min="0" value="0" aria-label="Heures">
+            <span>h</span>
+            <input type="number" id="convM" min="0" max="59" value="0" aria-label="Minutes">
+            <span>min</span>
+          </div>
+          <div>
+            <label data-t="lblDecOut" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;">Résultat décimal</label>
+            <div class="out-pill" id="convDecOut">0.00 h</div>
+          </div>
+        </div>
+
+        <div class="conv-box">
+          <h3 data-t="convDecToHmTitle">Centièmes (1/100e) → Heures &amp; Minutes</h3>
+          <div>
+            <label for="convDecIn" data-t="lblDecIn" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;">Heures décimales (ex. 7.50)</label>
+            <input type="number" id="convDecIn" min="0" step="0.01" value="0.00">
+          </div>
+          <div>
+            <label data-t="lblHmOut" style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:6px;">Résultat heures-minutes</label>
+            <div class="out-pill" id="convHmOut">00h 00min</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar" style="margin-bottom:0;">
+        <button type="button" class="btn-sec" id="resetConvBtn" data-t="btnReset">Reset (0)</button>
+      </div>
+    </section>
+
   </div>
 
-  <div class="quick-jump">
-    <a href="#tool1" class="jump-btn">1. Addition / Soustraction Durées</a>
-    <a href="#tool2" class="jump-btn">2. Convertisseur 1/100e</a>
-    <a href="#tool3" class="jump-btn">3. Estimation Salaire</a>
+  <!-- Supporting Content Section -->
+  <article class="guide-card">
+    <h2 data-t="guideTitle">Guide pratique : lecture en heures-minutes et centièmes d'heure</h2>
+    <p data-t="guideP1">En suivi d'activité et en préparation de paie, les horaires sont souvent saisis en heures et minutes (base 60), tandis que les feuilles de pointage ou logiciels utilisent fréquemment les centièmes d'heure (base 100).</p>
+
+    <h3 data-t="guideH2">Comment fonctionne le passage de la base 60 à la base 100 ?</h3>
+    <p data-t="guideP2">Chaque heure vaut 1.00 centième et chaque minute correspond à 1/60e d'heure (environ 0.0167 h). Par exemple, 30 minutes correspondent à 0.50 h, 15 minutes à 0.25 h et 45 minutes à 0.75 h.</p>
+
+    <ul class="guide-list">
+      <li data-t="guideB1"><strong>Plages de nuit :</strong> lorsque l'heure de fin est antérieure à l'heure de début, le calcul passe automatiquement au lendemain (+1j / +1d).</li>
+      <li data-t="guideB2"><strong>Déduction de pause :</strong> utilisez le bloc 02 pour retirer une pause repas ou un arrêt sans fausser vos totaux.</li>
+      <li data-t="guideB3"><strong>Conversion bidirectionnelle :</strong> utilisez le bloc 03 pour passer librement d'un format d'heures à l'autre.</li>
+    </ul>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>Calculette-tools</div>
+    <div class="footer-links">
+      <a href="index.html" class="active" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+    </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
+      <a href="terms.html" data-t="navDisclaimer">Disclaimer</a>
+    </div>
   </div>
-
-  <!-- TOOL 1: Duration Add / Subtract -->
-  <section id="tool1" class="tool-card">
-    <div class="tool-head">
-      <h2><span class="badge-num">OUTIL 1</span> Calculateur de Durées (HH:MM &amp; 1/100e)</h2>
-    </div>
-    <div class="grid-2">
-      <div>
-        <label>Durée 1</label>
-        <div class="hm-box">
-          <input type="number" id="d1h" min="0" value="0" oninput="calcDurations()">
-          <span>h</span>
-          <input type="number" id="d1m" min="0" max="59" value="0" oninput="calcDurations()">
-          <span>min</span>
-        </div>
-      </div>
-      <div>
-        <label>Opération</label>
-        <select id="dOp" onchange="calcDurations()">
-          <option value="add">Addition (+)</option>
-          <option value="sub">Soustraction (−)</option>
-        </select>
-      </div>
-      <div>
-        <label>Durée 2</label>
-        <div class="hm-box">
-          <input type="number" id="d2h" min="0" value="0" oninput="calcDurations()">
-          <span>h</span>
-          <input type="number" id="d2m" min="0" max="59" value="0" oninput="calcDurations()">
-          <span>min</span>
-        </div>
-      </div>
-    </div>
-    <div class="out-box" id="dOut">00h 00min (0.00 h)</div>
-    <div class="btn-row">
-      <button type="button" class="btn-sec" onclick="resetDurations()">Reset</button>
-    </div>
-  </section>
-
-  <!-- TOOL 2: Decimal 1/100e Converter -->
-  <section id="tool2" class="tool-card">
-    <div class="tool-head">
-      <h2><span class="badge-num">OUTIL 2</span> Convertisseur Heures-Minutes ↔ Centièmes (1/100e)</h2>
-    </div>
-    <div class="grid-2">
-      <div>
-        <label>Heures &amp; Minutes → Centièmes (1/100e)</label>
-        <div class="hm-box">
-          <input type="number" id="cvH" min="0" value="0" oninput="hmToDec()">
-          <span>h</span>
-          <input type="number" id="cvM" min="0" max="59" value="0" oninput="hmToDec()">
-          <span>min</span>
-        </div>
-        <div class="out-box" id="cvDecOut">0.00 h</div>
-      </div>
-      <div>
-        <label>Centièmes décimaux (ex. 7.50) → Heures &amp; Minutes</label>
-        <input type="number" id="cvDecIn" step="0.01" min="0" value="0" oninput="decToHm()">
-        <div class="out-box" id="cvHmOut">00h 00min</div>
-      </div>
-    </div>
-    <div class="btn-row">
-      <button type="button" class="btn-sec" onclick="resetConverter()">Reset</button>
-    </div>
-  </section>
-
-  <!-- TOOL 3: Quick Hourly Pay Estimator -->
-  <section id="tool3" class="tool-card">
-    <div class="tool-head">
-      <h2><span class="badge-num">OUTIL 3</span> Estimation Rapide Salaire Horaire</h2>
-    </div>
-    <div class="grid-2">
-      <div>
-        <label>Heures (en centièmes, ex. 39.50)</label>
-        <input type="number" id="payHours" step="0.01" min="0" value="0" oninput="calcPay()">
-      </div>
-      <div>
-        <label>Taux horaire (€ / unité)</label>
-        <input type="number" id="payRate" step="0.01" min="0" value="0" oninput="calcPay()">
-      </div>
-      <div>
-        <label>Majoration / Bonus (%)</label>
-        <input type="number" id="payBonus" step="1" min="0" value="0" oninput="calcPay()">
-      </div>
-    </div>
-    <div class="out-box" id="payOut">Total estimé : 0.00</div>
-    <div class="btn-row">
-      <button type="button" class="btn-sec" onclick="resetPay()">Reset</button>
-    </div>
-  </section>
-</div>
+</footer>
 
 <script>
-  function fmtHM(totalMins) {
-    const sign = totalMins < 0 ? "-" : "";
-    const abs = Math.abs(Math.round(totalMins));
+  const LANG_KEY = "calculette_lang_v1";
+  let lang = "fr";
+
+  let slots = [
+    { start: "00:00", end: "00:00", active: true },
+    { start: "00:00", end: "00:00", active: true }
+  ];
+
+  const dict = {
+    fr: {
+      btn: "EN",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
+      heroPill: "3 Outils Réunis • Calcul Instantané",
+      pageTitle: "Calculateur de Temps, Pauses & Centièmes (1/100e)",
+      pageSub: "Retrouvez vos trois calculateurs essentiels sur une seule page espacée : addition des plages horaires, déduction des pauses et conversion décimale.",
+      secAddTitle: "Additionner des plages horaires",
+      secAddDesc: "Saisissez vos heures de début et de fin pour obtenir la durée de chaque plage et le total journalier en heures-minutes et en centièmes.",
+      lblStart: "Heure début", lblEnd: "Heure fin", lblDur: "Durée", lblDec: "1/100e",
+      overnightBadge: "+1j",
+      btnAddSlot: "+ Ajouter une plage", btnReset: "Reset (0)", lblTotal: "TOTAL JOURNALIER",
+      btnCopy: "Copier", btnCopied: "Copié !",
+      subExceedMsg: "La pause (B) dépasse la durée totale (A) : le temps net est ramené à 00h 00min.",
+      secSubTitle: "Soustraire deux durées (ex. déduire une pause)",
+      secSubDesc: "Déduisez une pause ou un temps d'arrêt (B) d'une durée globale (A) pour calculer le temps de travail effectif.",
+      lblDurA: "Durée totale (A)", lblDurB: "Pause / Temps à déduire (B)", lblNetResult: "Temps net (A − B)",
+      secConvTitle: "Convertisseur Heures-Minutes ↔ Centièmes (1/100e)",
+      secConvDesc: "Convertissez rapidement des heures et minutes en heures décimales (base 100) ou des heures décimales en heures et minutes.",
+      convHmToDecTitle: "Heures & Minutes → Centièmes (1/100e)",
+      lblDecOut: "Résultat décimal",
+      convDecToHmTitle: "Centièmes (1/100e) → Heures & Minutes",
+      lblDecIn: "Heures décimales (ex. 7.50)",
+      lblHmOut: "Résultat heures-minutes",
+      guideTitle: "Guide pratique : lecture en heures-minutes et centièmes d'heure",
+      guideP1: "En suivi d'activité et en préparation de paie, les horaires sont souvent saisis en heures et minutes (base 60), tandis que les feuilles de pointage ou logiciels utilisent fréquemment les centièmes d'heure (base 100).",
+      guideH2: "Comment fonctionne le passage de la base 60 à la base 100 ?",
+      guideP2: "Chaque heure vaut 1.00 centième et chaque minute correspond à 1/60e d'heure (environ 0.0167 h). Par exemple, 30 minutes correspondent à 0.50 h, 15 minutes à 0.25 h et 45 minutes à 0.75 h.",
+      guideB1: "Plages de nuit : lorsque l'heure de fin est antérieure à l'heure de début, le calcul passe automatiquement au lendemain (+1j / +1d).",
+      guideB2: "Déduction de pause : utilisez le bloc 02 pour retirer une pause repas ou un arrêt sans fausser vos totaux.",
+      guideB3: "Conversion bidirectionnelle : utilisez le bloc 03 pour passer librement d'un format d'heures à l'autre."
+    },
+    en: {
+      btn: "FR",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
+      heroPill: "3 Tools Combined • Instant Calculation",
+      pageTitle: "Working Time, Breaks & 1/100e Calculator",
+      pageSub: "Use all three essential calculators on one spacious page: add time slots, subtract breaks, and convert decimal hours.",
+      secAddTitle: "Add Time Slots",
+      secAddDesc: "Enter start and end times to see each slot's duration and the daily total in hours-minutes and hundredths.",
+      lblStart: "Start time", lblEnd: "End time", lblDur: "Duration", lblDec: "1/100e",
+      overnightBadge: "+1d",
+      btnAddSlot: "+ Add time slot", btnReset: "Reset (0)", lblTotal: "DAILY TOTAL",
+      btnCopy: "Copy", btnCopied: "Copied!",
+      subExceedMsg: "Break (B) exceeds total duration (A): net time is clamped to 00h 00min.",
+      secSubTitle: "Subtract Two Durations (e.g. deduct a break)",
+      secSubDesc: "Deduct a break or downtime (B) from a total duration (A) to calculate net working time.",
+      lblDurA: "Total duration (A)", lblDurB: "Break / Time to deduct (B)", lblNetResult: "Net time (A − B)",
+      secConvTitle: "Hours-Minutes ↔ Hundredths (1/100e) Converter",
+      secConvDesc: "Convert hours and minutes into decimal hours (base 100) or decimal hours into hours and minutes.",
+      convHmToDecTitle: "Hours & Minutes → Hundredths (1/100e)",
+      lblDecOut: "Decimal output",
+      convDecToHmTitle: "Hundredths (1/100e) → Hours & Minutes",
+      lblDecIn: "Decimal hours (e.g. 7.50)",
+      lblHmOut: "Hours-minutes output",
+      guideTitle: "Practical Guide: Reading Hours-Minutes and Decimal Hundredths",
+      guideP1: "In time tracking and payroll prep, shifts are often entered in hours and minutes (base 60), while timesheets and software commonly use decimal hundredths (base 100).",
+      guideH2: "How does base 60 convert to base 100?",
+      guideP2: "Each hour equals 1.00 hundredth and each minute equals 1/60th of an hour (about 0.0167 h). For example, 30 minutes is 0.50 h, 15 minutes is 0.25 h, and 45 minutes is 0.75 h.",
+      guideB1: "Overnight shifts: when end time is earlier than start time, calculation rolls over to the next day (+1j / +1d).",
+      guideB2: "Break deduction: use block 02 to subtract meal or rest breaks without distorting your totals.",
+      guideB3: "Two-way conversion: use block 03 to move freely between hours-minutes and decimal hundredths."
+    }
+  };
+
+  function clampNonNeg(el) {
+    const val = parseFloat(el.value);
+    if (!Number.isNaN(val) && val < 0) el.value = "0";
+  }
+
+  function clampMins(el) {
+    const val = parseFloat(el.value);
+    if (Number.isNaN(val)) return;
+    if (val < 0) el.value = "0";
+    else if (val > 59) el.value = "59";
+  }
+
+  function calcSlotInfo(s) {
+    if (!s.start || !s.end) return { mins: 0, overnight: false };
+    const [sh, sm] = s.start.split(":").map(Number);
+    const [eh, em] = s.end.split(":").map(Number);
+    if ([sh, sm, eh, em].some(Number.isNaN)) return { mins: 0, overnight: false };
+    const startM = sh * 60 + sm;
+    let endM = eh * 60 + em;
+    const overnight = endM < startM;
+    if (overnight) endM += 1440;
+    return { mins: Math.max(0, endM - startM), overnight };
+  }
+
+  function fmtHM(mins) {
+    const sign = mins < 0 ? "-" : "";
+    const abs = Math.abs(Math.round(mins));
     const h = String(Math.floor(abs / 60)).padStart(2, "0");
     const m = String(abs % 60).padStart(2, "0");
     return `${sign}${h}h ${m}min`;
   }
 
-  function calcDurations() {
-    const h1 = Math.max(0, parseInt(document.getElementById("d1h").value, 10) || 0);
-    const m1 = Math.min(59, Math.max(0, parseInt(document.getElementById("d1m").value, 10) || 0));
-    const h2 = Math.max(0, parseInt(document.getElementById("d2h").value, 10) || 0);
-    const m2 = Math.min(59, Math.max(0, parseInt(document.getElementById("d2m").value, 10) || 0));
-    const op = document.getElementById("dOp").value;
+  function renderSlots() {
+    const d = dict[lang];
+    const container = document.getElementById("slotsContainer");
+    if (!container) return;
+    container.innerHTML = "";
+    let totalMins = 0;
 
-    const a = h1 * 60 + m1;
-    const b = h2 * 60 + m2;
-    const res = op === "add" ? a + b : Math.max(0, a - b);
-    document.getElementById("dOut").textContent = `${fmtHM(res)} (${(res / 60).toFixed(2)} h)`;
+    slots.forEach((s, idx) => {
+      const { mins, overnight } = calcSlotInfo(s);
+      if (s.active) totalMins += mins;
+
+      const badge = overnight ? `<span class="overnight-tag">${d.overnightBadge}</span>` : "";
+      const row = document.createElement("div");
+      row.className = "slot-row" + (s.active ? "" : " disabled");
+
+      const chk = document.createElement("input");
+      chk.type = "checkbox";
+      chk.className = "slot-check";
+      chk.checked = !!s.active;
+      chk.setAttribute("aria-label", "Activer");
+      chk.addEventListener("change", function () {
+        slots[idx].active = this.checked;
+        renderSlots();
+      });
+
+      const f1 = document.createElement("div");
+      f1.className = "slot-field";
+      f1.innerHTML = `<label>${d.lblStart}</label>`;
+      const inpStart = document.createElement("input");
+      inpStart.type = "time";
+      inpStart.value = s.start;
+      inpStart.addEventListener("input", function () {
+        slots[idx].start = this.value;
+        renderSlots();
+      });
+      f1.appendChild(inpStart);
+
+      const f2 = document.createElement("div");
+      f2.className = "slot-field";
+      f2.innerHTML = `<label>${d.lblEnd}</label>`;
+      const inpEnd = document.createElement("input");
+      inpEnd.type = "time";
+      inpEnd.value = s.end;
+      inpEnd.addEventListener("input", function () {
+        slots[idx].end = this.value;
+        renderSlots();
+      });
+      f2.appendChild(inpEnd);
+
+      const f3 = document.createElement("div");
+      f3.className = "slot-field";
+      f3.innerHTML = `<label>${d.lblDur}</label><div class="out-pill">${fmtHM(mins)}${badge}</div>`;
+
+      const f4 = document.createElement("div");
+      f4.className = "slot-field";
+      f4.innerHTML = `<label>${d.lblDec}</label><div class="out-pill">${(mins / 60).toFixed(2)} h</div>`;
+
+      const delBtn = document.createElement("button");
+      delBtn.type = "button";
+      delBtn.className = "del-btn";
+      delBtn.textContent = "×";
+      delBtn.title = "Supprimer";
+      delBtn.disabled = slots.length <= 1;
+      delBtn.addEventListener("click", function () {
+        if (slots.length > 1) {
+          slots.splice(idx, 1);
+          renderSlots();
+        }
+      });
+
+      row.appendChild(chk);
+      row.appendChild(f1);
+      row.appendChild(f2);
+      row.appendChild(f3);
+      row.appendChild(f4);
+      row.appendChild(delBtn);
+      container.appendChild(row);
+    });
+
+    document.getElementById("totalHM").textContent = fmtHM(totalMins);
+    document.getElementById("totalDec").textContent = `${(totalMins / 60).toFixed(2)} h`;
   }
 
-  function resetDurations() {
-    document.getElementById("d1h").value = 0;
-    document.getElementById("d1m").value = 0;
-    document.getElementById("d2h").value = 0;
-    document.getElementById("d2m").value = 0;
-    document.getElementById("dOp").value = "add";
-    calcDurations();
+  function calcSub() {
+    const d = dict[lang];
+    const ah = Math.max(0, Math.floor(parseFloat(document.getElementById("subAh").value) || 0));
+    const am = Math.min(59, Math.max(0, Math.floor(parseFloat(document.getElementById("subAm").value) || 0)));
+    const bh = Math.max(0, Math.floor(parseFloat(document.getElementById("subBh").value) || 0));
+    const bm = Math.min(59, Math.max(0, Math.floor(parseFloat(document.getElementById("subBm").value) || 0)));
+
+    const subOut = document.getElementById("subOut");
+    const notice = document.getElementById("subNotice");
+    const rawDiff = (ah * 60 + am) - (bh * 60 + bm);
+
+    if (rawDiff < 0) {
+      notice.textContent = d.subExceedMsg;
+      notice.style.display = "block";
+      subOut.textContent = "00h 00min (0.00 h)";
+      return;
+    }
+
+    notice.style.display = "none";
+    subOut.textContent = `${fmtHM(rawDiff)} (${(rawDiff / 60).toFixed(2)} h)`;
   }
 
-  function hmToDec() {
-    const h = Math.max(0, parseInt(document.getElementById("cvH").value, 10) || 0);
-    const m = Math.min(59, Math.max(0, parseInt(document.getElementById("cvM").value, 10) || 0));
-    const dec = h + m / 60;
-    document.getElementById("cvDecOut").textContent = `${dec.toFixed(2)} h`;
+  function calcConv() {
+    const h = Math.max(0, Math.floor(parseFloat(document.getElementById("convH").value) || 0));
+    const m = Math.min(59, Math.max(0, Math.floor(parseFloat(document.getElementById("convM").value) || 0)));
+    const decVal = h + (m / 60);
+    document.getElementById("convDecOut").textContent = `${decVal.toFixed(2)} h`;
+
+    const decIn = Math.max(0, parseFloat(document.getElementById("convDecIn").value) || 0);
+    const totalMins = Math.round(decIn * 60);
+    document.getElementById("convHmOut").textContent = fmtHM(totalMins);
   }
 
-  function decToHm() {
-    const dec = Math.max(0, parseFloat(document.getElementById("cvDecIn").value) || 0);
-    const totalMins = Math.round(dec * 60);
-    document.getElementById("cvHmOut").textContent = fmtHM(totalMins);
+  function applyLang() {
+    document.documentElement.lang = lang;
+    const d = dict[lang] || dict.fr;
+    const langBtn = document.getElementById("langBtn");
+    if (langBtn) langBtn.textContent = d.btn;
+
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (k && Object.prototype.hasOwnProperty.call(d, k)) {
+        el.textContent = d[k];
+      }
+    });
+
+    renderSlots();
+    calcSub();
+    calcConv();
   }
 
-  function resetConverter() {
-    document.getElementById("cvH").value = 0;
-    document.getElementById("cvM").value = 0;
-    document.getElementById("cvDecIn").value = 0;
-    hmToDec();
-    decToHm();
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
   }
 
-  function calcPay() {
-    const hrs = Math.max(0, parseFloat(document.getElementById("payHours").value) || 0);
-    const rate = Math.max(0, parseFloat(document.getElementById("payRate").value) || 0);
-    const bonus = Math.max(0, parseFloat(document.getElementById("payBonus").value) || 0);
-    const total = hrs * rate * (1 + bonus / 100);
-    document.getElementById("payOut").textContent = `Total estimé : ${total.toFixed(2)}`;
-  }
+  document.addEventListener("DOMContentLoaded", function () {
+    try {
+      const saved = localStorage.getItem(LANG_KEY);
+      if (saved === "en" || saved === "fr") lang = saved;
+    } catch (e) {}
 
-  function resetPay() {
-    document.getElementById("payHours").value = 0;
-    document.getElementById("payRate").value = 0;
-    document.getElementById("payBonus").value = 0;
-    calcPay();
-  }
+    document.getElementById("addSlotBtn").addEventListener("click", function () {
+      slots.push({ start: "00:00", end: "00:00", active: true });
+      renderSlots();
+    });
+
+    document.getElementById("resetSlotsBtn").addEventListener("click", function () {
+      slots = [
+        { start: "00:00", end: "00:00", active: true },
+        { start: "00:00", end: "00:00", active: true }
+      ];
+      renderSlots();
+    });
+
+    document.getElementById("copyTotalBtn").addEventListener("click", function () {
+      const d = dict[lang];
+      const hm = document.getElementById("totalHM").textContent;
+      const dec = document.getElementById("totalDec").textContent;
+      const text = `${hm} (${dec})`;
+      const btn = this;
+      const done = () => {
+        btn.textContent = d.btnCopied;
+        setTimeout(() => { btn.textContent = d.btnCopy; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(done);
+      } else {
+        done();
+      }
+    });
+
+    ["subAh", "subBh"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", function () { clampNonNeg(this); calcSub(); });
+    });
+
+    ["subAm", "subBm"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", function () { clampMins(this); calcSub(); });
+    });
+
+    document.getElementById("resetSubBtn").addEventListener("click", function () {
+      ["subAh", "subAm", "subBh", "subBm"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "0";
+      });
+      calcSub();
+    });
+
+    const convH = document.getElementById("convH");
+    const convM = document.getElementById("convM");
+    const convDecIn = document.getElementById("convDecIn");
+    if (convH) convH.addEventListener("input", function () { clampNonNeg(this); calcConv(); });
+    if (convM) convM.addEventListener("input", function () { clampMins(this); calcConv(); });
+    if (convDecIn) convDecIn.addEventListener("input", function () { clampNonNeg(this); calcConv(); });
+
+    document.getElementById("resetConvBtn").addEventListener("click", function () {
+      if (convH) convH.value = "0";
+      if (convM) convM.value = "0";
+      if (convDecIn) convDecIn.value = "0.00";
+      calcConv();
+    });
+
+    applyLang();
+  });
 </script>
+
 </body>
 </html>
