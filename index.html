@@ -26,7 +26,7 @@
     line-height: 1.5;
   }
 
-  /* Header: Brand top, Navigation links directly below on the left */
+  /* Header: Brand top, links below on left, lang switch easy to reach */
   .site-header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -40,19 +40,44 @@
     align-items: flex-start;
     gap: 10px;
   }
+  .brand-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
   .brand-link {
     text-decoration: none;
     color: var(--ink);
     font-size: 1.35rem;
     font-weight: 800;
     letter-spacing: -0.02em;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
   }
   .brand-link span {
     color: var(--primary);
   }
+  .lang-switch {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .lang-btn {
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.78rem;
+    padding: 5px 10px;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .lang-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary-dark);
+  }
+
   .nav-menu {
     display: flex;
     flex-wrap: wrap;
@@ -110,7 +135,6 @@
     font-size: 0.95rem;
   }
 
-  /* Calculator Card */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -188,7 +212,6 @@
     font-size: 1rem;
   }
 
-  /* Footer */
   .site-footer {
     max-width: 1120px;
     margin: 24px auto 0;
@@ -215,7 +238,14 @@
 
 <header class="site-header">
   <div class="header-inner">
-    <a href="index.html" class="brand-link">Calculette<span>-tools</span></a>
+    <div class="brand-row">
+      <a href="index.html" class="brand-link">Calculette<span>-tools</span></a>
+      <div class="lang-switch" aria-label="Language selector">
+        <button type="button" class="lang-btn active" id="btnFr" onclick="setLang('fr')">FR</button>
+        <button type="button" class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+
     <nav class="nav-menu" aria-label="Navigation principale">
       <a href="index.html" class="active">Home</a>
       <a href="working-time-calculator.html">Working Time</a>
@@ -230,23 +260,23 @@
 
 <main class="container">
   <section class="hero-box">
-    <h1>Calculateur de Temps de Travail</h1>
-    <p>Calculez vos heures nettes, déduisez vos pauses et obtenez le résultat en heures/minutes et en centièmes (1/100e).</p>
+    <h1 id="heroTitle">Calculateur de Temps de Travail</h1>
+    <p id="heroSub">Calculez vos heures nettes, déduisez vos pauses et obtenez le résultat en heures/minutes et en centièmes (1/100e).</p>
   </section>
 
   <section class="card">
-    <h2>Calcul journalier</h2>
+    <h2 id="cardTitle">Calcul journalier</h2>
     <div class="grid-row">
       <div>
-        <label for="startTime">Heure de début</label>
+        <label for="startTime" id="lblStart">Heure de début</label>
         <input type="time" id="startTime" value="09:00" oninput="calcWorkTime()">
       </div>
       <div>
-        <label for="endTime">Heure de fin</label>
+        <label for="endTime" id="lblEnd">Heure de fin</label>
         <input type="time" id="endTime" value="17:30" oninput="calcWorkTime()">
       </div>
       <div>
-        <label for="breakMin">Pause (minutes)</label>
+        <label for="breakMin" id="lblBreak">Pause (minutes)</label>
         <input type="number" id="breakMin" min="0" value="30" oninput="calcWorkTime()">
       </div>
     </div>
@@ -254,8 +284,8 @@
     <div class="result-box" id="workResult">Temps net : 08h 00min (8.00 h)</div>
 
     <div class="btn-row">
-      <button type="button" class="btn-primary" onclick="calcWorkTime()">Calculer</button>
-      <button type="button" class="btn-secondary" onclick="resetWorkTime()">Réinitialiser</button>
+      <button type="button" class="btn-primary" id="btnCalc" onclick="calcWorkTime()">Calculer</button>
+      <button type="button" class="btn-secondary" id="btnReset" onclick="resetWorkTime()">Réinitialiser</button>
     </div>
   </section>
 </main>
@@ -271,6 +301,54 @@
 </footer>
 
 <script>
+  let currentLang = "fr";
+
+  const i18n = {
+    fr: {
+      title: "Calculette-tools — Calculateur de Temps de Travail",
+      heroTitle: "Calculateur de Temps de Travail",
+      heroSub: "Calculez vos heures nettes, déduisez vos pauses et obtenez le résultat en heures/minutes et en centièmes (1/100e).",
+      cardTitle: "Calcul journalier",
+      lblStart: "Heure de début",
+      lblEnd: "Heure de fin",
+      lblBreak: "Pause (minutes)",
+      btnCalc: "Calculer",
+      btnReset: "Réinitialiser",
+      resPrefix: "Temps net"
+    },
+    en: {
+      title: "Calculette-tools — Working Time Calculator",
+      heroTitle: "Working Time Calculator",
+      heroSub: "Calculate net working hours, subtract breaks, and view results in hours/minutes and decimal hundredths (1/100th).",
+      cardTitle: "Daily Calculation",
+      lblStart: "Start time",
+      lblEnd: "End time",
+      lblBreak: "Break (minutes)",
+      btnCalc: "Calculate",
+      btnReset: "Reset",
+      resPrefix: "Net time"
+    }
+  };
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.getElementById("btnFr").classList.toggle("active", lang === "fr");
+    document.getElementById("btnEn").classList.toggle("active", lang === "en");
+
+    const t = i18n[lang];
+    document.title = t.title;
+    document.getElementById("heroTitle").textContent = t.heroTitle;
+    document.getElementById("heroSub").textContent = t.heroSub;
+    document.getElementById("cardTitle").textContent = t.cardTitle;
+    document.getElementById("lblStart").textContent = t.lblStart;
+    document.getElementById("lblEnd").textContent = t.lblEnd;
+    document.getElementById("lblBreak").textContent = t.lblBreak;
+    document.getElementById("btnCalc").textContent = t.btnCalc;
+    document.getElementById("btnReset").textContent = t.btnReset;
+    calcWorkTime();
+  }
+
   function toMinutes(tStr) {
     if (!tStr || !tStr.includes(":")) return null;
     const [h, m] = tStr.split(":").map(Number);
@@ -291,8 +369,9 @@
     const h = String(Math.floor(net / 60)).padStart(2, "0");
     const m = String(net % 60).padStart(2, "0");
     const dec = (net / 60).toFixed(2);
+    const prefix = i18n[currentLang].resPrefix;
 
-    document.getElementById("workResult").textContent = `Temps net : ${h}h ${m}min (${dec} h)`;
+    document.getElementById("workResult").textContent = `${prefix} : ${h}h ${m}min (${dec} h)`;
   }
 
   function resetWorkTime() {
