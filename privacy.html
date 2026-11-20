@@ -70,7 +70,7 @@
       h1: "1. Traitement local des données",
       p1: "Les données saisies dans nos calculateurs (horaires, taux horaires, feuilles hebdomadaires, dimensions de toiture) sont traitées exclusivement dans votre navigateur. Aucune donnée de calcul n'est transmise à un serveur externe.",
       h2: "2. Stockage local (localStorage)",
-      p2: "Notre site utilise le stockage local de votre navigateur uniquement pour mémoriser votre préférence de langue (FR/EN) ainsi que vos horaires saisis dans la feuille hebdomadaire jusqu'à ce que vous cliquiez sur Reset.",
+      p2: "Notre site utilise le stockage local de votre navigateur uniquement pour mémoriser votre préférence de langue (FR/EN) ainsi que vos horaires saisis dans la feuille hebdomadire jusqu'à ce que vous cliquiez sur Reset.",
       h3: "3. Vos droits et contrôle des données",
       p3: "Vous pouvez effacer à tout moment les données enregistrées localement en utilisant le bouton Reset des outils ou en vidant les données de navigation de votre navigateur.",
       h4: "4. Hébergement et services tiers",
@@ -97,21 +97,19 @@
   };
 
   function syncPrivacyMeta() {
-    const currentLang = (typeof lang !== "undefined" && PAGE_DICT[lang]) ? lang : "fr";
-    document.title = PAGE_DICT[currentLang].docTitle;
+    const d = PAGE_DICT[getLang()] || PAGE_DICT.fr;
+    document.title = d.docTitle;
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute("content", PAGE_DICT[currentLang].docDesc);
+    if (metaDesc) metaDesc.setAttribute("content", d.docDesc);
   }
 
-  if (typeof renderChrome === "function") renderChrome("privacy");
-  if (typeof applyLang === "function") applyLang();
+  renderChrome("privacy");
+  applyLang();
   syncPrivacyMeta();
 
   const langBtnEl = document.getElementById("langBtn");
   if (langBtnEl) {
-    langBtnEl.addEventListener("click", () => {
-      setTimeout(syncPrivacyMeta, 0);
-    });
+    langBtnEl.addEventListener("click", () => setTimeout(syncPrivacyMeta, 0));
   }
 </script>
 </body>
