@@ -75,6 +75,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    margin-left: 20px;
     flex-shrink: 0;
   }
   .brand-dot {
@@ -95,21 +96,36 @@
   .nav-menu {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 5px;
     min-width: 0;
   }
   .nav-menu a {
-    color: var(--muted);
+    color: var(--ink);
+    background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+    border: 1px solid #94a3b8;
+    border-bottom: 2px solid #64748b;
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 5px 8px;
-    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 7px;
     white-space: nowrap;
+    box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(15, 23, 42, 0.12);
+    transition: transform 0.1s ease, box-shadow 0.12s ease, background 0.12s ease;
   }
-  .nav-menu a:hover, .nav-menu a.active {
+  .nav-menu a:hover {
     color: var(--primary);
-    background: var(--soft);
+    background: linear-gradient(180deg, #ffffff 0%, #dbeafe 100%);
+    border-color: #3b82f6;
+    border-bottom-color: #1d4ed8;
+    transform: translateY(-1px);
+  }
+  .nav-menu a.active {
+    color: #ffffff;
+    background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+    border-color: #1d4ed8;
+    border-bottom-color: #1e3a8a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 3px rgba(29, 78, 216, 0.3);
   }
   .lang-btn {
     background: var(--primary);
@@ -588,4 +604,205 @@
       navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
       navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       pageTitle: "Weekly Timesheet",
-      pageSub: "Enter hours from Monday to Sunday,
+      pageSub: "Enter hours from Monday to Sunday, navigate across weeks, and view totals in hours-minutes and hundredths (1/100e).",
+      btnPrevWeek: "← Prev.",
+      btnCurrWeek: "Current",
+      btnNextWeek: "Next →",
+      btnPrint: "Printable view",
+      btnReset: "Reset week (0)",
+      btnCopy: "Copy",
+      btnCopied: "Copied!",
+      confirmResetMsg: "Reset all entered hours for this week?",
+      lblWeekTotal: "WEEKLY TOTAL",
+      overnightBadge: "+1d",
+      activeDaysFmt: n => `${n} ${n === 1 ? "active day" : "active days"}`,
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      weekWord: "Week",
+      guideTitle: "Practical Guide: Keeping and Checking Your Weekly Timesheet",
+      guideIntro: "Whether you are an employee, tradesperson, technician, or team lead, tracking the entire week in one place keeps your hours clear before submitting them.",
+      guideSub1: "1. Monday to Sunday Layout",
+      guideLi1: "Multiple shifts per day: click '+' to add another time slot on any day to separate morning, afternoon, or extra work.",
+      guideLi2: "Active or off days: check or uncheck each day based on your schedule (such as Saturday or Sunday) while keeping your saved times.",
+      guideLi3: "Week navigation: use the arrow buttons to review or prepare a previous or upcoming week with automatic week numbers and dates.",
+      guideSub2: "2. Local Save, Print View, and Hundredths (1/100e)",
+      guideP2: "Your entries stay saved in your browser until you click 'Reset week', preventing accidental data loss. Totals appear in both hours-minutes (HH:MM) and decimal hundredths (1/100e) with a clean print layout.",
+      guideP3: "For official payroll, overtime rules, or company policies, always confirm final figures with your employer or payroll team."
+    }
+  };
+
+  function getMondayOfWeek(offset) {
+    const now = new Date();
+    const day = now.getDay();
+    const diffToMon = day === 0 ? -6 : 1 - day;
+    const mon = new Date(now.getFullYear(), now.getMonth(), now.getDate() + diffToMon + offset * 7);
+    mon.setHours(0, 0, 0, 0);
+    return mon;
+  }
+
+  function getWeekKey(monDate) {
+    const y = monDate.getFullYear();
+    const m = String(monDate.getMonth() + 1).padStart(2, "0");
+    const d = String(monDate.getDate()).padStart(2, "0");
+    return `${STORE_PREFIX}${y}-${m}-${d}`;
+  }
+
+  function getISOWeekNumber(date) {
+    const tmp = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = tmp.getUTCDay() || 7;
+    tmp.setUTCDate(tmp.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(tmp.getUTCFullYear(), 0, 1));
+    return Math.ceil((((tmp - yearStart) / 86400000) + 1) / 7);
+  }
+
+  function fmtShortDate(d) {
+    const loc = lang === "fr" ? "fr-FR" : "en-GB";
+    return d.toLocaleDateString(loc, { day: "2-digit", month: "2-digit" });
+  }
+
+  function defaultWeekData() {
+    return Array.from({ length: 7 }, (_, idx) => ({
+      active: idx < 5,
+      slots: [{ start: "00:00", end: "00:00" }]
+    }));
+  }
+
+  function loadWeekData(monDate) {
+    try {
+      const raw = localStorage.getItem(getWeekKey(monDate));
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length === 7) return parsed;
+      }
+    } catch (e) {}
+    return defaultWeekData();
+  }
+
+  function saveWeekData(monDate, data) {
+    try {
+      localStorage.setItem(getWeekKey(monDate), JSON.stringify(data));
+    } catch (e) {}
+  }
+
+  function calcSlotInfo(s) {
+    if (!s.start || !s.end) return { mins: 0, overnight: false };
+    const [sh, sm] = s.start.split(":").map(Number);
+    const [eh, em] = s.end.split(":").map(Number);
+    const startM = sh * 60 + sm;
+    let endM = eh * 60 + em;
+    const overnight = endM < startM;
+    if (overnight) endM += 1440;
+    return { mins: Math.max(0, endM - startM), overnight };
+  }
+
+  function fmtHM(mins) {
+    const sign = mins < 0 ? "-" : "";
+    const abs = Math.abs(Math.round(mins));
+    const h = String(Math.floor(abs / 60)).padStart(2, "0");
+    const m = String(abs % 60).padStart(2, "0");
+    return `${sign}${h}h ${m}min`;
+  }
+
+  function renderWeek() {
+    const d = dict[lang];
+    const mon = getMondayOfWeek(weekOffset);
+    const sun = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + 6);
+    const wkNum = getISOWeekNumber(mon);
+
+    const weekLabel = document.getElementById("weekLabel");
+    const weekDates = document.getElementById("weekDates");
+    if (weekLabel) weekLabel.textContent = `${d.weekWord} ${wkNum} (${mon.getFullYear()})`;
+    if (weekDates) weekDates.textContent = `${fmtShortDate(mon)} → ${fmtShortDate(sun)}`;
+
+    const weekData = loadWeekData(mon);
+    const container = document.getElementById("daysContainer");
+    if (!container) return;
+    container.innerHTML = "";
+
+    let weekMins = 0;
+    let activeDays = 0;
+
+    weekData.forEach((dayObj, dIdx) => {
+      if (dayObj.active) activeDays += 1;
+      let dayMins = 0;
+      dayObj.slots.forEach(sl => {
+        const info = calcSlotInfo(sl);
+        if (dayObj.active) dayMins += info.mins;
+      });
+      weekMins += dayMins;
+
+      const dayDate = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + dIdx);
+      const dayBox = document.createElement("div");
+      dayBox.className = "day-box" + (dayObj.active ? "" : " off");
+
+      const slotsHtml = dayObj.slots.map((sl, sIdx) => {
+        const { mins, overnight } = calcSlotInfo(sl);
+        const badge = overnight ? `<span class="overnight-tag">${d.overnightBadge}</span>` : "";
+        const actionBtn = sIdx === 0
+          ? `<button type="button" class="btn-mini" onclick="addDaySlot(${dIdx})" title="Ajouter">+</button>`
+          : `<button type="button" class="btn-mini" onclick="removeDaySlot(${dIdx}, ${sIdx})" title="Supprimer">×</button>`;
+        return `
+          <div class="slot-row">
+            <input type="time" value="${sl.start}" oninput="updateDaySlot(${dIdx}, ${sIdx}, 'start', this.value)">
+            <input type="time" value="${sl.end}" oninput="updateDaySlot(${dIdx}, ${sIdx}, 'end', this.value)">
+            <div class="out-pill">${fmtHM(mins)}${badge}</div>
+            <div class="out-pill">${(mins / 60).toFixed(2)} h</div>
+            ${actionBtn}
+          </div>
+        `;
+      }).join("");
+
+      dayBox.innerHTML = `
+        <div class="day-title">
+          <input type="checkbox" ${dayObj.active ? "checked" : ""} onchange="toggleDayActive(${dIdx}, this.checked)">
+          <span>${d.days[dIdx]} <small style="color:var(--muted);font-weight:600;">${fmtShortDate(dayDate)}</small></span>
+        </div>
+        <div class="slots-col">${slotsHtml}</div>
+        <div class="day-totals">
+          <span>${fmtHM(dayMins)}</span>
+          <span>·</span>
+          <span>${(dayMins / 60).toFixed(2)} h</span>
+        </div>
+      `;
+      container.appendChild(dayBox);
+    });
+
+    const activePill = document.getElementById("activeDaysCount");
+    const totalHM = document.getElementById("weekTotalHM");
+    const totalDec = document.getElementById("weekTotalDec");
+    if (activePill) activePill.textContent = d.activeDaysFmt(activeDays);
+    if (totalHM) totalHM.textContent = fmtHM(weekMins);
+    if (totalDec) totalDec.textContent = `${(weekMins / 60).toFixed(2)} h`;
+  }
+
+  function shiftWeek(delta) {
+    if (delta === 0) weekOffset = 0;
+    else weekOffset += delta;
+    renderWeek();
+  }
+
+  function toggleDayActive(dIdx, checked) {
+    const mon = getMondayOfWeek(weekOffset);
+    const data = loadWeekData(mon);
+    data[dIdx].active = checked;
+    saveWeekData(mon, data);
+    renderWeek();
+  }
+
+  function updateDaySlot(dIdx, sIdx, key, val) {
+    const mon = getMondayOfWeek(weekOffset);
+    const data = loadWeekData(mon);
+    data[dIdx].slots[sIdx][key] = val;
+    saveWeekData(mon, data);
+    renderWeek();
+  }
+
+  function addDaySlot(dIdx) {
+    const mon = getMondayOfWeek(weekOffset);
+    const data = loadWeekData(mon);
+    data[dIdx].slots.push({ start: "00:00", end: "00:00" });
+    saveWeekData(mon, data);
+    renderWeek();
+  }
+
+  function removeDaySlot(dIdx, sIdx) {
+    const mon = getMondayOfWeek(
