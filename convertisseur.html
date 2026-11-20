@@ -115,7 +115,7 @@
     background: var(--primary);
     color: #fff;
     border: none;
-    padding: 6px 12px;
+    padding: 7px 13px;
     border-radius: 8px;
     font-weight: 700;
     font-size: 0.82rem;
@@ -200,6 +200,28 @@
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
   }
 
+  .presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .preset-btn {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: var(--ink);
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .preset-btn:hover {
+    background: var(--soft);
+    border-color: #93c5fd;
+    color: var(--primary);
+  }
+
   .out-box {
     margin-top: 12px;
     padding: 12px 14px;
@@ -216,11 +238,28 @@
     font-weight: 700;
     color: var(--muted);
   }
+  .out-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
   .out-val {
     font-size: 1.02rem;
     font-weight: 800;
     color: var(--primary);
   }
+  .btn-mini {
+    background: #ffffff;
+    color: var(--ink);
+    border: 1px solid #bfdbfe;
+    padding: 4px 10px;
+    border-radius: 7px;
+    font-weight: 700;
+    font-size: 0.76rem;
+    cursor: pointer;
+  }
+  .btn-mini:hover { background: #f8fafc; }
 
   .toolbar {
     display: flex;
@@ -324,18 +363,27 @@
     <div class="card">
       <h2 data-t="secHmToDec">Heures &amp; Minutes → Centièmes (1/100e)</h2>
       <div class="field">
-        <label data-t="lblHmInput">Saisir heures et minutes</label>
+        <label for="inH" data-t="lblHmInput">Saisir heures et minutes</label>
         <div class="hm-pair">
-          <input type="number" id="inH" min="0" value="0" oninput="convHmToDec()">
+          <input type="number" id="inH" min="0" value="0" oninput="clampNonNeg(this); convHmToDec()">
           <span>h</span>
-          <input type="number" id="inM" min="0" max="59" value="0" oninput="convHmToDec()">
+          <input type="number" id="inM" min="0" max="59" value="0" oninput="clampMins(this); convHmToDec()">
           <span>min</span>
+        </div>
+        <div class="presets" aria-label="Minutes rapides">
+          <button type="button" class="preset-btn" onclick="setMinsPreset(15)">15 min</button>
+          <button type="button" class="preset-btn" onclick="setMinsPreset(20)">20 min</button>
+          <button type="button" class="preset-btn" onclick="setMinsPreset(30)">30 min</button>
+          <button type="button" class="preset-btn" onclick="setMinsPreset(45)">45 min</button>
         </div>
       </div>
 
       <div class="out-box">
         <span class="out-lbl" data-t="lblOutDec">Résultat décimal</span>
-        <span class="out-val" id="outDec">0.00 h</span>
+        <div class="out-right">
+          <span class="out-val" id="outDec">0.00 h</span>
+          <button type="button" class="btn-mini" id="copyDecBtn" onclick="copyText('outDec', 'copyDecBtn')" data-t="btnCopy">Copier</button>
+        </div>
       </div>
 
       <div class="toolbar">
@@ -349,12 +397,21 @@
       <h2 data-t="secDecToHm">Centièmes (1/100e) → Heures &amp; Minutes</h2>
       <div class="field">
         <label for="inDec" data-t="lblDecInput">Saisir heures décimales (ex. 7.50)</label>
-        <input type="number" id="inDec" step="0.01" min="0" value="0" oninput="convDecToHm()">
+        <input type="number" id="inDec" step="0.01" min="0" value="0" oninput="clampNonNeg(this); convDecToHm()">
+        <div class="presets" aria-label="Décimales rapides">
+          <button type="button" class="preset-btn" onclick="setDecPreset(0.25)">0.25 h</button>
+          <button type="button" class="preset-btn" onclick="setDecPreset(0.50)">0.50 h</button>
+          <button type="button" class="preset-btn" onclick="setDecPreset(0.75)">0.75 h</button>
+          <button type="button" class="preset-btn" onclick="setDecPreset(1.00)">1.00 h</button>
+        </div>
       </div>
 
       <div class="out-box">
         <span class="out-lbl" data-t="lblOutHm">Résultat heures-minutes</span>
-        <span class="out-val" id="outHm">00h 00min</span>
+        <div class="out-right">
+          <span class="out-val" id="outHm">00h 00min</span>
+          <button type="button" class="btn-mini" id="copyHmBtn" onclick="copyText('outHm', 'copyHmBtn')" data-t="btnCopy">Copier</button>
+        </div>
       </div>
 
       <div class="toolbar">
@@ -419,6 +476,8 @@
       lblOutHm: "Résultat heures-minutes",
       btnConvert: "Convertir",
       btnReset: "Reset",
+      btnCopy: "Copier",
+      btnCopied: "Copié !",
       guideTitle: "Pourquoi convertir les minutes en centièmes d'heure (1/100e) ?",
       guideP1: "Une heure comprend 60 minutes, alors que le système décimal fonctionne sur une base 100. Par exemple, 30 minutes correspondent à la moitié d'une heure (0,50 h) et 15 minutes au quart d'une heure (0,25 h), tandis que 20 minutes valent environ 0,33 h.",
       guideP2: "Cette conversion est très pratique pour additionner des feuilles d'heures dans un tableur ou calculer un salaire horaire sans confondre les minutes avec des décimales."
@@ -438,14 +497,38 @@
       lblOutHm: "Hours-minutes output",
       btnConvert: "Convert",
       btnReset: "Reset",
+      btnCopy: "Copy",
+      btnCopied: "Copied!",
       guideTitle: "Why Convert Minutes into Hundredths of an Hour (1/100e)?",
       guideP1: "An hour has 60 minutes while decimal math uses base 100. For example, 30 minutes equals half an hour (0.50 hrs) and 15 minutes equals a quarter hour (0.25 hrs), while 20 minutes is about 0.33 hrs.",
       guideP2: "Converting to hundredths makes spreadsheet totals and hourly pay calculations straightforward without mixing up minutes and decimals."
     }
   };
 
+  function clampNonNeg(el) {
+    const val = parseFloat(el.value);
+    if (!Number.isNaN(val) && val < 0) el.value = "0";
+  }
+
+  function clampMins(el) {
+    const val = parseFloat(el.value);
+    if (Number.isNaN(val)) return;
+    if (val < 0) el.value = "0";
+    else if (val > 59) el.value = "59";
+  }
+
+  function setMinsPreset(mins) {
+    document.getElementById("inM").value = String(mins);
+    convHmToDec();
+  }
+
+  function setDecPreset(dec) {
+    document.getElementById("inDec").value = dec.toFixed(2);
+    convDecToHm();
+  }
+
   function convHmToDec() {
-    const h = Math.max(0, parseFloat(document.getElementById("inH").value) || 0);
+    const h = Math.max(0, Math.floor(parseFloat(document.getElementById("inH").value) || 0));
     const m = Math.min(59, Math.max(0, parseFloat(document.getElementById("inM").value) || 0));
     const dec = h + m / 60;
     document.getElementById("outDec").textContent = `${dec.toFixed(2)} h`;
@@ -468,6 +551,19 @@
   function resetDec() {
     document.getElementById("inDec").value = "0";
     convDecToHm();
+  }
+
+  function copyText(outId, btnId) {
+    const d = dict[lang];
+    const text = document.getElementById(outId).textContent;
+    const btn = document.getElementById(btnId);
+    const showCopied = () => {
+      btn.textContent = d.btnCopied;
+      setTimeout(() => { btn.textContent = d.btnCopy; }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(showCopied).catch(() => {});
+    }
   }
 
   function applyLang() {
