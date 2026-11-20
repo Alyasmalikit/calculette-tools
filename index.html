@@ -3,1020 +3,306 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculette-tools | Calculateur de Temps de Travail, Feuille Hebdo &amp; Charpente</title>
-<meta name="description" content="Calculez votre temps de travail en heures-minutes et centièmes (1/100e), tenez votre feuille hebdomadaire et accédez à nos calculateurs gratuits.">
-<link rel="canonical" href="https://calculette-tools.github.io/">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Calculette-tools",
-  "url": "https://calculette-tools.github.io/",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "Any",
-  "inLanguage": ["fr", "en"],
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR"
-  }
-}
-</script>
-  <style>
+<title>Calculette-tools — Calculateur de Temps de Travail</title>
+<style>
   :root {
-    --bg: #f1f5f9;
+    --bg: #f4f6f9;
     --surface: #ffffff;
     --ink: #0f172a;
     --muted: #475569;
     --border: #e2e8f0;
     --primary: #2563eb;
-    --primary-dark: #1e40af;
-    --primary-hover: #1d4ed8;
+    --primary-dark: #1d4ed8;
     --soft: #eff6ff;
-    --warn-bg: #fffbeb;
-    --warn-border: #fde68a;
-    --warn-ink: #92400e;
-    --radius: 16px;
-    --shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+    --radius: 14px;
+    --shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.06);
   }
   *, *::before, *::after { box-sizing: border-box; }
-  html, body {
+  body {
     margin: 0;
-    padding: 0;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--ink);
-    line-height: 1.55;
-  }
-  .container {
-    width: 100%;
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 16px;
+    line-height: 1.5;
   }
 
-  /* Header */
+  /* Header: Brand top, Navigation links directly below on the left */
   .site-header {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(8px);
+    background: var(--surface);
     border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 20;
   }
-  .nav-bar {
+  .header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 14px 18px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
-    padding: 12px 0;
   }
-  .brand {
-    font-weight: 800;
-    font-size: 1.18rem;
-    color: var(--ink);
+  .brand-link {
     text-decoration: none;
+    color: var(--ink);
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    flex-shrink: 0;
+    gap: 6px;
   }
-  .brand-badge {
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
-    font-weight: 900;
-    box-shadow: 0 3px 8px rgba(37, 99, 235, 0.3);
+  .brand-link span {
+    color: var(--primary);
   }
-  .nav-right {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    min-width: 0;
-    max-width: 100%;
-  }
-  .site-header .nav-menu {
+  .nav-menu {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    min-width: 0;
-  }
-  .site-header .nav-menu a {
-    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    color: #0f172a;
-    background: linear-gradient(180deg, #ffffff 0%, #dde6f2 100%);
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+  .nav-menu a {
+    text-decoration: none;
+    color: var(--ink);
+    background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
     border: 1px solid #94a3b8;
     border-bottom: 3px solid #64748b;
-    text-decoration: none;
-    font-size: 0.84rem;
-    font-weight: 700;
     padding: 6px 12px;
     border-radius: 9px;
-    white-space: nowrap;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.95),
-      0 3px 6px rgba(15, 23, 42, 0.14);
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-    transition:
-      background 0.15s ease,
-      color 0.15s ease,
-      border-color 0.15s ease,
-      transform 0.1s ease,
-      box-shadow 0.15s ease;
+    font-size: 0.85rem;
+    font-weight: 700;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.08);
+    transition: transform 0.12s ease, background 0.15s ease, color 0.15s ease;
   }
-  .site-header .nav-menu a:hover {
-    color: #1d4ed8;
-    background: linear-gradient(180deg, #ffffff 0%, #bfdbfe 100%);
+  .nav-menu a:hover {
+    color: var(--primary-dark);
     border-color: #3b82f6;
     border-bottom-color: #1d4ed8;
     transform: translateY(-1px);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 1),
-      0 5px 12px rgba(37, 99, 235, 0.24);
   }
-  .site-header .nav-menu a:active {
-    transform: translateY(1px);
-    border-bottom-width: 1px;
-    box-shadow:
-      inset 0 2px 5px rgba(15, 23, 42, 0.2),
-      0 1px 2px rgba(15, 23, 42, 0.1);
-  }
-  .site-header .nav-menu a.active {
-    color: #ffffff;
+  .nav-menu a.active {
     background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
-    border-color: #1d4ed8;
-    border-bottom: 3px solid #1e3a8a;
-    text-shadow: 0 -1px 0 rgba(15, 23, 42, 0.4);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.4),
-      0 4px 10px rgba(29, 78, 216, 0.38);
-  }
-  .site-header .nav-menu a:focus-visible {
-    outline: 2px solid #2563eb;
-    outline-offset: 2px;
-  }
-  .lang-btn {
-    background: var(--ink);
-    color: #fff;
-    border: none;
-    padding: 7px 13px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.8rem;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: background 0.15s ease;
-  }
-  .lang-btn:hover { background: var(--primary); }
-  @media (max-width: 600px) {
-    .site-header .nav-menu a {
-      font-size: 0.8rem;
-      padding: 6px 10px;
-    }
+    color: #ffffff;
+    border-color: #1e40af;
+    border-bottom-color: #1e3a8a;
   }
 
-  /* Hero Banner */
-  .hero-banner {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 65%, #2563eb 100%);
-    color: #fff;
-    padding: 28px 0 34px;
-    margin-bottom: -18px;
+  /* Main Container */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 22px 18px 48px;
   }
-  .hero-inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+  .hero-box {
+    background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
+    color: #ffffff;
+    border-radius: var(--radius);
+    padding: 22px;
+    margin-bottom: 20px;
   }
-  .hero-text { max-width: 680px; }
-  .hero-pill {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.14);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    color: #dbeafe;
-    font-size: 0.76rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 999px;
-    margin-bottom: 10px;
+  .hero-box h1 {
+    margin: 0 0 6px;
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
   }
-  .hero-banner h1 {
-    margin: 0 0 8px;
-    font-size: clamp(1.45rem, 3.2vw, 2.05rem);
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-  .hero-banner p {
+  .hero-box p {
     margin: 0;
-    color: #cbd5e1;
-    font-size: 0.94rem;
+    color: #dbeafe;
+    font-size: 0.95rem;
   }
 
-  /* Cards */
+  /* Calculator Card */
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 22px;
+    padding: 20px;
     box-shadow: var(--shadow);
-    margin-bottom: 18px;
-    width: 100%;
-    min-width: 0;
   }
-  .card-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
+  .card h2 {
+    margin: 0 0 14px;
+    font-size: 1.1rem;
   }
-  .card-head h2 {
-    margin: 0;
-    font-size: 1.08rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .step-tag {
-    background: var(--soft);
-    color: var(--primary);
-    font-size: 0.78rem;
-    font-weight: 800;
-    padding: 3px 9px;
-    border-radius: 6px;
-  }
-
-  /* Time Slot Row (Cells) */
-  .slot-row {
+  .grid-row {
     display: grid;
-    grid-template-columns: 28px minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1.15fr) minmax(0, 0.9fr) 36px;
-    gap: 10px;
-    align-items: center;
-    padding: 11px 12px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 10px;
-    background: #f8fafc;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    align-items: end;
   }
-  .slot-row:hover {
-    border-color: #cbd5e1;
-    background: #ffffff;
-  }
-  .slot-row.disabled { opacity: 0.5; }
-  .slot-check {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    justify-self: center;
-    margin-top: 16px;
-  }
-  @media (max-width: 760px) {
-    .slot-row {
-      grid-template-columns: 32px repeat(2, minmax(0, 1fr)) 36px;
-      gap: 8px;
-    }
-    .slot-check { margin-top: 0; }
-    .del-btn { margin-top: 0; }
-  }
-  .slot-field label {
+  label {
     display: block;
-    font-size: 0.73rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--muted);
-    margin-bottom: 4px;
+    margin-bottom: 5px;
   }
-  input[type="time"], input[type="number"] {
+  input[type="time"],
+  input[type="number"] {
     width: 100%;
-    min-width: 0;
-    padding: 8px 10px;
+    padding: 9px 10px;
     border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 0.94rem;
+    border-radius: 9px;
+    font-size: 0.95rem;
     font-weight: 600;
-    background: #fff;
     color: var(--ink);
+    background: #ffffff;
   }
   input:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
   }
-  .out-pill {
-    padding: 8px 10px;
-    background: var(--soft);
-    border: 1px solid #bfdbfe;
-    border-radius: 8px;
-    font-weight: 800;
-    font-size: 0.88rem;
-    color: var(--primary-dark);
-    text-align: center;
-    white-space: nowrap;
-  }
-  .overnight-tag {
-    display: inline-block;
-    margin-left: 5px;
-    padding: 1px 6px;
-    border-radius: 999px;
-    background: #dbeafe;
-    color: #1e40af;
-    font-size: 0.7rem;
-    font-weight: 800;
-    vertical-align: middle;
-  }
-  .del-btn {
-    background: #fee2e2;
-    color: #b91c1c;
-    border: none;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 16px;
-    transition: background 0.15s ease;
-  }
-  .del-btn:hover:not(:disabled) { background: #fecaca; }
-  .del-btn:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
-
-  /* Buttons & Total Bar */
-  .toolbar {
+  .btn-row {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin: 14px 0 16px;
+    margin-top: 16px;
   }
-  .btn {
+  .btn-primary {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: #fff;
+    color: #ffffff;
     border: none;
-    padding: 9px 16px;
+    padding: 10px 16px;
     border-radius: 9px;
     font-weight: 700;
     font-size: 0.88rem;
     cursor: pointer;
-    box-shadow: 0 3px 10px rgba(37, 99, 235, 0.22);
-    transition: transform 0.12s ease, box-shadow 0.12s ease;
   }
-  .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 14px rgba(37, 99, 235, 0.3);
-  }
-  .btn-sec {
+  .btn-secondary {
     background: #f1f5f9;
     color: var(--ink);
     border: 1px solid #cbd5e1;
-    padding: 9px 15px;
+    padding: 10px 15px;
     border-radius: 9px;
     font-weight: 600;
     font-size: 0.88rem;
     cursor: pointer;
   }
-  .btn-sec:hover { background: #e2e8f0; }
-
-  .total-bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 15px 18px;
-    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-    border: 1px solid #93c5fd;
-    border-radius: 12px;
-  }
-  .total-label {
-    font-size: 0.96rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-  }
-  .total-vals {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-  }
-  .total-badge {
-    background: #fff;
-    border: 1px solid #bfdbfe;
-    padding: 6px 14px;
-    border-radius: 8px;
-    font-weight: 800;
-    font-size: 1.05rem;
-    color: var(--primary-dark);
-  }
-  .notice-box {
-    margin-top: 10px;
-    padding: 9px 12px;
-    border-radius: 9px;
-    background: var(--warn-bg);
-    border: 1px solid var(--warn-border);
-    color: var(--warn-ink);
-    font-size: 0.85rem;
-    font-weight: 600;
-    display: none;
-  }
-
-  /* Subtract Grid */
-  .sub-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-    gap: 14px;
-    align-items: end;
-  }
-  .hm-pair {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .hm-pair span {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--muted);
-  }
-
-  /* Dedicated Ad Space */
-  .ad-slot {
-    width: 100%;
-    max-width: 728px;
-    min-height: 90px;
-    margin: 18px auto;
-    padding: 10px;
-    background: #f8fafc;
-    border: 1px dashed #cbd5e1;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  /* Other Tools Grid */
-  .sec-header {
-    margin: 26px 0 14px;
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  .sec-header h2 {
-    margin: 0;
-    font-size: 1.18rem;
-  }
-  .sec-header span {
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 295px), 1fr));
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-  .tool-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 14px;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
-    min-width: 0;
-  }
-  .tool-card:hover {
-    transform: translateY(-3px);
-    border-color: #60a5fa;
-    box-shadow: 0 14px 28px -8px rgba(37, 99, 235, 0.15);
-  }
-  .tool-top {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-  }
-  .tool-ico {
-    width: 40px;
-    height: 40px;
+  .result-box {
+    margin-top: 16px;
+    padding: 14px 16px;
     border-radius: 10px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    background: var(--soft);
+    border: 1px solid #bfdbfe;
+    color: var(--primary-dark);
     font-weight: 800;
+    font-size: 1rem;
   }
-  .ico-blue { background: #dbeafe; color: #1d4ed8; }
-  .ico-green { background: #dcfce7; color: #15803d; }
-  .ico-amber { background: #fef3c7; color: #b45309; }
-  .ico-purple { background: #f3e8ff; color: #7e22ce; }
-  .ico-rose { background: #ffe4e6; color: #be123c; }
-
-  .tool-card h3 {
-    margin: 0 0 4px;
-    font-size: 1.02rem;
-    color: var(--ink);
-  }
-  .tool-card p {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.88rem;
-  }
-  .tool-cta {
-    font-size: 0.84rem;
-    font-weight: 700;
-    color: var(--primary);
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .tool-card:hover .tool-cta { text-decoration: underline; }
 
   /* Footer */
   .site-footer {
-    width: 100%;
+    max-width: 1120px;
+    margin: 24px auto 0;
+    padding: 16px 18px 32px;
     border-top: 1px solid var(--border);
-    background: var(--surface);
-    padding: 24px 0 34px;
-    text-align: center;
-    font-size: 0.86rem;
-    color: var(--muted);
-    margin-top: 24px;
-  }
-  .footer-links {
-    margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap: 12px;
+    font-size: 0.85rem;
+    color: var(--muted);
   }
-  .footer-links a {
+  .site-footer a {
     color: var(--muted);
     text-decoration: none;
-    font-weight: 500;
+    margin-right: 14px;
   }
-  .footer-links a:hover { color: var(--primary); }
+  .site-footer a:hover {
+    color: var(--primary);
+  }
 </style>
 </head>
 <body>
 
 <header class="site-header">
-  <div class="container nav-bar">
-    <a href="index.html" class="brand"><span class="brand-badge">C</span>Calculette-tools</a>
-    <div class="nav-right">
-      <nav class="nav-menu">
-        <a href="index.html" class="active" data-t="navHome">Accueil</a>
-        <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
-        <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
-        <a href="time-calculator.html" data-t="navTc">Durées</a>
-        <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
-        <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
-        <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
-      </nav>
-      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
-    </div>
+  <div class="header-inner">
+    <a href="index.html" class="brand-link">Calculette<span>-tools</span></a>
+    <nav class="nav-menu" aria-label="Navigation principale">
+      <a href="index.html" class="active">Home</a>
+      <a href="working-time-calculator.html">Working Time</a>
+      <a href="working-hour-calculator.html">Working Hours</a>
+      <a href="time-calculator.html">Time Calculator</a>
+      <a href="feuille-hebdo.html">Weekly Timesheet</a>
+      <a href="convertisseur.html">Decimal Converter</a>
+      <a href="toiture-croupe.html">Hip Roof</a>
+    </nav>
   </div>
 </header>
 
-<!-- Attractive Hero Banner -->
-<section class="hero-banner">
-  <div class="container hero-inner">
-    <div class="hero-text">
-      <span class="hero-pill" data-t="heroPill">100% Gratuit • Sans Inscription</span>
-      <h1 data-t="pageTitle">Calculateur de Temps de Travail &amp; Outils</h1>
-      <p data-t="pageSub">Additionnez vos plages horaires ou soustrayez vos pauses en heures-minutes et en centièmes d'heure (1/100e), directement ci-dessous.</p>
-    </div>
-  </div>
-</section>
-
 <main class="container">
-  <!-- Main Cells: Time Slots (Initialised at 0) -->
-  <div class="card">
-    <div class="card-head">
-      <h2><span class="step-tag">01</span> <span data-t="secAddTitle">Additionner des plages horaires</span></h2>
-    </div>
+  <section class="hero-box">
+    <h1>Calculateur de Temps de Travail</h1>
+    <p>Calculez vos heures nettes, déduisez vos pauses et obtenez le résultat en heures/minutes et en centièmes (1/100e).</p>
+  </section>
 
-    <div id="slotsContainer"></div>
-
-    <div class="toolbar">
-      <button type="button" class="btn" onclick="addSlot()" data-t="btnAddSlot">+ Ajouter une plage</button>
-      <button type="button" class="btn-sec" onclick="resetSlots()" data-t="btnReset">Reset (0)</button>
-    </div>
-
-    <div class="total-bar">
-      <span class="total-label" data-t="lblTotal">TOTAL JOURNALIER</span>
-      <div class="total-vals">
-        <span class="total-badge" id="totalHM">00h 00min</span>
-        <span class="total-badge" id="totalDec">0.00 h</span>
-        <button type="button" class="btn-sec" id="copyTotalBtn" onclick="copyDailyTotal()" data-t="btnCopy">Copier</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Second Cells: Subtract Durations (Initialised at 0) -->
-  <div class="card">
-    <div class="card-head">
-      <h2><span class="step-tag">02</span> <span data-t="secSubTitle">Soustraire deux durées (ex. déduire une pause)</span></h2>
-    </div>
-
-    <div class="sub-grid">
+  <section class="card">
+    <h2>Calcul journalier</h2>
+    <div class="grid-row">
       <div>
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;" data-t="lblDurA">Durée totale (A)</label>
-        <div class="hm-pair">
-          <input type="number" id="subAh" min="0" value="0" oninput="clampNonNeg(this); calcSub()">
-          <span>h</span>
-          <input type="number" id="subAm" min="0" max="59" value="0" oninput="clampMins(this); calcSub()">
-          <span>min</span>
-        </div>
+        <label for="startTime">Heure de début</label>
+        <input type="time" id="startTime" value="09:00" oninput="calcWorkTime()">
       </div>
-
       <div>
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;" data-t="lblDurB">Pause / Temps à déduire (B)</label>
-        <div class="hm-pair">
-          <input type="number" id="subBh" min="0" value="0" oninput="clampNonNeg(this); calcSub()">
-          <span>h</span>
-          <input type="number" id="subBm" min="0" max="59" value="0" oninput="clampMins(this); calcSub()">
-          <span>min</span>
-        </div>
+        <label for="endTime">Heure de fin</label>
+        <input type="time" id="endTime" value="17:30" oninput="calcWorkTime()">
       </div>
-
       <div>
-        <label style="display:block;font-size:0.78rem;font-weight:700;color:var(--muted);margin-bottom:5px;" data-t="lblNetResult">Temps net (A − B)</label>
-        <div class="out-pill" id="subOut">00h 00min (0.00 h)</div>
+        <label for="breakMin">Pause (minutes)</label>
+        <input type="number" id="breakMin" min="0" value="30" oninput="calcWorkTime()">
       </div>
     </div>
 
-    <div id="subNotice" class="notice-box" role="status"></div>
+    <div class="result-box" id="workResult">Temps net : 08h 00min (8.00 h)</div>
 
-    <div class="toolbar" style="margin-bottom:0;">
-      <button type="button" class="btn-sec" onclick="resetSub()" data-t="btnReset">Reset (0)</button>
+    <div class="btn-row">
+      <button type="button" class="btn-primary" onclick="calcWorkTime()">Calculer</button>
+      <button type="button" class="btn-secondary" onclick="resetWorkTime()">Réinitialiser</button>
     </div>
-  </div>
-
-  <!-- Ad Space -->
-  <div class="ad-slot" id="adSlotMid" aria-label="Advertisement space"></div>
-
-  <!-- Other Tools Cards -->
-  <div class="sec-header">
-    <h2 data-t="otherToolsTitle">Suite complète d'outils</h2>
-    <span data-t="otherToolsSub">Cliquez sur un outil pour l'ouvrir</span>
-  </div>
-
-  <section class="tools-grid">
-    <a href="feuille-hebdo.html" class="tool-card">
-      <div class="tool-top">
-        <div class="tool-ico ico-blue">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        </div>
-        <div>
-          <h3 data-t="t2Title">Feuille Hebdomadaire</h3>
-          <p data-t="t2Desc">Pointage du lundi au dimanche avec sauvegarde locale, navigation par semaine et impression.</p>
-        </div>
-      </div>
-      <span class="tool-cta" data-t="openTool">Ouvrir l'outil →</span>
-    </a>
-
-    <a href="working-hour-calculator.html" class="tool-card">
-      <div class="tool-top">
-        <div class="tool-ico ico-green">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.5a3 3 0 0 0-5 2.5 3 3 0 0 0 5 2.5M8 11h5M8 13h5"/></svg>
-        </div>
-        <div>
-          <h3 data-t="t3Title">Heures &amp; Salaire</h3>
-          <p data-t="t3Desc">Estimez votre rémunération à partir de vos heures normales, heures sup et taux horaire.</p>
-        </div>
-      </div>
-      <span class="tool-cta" data-t="openTool">Ouvrir l'outil →</span>
-    </a>
-
-    <a href="time-calculator.html" class="tool-card">
-      <div class="tool-top">
-        <div class="tool-ico ico-purple">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-        </div>
-        <div>
-          <h3 data-t="t4Title">Calculateur de Durées</h3>
-          <p data-t="t4Desc">Additionnez ou soustrayez des durées en heures et minutes avec résultat en centièmes.</p>
-        </div>
-      </div>
-      <span class="tool-cta" data-t="openTool">Ouvrir l'outil →</span>
-    </a>
-
-    <a href="convertisseur.html" class="tool-card">
-      <div class="tool-top">
-        <div class="tool-ico ico-amber">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-        </div>
-        <div>
-          <h3 data-t="t5Title">Convertisseur 1/100e</h3>
-          <p data-t="t5Desc">Convertissez vos heures et minutes en centièmes d'heure décimaux et inversement.</p>
-        </div>
-      </div>
-      <span class="tool-cta" data-t="openTool">Ouvrir l'outil →</span>
-    </a>
-
-    <a href="toiture-croupe.html" class="tool-card">
-      <div class="tool-top">
-        <div class="tool-ico ico-rose">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
-        </div>
-        <div>
-          <h3 data-t="t6Title">Toiture en Croupe</h3>
-          <p data-t="t6Desc">Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe et la surface des pans.</p>
-        </div>
-      </div>
-      <span class="tool-cta" data-t="openTool">Ouvrir l'outil →</span>
-    </a>
   </section>
 </main>
 
 <footer class="site-footer">
-  <div class="container">
-    <div>Calculette-tools</div>
-    <div class="footer-links">
-      <a href="index.html" class="active" data-t="navHome">Accueil</a>
-      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
-      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
-      <a href="time-calculator.html" data-t="navTc">Durées</a>
-      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
-      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
-      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
-    </div>
-    <div class="footer-links">
-      <a href="about.html" data-t="navAbout">À propos</a>
-      <a href="contact.html" data-t="navContact">Contact</a>
-      <a href="privacy.html" data-t="navPrivacy">Confidentialité</a>
-      <a href="terms.html" data-t="navDisclaimer">Disclaimer</a>
-    </div>
+  <div>© 2026 Calculette-tools</div>
+  <div>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
   </div>
 </footer>
 
 <script>
-  const LANG_KEY = "calculette_lang_v1";
-  let lang = "fr";
-
-  let slots = [
-    { start: "00:00", end: "00:00", active: true },
-    { start: "00:00", end: "00:00", active: true }
-  ];
-
-  const dict = {
-    fr: {
-      btn: "EN",
-      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
-      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
-      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
-      heroPill: "100% Gratuit • Sans Inscription",
-      pageTitle: "Calculateur de Temps de Travail & Outils",
-      pageSub: "Additionnez vos plages horaires ou soustrayez vos pauses en heures-minutes et en centièmes d'heure (1/100e), directement ci-dessous.",
-      secAddTitle: "Additionner des plages horaires",
-      lblStart: "Heure début", lblEnd: "Heure fin", lblDur: "Durée", lblDec: "1/100e",
-      overnightBadge: "+1j",
-      btnAddSlot: "+ Ajouter une plage", btnReset: "Reset (0)", lblTotal: "TOTAL JOURNALIER",
-      btnCopy: "Copier", btnCopied: "Copié !",
-      subExceedMsg: "La pause (B) dépasse la durée totale (A) : le temps net est ramené à 00h 00min.",
-      secSubTitle: "Soustraire deux durées (ex. déduire une pause)",
-      lblDurA: "Durée totale (A)", lblDurB: "Pause / Temps à déduire (B)", lblNetResult: "Temps net (A − B)",
-      otherToolsTitle: "Suite complète d'outils",
-      otherToolsSub: "Cliquez sur un outil pour l'ouvrir",
-      t2Title: "Feuille Hebdomadaire",
-      t2Desc: "Pointage du lundi au dimanche avec sauvegarde locale, navigation par semaine et impression.",
-      t3Title: "Heures & Salaire",
-      t3Desc: "Estimez votre rémunération à partir de vos heures normales, heures sup et taux horaire.",
-      t4Title: "Calculateur de Durées",
-      t4Desc: "Additionnez ou soustrayez des durées en heures et minutes avec résultat en centièmes.",
-      t5Title: "Convertisseur 1/100e",
-      t5Desc: "Convertissez vos heures et minutes en centièmes d'heure décimaux et inversement.",
-      t6Title: "Toiture en Croupe",
-      t6Desc: "Calculez les longueurs de chevrons et d'arêtiers, les angles de coupe et la surface des pans.",
-      openTool: "Ouvrir l'outil →"
-    },
-    en: {
-      btn: "FR",
-      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
-      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
-      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
-      heroPill: "100% Free • No Sign-Up",
-      pageTitle: "Working Time Calculator & Tools",
-      pageSub: "Add daily time slots or subtract breaks in hours-minutes and hundredths of an hour (1/100e) right below.",
-      secAddTitle: "Add Time Slots",
-      lblStart: "Start time", lblEnd: "End time", lblDur: "Duration", lblDec: "1/100e",
-      overnightBadge: "+1d",
-      btnAddSlot: "+ Add time slot", btnReset: "Reset (0)", lblTotal: "DAILY TOTAL",
-      btnCopy: "Copy", btnCopied: "Copied!",
-      subExceedMsg: "Break (B) exceeds total duration (A): net time is clamped to 00h 00min.",
-      secSubTitle: "Subtract Two Durations (e.g. deduct a break)",
-      lblDurA: "Total duration (A)", lblDurB: "Break / Time to deduct (B)", lblNetResult: "Net time (A − B)",
-      otherToolsTitle: "Complete Tool Suite",
-      otherToolsSub: "Select a tool to launch",
-      t2Title: "Weekly Timesheet",
-      t2Desc: "Monday-to-Sunday timesheet with local save, week switching, and printable view.",
-      t3Title: "Working Hours & Pay",
-      t3Desc: "Estimate earnings from regular hours, overtime bonus percentage, and hourly pay rate.",
-      t4Title: "Time Duration Calculator",
-      t4Desc: "Add or subtract hours and minutes with simultaneous decimal hundredths output.",
-      t5Title: "1/100e Converter",
-      t5Desc: "Convert hours and minutes into decimal hundredths of an hour and back.",
-      t6Title: "Hip Roof Framing",
-      t6Desc: "Calculate common and hip rafter lengths, cut angles, roof pitch, and slope surface area.",
-      openTool: "Open tool →"
-    }
-  };
-
-  function clampNonNeg(el) {
-    const val = parseFloat(el.value);
-    if (!Number.isNaN(val) && val < 0) el.value = "0";
+  function toMinutes(tStr) {
+    if (!tStr || !tStr.includes(":")) return null;
+    const [h, m] = tStr.split(":").map(Number);
+    if (Number.isNaN(h) || Number.isNaN(m)) return null;
+    return h * 60 + m;
   }
 
-  function clampMins(el) {
-    const val = parseFloat(el.value);
-    if (Number.isNaN(val)) return;
-    if (val < 0) el.value = "0";
-    else if (val > 59) el.value = "59";
+  function calcWorkTime() {
+    const start = toMinutes(document.getElementById("startTime").value);
+    const end = toMinutes(document.getElementById("endTime").value);
+    const pause = Math.max(0, parseInt(document.getElementById("breakMin").value, 10) || 0);
+
+    if (start === null || end === null) return;
+    let diff = end - start;
+    if (diff < 0) diff += 24 * 60;
+    const net = Math.max(0, diff - pause);
+
+    const h = String(Math.floor(net / 60)).padStart(2, "0");
+    const m = String(net % 60).padStart(2, "0");
+    const dec = (net / 60).toFixed(2);
+
+    document.getElementById("workResult").textContent = `Temps net : ${h}h ${m}min (${dec} h)`;
   }
 
-  function calcSlotInfo(s) {
-    if (!s.start || !s.end) return { mins: 0, overnight: false };
-    const [sh, sm] = s.start.split(":").map(Number);
-    const [eh, em] = s.end.split(":").map(Number);
-    if ([sh, sm, eh, em].some(Number.isNaN)) return { mins: 0, overnight: false };
-    const startM = sh * 60 + sm;
-    let endM = eh * 60 + em;
-    const overnight = endM < startM;
-    if (overnight) endM += 1440;
-    return { mins: Math.max(0, endM - startM), overnight };
+  function resetWorkTime() {
+    document.getElementById("startTime").value = "09:00";
+    document.getElementById("endTime").value = "17:30";
+    document.getElementById("breakMin").value = 30;
+    calcWorkTime();
   }
 
-  function fmtHM(mins) {
-    const sign = mins < 0 ? "-" : "";
-    const abs = Math.abs(Math.round(mins));
-    const h = String(Math.floor(abs / 60)).padStart(2, "0");
-    const m = String(abs % 60).padStart(2, "0");
-    return `${sign}${h}h ${m}min`;
-  }
-
-  function renderSlots() {
-    const d = dict[lang];
-    const container = document.getElementById("slotsContainer");
-    container.innerHTML = "";
-    let totalMins = 0;
-
-    slots.forEach((s, idx) => {
-      const { mins, overnight } = calcSlotInfo(s);
-      if (s.active) totalMins += mins;
-
-      const badge = overnight ? `<span class="overnight-tag">${d.overnightBadge}</span>` : "";
-      const row = document.createElement("div");
-      row.className = "slot-row" + (s.active ? "" : " disabled");
-      row.innerHTML = `
-        <input type="checkbox" class="slot-check" ${s.active ? "checked" : ""} onchange="toggleSlot(${idx}, this.checked)" aria-label="Activer">
-        <div class="slot-field">
-          <label>${d.lblStart}</label>
-          <input type="time" value="${s.start}" oninput="updateSlot(${idx}, 'start', this.value)">
-        </div>
-        <div class="slot-field">
-          <label>${d.lblEnd}</label>
-          <input type="time" value="${s.end}" oninput="updateSlot(${idx}, 'end', this.value)">
-        </div>
-        <div class="slot-field">
-          <label>${d.lblDur}</label>
-          <div class="out-pill">${fmtHM(mins)}${badge}</div>
-        </div>
-        <div class="slot-field">
-          <label>${d.lblDec}</label>
-          <div class="out-pill">${(mins / 60).toFixed(2)} h</div>
-        </div>
-        <button type="button" class="del-btn" ${slots.length <= 1 ? "disabled" : ""} onclick="removeSlot(${idx})" title="Supprimer">×</button>
-      `;
-      container.appendChild(row);
-    });
-
-    document.getElementById("totalHM").textContent = fmtHM(totalMins);
-    document.getElementById("totalDec").textContent = `${(totalMins / 60).toFixed(2)} h`;
-  }
-
-  function updateSlot(idx, key, val) {
-    slots[idx][key] = val;
-    renderSlots();
-  }
-
-  function toggleSlot(idx, checked) {
-    slots[idx].active = checked;
-    renderSlots();
-  }
-
-  function addSlot() {
-    slots.push({ start: "00:00", end: "00:00", active: true });
-    renderSlots();
-  }
-
-  function removeSlot(idx) {
-    if (slots.length > 1) {
-      slots.splice(idx, 1);
-      renderSlots();
-    }
-  }
-
-  function resetSlots() {
-    slots = [
-      { start: "00:00", end: "00:00", active: true },
-      { start: "00:00", end: "00:00", active: true }
-    ];
-    renderSlots();
-  }
-
-  function calcSub() {
-    const d = dict[lang];
-    const ah = Math.max(0, Math.floor(parseFloat(document.getElementById("subAh").value) || 0));
-    const am = Math.min(59, Math.max(0, Math.floor(parseFloat(document.getElementById("subAm").value) || 0)));
-    const bh = Math.max(0, Math.floor(parseFloat(document.getElementById("subBh").value) || 0));
-    const bm = Math.min(59, Math.max(0, Math.floor(parseFloat(document.getElementById("subBm").value) || 0)));
-
-    const rawDiff = (ah * 60 + am) - (bh * 60 + bm);
-    const notice = document.getElementById("subNotice");
-
-    if (rawDiff < 0) {
-      notice.textContent = d.subExceedMsg;
-      notice.style.display = "block";
-      document.getElementById("subOut").textContent = "00h 00min (0.00 h)";
-      return;
-    }
-
-    notice.style.display = "none";
-    document.getElementById("subOut").textContent = `${fmtHM(rawDiff)} (${(rawDiff / 60).toFixed(2)} h)`;
-  }
-
-  function resetSub() {
-    document.getElementById("subAh").value = "0";
-    document.getElementById("subAm").value = "0";
-    document.getElementById("subBh").value = "0";
-    document.getElementById("subBm").value = "0";
-    calcSub();
-  }
-
-  function copyDailyTotal() {
-    const d = dict[lang];
-    const text = `${document.getElementById("totalHM").textContent} (${document.getElementById("totalDec").textContent})`;
-    const btn = document.getElementById("copyTotalBtn");
-    const showCopied = () => {
-      btn.textContent = d.btnCopied;
-      setTimeout(() => { btn.textContent = d.btnCopy; }, 1600);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(showCopied).catch(() => {});
-    }
-  }
-
-  function applyLang() {
-    document.documentElement.lang = lang;
-    const d = dict[lang];
-    document.getElementById("langBtn").textContent = d.btn;
-    document.querySelectorAll("[data-t]").forEach(el => {
-      const k = el.getAttribute("data-t");
-      if (d[k]) el.textContent = d[k];
-    });
-    renderSlots();
-    calcSub();
-  }
-
-  function toggleLang() {
-    lang = lang === "fr" ? "en" : "fr";
-    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
-    applyLang();
-  }
-
-  try {
-    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
-  } catch (e) {}
-
-  applyLang();
+  calcWorkTime();
 </script>
 
 </body>
