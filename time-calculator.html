@@ -78,6 +78,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    margin-left: 20px;
     flex-shrink: 0;
   }
   .brand-dot {
@@ -98,21 +99,36 @@
   .nav-menu {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 5px;
     min-width: 0;
   }
   .nav-menu a {
-    color: var(--muted);
+    color: var(--ink);
+    background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+    border: 1px solid #94a3b8;
+    border-bottom: 2px solid #64748b;
     text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 6px 9px;
-    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 7px;
     white-space: nowrap;
+    box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(15, 23, 42, 0.12);
+    transition: transform 0.1s ease, box-shadow 0.12s ease, background 0.12s ease;
   }
-  .nav-menu a:hover, .nav-menu a.active {
+  .nav-menu a:hover {
     color: var(--primary);
-    background: var(--soft);
+    background: linear-gradient(180deg, #ffffff 0%, #dbeafe 100%);
+    border-color: #3b82f6;
+    border-bottom-color: #1d4ed8;
+    transform: translateY(-1px);
+  }
+  .nav-menu a.active {
+    color: #ffffff;
+    background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+    border-color: #1d4ed8;
+    border-bottom-color: #1e3a8a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 3px rgba(29, 78, 216, 0.3);
   }
   .lang-btn {
     background: var(--primary);
@@ -563,4 +579,33 @@
       setTimeout(() => { btn.textContent = d.btnCopy; }, 1600);
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(showCopied).catch
+      navigator.clipboard.writeText(text).then(showCopied).catch(() => {});
+    }
+  }
+
+  function applyLang() {
+    document.documentElement.lang = lang;
+    const d = dict[lang];
+    document.getElementById("langBtn").textContent = d.btn;
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (d[k]) el.textContent = d[k];
+    });
+    calcDur();
+  }
+
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    if (localStorage.getItem(LANG_KEY) === "en") lang = "en";
+  } catch (e) {}
+
+  applyLang();
+</script>
+
+</body>
+</html>
