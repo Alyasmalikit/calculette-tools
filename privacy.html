@@ -6,8 +6,169 @@
 <title>Politique de Confidentialité | Calculette-tools</title>
 <meta name="description" content="Politique de confidentialité et protection des données personnelles sur Calculette-tools.">
 <link rel="canonical" href="https://calculette-tools.github.io/privacy.html">
-<link rel="stylesheet" href="style.css">
 <style>
+  :root {
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --ink: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --soft: #eff6ff;
+    --radius: 14px;
+    --shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  .container {
+    width: 100%;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* Header */
+  .site-header {
+    width: 100%;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px 0;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 20px;
+    flex-shrink: 0;
+  }
+  .brand-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: inline-block;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .site-header .nav-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    min-width: 0;
+  }
+  .site-header .nav-menu a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f172a;
+    background: linear-gradient(180deg, #ffffff 0%, #e2e8f0 100%);
+    border: 1px solid #94a3b8;
+    border-bottom: 2px solid #64748b;
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 7px;
+    white-space: nowrap;
+    box-shadow: inset 0 1px 0 #ffffff, 0 1px 2px rgba(15, 23, 42, 0.12);
+    transition: transform 0.1s ease, box-shadow 0.12s ease, background 0.12s ease;
+  }
+  .site-header .nav-menu a:hover {
+    color: var(--primary);
+    background: linear-gradient(180deg, #ffffff 0%, #dbeafe 100%);
+    border-color: #3b82f6;
+    border-bottom-color: #1d4ed8;
+    transform: translateY(-1px);
+  }
+  .site-header .nav-menu a.active {
+    color: #ffffff;
+    background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+    border-color: #1d4ed8;
+    border-bottom-color: #1e3a8a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 1px 3px rgba(29, 78, 216, 0.3);
+  }
+  .site-header .nav-menu a:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+  }
+  .lang-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 7px 13px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.82rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .lang-btn:hover { background: var(--primary-hover); }
+  @media (max-width: 600px) {
+    .site-header .nav-menu a {
+      font-size: 0.76rem;
+      padding: 4px 7px;
+    }
+  }
+
+  /* Page Content */
+  .page-head { padding: 22px 0 12px; }
+  .page-head h1 {
+    margin: 0 0 6px;
+    font-size: clamp(1.4rem, 3vw, 1.95rem);
+    letter-spacing: -0.02em;
+  }
+  .page-head p { margin: 0; color: var(--muted); font-size: 0.94rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+    width: 100%;
+    min-width: 0;
+  }
+  .card h2 {
+    margin: 0 0 8px;
+    font-size: 1.08rem;
+  }
+  .card h2:not(:first-child) {
+    margin-top: 16px;
+  }
+  .card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
   .privacy-note {
     margin-top: 16px;
     padding: 12px 14px;
@@ -25,11 +186,53 @@
   .privacy-note a:hover {
     text-decoration: underline;
   }
+
+  /* Footer */
+  .site-footer {
+    width: 100%;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding: 22px 0 32px;
+    text-align: center;
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin-top: 22px;
+  }
+  .footer-links {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-links a:hover,
+  .footer-links a.active { color: var(--primary); }
 </style>
 </head>
 <body>
 
-<header id="siteHeader" class="site-header"></header>
+<header class="site-header">
+  <div class="container nav-bar">
+    <a href="index.html" class="brand"><span class="brand-dot"></span>Calculette-tools</a>
+    <div class="nav-right">
+      <nav class="nav-menu">
+        <a href="index.html" data-t="navHome">Accueil</a>
+        <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+        <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+        <a href="time-calculator.html" data-t="navTc">Durées</a>
+        <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+        <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+        <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+      </nav>
+      <button type="button" id="langBtn" class="lang-btn" onclick="toggleLang()">EN</button>
+    </div>
+  </div>
+</header>
 
 <main class="container">
   <div class="page-head">
@@ -57,20 +260,45 @@
   </div>
 </main>
 
-<footer id="siteFooter" class="site-footer"></footer>
+<footer class="site-footer">
+  <div class="container">
+    <div>Calculette-tools</div>
+    <div class="footer-links">
+      <a href="index.html" data-t="navHome">Accueil</a>
+      <a href="working-time-calculator.html" data-t="navWt">Temps de Travail</a>
+      <a href="working-hour-calculator.html" data-t="navWh">Heures &amp; Salaire</a>
+      <a href="time-calculator.html" data-t="navTc">Durées</a>
+      <a href="feuille-hebdo.html" data-t="navFh">Feuille Hebdo</a>
+      <a href="convertisseur.html" data-t="navCv">Convertisseur</a>
+      <a href="toiture-croupe.html" data-t="navTo">Toiture</a>
+    </div>
+    <div class="footer-links">
+      <a href="about.html" data-t="navAbout">À propos</a>
+      <a href="contact.html" data-t="navContact">Contact</a>
+      <a href="privacy.html" class="active" data-t="navPrivacy">Confidentialité</a>
+      <a href="terms.html" data-t="navDisclaimer">Disclaimer</a>
+    </div>
+  </div>
+</footer>
 
-<script src="app.js"></script>
 <script>
-  const PAGE_DICT = {
+  const LANG_KEY = "calculette_lang_v1";
+  let lang = "fr";
+
+  const dict = {
     fr: {
+      btn: "EN",
       docTitle: "Politique de Confidentialité | Calculette-tools",
       docDesc: "Politique de confidentialité et protection des données personnelles sur Calculette-tools.",
+      navHome: "Accueil", navWt: "Temps de Travail", navWh: "Heures & Salaire",
+      navTc: "Durées", navFh: "Feuille Hebdo", navCv: "Convertisseur", navTo: "Toiture",
+      navAbout: "À propos", navContact: "Contact", navPrivacy: "Confidentialité", navDisclaimer: "Disclaimer",
       title: "Politique de Confidentialité",
       sub: "Dernière mise à jour : Novembre 2026",
       h1: "1. Traitement local des données",
       p1: "Les données saisies dans nos calculateurs (horaires, taux horaires, feuilles hebdomadaires, dimensions de toiture) sont traitées exclusivement dans votre navigateur. Aucune donnée de calcul n'est transmise à un serveur externe.",
       h2: "2. Stockage local (localStorage)",
-      p2: "Notre site utilise le stockage local de votre navigateur uniquement pour mémoriser votre préférence de langue (FR/EN) ainsi que vos horaires saisis dans la feuille hebdomadire jusqu'à ce que vous cliquiez sur Reset.",
+      p2: "Notre site utilise le stockage local de votre navigateur uniquement pour mémoriser votre préférence de langue (FR/EN) ainsi que vos horaires saisis dans la feuille hebdomadaire jusqu'à ce que vous cliquiez sur Reset.",
       h3: "3. Vos droits et contrôle des données",
       p3: "Vous pouvez effacer à tout moment les données enregistrées localement en utilisant le bouton Reset des outils ou en vidant les données de navigation de votre navigateur.",
       h4: "4. Hébergement et services tiers",
@@ -79,8 +307,12 @@
       contactLink: "Contactez-nous"
     },
     en: {
+      btn: "FR",
       docTitle: "Privacy Policy | Calculette-tools",
       docDesc: "Privacy policy and data handling practices for Calculette-tools.",
+      navHome: "Home", navWt: "Working Time", navWh: "Working Hours",
+      navTc: "Time Calculator", navFh: "Weekly Timesheet", navCv: "Decimal Converter", navTo: "Hip Roof",
+      navAbout: "About", navContact: "Contact", navPrivacy: "Privacy Policy", navDisclaimer: "Disclaimer",
       title: "Privacy Policy",
       sub: "Last updated: November 2026",
       h1: "1. Local Browser Processing",
@@ -96,21 +328,37 @@
     }
   };
 
-  function syncPrivacyMeta() {
-    const d = PAGE_DICT[getLang()] || PAGE_DICT.fr;
+  function applyLang() {
+    document.documentElement.lang = lang;
+    const d = dict[lang] || dict.fr;
     document.title = d.docTitle;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", d.docDesc);
+
+    const langBtn = document.getElementById("langBtn");
+    if (langBtn) langBtn.textContent = d.btn;
+
+    document.querySelectorAll("[data-t]").forEach(el => {
+      const k = el.getAttribute("data-t");
+      if (k && Object.prototype.hasOwnProperty.call(d, k)) {
+        el.textContent = d[k];
+      }
+    });
   }
 
-  renderChrome("privacy");
+  function toggleLang() {
+    lang = lang === "fr" ? "en" : "fr";
+    try { localStorage.setItem(LANG_KEY, lang); } catch (e) {}
+    applyLang();
+  }
+
+  try {
+    const saved = localStorage.getItem(LANG_KEY);
+    if (saved === "en" || saved === "fr") lang = saved;
+  } catch (e) {}
+
   applyLang();
-  syncPrivacyMeta();
-
-  const langBtnEl = document.getElementById("langBtn");
-  if (langBtnEl) {
-    langBtnEl.addEventListener("click", () => setTimeout(syncPrivacyMeta, 0));
-  }
 </script>
+
 </body>
 </html>
